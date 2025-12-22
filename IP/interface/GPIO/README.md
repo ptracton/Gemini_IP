@@ -99,7 +99,7 @@ graph TD
 The IP includes a comprehensive multi-tool verification suite.
 
 ### 1. Regression Suite (Recommended)
-Automatically runs all 20 simulation jobs (Cocotb SV/VHDL, Xilinx, ModelSim).
+Automatically runs all 30 simulation jobs (Cocotb SV/VHDL, Xilinx, ModelSim, Yosys/Vivado Synthesis).
 ```bash
 python3 IP/interface/GPIO/tools/run_regression.py
 ```
@@ -153,7 +153,13 @@ To remove all intermediate verification artifacts (Cocotb, UVM, Formal):
 ./IP/interface/GPIO/verif/clean_verif.sh
 ```
 
-### 4. Native Linting
+### 5. Synthesis (Vivado & Yosys)
+Synthesize the IP for Artix-7 to verify timing and resource utilization.
+```bash
+./IP/interface/GPIO/synthesis/run_synth.sh
+```
+
+### 6. Native Linting
 Performs static analysis on both SystemVerilog and VHDL source files.
 ```bash
 ./IP/interface/GPIO/tools/run_lint.sh
@@ -182,6 +188,20 @@ make SIM=ghdl TOPLEVEL_LANG=vhdl BUS_TYPE=APB NUM_BITS=8
 | UVM Random | SV | Xilinx Vivado | ✅ PASS |
 
 Full report available in: [regression_results.md](../../../regression_results.md)
+
+### 7. Synthesis Results (Artix-7)
+Resource utilization for default configuration (32-bit GPIO).
+
+| Interface | Tool | Slice LUTs | Registers |
+| :--- | :--- | :--- | :--- |
+| **AXI4-Lite** | Vivado | ~2366 | ~1910 |
+| **AXI4-Lite** | Yosys | ~3220 | ~2247 |
+| **APB4** | Vivado | ~2349 | ~1904 |
+| **APB4** | Yosys | ~3162 | ~2241 |
+| **Wishbone** | Vivado | ~2333 | ~1905 |
+| **Wishbone** | Yosys | ~3178 | ~2241 |
+
+*Note: Yosys results are pre-place-and-route estimation.*
 
 ## Licensing
 - **Author**: Gemini-3 AI (Google DeepMind)

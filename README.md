@@ -32,6 +32,7 @@ The repository has transitioned from initial implementation to a fully verified 
 | **VHDL-2008** | ✅ |
 | **UVM Random** | ✅ |
 | **Regression Tool** | ✅ |
+| **Synthesis (Vivado/Yosys)** | ✅ |
 
 ## Running Verifications & Tools
 
