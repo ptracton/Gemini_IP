@@ -1,0 +1,30 @@
+make: Entering directory '/home/ptracton/src/Gemini_IP/IP/interface/GPIO/verif/cocotb'
+rm -f results.xml
+"make" -f Makefile results.xml
+make[1]: Entering directory '/home/ptracton/src/Gemini_IP/IP/interface/GPIO/verif/cocotb'
+/home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/lib/python3.12/site-packages/cocotb_tools/makefiles/simulators/Makefile.verilator:69: Using MODULE is deprecated, please use COCOTB_TEST_MODULES instead.
+/home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/lib/python3.12/site-packages/cocotb_tools/makefiles/simulators/Makefile.verilator:69: Using PLUSARGS is deprecated, please use COCOTB_PLUSARGS instead.
+rm -f results.xml
+COCOTB_TEST_MODULES=test_gpio COCOTB_TESTCASE= COCOTB_TEST_FILTER= COCOTB_TOPLEVEL=gpio_apb TOPLEVEL_LANG=verilog \
+         sim_build/Vtop   +BUS_TYPE=APB  
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:93   in _embed_init_python              Using Python 3.12.4 interpreter at /home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/bin/python
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Verilator version 5.043 devel
+     0.00ns INFO     cocotb                             Seeding Python random module with 1766364357
+     0.00ns ERROR    gpi                                VPI: Couldn't find root handle gpio_apb
+     0.00ns ERROR    gpi                                VPI: Toplevel instances: gpio_apb != gpio_axi...
+     0.00ns ERROR    gpi                                No root handle found
+Traceback (most recent call last):
+  File "/home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/lib/python3.12/site-packages/pygpi/entry.py", line 42, in load_entry
+    entry_func(argv)
+  File "/home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/lib/python3.12/site-packages/cocotb/_init.py", line 87, in init_package_from_simulation
+    _setup_root_handle()
+  File "/home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/lib/python3.12/site-packages/cocotb/_init.py", line 267, in _setup_root_handle
+    raise RuntimeError(f"Can not find root handle {root_name!r}")
+RuntimeError: Can not find root handle 'gpio_apb'
+     0.00ns ERROR    cocotb                             Simulator shut down prematurely
+- :0: Verilog $finish
+make[1]: *** [/home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/lib/python3.12/site-packages/cocotb_tools/makefiles/simulators/Makefile.verilator:70: results.xml] Error 1
+make[1]: Leaving directory '/home/ptracton/src/Gemini_IP/IP/interface/GPIO/verif/cocotb'
+make: *** [/home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/lib/python3.12/site-packages/cocotb_tools/makefiles/Makefile.inc:17: sim] Error 2
+make: Leaving directory '/home/ptracton/src/Gemini_IP/IP/interface/GPIO/verif/cocotb'

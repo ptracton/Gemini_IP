@@ -1,0 +1,323 @@
+// Verilated -*- C++ -*-
+// DESCRIPTION: Verilator output: Design internal header
+// See Vtop.h for the primary calling header
+
+#ifndef VERILATED_VTOP___024ROOT_H_
+#define VERILATED_VTOP___024ROOT_H_  // guard
+
+#include "verilated.h"
+
+
+class Vtop__Syms;
+
+class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
+  public:
+
+    // DESIGN SPECIFIC STATE
+    // Anonymous structures to workaround compiler member-count bugs
+    struct {
+        VL_IN8(wb_clk_i,0,0);
+        VL_IN8(wb_rst_i,0,0);
+        VL_IN8(wb_we_i,0,0);
+        VL_IN8(wb_sel_i,3,0);
+        VL_IN8(wb_stb_i,0,0);
+        VL_IN8(wb_cyc_i,0,0);
+        VL_OUT8(wb_ack_o,0,0);
+        VL_OUT8(wb_err_o,0,0);
+        VL_OUT8(wb_stall_o,0,0);
+        VL_INOUT8(io,7,0);
+        VL_OUT8(intr,0,0);
+        CData/*0:0*/ gpio_wb__DOT__wb_clk_i;
+        CData/*0:0*/ gpio_wb__DOT__wb_rst_i;
+        CData/*0:0*/ gpio_wb__DOT__wb_we_i;
+        CData/*3:0*/ gpio_wb__DOT__wb_sel_i;
+        CData/*0:0*/ gpio_wb__DOT__wb_stb_i;
+        CData/*0:0*/ gpio_wb__DOT__wb_cyc_i;
+        CData/*0:0*/ gpio_wb__DOT__wb_ack_o;
+        CData/*0:0*/ gpio_wb__DOT__wb_err_o;
+        CData/*0:0*/ gpio_wb__DOT__wb_stall_o;
+        CData/*7:0*/ gpio_wb__DOT__io;
+        CData/*0:0*/ gpio_wb__DOT__intr;
+        CData/*0:0*/ gpio_wb__DOT__reg_we;
+        CData/*0:0*/ gpio_wb__DOT__reg_re;
+        CData/*3:0*/ gpio_wb__DOT__reg_be;
+        CData/*0:0*/ gpio_wb__DOT__reg_ack;
+        CData/*7:0*/ gpio_wb__DOT__reg_data_o;
+        CData/*7:0*/ gpio_wb__DOT__reg_dir;
+        CData/*7:0*/ gpio_wb__DOT__gpio_i;
+        CData/*7:0*/ gpio_wb__DOT__open_drain;
+        CData/*7:0*/ gpio_wb__DOT__pull_up_en;
+        CData/*7:0*/ gpio_wb__DOT__pull_down_en;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_regs__DOT__clk;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_regs__DOT__reset_n;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_regs__DOT__we;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_regs__DOT__re;
+        CData/*3:0*/ gpio_wb__DOT__u_gpio_regs__DOT__be;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ack;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__reg_data_o;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__reg_dir;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gpio_i;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__open_drain;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__pull_up_en;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__pull_down_en;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_regs__DOT__intr;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__s_reg_data_o;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__s_reg_dir;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__s_reg_int_en;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__s_reg_int_typ;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__s_reg_int_pol;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__s_reg_int_any;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__s_reg_int_sts;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__s_reg_deb_en;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__s_reg_inv_in;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__s_reg_inv_out;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__s_reg_od_en;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__s_reg_wr_mask;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__s_reg_pu_en;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__s_reg_pd_en;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__s_reg_pwm_en;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__pwm_val;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gpio_i_deb;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gpio_i_deb_q;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gpio_edge_pos;
+    };
+    struct {
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gpio_edge_neg;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gpio_edge_any;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_regs__DOT__intr_cond;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gen_deb__BRA__0__KET____DOT__gpio_i_sync;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gen_deb__BRA__1__KET____DOT__gpio_i_sync;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gen_deb__BRA__2__KET____DOT__gpio_i_sync;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gen_deb__BRA__3__KET____DOT__gpio_i_sync;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gen_deb__BRA__4__KET____DOT__gpio_i_sync;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gen_deb__BRA__5__KET____DOT__gpio_i_sync;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gen_deb__BRA__6__KET____DOT__gpio_i_sync;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gen_deb__BRA__7__KET____DOT__gpio_i_sync;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__clk;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__reset_n;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__o;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__oe;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__i;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__open_drain;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__pull_up_en;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__pull_down_en;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__io;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__io__out__strong__out8;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__io__out__strong__out9;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__io__out__strong__out10;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__io__out__strong__out11;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__io__out__strong__out12;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__io__out__strong__out13;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__io__out__strong__out14;
+        CData/*7:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__io__out__strong__out15;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__0__KET____DOT__u_gpio_bit__DOT__clk;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__0__KET____DOT__u_gpio_bit__DOT__reset_n;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__0__KET____DOT__u_gpio_bit__DOT__o;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__0__KET____DOT__u_gpio_bit__DOT__oe;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__0__KET____DOT__u_gpio_bit__DOT__i;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__0__KET____DOT__u_gpio_bit__DOT__open_drain;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__0__KET____DOT__u_gpio_bit__DOT__pull_up_en;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__0__KET____DOT__u_gpio_bit__DOT__pull_down_en;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__0__KET____DOT__u_gpio_bit__DOT__pad;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__0__KET____DOT__u_gpio_bit__DOT__oe_actual;
+        CData/*1:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__0__KET____DOT__u_gpio_bit__DOT__sync_reg;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__1__KET____DOT__u_gpio_bit__DOT__clk;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__1__KET____DOT__u_gpio_bit__DOT__reset_n;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__1__KET____DOT__u_gpio_bit__DOT__o;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__1__KET____DOT__u_gpio_bit__DOT__oe;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__1__KET____DOT__u_gpio_bit__DOT__i;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__1__KET____DOT__u_gpio_bit__DOT__open_drain;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__1__KET____DOT__u_gpio_bit__DOT__pull_up_en;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__1__KET____DOT__u_gpio_bit__DOT__pull_down_en;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__1__KET____DOT__u_gpio_bit__DOT__pad;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__1__KET____DOT__u_gpio_bit__DOT__oe_actual;
+        CData/*1:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__1__KET____DOT__u_gpio_bit__DOT__sync_reg;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__2__KET____DOT__u_gpio_bit__DOT__clk;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__2__KET____DOT__u_gpio_bit__DOT__reset_n;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__2__KET____DOT__u_gpio_bit__DOT__o;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__2__KET____DOT__u_gpio_bit__DOT__oe;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__2__KET____DOT__u_gpio_bit__DOT__i;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__2__KET____DOT__u_gpio_bit__DOT__open_drain;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__2__KET____DOT__u_gpio_bit__DOT__pull_up_en;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__2__KET____DOT__u_gpio_bit__DOT__pull_down_en;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__2__KET____DOT__u_gpio_bit__DOT__pad;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__2__KET____DOT__u_gpio_bit__DOT__oe_actual;
+        CData/*1:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__2__KET____DOT__u_gpio_bit__DOT__sync_reg;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__3__KET____DOT__u_gpio_bit__DOT__clk;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__3__KET____DOT__u_gpio_bit__DOT__reset_n;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__3__KET____DOT__u_gpio_bit__DOT__o;
+    };
+    struct {
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__3__KET____DOT__u_gpio_bit__DOT__oe;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__3__KET____DOT__u_gpio_bit__DOT__i;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__3__KET____DOT__u_gpio_bit__DOT__open_drain;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__3__KET____DOT__u_gpio_bit__DOT__pull_up_en;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__3__KET____DOT__u_gpio_bit__DOT__pull_down_en;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__3__KET____DOT__u_gpio_bit__DOT__pad;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__3__KET____DOT__u_gpio_bit__DOT__oe_actual;
+        CData/*1:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__3__KET____DOT__u_gpio_bit__DOT__sync_reg;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__4__KET____DOT__u_gpio_bit__DOT__clk;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__4__KET____DOT__u_gpio_bit__DOT__reset_n;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__4__KET____DOT__u_gpio_bit__DOT__o;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__4__KET____DOT__u_gpio_bit__DOT__oe;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__4__KET____DOT__u_gpio_bit__DOT__i;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__4__KET____DOT__u_gpio_bit__DOT__open_drain;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__4__KET____DOT__u_gpio_bit__DOT__pull_up_en;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__4__KET____DOT__u_gpio_bit__DOT__pull_down_en;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__4__KET____DOT__u_gpio_bit__DOT__pad;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__4__KET____DOT__u_gpio_bit__DOT__oe_actual;
+        CData/*1:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__4__KET____DOT__u_gpio_bit__DOT__sync_reg;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__5__KET____DOT__u_gpio_bit__DOT__clk;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__5__KET____DOT__u_gpio_bit__DOT__reset_n;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__5__KET____DOT__u_gpio_bit__DOT__o;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__5__KET____DOT__u_gpio_bit__DOT__oe;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__5__KET____DOT__u_gpio_bit__DOT__i;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__5__KET____DOT__u_gpio_bit__DOT__open_drain;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__5__KET____DOT__u_gpio_bit__DOT__pull_up_en;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__5__KET____DOT__u_gpio_bit__DOT__pull_down_en;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__5__KET____DOT__u_gpio_bit__DOT__pad;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__5__KET____DOT__u_gpio_bit__DOT__oe_actual;
+        CData/*1:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__5__KET____DOT__u_gpio_bit__DOT__sync_reg;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__6__KET____DOT__u_gpio_bit__DOT__clk;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__6__KET____DOT__u_gpio_bit__DOT__reset_n;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__6__KET____DOT__u_gpio_bit__DOT__o;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__6__KET____DOT__u_gpio_bit__DOT__oe;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__6__KET____DOT__u_gpio_bit__DOT__i;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__6__KET____DOT__u_gpio_bit__DOT__open_drain;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__6__KET____DOT__u_gpio_bit__DOT__pull_up_en;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__6__KET____DOT__u_gpio_bit__DOT__pull_down_en;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__6__KET____DOT__u_gpio_bit__DOT__pad;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__6__KET____DOT__u_gpio_bit__DOT__oe_actual;
+        CData/*1:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__6__KET____DOT__u_gpio_bit__DOT__sync_reg;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__7__KET____DOT__u_gpio_bit__DOT__clk;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__7__KET____DOT__u_gpio_bit__DOT__reset_n;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__7__KET____DOT__u_gpio_bit__DOT__o;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__7__KET____DOT__u_gpio_bit__DOT__oe;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__7__KET____DOT__u_gpio_bit__DOT__i;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__7__KET____DOT__u_gpio_bit__DOT__open_drain;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__7__KET____DOT__u_gpio_bit__DOT__pull_up_en;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__7__KET____DOT__u_gpio_bit__DOT__pull_down_en;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__7__KET____DOT__u_gpio_bit__DOT__pad;
+        CData/*0:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__7__KET____DOT__u_gpio_bit__DOT__oe_actual;
+        CData/*1:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__7__KET____DOT__u_gpio_bit__DOT__sync_reg;
+        CData/*0:0*/ __VstlFirstIteration;
+        CData/*0:0*/ __VicoFirstIteration;
+        CData/*0:0*/ __Vtrigprevexpr___TOP__gpio_wb__DOT__u_gpio_regs__DOT__clk__0;
+        CData/*0:0*/ __Vtrigprevexpr___TOP__gpio_wb__DOT__u_gpio_regs__DOT__reset_n__0;
+        CData/*0:0*/ __Vtrigprevexpr___TOP__gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__0__KET____DOT__u_gpio_bit__DOT__clk__0;
+        CData/*0:0*/ __Vtrigprevexpr___TOP__gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__0__KET____DOT__u_gpio_bit__DOT__reset_n__0;
+        CData/*0:0*/ __Vtrigprevexpr___TOP__gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__1__KET____DOT__u_gpio_bit__DOT__clk__0;
+        CData/*0:0*/ __Vtrigprevexpr___TOP__gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__1__KET____DOT__u_gpio_bit__DOT__reset_n__0;
+        CData/*0:0*/ __Vtrigprevexpr___TOP__gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__2__KET____DOT__u_gpio_bit__DOT__clk__0;
+        CData/*0:0*/ __Vtrigprevexpr___TOP__gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__2__KET____DOT__u_gpio_bit__DOT__reset_n__0;
+        CData/*0:0*/ __Vtrigprevexpr___TOP__gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__3__KET____DOT__u_gpio_bit__DOT__clk__0;
+        CData/*0:0*/ __Vtrigprevexpr___TOP__gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__3__KET____DOT__u_gpio_bit__DOT__reset_n__0;
+    };
+    struct {
+        CData/*0:0*/ __Vtrigprevexpr___TOP__gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__4__KET____DOT__u_gpio_bit__DOT__clk__0;
+        CData/*0:0*/ __Vtrigprevexpr___TOP__gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__4__KET____DOT__u_gpio_bit__DOT__reset_n__0;
+        CData/*0:0*/ __Vtrigprevexpr___TOP__gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__5__KET____DOT__u_gpio_bit__DOT__clk__0;
+        CData/*0:0*/ __Vtrigprevexpr___TOP__gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__5__KET____DOT__u_gpio_bit__DOT__reset_n__0;
+        CData/*0:0*/ __Vtrigprevexpr___TOP__gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__6__KET____DOT__u_gpio_bit__DOT__clk__0;
+        CData/*0:0*/ __Vtrigprevexpr___TOP__gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__6__KET____DOT__u_gpio_bit__DOT__reset_n__0;
+        CData/*0:0*/ __Vtrigprevexpr___TOP__gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__7__KET____DOT__u_gpio_bit__DOT__clk__0;
+        CData/*0:0*/ __Vtrigprevexpr___TOP__gpio_wb__DOT__u_gpio_wrapper__DOT__gen_gpio_bits__BRA__7__KET____DOT__u_gpio_bit__DOT__reset_n__0;
+        SData/*15:0*/ gpio_wb__DOT__u_gpio_regs__DOT__pwm_cnt;
+        SData/*15:0*/ gpio_wb__DOT__u_gpio_regs__DOT__pwm_prescaler;
+        VL_IN(wb_adr_i,31,0);
+        VL_IN(wb_dat_i,31,0);
+        VL_OUT(wb_dat_o,31,0);
+        IData/*31:0*/ gpio_wb__DOT__wb_adr_i;
+        IData/*31:0*/ gpio_wb__DOT__wb_dat_i;
+        IData/*31:0*/ gpio_wb__DOT__wb_dat_o;
+        IData/*31:0*/ gpio_wb__DOT__reg_addr;
+        IData/*31:0*/ gpio_wb__DOT__reg_wdata;
+        IData/*31:0*/ gpio_wb__DOT__reg_rdata;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__addr;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__wdata;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__rdata;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__s_reg_deb_th;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__s_reg_pwm_cfg;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__pwm_duty_idx;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__pwm_duty_int;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gen_deb__BRA__0__KET____DOT__deb_cnt;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gen_deb__BRA__1__KET____DOT__deb_cnt;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gen_deb__BRA__2__KET____DOT__deb_cnt;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gen_deb__BRA__3__KET____DOT__deb_cnt;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gen_deb__BRA__4__KET____DOT__deb_cnt;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gen_deb__BRA__5__KET____DOT__deb_cnt;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gen_deb__BRA__6__KET____DOT__deb_cnt;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__gen_deb__BRA__7__KET____DOT__deb_cnt;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk2__DOT__r;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk3__DOT__k;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk4__DOT__k;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk5__DOT__k;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk6__DOT__k;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk7__DOT__k;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk8__DOT__k;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk9__DOT__k;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk10__DOT__k;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk11__DOT__k;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk12__DOT__k;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk13__DOT__k;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk14__DOT__k;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk15__DOT__k;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk16__DOT__k;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk17__DOT__k;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk18__DOT__k;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk19__DOT__k;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk20__DOT__k;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_write__DOT__unnamedblk1__DOT__r;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_reg_read__DOT__unnamedblk21__DOT__k;
+        IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__proc_intr_out__DOT__unnamedblk22__DOT__m;
+        IData/*31:0*/ __VactIterCount;
+        VlUnpacked<SData/*15:0*/, 8> gpio_wb__DOT__u_gpio_regs__DOT__s_reg_pwm_duty;
+        VlUnpacked<QData/*63:0*/, 1> __VstlTriggered;
+        VlUnpacked<QData/*63:0*/, 1> __VicoTriggered;
+        VlUnpacked<QData/*63:0*/, 1> __VactTriggered;
+        VlUnpacked<QData/*63:0*/, 1> __VnbaTriggered;
+    };
+    VlNBACommitQueue<VlUnpacked<SData/*15:0*/, 8>, true, SData/*15:0*/, 1> __VdlyCommitQueuegpio_wb__DOT__u_gpio_regs__DOT__s_reg_pwm_duty;
+
+    // INTERNAL VARIABLES
+    Vtop__Syms* vlSymsp;
+    const char* vlNamep;
+
+    // PARAMETERS
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_DATA_I = 0U;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_DATA_O = 4U;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_DIR = 8U;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_INT_EN = 0x0cU;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_INT_TYP = 0x10U;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_INT_POL = 0x14U;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_INT_ANY = 0x18U;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_INT_STS = 0x1cU;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_SET_O = 0x20U;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_CLR_O = 0x24U;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_TGL_O = 0x28U;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_DEB_TH = 0x2cU;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_DEB_EN = 0x30U;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_INV_IN = 0x34U;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_INV_OUT = 0x38U;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_OD_EN = 0x3cU;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_WR_MASK = 0x40U;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_PU_EN = 0x44U;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_PD_EN = 0x48U;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_PWM_EN = 0x4cU;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_PWM_CFG = 0x50U;
+    static constexpr CData/*6:0*/ gpio_wb__DOT__u_gpio_regs__DOT__ADDR_PWM_DUTY = 0x54U;
+    static constexpr IData/*31:0*/ gpio_wb__DOT__NUM_BITS = 8U;
+    static constexpr IData/*31:0*/ gpio_wb__DOT__u_gpio_regs__DOT__NUM_BITS = 8U;
+    static constexpr IData/*31:0*/ gpio_wb__DOT__u_gpio_wrapper__DOT__NUM_BITS = 8U;
+
+    // CONSTRUCTORS
+    Vtop___024root(Vtop__Syms* symsp, const char* namep);
+    ~Vtop___024root();
+    VL_UNCOPYABLE(Vtop___024root);
+
+    // INTERNAL METHODS
+    void __Vconfigure(bool first);
+};
+
+
+#endif  // guard

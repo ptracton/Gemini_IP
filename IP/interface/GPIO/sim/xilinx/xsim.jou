@@ -1,0 +1,15 @@
+#-----------------------------------------------------------
+# xsim v2023.2 (64-bit)
+# SW Build 4029153 on Fri Oct 13 20:13:54 MDT 2023
+# IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
+# SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
+# Start of session at: Sun Dec 21 17:10:38 2025
+# Process ID: 156113
+# Current directory: /home/ptracton/src/Gemini_IP/IP/interface/GPIO/sim/xilinx
+# Command line: xsim -log xsim.log -mode tcl -source {xsim.dir/snapshot_tb_gpio_axi/xsim_script.tcl}
+# Log file: /home/ptracton/src/Gemini_IP/IP/interface/GPIO/sim/xilinx/xsim.log
+# Journal file: /home/ptracton/src/Gemini_IP/IP/interface/GPIO/sim/xilinx/xsim.jou
+# Running On: salvage, OS: Linux, CPU Frequency: 4299.589 MHz, CPU Physical cores: 6, Host memory: 16692 MB
+#-----------------------------------------------------------
+source xsim.dir/snapshot_tb_gpio_axi/xsim_script.tcl
+run -all
