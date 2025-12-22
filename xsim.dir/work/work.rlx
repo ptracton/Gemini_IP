@@ -1,9 +1,0 @@
-0.7
-2020.2
-Oct 13 2023
-20:21:30
-/home/ptracton/src/Gemini_IP/IP/interface/GPIO/rtl/verilog/gpio_axi.sv,1766364984,systemVerilog,,,,gpio_axi,,,,,,,,
-/home/ptracton/src/Gemini_IP/IP/interface/GPIO/rtl/verilog/gpio_bit.sv,1766365015,systemVerilog,,/home/ptracton/src/Gemini_IP/IP/interface/GPIO/rtl/verilog/gpio_wrapper.sv,,gpio_bit,,,,,,,,
-/home/ptracton/src/Gemini_IP/IP/interface/GPIO/rtl/verilog/gpio_regs.sv,1766364999,systemVerilog,,/home/ptracton/src/Gemini_IP/IP/interface/GPIO/rtl/verilog/gpio_axi.sv,,gpio_regs,,,,,,,,
-/home/ptracton/src/Gemini_IP/IP/interface/GPIO/rtl/verilog/gpio_wrapper.sv,1766365008,systemVerilog,,/home/ptracton/src/Gemini_IP/IP/interface/GPIO/rtl/verilog/gpio_regs.sv,,gpio_wrapper,,,,,,,,
-/home/ptracton/src/Gemini_IP/IP/interface/GPIO/sim/xilinx/tb_gpio_axi.sv,1766365286,systemVerilog,,,,tb_gpio_axi,,,,,,,,

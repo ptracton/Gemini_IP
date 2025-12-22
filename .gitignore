@@ -205,3 +205,32 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# --- Hardware Simulation Artifacts ---
+# Cocotb
+sim_build*/
+results.xml
+
+# Xilinx Vivado (xsim)
+xsim.dir/
+*.jou
+*.pb
+*.vcd
+xelab.log
+xvlog.log
+xsim.log
+xsimcrash.log
+xsimkernel.log
+
+# ModelSim / Questa
+work/
+transcript
+vsim.wlf
+*.wlf
+
+# GHDL
+*.cf
+*.o
+
+# General Simulation Logs
+sim_log*.txt
