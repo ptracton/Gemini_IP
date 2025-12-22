@@ -216,6 +216,7 @@ xsim.dir/
 *.jou
 *.pb
 *.vcd
+*.wdb
 xelab.log
 xvlog.log
 xsim.log
