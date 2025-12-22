@@ -58,6 +58,16 @@ For detailed interactive debugging:
 cd IP/interface/GPIO/verif/cocotb && make
 ```
 
+## Development Standards
+
+Every IP in `Gemini_IP` follows a strict "Gold Standard" template established by the [GPIO](IP/interface/GPIO/README.md) module. New IP development must follow the [Create New IP Workflow](create_new_ip.md):
+
+1.  **Dual-RTL**: Concurrent SystemVerilog and VHDL-2008 development.
+2.  **Layered Arch**: Separate Bus Wrappers (AXI/APB/WB) from core logic.
+3.  **Universal Verification**: Every IP must pass Native, Cocotb, UVM, and Formal simulation.
+4.  **Static Analysis**: Zero warnings in Linting (Verilator/GHDL).
+5.  **Synthesis Proven**: Area and timing verified via Vivado and Yosys.
+
 ## Authorship & License
 - **Author**: Gemini-3 AI (Google DeepMind)
 - **License**: [MIT License](LICENSE)
