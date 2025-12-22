@@ -26,6 +26,9 @@ export PATH=$PATH:/opt/intelFPGA_pro/21.1/modelsim_ase/bin
 # Done last to ensure it stays at the front
 export PATH=/opt/oss-cad-suite/bin:$PATH
 
+# Intel Quartus Prime Lite
+export PATH=$PATH:/opt/intelFPGA_lite/23.1std/quartus/bin
+
 # Python Virtual Environment
 if [ -f "$GEMINI_IP_ROOT/virtualenv/GEMINI_IP_PYTHON/bin/activate" ]; then
     source "$GEMINI_IP_ROOT/virtualenv/GEMINI_IP_PYTHON/bin/activate"

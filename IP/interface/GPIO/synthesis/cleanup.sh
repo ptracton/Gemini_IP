@@ -15,5 +15,10 @@ rm -f $SYNTH_DIR/*.log
 rm -f $SYNTH_DIR/*.jou
 rm -f $SYNTH_DIR/*.pb
 rm -rf $SYNTH_DIR/.Xil
+rm -rf $SYNTH_DIR/db
+rm -rf $SYNTH_DIR/incremental_db
+rm -f $SYNTH_DIR/*.qpf
+rm -f $SYNTH_DIR/*.qsf
+rm -f $SYNTH_DIR/*.qws
 
 echo "Cleanup complete."

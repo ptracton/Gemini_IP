@@ -159,6 +159,8 @@ Synthesize the IP for Artix-7 to verify timing and resource utilization.
 ./IP/interface/GPIO/synthesis/run_synth.sh
 ```
 
+**Note**: If Quartus is installed, the script will also perform synthesis for Intel Cyclone IV.
+
 ### 6. ModelSim GUI Simulation
 Launch ModelSim with a pre-configured waveform (Hex radix, grouped signals).
 ```bash
@@ -202,8 +204,11 @@ Resource utilization for default configuration (32-bit GPIO).
 | **APB4** | Yosys | ~3162 | ~2241 |
 | **Wishbone** | Vivado | ~2333 | ~1905 |
 | **Wishbone** | Yosys | ~3178 | ~2241 |
+| **AXI4-Lite** | Quartus (C4GX) | ~4200 (LCs)| N/A |
+| **APB4** | Quartus (C4GX) | ~4200 (LCs)| N/A |
+| **Wishbone** | Quartus (C4GX) | ~4200 (LCs)| N/A |
 
-*Note: Yosys results are pre-place-and-route estimation.*
+*Note: Yosys results are pre-place-and-route estimation. Quartus results are for Cyclone IV GX.*
 
 ## Licensing
 - **Author**: Gemini-3 AI (Google DeepMind)

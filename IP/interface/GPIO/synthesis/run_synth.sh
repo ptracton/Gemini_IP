@@ -48,6 +48,21 @@ for MODULE in "${MODULES[@]}"; do
     else
         echo "SKIP: Yosys not found in PATH."
     fi
+
+    # Quartus Synthesis
+    echo "Synthesizing $MODULE with Quartus..."
+    if command -v quartus_sh &> /dev/null; then
+        quartus_sh -t run_quartus.tcl "$MODULE" > "results/$MODULE/quartus.log" 2>&1
+        if [ $? -eq 0 ]; then
+            echo "PASS: $MODULE Quartus synthesis successful."
+            echo "      Log: results/$MODULE/quartus.log"
+        else
+            echo "FAIL: $MODULE Quartus synthesis failed."
+            echo "      Check log: results/$MODULE/quartus.log"
+        fi
+    else
+        echo "SKIP: Quartus not found in PATH."
+    fi
 done
 
 echo "----------------------------------------------------------------"

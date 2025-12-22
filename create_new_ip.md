@@ -47,7 +47,9 @@ NEW_IP/
 
 ## 5. Synthesis Validation
 - [ ] Perform **Vivado** synthesis to check Artix-7 utilization and timing.
-- [ ] Perform **Yosys** synthesis for open-source toolchain compatibility.
+- [ ] Perform **Vivado** synthesis to check Artix-7 utilization and timing.
+- [ ] Perform **Open-Source (Yosys)** synthesis for cross-tool verification.
+- [ ] Perform **Quartus** synthesis to verify Intel FPGA compatibility (Cyclone IV/V).
 
 ## 6. Regression & Documentation
 - [ ] Integrate all jobs into a local `run_regression.py` tool.
