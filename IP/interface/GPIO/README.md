@@ -159,20 +159,22 @@ Synthesize the IP for Artix-7 to verify timing and resource utilization.
 ./IP/interface/GPIO/synthesis/run_synth.sh
 ```
 
-### 6. Native Linting
+### 6. ModelSim GUI Simulation
+Launch ModelSim with a pre-configured waveform (Hex radix, grouped signals).
+```bash
+# From IP/interface/GPIO/sim/modelsim/
+./run_gui.sh axi
+./run_gui.sh apb
+./run_gui.sh wb
+```
+
+### 8. Native Linting
 Performs static analysis on both SystemVerilog and VHDL source files.
 ```bash
-./IP/interface/GPIO/tools/run_lint.sh
+./IP/interface/GPIO/tools/run_regression.py
 ```
 
-### 4. Detailed Cocotb Verification
-Directly control simulation parameters via the Makefile in `verif/cocotb`.
-```bash
-make SIM=verilator BUS_TYPE=AXI NUM_BITS=16
-make SIM=ghdl TOPLEVEL_LANG=vhdl BUS_TYPE=APB NUM_BITS=8
-```
-
-## Verification Results Summary (23/23 PASSED)
+## Verification Results Summary (30/30 PASSED)
 
 | Configuration | Language | Simulator | Status |
 | :--- | :--- | :--- | :--- |
@@ -189,7 +191,7 @@ make SIM=ghdl TOPLEVEL_LANG=vhdl BUS_TYPE=APB NUM_BITS=8
 
 Full report available in: [regression_results.md](../../../regression_results.md)
 
-### 7. Synthesis Results (Artix-7)
+### 9. Synthesis Results (Artix-7)
 Resource utilization for default configuration (32-bit GPIO).
 
 | Interface | Tool | Slice LUTs | Registers |
