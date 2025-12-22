@@ -28,7 +28,11 @@ module gpio_wrapper #(
     input  logic [NUM_BITS-1:0] pull_down_en,
 
     // External IO Pins
+`ifndef FORMAL
     inout  wire  [NUM_BITS-1:0] io
+`else
+    input  wire  [NUM_BITS-1:0] io
+`endif
 );
 
     genvar g;

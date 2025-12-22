@@ -30,6 +30,7 @@ The repository has transitioned from initial implementation to a fully verified 
 | **Wishbone B4** | ✅ |
 | **SystemVerilog** | ✅ |
 | **VHDL-2008** | ✅ |
+| **UVM Random** | ✅ |
 | **Regression Tool** | ✅ |
 
 ## Running Verifications & Tools

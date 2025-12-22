@@ -1,9 +1,11 @@
 # Gemini_IP Regression Results
 
-Generated on: Sun Dec 21 18:51:07 2025
+Generated on: Sun Dec 21 20:18:58 2025
 
-**Overall Status: PASSED**
-**Passed: 23 / 23**
+**Overall- **Total Tests**: 30
+- **Passed**: 30
+- **Failed**: 0
+- **Pass Rate**: 100.00%
 
 | Test Name | Status | Description |
 | :--- | :---: | :--- |
@@ -29,4 +31,11 @@ Generated on: Sun Dec 21 18:51:07 2025
 | ModelSim_Native | ✅ PASS | ModelSim vsim native directed test |
 | Icarus_Native | ✅ PASS | Icarus iverilog native directed test |
 | GHDL_Native | ✅ PASS | GHDL native directed test |
+| UVM_APB_Test | PASS | UVM APB Verification (Xilinx) |
+| UVM_AXI_Test | PASS | UVM AXI Verification (Xilinx) |
+| UVM_WB_Test | PASS | UVM Wishbone Verification (Xilinx) |
+| UVM_APB_Random_Test | PASS | UVM APB Random Verification |
+| UVM_AXI_Random_Test | PASS | UVM AXI Random Verification |
+| UVM_WB_Random_Test | PASS | UVM WB Random Verification |
+| Formal_Verification | ✅ PASS | SymbiYosys Formal Verification |
 | Linting | ✅ PASS | SystemVerilog and VHDL linting |

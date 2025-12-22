@@ -27,7 +27,11 @@ module gpio_bit (
     input  logic pull_down_en, // 1 = Internal pull-down enabled
 
     // External Pad side
+`ifndef FORMAL
     inout  wire  pad
+`else
+    input  wire  pad
+`endif
 );
 
     // Internal driven signal
@@ -35,7 +39,13 @@ module gpio_bit (
     assign oe_actual = open_drain ? (oe && !o) : oe;
     
     // Drive the pad
+`ifndef FORMAL
     assign pad = oe_actual ? o : 1'bz;
+`else
+    // For Formal, we verify logic driving 'o' and 'oe'.
+    // 'pad' is treated as input (modelled by solver constraints if needed)
+    // We explicitly don't drive it to avoid SMT2 issues with Z state.
+`endif
 
     // Simulation-only: Handle Pulls if supported by simulator
     // In actual hardware, these would be ports connected to IO pad control signals.

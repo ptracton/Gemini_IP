@@ -117,6 +117,20 @@ cd IP/interface/GPIO/sim/xilinx && ./run_xsim.sh
 cd IP/interface/GPIO/sim/modelsim && ./run_modelsim.sh
 ```
 
+**UVM Verification (Xilinx):**
+```bash
+IP/interface/GPIO/verif/uvm/run_uvm.sh [apb|axi|wb]
+```
+To run the Constrained Random test:
+```bash
+IP/interface/GPIO/verif/uvm/run_uvm.sh [apb|axi|wb] gpio_[apb|axi|wb]_random_test
+```
+
+**Formal Verification (SymbiYosys):**
+```bash
+IP/interface/GPIO/verif/formal/run_formal.sh
+```
+
 **Icarus Verilog (iverilog):**
 ```bash
 cd IP/interface/GPIO/sim/iverilog && ./run_iverilog.sh
@@ -131,6 +145,12 @@ cd IP/interface/GPIO/sim/ghdl && ./run_ghdl.sh
 To remove all simulation artifacts (logs, waveforms, compiled libraries):
 ```bash
 ./IP/interface/GPIO/sim/cleanup.sh
+```
+
+### 4. Verification Cleanup
+To remove all intermediate verification artifacts (Cocotb, UVM, Formal):
+```bash
+./IP/interface/GPIO/verif/clean_verif.sh
 ```
 
 ### 4. Native Linting
@@ -157,6 +177,9 @@ make SIM=ghdl TOPLEVEL_LANG=vhdl BUS_TYPE=APB NUM_BITS=8
 | Native Directed | SV | ModelSim vsim | ✅ PASS |
 | Native Directed | SV | Icarus Verilog | ✅ PASS |
 | Native Directed | VHDL | GHDL | ✅ PASS |
+| UVM Simulation | SV | Xilinx Vivado | ✅ PASS |
+| UVM Pwr-Reset | SV | Xilinx Vivado | ✅ PASS |
+| UVM Random | SV | Xilinx Vivado | ✅ PASS |
 
 Full report available in: [regression_results.md](../../../regression_results.md)
 

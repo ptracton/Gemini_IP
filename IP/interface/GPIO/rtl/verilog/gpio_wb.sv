@@ -38,7 +38,11 @@ module gpio_wb #(
     output logic        wb_stall_o,
 
     // GPIO Pins
+`ifndef FORMAL
     inout  wire  [NUM_BITS-1:0] io,
+`else
+    input  wire  [NUM_BITS-1:0] io,
+`endif
 
     // Interrupt
     output logic                intr

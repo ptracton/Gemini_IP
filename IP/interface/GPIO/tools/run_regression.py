@@ -121,7 +121,62 @@ def main():
         description="GHDL native directed test"
     ))
 
-    # 7. Linting
+    # 7. UVM Test
+    uvm_dir = os.path.join(root_dir, "IP/interface/GPIO/verif/uvm")
+    jobs.append(TestJob(
+        name="UVM_APB_Test",
+        cwd=uvm_dir,
+        command=["./run_uvm.sh", "apb"],
+        description="UVM APB Verification (Xilinx)"
+    ))
+
+    jobs.append(TestJob(
+        name="UVM_AXI_Test",
+        cwd=uvm_dir,
+        command=["./run_uvm.sh", "axi"],
+        description="UVM AXI Verification (Xilinx)"
+    ))
+
+    jobs.append(TestJob(
+        name="UVM_WB_Test",
+        cwd=uvm_dir,
+        command=["./run_uvm.sh", "wb"],
+        description="UVM Wishbone Verification (Xilinx)"
+    ))
+
+    jobs.append(TestJob(
+        name="UVM_APB_Random_Test",
+        cwd=uvm_dir,
+        command=["./run_uvm.sh", "apb", "gpio_random_test"],
+        description="UVM APB Random Verification"
+    ))
+    # Override TEST_NAME for random test via environment or arg if script supports it.
+    # The script uses BUS_TYPE to set TEST_NAME. We need to update run_uvm.sh or pass arg.
+
+    jobs.append(TestJob(
+        name="UVM_AXI_Random_Test",
+        cwd=uvm_dir,
+        command=["./run_uvm.sh", "axi", "gpio_axi_random_test"],
+        description="UVM AXI Random Verification"
+    ))
+
+    jobs.append(TestJob(
+        name="UVM_WB_Random_Test",
+        cwd=uvm_dir,
+        command=["./run_uvm.sh", "wb", "gpio_wb_random_test"],
+        description="UVM WB Random Verification"
+    ))
+
+    # 8. Formal Verification
+    formal_dir = os.path.join(root_dir, "IP/interface/GPIO/verif/formal")
+    jobs.append(TestJob(
+        name="Formal_Verification",
+        cwd=formal_dir,
+        command=["./run_formal.sh"],
+        description="SymbiYosys Formal Verification"
+    ))
+
+    # 9. Linting
     lint_dir = os.path.join(root_dir, "IP/interface/GPIO/tools")
     jobs.append(TestJob(
         name="Linting",

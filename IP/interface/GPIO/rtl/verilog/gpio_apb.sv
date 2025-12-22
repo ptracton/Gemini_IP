@@ -37,7 +37,11 @@ module gpio_apb #(
     output logic        pslverr,
 
     // GPIO Pins
+`ifndef FORMAL
     inout  wire  [NUM_BITS-1:0] io,
+`else
+    input  wire  [NUM_BITS-1:0] io,
+`endif
 
     // Interrupt
     output logic                intr
