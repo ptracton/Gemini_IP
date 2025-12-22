@@ -117,14 +117,36 @@ cd IP/interface/GPIO/sim/xilinx && ./run_xsim.sh
 cd IP/interface/GPIO/sim/modelsim && ./run_modelsim.sh
 ```
 
-### 3. Detailed Cocotb Verification
+**Icarus Verilog (iverilog):**
+```bash
+cd IP/interface/GPIO/sim/iverilog && ./run_iverilog.sh
+```
+
+**GHDL:**
+```bash
+cd IP/interface/GPIO/sim/ghdl && ./run_ghdl.sh
+```
+
+### 3. Cleanup
+To remove all simulation artifacts (logs, waveforms, compiled libraries):
+```bash
+./IP/interface/GPIO/sim/cleanup.sh
+```
+
+### 4. Native Linting
+Performs static analysis on both SystemVerilog and VHDL source files.
+```bash
+./IP/interface/GPIO/tools/run_lint.sh
+```
+
+### 4. Detailed Cocotb Verification
 Directly control simulation parameters via the Makefile in `verif/cocotb`.
 ```bash
 make SIM=verilator BUS_TYPE=AXI NUM_BITS=16
 make SIM=ghdl TOPLEVEL_LANG=vhdl BUS_TYPE=APB NUM_BITS=8
 ```
 
-## Verification Results Summary (20/20 PASSED)
+## Verification Results Summary (23/23 PASSED)
 
 | Configuration | Language | Simulator | Status |
 | :--- | :--- | :--- | :--- |
@@ -133,6 +155,8 @@ make SIM=ghdl TOPLEVEL_LANG=vhdl BUS_TYPE=APB NUM_BITS=8
 | Wishbone B4 (8,16,32) | SV/VHDL | Verilator/GHDL | ✅ PASS |
 | Native Directed | SV | Xilinx xsim | ✅ PASS |
 | Native Directed | SV | ModelSim vsim | ✅ PASS |
+| Native Directed | SV | Icarus Verilog | ✅ PASS |
+| Native Directed | VHDL | GHDL | ✅ PASS |
 
 Full report available in: [regression_results.md](../../../regression_results.md)
 

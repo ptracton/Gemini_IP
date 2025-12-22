@@ -1,11 +1,11 @@
 #!/bin/bash
 #-------------------------------------------------------------------------------
-# File: run_modelsim.sh
-# Description: ModelSim vsim orchestration script for GPIO IP.
+# File: run_ghdl.sh
+# Description: GHDL orchestration script for GPIO IP.
 #
 # How it operates:
-# This script uses ModelSim tools (vlib, vlog, vsim) to compile and run
-# the SystemVerilog testbench.
+# This script uses GHDL to analyze, elaborate, and run VHDL directed
+# tests. It iterates through supported bus types (AXI, APB, WB).
 #
 # Author: Gemini-3 AI
 # License: MIT
@@ -22,7 +22,7 @@ fi
 # Project Paths
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 IP_DIR="$SCRIPT_DIR/../.."
-RTL_DIR="$IP_DIR/rtl/verilog"
+RTL_DIR="$IP_DIR/rtl/vhdl"
 TB_DIR="$IP_DIR/tb"
 
 # List of bus types to test
@@ -33,43 +33,42 @@ mkdir -p work
 cd work
 
 # Clean previous runs
-rm -rf work transcript vsim.wlf
+rm -rf work-obj08.cf *.log
 
 for bus in "${BUS_TYPES[@]}"; do
     echo "=================================================="
-    echo "Running ModelSim Simulation for BUS: $bus"
+    echo "Running GHDL Simulation for BUS: $bus"
     echo "=================================================="
     
-    echo "--- Creating Library ---"
-    vlib work_$bus
+    echo "--- Analyzing RTL ---"
+    ghdl -a --std=08 --work=work $RTL_DIR/gpio_regs.vhd
+    ghdl -a --std=08 --work=work $RTL_DIR/gpio_bit.vhd
+    ghdl -a --std=08 --work=work $RTL_DIR/gpio_wrapper.vhd
+    ghdl -a --std=08 --work=work $RTL_DIR/gpio_$bus.vhd
 
-    echo "--- Compiling RTL ---"
-    vlog -work work_$bus -sv -timescale "1ns/1ps" \
-        $RTL_DIR/gpio_bit.sv \
-        $RTL_DIR/gpio_wrapper.sv \
-        $RTL_DIR/gpio_regs.sv \
-        $RTL_DIR/gpio_$bus.sv
+    echo "--- Analyzing Testbench ---"
+    ghdl -a --std=08 --work=work $TB_DIR/tb_gpio_$bus.vhd
 
-    echo "--- Compiling Testbench ---"
-    vlog -work work_$bus -sv -timescale "1ns/1ps" $TB_DIR/tb_gpio_$bus.sv
+    echo "--- Elaborating ---"
+    ghdl -e --std=08 --work=work tb_gpio_$bus
 
     echo "--- Simulating ---"
-    vsim -work work_$bus -c -do "run -all; quit" tb_gpio_$bus | tee transcript_$bus
-    
+    ghdl -r --std=08 --work=work tb_gpio_$bus | tee ghdl_$bus.log
+
     # Check result
     test_marker=$(echo $bus | tr '[:lower:]' '[:upper:]')
-    if grep -q "${test_marker} TEST PASSED" transcript_$bus || grep -q "TEST PASSED" transcript_$bus; then
+    if grep -q "${test_marker} TEST PASSED" ghdl_$bus.log || grep -q "TEST PASSED" ghdl_$bus.log; then
         echo "--------------------------"
-        echo "MODELSIM $bus SIMULATION PASSED"
+        echo "GHDL $bus SIMULATION PASSED"
         echo "--------------------------"
     else
         echo "--------------------------"
-        echo "MODELSIM $bus SIMULATION FAILED"
+        echo "GHDL $bus SIMULATION FAILED"
         echo "--------------------------"
         exit 1
     fi
 done
 
 echo "=================================================="
-echo "ALL MODELSIM NATIVE TESTS PASSED"
+echo "ALL GHDL NATIVE TESTS PASSED"
 echo "=================================================="

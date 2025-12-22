@@ -22,6 +22,10 @@ module gpio_wb #(
     input  logic        wb_rst_i,
     
     // Wishbone Interface
+    /* verilator lint_off UNUSEDSIGNAL */
+    input  logic [2:0]  s_wb_cti,
+    input  logic [1:0]  s_wb_bte,
+    /* verilator lint_on UNUSEDSIGNAL */
     input  logic [31:0] wb_adr_i,
     input  logic [31:0] wb_dat_i,
     output logic [31:0] wb_dat_o,
@@ -47,8 +51,9 @@ module gpio_wb #(
     logic        reg_we;
     logic        reg_re;
     logic [3:0]  reg_be;
+    /* verilator lint_off UNUSEDSIGNAL */
     logic        reg_ack;
-
+    /* verilator lint_on UNUSEDSIGNAL */
     logic [NUM_BITS-1:0] reg_data_o;
     logic [NUM_BITS-1:0] reg_dir;
     logic [NUM_BITS-1:0] gpio_i;

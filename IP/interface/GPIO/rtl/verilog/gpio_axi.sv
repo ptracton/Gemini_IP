@@ -21,7 +21,9 @@ module gpio_axi #(
     
     // Write Address Channel
     input  logic [31:0] s_axi_awaddr,
+    /* verilator lint_off UNUSEDSIGNAL */
     input  logic [2:0]  s_axi_awprot,
+    /* verilator lint_on UNUSEDSIGNAL */
     input  logic        s_axi_awvalid,
     output logic        s_axi_awready,
     
@@ -38,7 +40,9 @@ module gpio_axi #(
     
     // Read Address Channel
     input  logic [31:0] s_axi_araddr,
+    /* verilator lint_off UNUSEDSIGNAL */
     input  logic [2:0]  s_axi_arprot,
+    /* verilator lint_on UNUSEDSIGNAL */
     input  logic        s_axi_arvalid,
     output logic        s_axi_arready,
     
@@ -62,7 +66,9 @@ module gpio_axi #(
     logic        reg_we;
     logic        reg_re;
     logic [3:0]  reg_be;
+    /* verilator lint_off UNUSEDSIGNAL */
     logic        reg_ack;
+    /* verilator lint_on UNUSEDSIGNAL */
 
     logic [NUM_BITS-1:0] reg_data_o;
     logic [NUM_BITS-1:0] reg_dir;

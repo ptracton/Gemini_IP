@@ -1,11 +1,11 @@
 #!/bin/bash
 #-------------------------------------------------------------------------------
-# File: run_modelsim.sh
-# Description: ModelSim vsim orchestration script for GPIO IP.
+# File: run_iverilog.sh
+# Description: Icarus Verilog orchestration script for GPIO IP.
 #
 # How it operates:
-# This script uses ModelSim tools (vlib, vlog, vsim) to compile and run
-# the SystemVerilog testbench.
+# This script uses iverilog and vvp to compile and run SystemVerilog directed
+# tests. It iterates through supported bus types (AXI, APB, WB).
 #
 # Author: Gemini-3 AI
 # License: MIT
@@ -33,43 +33,38 @@ mkdir -p work
 cd work
 
 # Clean previous runs
-rm -rf work transcript vsim.wlf
+rm -f *.vvp *.log
 
 for bus in "${BUS_TYPES[@]}"; do
     echo "=================================================="
-    echo "Running ModelSim Simulation for BUS: $bus"
+    echo "Running Icarus Verilog Simulation for BUS: $bus"
     echo "=================================================="
     
-    echo "--- Creating Library ---"
-    vlib work_$bus
-
-    echo "--- Compiling RTL ---"
-    vlog -work work_$bus -sv -timescale "1ns/1ps" \
+    echo "--- Compiling ---"
+    iverilog -g2012 -o gpio_$bus.vvp -D SIMULATION \
         $RTL_DIR/gpio_bit.sv \
         $RTL_DIR/gpio_wrapper.sv \
         $RTL_DIR/gpio_regs.sv \
-        $RTL_DIR/gpio_$bus.sv
-
-    echo "--- Compiling Testbench ---"
-    vlog -work work_$bus -sv -timescale "1ns/1ps" $TB_DIR/tb_gpio_$bus.sv
+        $RTL_DIR/gpio_$bus.sv \
+        $TB_DIR/tb_gpio_$bus.sv
 
     echo "--- Simulating ---"
-    vsim -work work_$bus -c -do "run -all; quit" tb_gpio_$bus | tee transcript_$bus
-    
+    vvp gpio_$bus.vvp | tee iverilog_$bus.log
+
     # Check result
     test_marker=$(echo $bus | tr '[:lower:]' '[:upper:]')
-    if grep -q "${test_marker} TEST PASSED" transcript_$bus || grep -q "TEST PASSED" transcript_$bus; then
+    if grep -q "${test_marker} TEST PASSED" iverilog_$bus.log || grep -q "TEST PASSED" iverilog_$bus.log; then
         echo "--------------------------"
-        echo "MODELSIM $bus SIMULATION PASSED"
+        echo "IVERILOG $bus SIMULATION PASSED"
         echo "--------------------------"
     else
         echo "--------------------------"
-        echo "MODELSIM $bus SIMULATION FAILED"
+        echo "IVERILOG $bus SIMULATION FAILED"
         echo "--------------------------"
         exit 1
     fi
 done
 
 echo "=================================================="
-echo "ALL MODELSIM NATIVE TESTS PASSED"
+echo "ALL IVERILOG NATIVE TESTS PASSED"
 echo "=================================================="

@@ -24,6 +24,9 @@ module gpio_apb #(
     
     // APB Interface
     input  logic [31:0] paddr,
+    /* verilator lint_off UNUSEDSIGNAL */
+    input  logic [2:0]  pprot,
+    /* verilator lint_on UNUSEDSIGNAL */
     input  logic        psel,
     input  logic        penable,
     input  logic        pwrite,
@@ -47,7 +50,9 @@ module gpio_apb #(
     logic        reg_we;
     logic        reg_re;
     logic [3:0]  reg_be;
+    /* verilator lint_off UNUSEDSIGNAL */
     logic        reg_ack;
+    /* verilator lint_on UNUSEDSIGNAL */
 
     logic [NUM_BITS-1:0] reg_data_o;
     logic [NUM_BITS-1:0] reg_dir;

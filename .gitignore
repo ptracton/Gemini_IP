@@ -233,5 +233,21 @@ vsim.wlf
 *.cf
 *.o
 
+
 # General Simulation Logs
 sim_log*.txt
+*.log
+*.vvp
+work_*/
+xsim_*.log
+ghdl_*.log
+iverilog_*.log
+transcript
+transcript_*
+# Root level artifacts
+/*.o
+/snapshot*
+/tb*
+/*.vvp
+/transcript*
+/work*.cf

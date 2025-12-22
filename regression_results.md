@@ -1,9 +1,9 @@
 # Gemini_IP Regression Results
 
-Generated on: Sun Dec 21 17:10:41 2025
+Generated on: Sun Dec 21 18:51:07 2025
 
 **Overall Status: PASSED**
-**Passed: 20 / 20**
+**Passed: 23 / 23**
 
 | Test Name | Status | Description |
 | :--- | :---: | :--- |
@@ -27,3 +27,6 @@ Generated on: Sun Dec 21 17:10:41 2025
 | VHDL_WB_32 | ✅ PASS | VHDL WB 32-bit via GHDL |
 | Xilinx_Native | ✅ PASS | Xilinx xsim native directed test |
 | ModelSim_Native | ✅ PASS | ModelSim vsim native directed test |
+| Icarus_Native | ✅ PASS | Icarus iverilog native directed test |
+| GHDL_Native | ✅ PASS | GHDL native directed test |
+| Linting | ✅ PASS | SystemVerilog and VHDL linting |

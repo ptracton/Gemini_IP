@@ -1,11 +1,11 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1766365832" />
-    <testcase name="test_gpio_basic" classname="test_gpio" file="/home/ptracton/src/Gemini_IP/IP/interface/GPIO/verif/cocotb/test_gpio.py" lineno="192" time="0.0016274452209472656" sim_time_ns="330.0" ratio_time="202771.80193378258" />
-    <testcase name="test_atomic_ops" classname="test_gpio" file="/home/ptracton/src/Gemini_IP/IP/interface/GPIO/verif/cocotb/test_gpio.py" lineno="214" time="0.0008895397186279297" sim_time_ns="200.0" ratio_time="224835.37925489145" />
-    <testcase name="test_interrupts" classname="test_gpio" file="/home/ptracton/src/Gemini_IP/IP/interface/GPIO/verif/cocotb/test_gpio.py" lineno="236" time="0.00189971923828125" sim_time_ns="860.0" ratio_time="452698.4738955823" />
-    <testcase name="test_debouncing" classname="test_gpio" file="/home/ptracton/src/Gemini_IP/IP/interface/GPIO/verif/cocotb/test_gpio.py" lineno="278" time="0.001725912094116211" sim_time_ns="760.0" ratio_time="440346.87664041994" />
-    <testcase name="test_inversion" classname="test_gpio" file="/home/ptracton/src/Gemini_IP/IP/interface/GPIO/verif/cocotb/test_gpio.py" lineno="306" time="0.0013267993927001953" sim_time_ns="620.0" ratio_time="467289.93351302785" />
-    <testcase name="test_pwm" classname="test_gpio" file="/home/ptracton/src/Gemini_IP/IP/interface/GPIO/verif/cocotb/test_gpio.py" lineno="330" time="0.005822181701660156" sim_time_ns="1360.0" ratio_time="233589.41195741197" />
+    <property name="random_seed" value="1766371834" />
+    <testcase name="test_gpio_basic" classname="test_gpio" file="/home/ptracton/src/Gemini_IP/IP/interface/GPIO/verif/cocotb/test_gpio.py" lineno="192" time="0.0018410682678222656" sim_time_ns="330.0" ratio_time="179243.7606837607" />
+    <testcase name="test_atomic_ops" classname="test_gpio" file="/home/ptracton/src/Gemini_IP/IP/interface/GPIO/verif/cocotb/test_gpio.py" lineno="214" time="0.0008416175842285156" sim_time_ns="200.0" ratio_time="237637.62039660057" />
+    <testcase name="test_interrupts" classname="test_gpio" file="/home/ptracton/src/Gemini_IP/IP/interface/GPIO/verif/cocotb/test_gpio.py" lineno="236" time="0.0019752979278564453" sim_time_ns="860.0" ratio_time="435377.36149668077" />
+    <testcase name="test_debouncing" classname="test_gpio" file="/home/ptracton/src/Gemini_IP/IP/interface/GPIO/verif/cocotb/test_gpio.py" lineno="278" time="0.0016260147094726562" sim_time_ns="760.0" ratio_time="467400.4457478006" />
+    <testcase name="test_inversion" classname="test_gpio" file="/home/ptracton/src/Gemini_IP/IP/interface/GPIO/verif/cocotb/test_gpio.py" lineno="306" time="0.0012662410736083984" sim_time_ns="620.0" ratio_time="489638.19996234233" />
+    <testcase name="test_pwm" classname="test_gpio" file="/home/ptracton/src/Gemini_IP/IP/interface/GPIO/verif/cocotb/test_gpio.py" lineno="330" time="0.005778789520263672" sim_time_ns="1360.0" ratio_time="235343.40457133428" />
   </testsuite>
 </testsuites>

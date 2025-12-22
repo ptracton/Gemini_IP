@@ -46,6 +46,8 @@ python3 IP/interface/GPIO/tools/run_regression.py
 Go to the respective IP simulation directories:
 - **Xilinx**: `IP/interface/GPIO/sim/xilinx/run_xsim.sh`
 - **ModelSim**: `IP/interface/GPIO/sim/modelsim/run_modelsim.sh`
+- **Icarus**: `IP/interface/GPIO/sim/iverilog/run_iverilog.sh`
+- **GHDL**: `IP/interface/GPIO/sim/ghdl/run_ghdl.sh`
 
 ### Cocotb Framework
 For detailed interactive debugging:

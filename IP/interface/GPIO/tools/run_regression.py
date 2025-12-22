@@ -103,6 +103,33 @@ def main():
         description="ModelSim vsim native directed test"
     ))
 
+    # 5. Native Icarus Test
+    iverilog_dir = os.path.join(root_dir, "IP/interface/GPIO/sim/iverilog")
+    jobs.append(TestJob(
+        name="Icarus_Native",
+        cwd=iverilog_dir,
+        command=["./run_iverilog.sh"],
+        description="Icarus iverilog native directed test"
+    ))
+
+    # 6. Native GHDL Test
+    ghdl_dir = os.path.join(root_dir, "IP/interface/GPIO/sim/ghdl")
+    jobs.append(TestJob(
+        name="GHDL_Native",
+        cwd=ghdl_dir,
+        command=["./run_ghdl.sh"],
+        description="GHDL native directed test"
+    ))
+
+    # 7. Linting
+    lint_dir = os.path.join(root_dir, "IP/interface/GPIO/tools")
+    jobs.append(TestJob(
+        name="Linting",
+        cwd=lint_dir,
+        command=["./run_lint.sh"],
+        description="SystemVerilog and VHDL linting"
+    ))
+
     # Run Regression
     print("="*80)
     print(f"Starting Gemini_IP Regression at {time.ctime()}")

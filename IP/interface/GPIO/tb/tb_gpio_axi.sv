@@ -91,37 +91,41 @@ module tb_gpio_axi;
 
     // AXI Write Task
     task axi_write(input [31:0] addr, input [31:0] data);
-        s_axi_awaddr  <= addr;
-        s_axi_wdata   <= data;
-        s_axi_awvalid <= 1;
-        s_axi_wvalid  <= 1;
-        s_axi_wstrb   <= 4'hF;
-        s_axi_bready  <= 1;
+        s_axi_awaddr  = addr;
+        s_axi_wdata   = data;
+        s_axi_awvalid = 1;
+        s_axi_wvalid  = 1;
+        s_axi_wstrb   = 4'hF;
+        s_axi_bready  = 1;
         
         wait(s_axi_awready && s_axi_wready);
         @(posedge clk);
-        s_axi_awvalid <= 0;
-        s_axi_wvalid  <= 0;
+        #1;
+        s_axi_awvalid = 0;
+        s_axi_wvalid  = 0;
         
         wait(s_axi_bvalid);
         @(posedge clk);
-        s_axi_bready  <= 0;
+        #1;
+        s_axi_bready  = 0;
     endtask
 
     // AXI Read Task
     task axi_read(input [31:0] addr, output [31:0] data);
-        s_axi_araddr  <= addr;
-        s_axi_arvalid <= 1;
-        s_axi_rready  <= 1;
+        s_axi_araddr  = addr;
+        s_axi_arvalid = 1;
+        s_axi_rready  = 1;
         
         wait(s_axi_arready);
         @(posedge clk);
-        s_axi_arvalid <= 0;
+        #1;
+        s_axi_arvalid = 0;
         
         wait(s_axi_rvalid);
         data = s_axi_rdata;
         @(posedge clk);
-        s_axi_rready  <= 0;
+        #1;
+        s_axi_rready  = 0;
     endtask
 
     // Main Test Sequence
@@ -145,6 +149,7 @@ module tb_gpio_axi;
         $display("[%t] Test 1: Basic R/W and DIR", $time);
         axi_write(REG_DIR, 8'hFF); // All outputs
         axi_write(REG_DATA_O, 8'hAA);
+        repeat(10) @(posedge clk);
         axi_read(REG_DATA_O, rdata);
         if (rdata[7:0] !== 8'hAA) $error("Test 1 Failed: DATA_O mismatch");
         axi_read(REG_DATA_I, rdata);
@@ -187,6 +192,13 @@ module tb_gpio_axi;
         $display("TEST PASSED");
         $display("--------------------------------------------------");
         #100 $finish;
+    end
+
+    // Timeout Watchdog
+    initial begin
+        #1000000; // 1 ms timeout
+        $display("TIMEOUT - Testbench hung");
+        $finish;
     end
 
 endmodule

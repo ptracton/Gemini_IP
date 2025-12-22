@@ -2,12 +2,6 @@
 // Module: gpio_regs
 // Description: Common register block for Professional-Grade GPIO IP.
 //
-// How it operates:
-// This module contains the state registers (DATA_O, DIR, INT_EN, etc.) and
-// all management logic for the GPIO bits. It handles debouncing timing,
-// PWM generation per bit, interrupt edge/level detection, and atomic
-// bit manipulations (SET, CLR, TGL).
-//
 // Author: Gemini-3 AI
 // License: MIT
 //------------------------------------------------------------------------------
@@ -19,7 +13,9 @@ module gpio_regs #(
     input  logic                reset_n,
     
     // Internal Bus Interface
+    /* verilator lint_off UNUSEDSIGNAL */
     input  logic [31:0]         addr,
+    /* verilator lint_on UNUSEDSIGNAL */
     input  logic [31:0]         wdata,
     output logic [31:0]         rdata,
     input  logic                we,
@@ -193,6 +189,17 @@ module gpio_regs #(
     logic [31:0] pwm_duty_idx;
     int          pwm_duty_int;
 
+    // Combinational address mapping to avoid latches
+    always_comb begin
+        if (addr[6:0] >= ADDR_PWM_DUTY) begin
+            pwm_duty_idx = ({25'b0, addr[6:0]} - {25'b0, ADDR_PWM_DUTY}) >> 2;
+            pwm_duty_int = int'(pwm_duty_idx);
+        end else begin
+            pwm_duty_idx = '0;
+            pwm_duty_int = 0;
+        end
+    end
+
     // Register Writes
     always_ff @(posedge clk or negedge reset_n) begin : proc_reg_write
         if (!reset_n) begin
@@ -256,22 +263,22 @@ module gpio_regs #(
                     end
                     ADDR_INT_STS: begin
                         for (int k = 0; k < NUM_BITS; k++) begin
-                            if (be[k/8]) s_reg_int_sts[k] &= ~wdata[k];
+                            if (be[k/8]) s_reg_int_sts[k] <= s_reg_int_sts[k] & ~wdata[k];
                         end
                     end
                     ADDR_SET_O: begin
                         for (int k = 0; k < NUM_BITS; k++) begin
-                            if (be[k/8]) s_reg_data_o[k] |= wdata[k];
+                            if (be[k/8]) s_reg_data_o[k] <= s_reg_data_o[k] | wdata[k];
                         end
                     end
                     ADDR_CLR_O: begin
                         for (int k = 0; k < NUM_BITS; k++) begin
-                            if (be[k/8]) s_reg_data_o[k] &= ~wdata[k];
+                            if (be[k/8]) s_reg_data_o[k] <= s_reg_data_o[k] & ~wdata[k];
                         end
                     end
                     ADDR_TGL_O: begin
                         for (int k = 0; k < NUM_BITS; k++) begin
-                            if (be[k/8]) s_reg_data_o[k] ^= wdata[k];
+                            if (be[k/8]) s_reg_data_o[k] <= s_reg_data_o[k] ^ wdata[k];
                         end
                     end
                     ADDR_DEB_TH: begin
@@ -339,12 +346,6 @@ module gpio_regs #(
                 endcase
             end
         end
-    end
-
-    // Combinational address mapping to avoid latches
-    always_comb begin
-        pwm_duty_idx = (addr[31:0] - {25'b0, ADDR_PWM_DUTY}) >> 2;
-        pwm_duty_int = int'(pwm_duty_idx);
     end
 
     // Register Reads

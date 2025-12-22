@@ -35,6 +35,7 @@ entity gpio_apb is
     pwrite  : in std_logic;
     pwdata  : in std_logic_vector(31 downto 0);
     pstrb   : in std_logic_vector(3 downto 0);
+    pprot   : in std_logic_vector(2 downto 0);
     prdata  : out std_logic_vector(31 downto 0);
     pready  : out std_logic;
     pslverr : out std_logic;
