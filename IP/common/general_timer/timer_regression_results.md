@@ -1,9 +1,9 @@
 # General Timer Regression Results
 
-Generated on: 2025-12-22 17:33:26
+Generated on: 2025-12-22 18:11:01
 
 **Overall Status: PASSED**
-**Passed: 13 / 13**
+**Passed: 16 / 16**
 
 | Test Name | Status | Description |
 | :--- | :---: | :--- |
@@ -20,3 +20,6 @@ Generated on: 2025-12-22 17:33:26
 | Icarus_Verilog | ✅ PASS | Icarus Verilog Native TB |
 | GHDL_Native | ✅ PASS | GHDL VHDL Native TB |
 | Linting | ✅ PASS | Verilator & GHDL Linting |
+| Formal_AXI | ✅ PASS | Formal Verification (AXI) via SymbiYosys |
+| Formal_APB | ✅ PASS | Formal Verification (APB) via SymbiYosys |
+| Formal_WB | ✅ PASS | Formal Verification (WB) via SymbiYosys |

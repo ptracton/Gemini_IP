@@ -153,6 +153,16 @@ def main():
         description="Verilator & GHDL Linting"
     ))
 
+    # 8. Formal Verification
+    formal_dir = os.path.join(verif_dir, "formal")
+    for bus in ["axi", "apb", "wb"]:
+        jobs.append(TestJob(
+            name=f"Formal_{bus.upper()}",
+            cwd=formal_dir,
+            command=["./run_formal.sh", bus],
+            description=f"Formal Verification ({bus.upper()}) via SymbiYosys"
+        ))
+
     # Execute Jobs
     results = []
     for job in jobs:

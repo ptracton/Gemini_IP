@@ -195,8 +195,15 @@ make BUS_TYPE=AXI SIM=verilator
 make BUS_TYPE=APB SIM=ghdl TOPLEVEL_LANG=vhdl
 ```
 
+### Formal Verification
+Formal verification is implemented using SymbiYosys (SBY) to prove functional properties and protocol compliance.
+```bash
+cd verif/formal
+./run_formal.sh  # Runs AXI, APB, and Wishbone tasks
+```
+
 ### Regression
-To run the full regression suite (13 jobs across all simulators):
+To run the full regression suite (16 jobs across all simulators and formal tools):
 ```bash
 ./tools/run_regression.py
 ```
