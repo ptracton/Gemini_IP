@@ -80,6 +80,11 @@ def main():
     print("==================================================")
     print(f"General Timer Regression Run: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("==================================================")
+    
+    # Remove existing report if it exists
+    report_path = os.path.join(ip_root, "timer_regression_results.md")
+    if os.path.exists(report_path):
+        os.remove(report_path)
 
     jobs = []
 

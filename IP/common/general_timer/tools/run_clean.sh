@@ -32,7 +32,7 @@ echo "[4/4] Cleaning Formal..."
 echo "[5/5] Cleaning General artifacts..."
 rm -f "$TIMER_DIR"/*.log
 rm -f "$TIMER_DIR"/*.vcd
-rm -f "$TIMER_DIR"/timer_regression_results.md
+# rm -f "$TIMER_DIR"/timer_regression_results.md
 rm -f "$SCRIPT_DIR"/*.log
 
 echo "=================================================="

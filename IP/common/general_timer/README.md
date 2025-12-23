@@ -226,7 +226,7 @@ To check the code quality:
 To maintain a clean workspace, the project provides a master cleanup script as well as individual scripts for each environment.
 
 ### Master Cleanup (Recommended)
-Resets the entire project by calling all specific cleanup scripts:
+Resets the entire project by calling all specific cleanup scripts. Note that this script **preserves** the `timer_regression_results.md` report to maintain the last known verification status; the report is instead reset at the start of a new `./tools/run_regression.py` execution.
 ```bash
 ./tools/run_clean.sh
 ```
