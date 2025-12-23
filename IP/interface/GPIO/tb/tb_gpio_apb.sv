@@ -162,6 +162,29 @@ module tb_gpio_apb;
             errors++;
         end
 
+        // Test 3: Interrupts (Basic)
+        $display("[%t] Test 3: Interrupts (Basic)", $time);
+        apb_write(REG_DIR,    32'hFF); // Outputs
+        apb_write(REG_INT_EN, 32'h01); // Enable Bit 1
+        apb_write(REG_DATA_O, 32'h01); // Bit 1 High
+        repeat(5) @(posedge clk);
+        apb_write(REG_INT_STS, 32'h01); // Clear Status
+        repeat(2) @(posedge clk);
+        
+        apb_write(REG_DATA_O, 32'h00); // Falling Edge on Bit 1
+        repeat(10) @(posedge clk);
+        
+        apb_read(REG_INT_STS, rdata);
+        if (!(rdata & 32'h01)) begin
+             $error("Test 3 Failed: Interrupt status not set");
+             errors++;
+        end
+        if (!intr) begin
+             $error("Test 3 Failed: Global interrupt not asserted");
+             errors++;
+        end
+        apb_write(REG_INT_STS, 32'h01); // Clear
+
         $display("[%t] APB Native Directed Test Completion.", $time);
         $display("--------------------------------------------------");
         if (errors == 0) begin

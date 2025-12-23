@@ -158,6 +158,29 @@ module tb_gpio_wb;
             errors++;
         end
 
+        // Test 3: Interrupts (Basic)
+        $display("[%t] Test 3: Interrupts (Basic)", $time);
+        wb_write(REG_DIR,    32'hFF); // Outputs
+        wb_write(REG_INT_EN, 32'h01); // Enable Bit 0
+        wb_write(REG_DATA_O, 32'h01); // Bit 0 High
+        repeat(5) @(posedge clk);
+        wb_write(REG_INT_STS, 32'h01); // Clear Status
+        repeat(2) @(posedge clk);
+        
+        wb_write(REG_DATA_O, 32'h00); // Falling Edge on Bit 0
+        repeat(10) @(posedge clk);
+        
+        wb_read(REG_INT_STS, rdata);
+        if (!(rdata & 32'h01)) begin
+             $error("Test 3 Failed: Interrupt status not set");
+             errors++;
+        end
+        if (!intr) begin
+             $error("Test 3 Failed: Global interrupt not asserted");
+             errors++;
+        end
+        wb_write(REG_INT_STS, 32'h01); // Clear
+
         $display("[%t] Wishbone Native Directed Test Completion.", $time);
         $display("--------------------------------------------------");
         if (errors == 0) begin

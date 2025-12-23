@@ -51,7 +51,7 @@ for bus in "${BUS_TYPES[@]}"; do
     xvlog -sv $TB_DIR/tb_gpio_$bus.sv
 
     echo "--- Elaborating ---"
-    xelab -debug typical tb_gpio_$bus -s snapshot_tb_gpio_$bus -timescale 1ns/1ps
+    xelab -cc_type sbct -debug typical tb_gpio_$bus -s snapshot_tb_gpio_$bus -timescale 1ns/1ps
 
     echo "--- Simulating ---"
     xsim snapshot_tb_gpio_$bus -runall -log xsim_$bus.log
@@ -69,6 +69,8 @@ for bus in "${BUS_TYPES[@]}"; do
         exit 1
     fi
 done
+
+xcrg -merge_cc -cc_dir . -cc_db snapshot_tb_gpio_axi -cc_db snapshot_tb_gpio_apb -cc_db snapshot_tb_gpio_wb -cc_report ./coverage_report
 
 echo "=================================================="
 echo "ALL XSIM NATIVE TESTS PASSED"
