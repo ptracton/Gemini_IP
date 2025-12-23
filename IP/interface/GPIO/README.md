@@ -91,8 +91,48 @@ graph TD
 | 0x44   | PU_EN        | RW     | Pull-up Enable Mask                             |
 | 0x48   | PD_EN        | RW     | Pull-down Enable Mask                           |
 | 0x4C   | PWM_EN       | RW     | PWM Enable Mask                                 |
-| 0x50   | PWM_CFG      | RW     | PWM Config: [31:16] Period, [15:0] Pre-scaler   |
-| 0x54+n | PWM_DUTY_n   | RW     | 16-bit Duty Cycle for bit 'n'                   |
+| 0x50   | PWM_CFG      | RW     | PWM Configuration                               |
+| 0x54+n | PWM_DUTY_n   | RW     | PWM Duty Cycle for bit 'n'                      |
+
+### Register Bit Definitions
+
+#### Standard GPIO Registers (Offsets 0x00 - 0x4C)
+For the following registers, each bit `n` maps directly to GPIO pin `n`.
+- **DATA_I**: Read current pin state.
+- **DATA_O**: Write output value.
+- **DIR**: 0 = Input, 1 = Output.
+- **INT_EN**: 1 = Interrupt Enabled.
+- **INT_TYPE**: 0 = Level-sensitive, 1 = Edge-sensitive.
+- **INT_POL**:
+    - Level: 0 = Low, 1 = High.
+    - Edge: 0 = Falling, 1 = Rising.
+- **INT_ANY**: 1 = Trigger on both Rising and Falling edges (overrides INT_POL).
+- **INT_STS**: 1 = Interrupt Pending. Write 1 to Clear (for edge interrupts).
+- **SET_O / CLR_O / TGL_O**: Write 1 to Set/Clear/Toggle corresponding bit in DATA_O.
+- **DEB_EN**: 1 = Enable Debouncing filter.
+- **INV_IN**: 1 = Invert Input Read Data.
+- **INV_OUT**: 1 = Invert Output Drive.
+- **OD_EN**: 1 = Open-Drain Mode (Drive Low only, float High).
+- **WR_MASK**: 1 = Prevent writes to DATA_O bit.
+- **PU_EN / PD_EN**: 1 = Enable internal Pull-Up / Pull-Down.
+- **PWM_EN**: 1 = Enable PWM generator for this pin.
+
+#### DEB_TH (Debounce Threshold) - 0x2C
+| Bit | Name | Description |
+|---|---|---|
+| 31:0 | `TH_VAL` | Number of stable clock cycles required before an input transition is accepted. |
+
+#### PWM_CFG (PWM Configuration) - 0x50
+| Bit | Name | Description |
+|---|---|---|
+| 15:0 | `PRESCALER` | Global PWM Prescaler. PWM Clock = System Clock / (PRESCALER + 1). |
+| 31:16 | `PERIOD` | Global PWM Period. Frequency = PWM Clock / (`PERIOD` + 1). |
+
+#### PWM_DUTY_n (PWM Duty Cycle) - 0x54 + (n * 4)
+| Bit | Name | Description |
+|---|---|---|
+| 15:0 | `DUTY` | Active High time for channel `n`. Output is High when internal counter < `DUTY`. |
+| 31:16 | - | Reserved |
 
 ## Verification & Tooling
 
