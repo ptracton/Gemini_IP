@@ -140,6 +140,8 @@ The IP includes a comprehensive multi-tool verification suite.
 
 ### 1. Regression Suite (Recommended)
 Automatically runs all 30 simulation jobs (Cocotb SV/VHDL, Xilinx, ModelSim, Yosys/Vivado Synthesis).
+### 1. Regression Suite (Recommended)
+Automatically runs all 30 simulation jobs (Cocotb SV/VHDL, Xilinx, ModelSim, Yosys/Vivado Synthesis).
 ```bash
 python3 IP/interface/GPIO/tools/run_regression.py
 ```
@@ -181,19 +183,29 @@ cd IP/interface/GPIO/sim/iverilog && ./run_iverilog.sh
 cd IP/interface/GPIO/sim/ghdl && ./run_ghdl.sh
 ```
 
-### 3. Cleanup
+### 3. Cocotb Verification
+For detailed interactive debugging using the Python-based Cocotb framework:
+```bash
+```bash
+cd IP/interface/GPIO/verif/cocotb
+make BUS_TYPE=AXI
+# Options: BUS_TYPE=[AXI|APB|WB] SIM=[verilator|ghdl]
+```
+```
+
+### 4. Cleanup
 To remove all simulation artifacts (logs, waveforms, compiled libraries):
 ```bash
 ./IP/interface/GPIO/sim/cleanup.sh
 ```
 
-### 4. Verification Cleanup
+### 5. Verification Cleanup
 To remove all intermediate verification artifacts (Cocotb, UVM, Formal):
 ```bash
 ./IP/interface/GPIO/verif/clean_verif.sh
 ```
 
-### 5. Synthesis (Vivado & Yosys)
+### 6. Synthesis (Vivado & Yosys)
 Synthesize the IP for Artix-7 to verify timing and resource utilization.
 ```bash
 ./IP/interface/GPIO/synthesis/run_synth.sh
@@ -201,7 +213,7 @@ Synthesize the IP for Artix-7 to verify timing and resource utilization.
 
 **Note**: If Quartus is installed, the script will also perform synthesis for Intel Cyclone IV.
 
-### 6. ModelSim GUI Simulation
+### 7. ModelSim GUI Simulation
 Launch ModelSim with a pre-configured waveform (Hex radix, grouped signals).
 ```bash
 # From IP/interface/GPIO/sim/modelsim/

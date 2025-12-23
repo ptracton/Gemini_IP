@@ -39,27 +39,12 @@ The repository has transitioned from initial implementation to a fully verified 
 
 ## Running Verifications & Tools
 
-The repository is equipped with several automation tools for verification and hardware integration.
+The repository is equipped with several automation tools for verification and hardware integration. Each IP has its own dedicated verification suite.
 
-### Local Regression
-To run the full IP quality suite (Verilator, GHDL, Xilinx, ModelSim):
-```bash
-python3 IP/interface/GPIO/tools/run_regression.py
-```
+Please refer to the specific IP documentation for detailed instructions on running regressions, native simulations, and Cocotb tests:
 
-### Native Simulations
-Go to the respective IP simulation directories:
-- **Xilinx**: `IP/interface/GPIO/sim/xilinx/run_xsim.sh`
-- **ModelSim**: `IP/interface/GPIO/sim/modelsim/run_modelsim.sh`
-- **ModelSim GUI**: `IP/interface/GPIO/sim/modelsim/run_gui.sh [axi|apb|wb]`
-- **Icarus**: `IP/interface/GPIO/sim/iverilog/run_iverilog.sh`
-- **GHDL**: `IP/interface/GPIO/sim/ghdl/run_ghdl.sh`
-
-### Cocotb Framework
-For detailed interactive debugging:
-```bash
-cd IP/interface/GPIO/verif/cocotb && make
-```
+- **[GPIO Verification Guide](IP/interface/GPIO/README.md#verification--tooling)**
+- **[General Timer Verification Guide](IP/common/general_timer/README.md#verification-status)**
 
 ## Development Standards
 
