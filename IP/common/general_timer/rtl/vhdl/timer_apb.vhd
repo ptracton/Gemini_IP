@@ -10,20 +10,20 @@ entity timer_apb is
     pclk    : in std_logic;
     presetn : in std_logic;
 
-    paddr   : in std_logic_vector(31 downto 0);
-    pprot   : in std_logic_vector(2 downto 0);
-    psel    : in std_logic;
-    penable : in std_logic;
-    pwrite  : in std_logic;
-    pwdata  : in std_logic_vector(31 downto 0);
-    pstrb   : in std_logic_vector(3 downto 0);
+    paddr   : in std_logic_vector(31 downto 0) := (others => '0');
+    pprot   : in std_logic_vector(2 downto 0)  := (others => '0');
+    psel    : in std_logic                     := '0';
+    penable : in std_logic                     := '0';
+    pwrite  : in std_logic                     := '0';
+    pwdata  : in std_logic_vector(31 downto 0) := (others => '0');
+    pstrb   : in std_logic_vector(3 downto 0)  := (others => '0');
     pready  : out std_logic;
     prdata  : out std_logic_vector(31 downto 0);
     pslverr : out std_logic;
 
     -- External IO
-    ext_meas_i : in std_logic;
-    capture_i  : in std_logic;
+    ext_meas_i : in std_logic := '0';
+    capture_i  : in std_logic := '0';
     pwm_o      : out std_logic;
     trigger_o  : out std_logic;
 
@@ -89,14 +89,14 @@ architecture rtl of timer_apb is
     );
   end component timer_core;
 
-  signal cs, we : std_logic;
-  signal addr   : std_logic_vector(5 downto 0);
-  signal rdata  : std_logic_vector(31 downto 0);
+  signal cs, we : std_logic                     := '0';
+  signal addr   : std_logic_vector(5 downto 0)  := (others => '0');
+  signal rdata  : std_logic_vector(31 downto 0) := (others => '0');
 
-  signal en, mode, dir, pwm_en, ext_en, cap_en, pre_en, load_cmd : std_logic;
-  signal core_irq_pulse, capture_stb, core_intr                  : std_logic;
-  signal pre_val                                                 : std_logic_vector(15 downto 0);
-  signal load_val, cmp_val, current_val, capture_val             : std_logic_vector(31 downto 0);
+  signal en, mode, dir, pwm_en, ext_en, cap_en, pre_en, load_cmd : std_logic                     := '0';
+  signal core_irq_pulse, capture_stb, core_intr                  : std_logic                     := '0';
+  signal pre_val                                                 : std_logic_vector(15 downto 0) := (others => '0');
+  signal load_val, cmp_val, current_val, capture_val             : std_logic_vector(31 downto 0) := (others => '0');
 
 begin
   pready  <= '1';

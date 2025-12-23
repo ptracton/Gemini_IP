@@ -173,7 +173,7 @@ Run the regression or GUI scripts:
 ```bash
 # GUI Mode
 cd sim/modelsim
-./run_gui_verilog.do  # or run_gui_vhdl.do
+vsim -do run_gui_verilog.do  # or run_gui_vhdl.do
 
 # Batch Mode
 ./sim/modelsim/run_modelsim.sh
@@ -184,14 +184,34 @@ cd sim/modelsim
 ./sim/xilinx/run_xsim.sh
 ```
 
+### Cocotb (Python-based Verification)
+A comprehensive Cocotb test suite is available in `verif/cocotb`. It supports AXI, APB, and Wishbone interfaces for both SystemVerilog and VHDL.
+```bash
+# Run AXI tests with Verilator
+cd verif/cocotb
+make BUS_TYPE=AXI SIM=verilator
+
+# Run APB tests with GHDL (VHDL)
+make BUS_TYPE=APB SIM=ghdl TOPLEVEL_LANG=vhdl
+```
+
 ### Regression
-To run all simulations and verify the IP:
+To run the full regression suite (13 jobs across all simulators):
 ```bash
 ./tools/run_regression.py
 ```
+View the latest status in [timer_regression_results.md](timer_regression_results.md).
 
 ## Linting
 To check the code quality:
 ```bash
 ./tools/run_lint.sh
 ```
+
+## Cleanup
+Each simulation environment has a cleanup script to remove temporary artifacts:
+- `sim/modelsim/clean_modelsim.sh`
+- `sim/xilinx/clean_xsim.sh`
+- `sim/iverilog/clean_iverilog.sh`
+- `sim/ghdl/clean_ghdl.sh`
+- `verif/cocotb/clean_cocotb.sh`

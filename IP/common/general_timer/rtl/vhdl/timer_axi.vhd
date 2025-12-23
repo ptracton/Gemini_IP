@@ -12,37 +12,37 @@ entity timer_axi is
     aresetn : in std_logic;
 
     -- Write Address Output
-    awaddr  : in std_logic_vector(31 downto 0);
-    awprot  : in std_logic_vector(2 downto 0);
-    awvalid : in std_logic;
+    awaddr  : in std_logic_vector(31 downto 0) := (others => '0');
+    awprot  : in std_logic_vector(2 downto 0)  := (others => '0');
+    awvalid : in std_logic                     := '0';
     awready : out std_logic;
 
     -- Write Data
-    wdata  : in std_logic_vector(31 downto 0);
-    wstrb  : in std_logic_vector(3 downto 0);
-    wvalid : in std_logic;
+    wdata  : in std_logic_vector(31 downto 0) := (others => '0');
+    wstrb  : in std_logic_vector(3 downto 0)  := (others => '0');
+    wvalid : in std_logic                     := '0';
     wready : out std_logic;
 
     -- Write Response
     bresp  : out std_logic_vector(1 downto 0);
     bvalid : out std_logic;
-    bready : in std_logic;
+    bready : in std_logic := '0';
 
     -- Read Address
-    araddr  : in std_logic_vector(31 downto 0);
-    arprot  : in std_logic_vector(2 downto 0);
-    arvalid : in std_logic;
+    araddr  : in std_logic_vector(31 downto 0) := (others => '0');
+    arprot  : in std_logic_vector(2 downto 0)  := (others => '0');
+    arvalid : in std_logic                     := '0';
     arready : out std_logic;
 
     -- Read Data
     rdata  : out std_logic_vector(31 downto 0);
     rresp  : out std_logic_vector(1 downto 0);
     rvalid : out std_logic;
-    rready : in std_logic;
+    rready : in std_logic := '0';
 
     -- External IO
-    ext_meas_i : in std_logic;
-    capture_i  : in std_logic;
+    ext_meas_i : in std_logic := '0';
+    capture_i  : in std_logic := '0';
     pwm_o      : out std_logic;
     trigger_o  : out std_logic;
 
@@ -110,20 +110,20 @@ architecture rtl of timer_axi is
   end component timer_core;
 
   -- Internal signals
-  signal cs, we    : std_logic;
-  signal addr      : std_logic_vector(5 downto 0);
-  signal reg_rdata : std_logic_vector(31 downto 0);
+  signal cs, we    : std_logic                     := '0';
+  signal addr      : std_logic_vector(5 downto 0)  := (others => '0');
+  signal reg_rdata : std_logic_vector(31 downto 0) := (others => '0');
 
-  signal en, mode, dir, pwm_en, ext_en, cap_en, pre_en, load_cmd : std_logic;
-  signal core_irq_pulse, capture_stb, core_intr                  : std_logic;
-  signal pre_val                                                 : std_logic_vector(15 downto 0);
-  signal load_val, cmp_val, current_val, capture_val             : std_logic_vector(31 downto 0);
+  signal en, mode, dir, pwm_en, ext_en, cap_en, pre_en, load_cmd : std_logic                     := '0';
+  signal core_irq_pulse, capture_stb, core_intr                  : std_logic                     := '0';
+  signal pre_val                                                 : std_logic_vector(15 downto 0) := (others => '0');
+  signal load_val, cmp_val, current_val, capture_val             : std_logic_vector(31 downto 0) := (others => '0');
 
   -- AXI State signals
-  signal aw_en                                              : std_logic;
-  signal awready_i, wready_i, bvalid_i, arready_i, rvalid_i : std_logic;
-  signal bresp_i, rresp_i                                   : std_logic_vector(1 downto 0);
-  signal rdata_q                                            : std_logic_vector(31 downto 0);
+  signal aw_en                                              : std_logic                     := '1';
+  signal awready_i, wready_i, bvalid_i, arready_i, rvalid_i : std_logic                     := '0';
+  signal bresp_i, rresp_i                                   : std_logic_vector(1 downto 0)  := (others => '0');
+  signal rdata_q                                            : std_logic_vector(31 downto 0) := (others => '0');
 
 begin
 

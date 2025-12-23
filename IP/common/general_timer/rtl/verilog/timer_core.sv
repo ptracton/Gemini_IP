@@ -106,6 +106,19 @@ module timer_core (
     // Main Tick Selection
     assign tick = ext_en ? ext_tick : clk_tick;
 
+    // One-Shot Done Logic
+    logic op_done;
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            op_done <= 1'b0;
+        end else if (load_cmd || !en) begin
+            op_done <= 1'b0; 
+        end else if (en && tick && !mode && !op_done) begin
+            if (dir == 1'b0 && counter == 0) op_done <= 1'b1;
+            else if (dir == 1'b1 && counter == load_val) op_done <= 1'b1;
+        end
+    end
+
     // Counter & Trigger Logic
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
@@ -116,7 +129,7 @@ module timer_core (
             counter   <= load_val;
             irq       <= 1'b0;
             trigger_o <= 1'b0;
-        end else if (en && tick) begin
+        end else if (en && tick && !op_done) begin
             if (dir == 1'b0) begin 
                 // Down Counting
                 if (counter == 0) begin

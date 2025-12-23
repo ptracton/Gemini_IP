@@ -1,107 +1,198 @@
 #!/usr/bin/env python3
-"""
-run_regression.py
-
-Description:
-    Runs all configured simulations for the General Timer IP and reports results.
-
-Simulations:
-    - ModelSim (Verilog & VHDL)
-    - Xilinx (Verilog & VHDL)
-    - Icarus Verilog
-    - GHDL
-
-Usage:
-    ./run_regression.py
-"""
+#-------------------------------------------------------------------------------
+# File: run_regression.py
+# Description: Centralized regression script for General Timer IP.
+#
+# How it operates:
+# This script executes all available simulation flows (Cocotb, Xilinx, ModelSim, etc.)
+# across various configurations and summarizes the results.
+#
+# Author: Gemini-3 AI
+# License: MIT
+#-------------------------------------------------------------------------------
 
 import os
 import subprocess
 import sys
 import time
 from datetime import datetime
+from dataclasses import dataclass
+from typing import List
 
-# Configuration
-# Paths are relative to this script's location
-TOOLS_DIR = os.path.dirname(os.path.abspath(__file__))
-IP_ROOT = os.path.dirname(TOOLS_DIR)
-SIM_DIR = os.path.join(IP_ROOT, "sim")
+@dataclass
+class TestJob:
+    name: str
+    cwd: str
+    command: List[str]
+    description: str
 
-# List of simulations to run
-# (Name, Script Path)
-SIMULATIONS = [
-    ("ModelSim Verilog", os.path.join(SIM_DIR, "modelsim/run_modelsim.sh")),
-    ("ModelSim VHDL",    os.path.join(SIM_DIR, "modelsim/run_modelsim_vhdl.sh")),
-    ("Xilinx Verilog",   os.path.join(SIM_DIR, "xilinx/run_xsim.sh")),
-    ("Xilinx VHDL",      os.path.join(SIM_DIR, "xilinx/run_xsim_vhdl.sh")),
-    ("Icarus Verilog",   os.path.join(SIM_DIR, "iverilog/run_iverilog.sh")),
-    ("GHDL (VHDL)",      os.path.join(SIM_DIR, "ghdl/run_ghdl.sh"))
-]
-
-def run_simulation(name, script_path):
-    """Runs a single simulation script and returns result."""
-    print(f"Running: {name}...")
+def run_job(job: TestJob) -> bool:
+    print(f"[RUNNING] {job.name} - {job.description}")
     start_time = time.time()
     
-    # Check if script exists
-    if not os.path.exists(script_path):
-        return "MISSING", 0.0
-
-    # Ensure script is executable
-    os.chmod(script_path, 0o755)
-
     try:
-        # Run process
-        # Capture output to separate log file in tools dir for debug
-        log_file = os.path.join(TOOLS_DIR, f"regression_{name.replace(' ', '_').lower()}.log")
+        # Run command and capture output
+        # Logs are saved in the same directory as the script
+        log_dir = os.path.dirname(os.path.abspath(__file__))
+        log_file = os.path.join(log_dir, f"regression_{job.name.lower()}.log")
+        
         with open(log_file, "w") as f:
             result = subprocess.run(
-                [script_path],
-                cwd=os.path.dirname(script_path), # Run in sim dir
+                job.command,
+                cwd=job.cwd,
                 stdout=f,
                 stderr=subprocess.STDOUT,
+                text=True,
                 check=False
             )
         
         duration = time.time() - start_time
-        status = "PASS" if result.returncode == 0 else "FAIL"
-        return status, duration
-
+        
+        if result.returncode == 0:
+            print(f"[PASSED ] {job.name} ({duration:.2f}s)")
+            return True
+        else:
+            print(f"[FAILED ] {job.name} ({duration:.2f}s)")
+            # Dump last 5 lines for context
+            try:
+                with open(log_file, "r") as f:
+                    lines = f.readlines()
+                    print("--- LAST 5 LINES OF LOG ---")
+                    for line in lines[-5:]:
+                        print(line.strip())
+                    print("---------------------------")
+            except:
+                pass
+            return False
+            
     except Exception as e:
-        print(f"Exception running {name}: {e}")
-        return "ERROR", 0.0
+        print(f"[ERROR  ] {job.name}: {str(e)}")
+        return False
 
 def main():
+    # Setup Paths
+    tools_dir = os.path.dirname(os.path.abspath(__file__))
+    ip_root = os.path.dirname(tools_dir)
+    sim_dir = os.path.join(ip_root, "sim")
+    verif_dir = os.path.join(ip_root, "verif")
+    cocotb_dir = os.path.join(verif_dir, "cocotb")
+
     print("==================================================")
     print(f"General Timer Regression Run: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("==================================================")
 
+    jobs = []
+
+    # 1. SystemVerilog Cocotb Tests
+    for bus in ["AXI", "APB", "WB"]:
+        jobs.append(TestJob(
+            name=f"SV_Cocotb_{bus}",
+            cwd=cocotb_dir,
+            command=["make", "SIM=verilator", f"BUS_TYPE={bus}", "TOPLEVEL_LANG=verilog"],
+            description=f"SystemVerilog {bus} Cocotb via Verilator"
+        ))
+
+    # 2. VHDL Cocotb Tests
+    for bus in ["AXI", "APB", "WB"]:
+        jobs.append(TestJob(
+            name=f"VHDL_Cocotb_{bus}",
+            cwd=cocotb_dir,
+            command=["make", "SIM=ghdl", f"BUS_TYPE={bus}", "TOPLEVEL_LANG=vhdl"],
+            description=f"VHDL {bus} Cocotb via GHDL"
+        ))
+
+    # 3. Native ModelSim Tests
+    jobs.append(TestJob(
+        name="ModelSim_SV",
+        cwd=os.path.join(sim_dir, "modelsim"),
+        command=["./run_modelsim.sh"],
+        description="ModelSim SystemVerilog Native TB"
+    ))
+    jobs.append(TestJob(
+        name="ModelSim_VHDL",
+        cwd=os.path.join(sim_dir, "modelsim"),
+        command=["./run_modelsim_vhdl.sh"],
+        description="ModelSim VHDL Native TB"
+    ))
+
+    # 4. Native Xilinx Tests
+    jobs.append(TestJob(
+        name="Xilinx_SV",
+        cwd=os.path.join(sim_dir, "xilinx"),
+        command=["./run_xsim.sh"],
+        description="Xilinx xsim SystemVerilog Native TB"
+    ))
+    jobs.append(TestJob(
+        name="Xilinx_VHDL",
+        cwd=os.path.join(sim_dir, "xilinx"),
+        command=["./run_xsim_vhdl.sh"],
+        description="Xilinx xsim VHDL Native TB"
+    ))
+
+    # 5. Icarus Verilog
+    jobs.append(TestJob(
+        name="Icarus_Verilog",
+        cwd=os.path.join(sim_dir, "iverilog"),
+        command=["./run_iverilog.sh"],
+        description="Icarus Verilog Native TB"
+    ))
+
+    # 6. GHDL
+    jobs.append(TestJob(
+        name="GHDL_Native",
+        cwd=os.path.join(sim_dir, "ghdl"),
+        command=["./run_ghdl.sh"],
+        description="GHDL VHDL Native TB"
+    ))
+
+    # 7. Linting
+    jobs.append(TestJob(
+        name="Linting",
+        cwd=tools_dir,
+        command=["./run_lint.sh"],
+        description="Verilator & GHDL Linting"
+    ))
+
+    # Execute Jobs
     results = []
-    
-    for name, script_path in SIMULATIONS:
-        status, duration = run_simulation(name, script_path)
-        results.append((name, status, duration))
+    for job in jobs:
+        passed = run_job(job)
+        results.append((job, passed))
 
     # Print Summary
     print("\n==================================================")
     print("REGRESSION SUMMARY")
     print("==================================================")
-    print(f"{'TEST NAME':<25} | {'STATUS':<10} | {'TIME (s)':<10}")
-    print("-" * 50)
+    passed_count = sum(1 for _, p in results if p)
+    total_count = len(results)
     
-    overall_pass = True
-    for name, status, duration in results:
-        print(f"{name:<25} | {status:<10} | {duration:<10.2f}")
-        if status != "PASS":
-            overall_pass = False
-
+    print(f"{'TEST NAME':<25} | {'STATUS':<10} | {'DESCRIPTION'}")
+    print("-" * 75)
+    for job, passed in results:
+        status = "PASS" if passed else "FAIL"
+        print(f"{job.name:<25} | {status:<10} | {job.description}")
+    
+    print("-" * 75)
+    print(f"TOTAL: {passed_count}/{total_count} PASSED")
     print("==================================================")
-    if overall_pass:
-        print("RESULT: ALL TESTS PASSED")
-        sys.exit(0)
-    else:
-        print("RESULT: FAILURE DETECTED")
+
+    # Generate Markdown Report
+    report_path = os.path.join(ip_root, "timer_regression_results.md")
+    with open(report_path, "w") as f:
+        f.write("# General Timer Regression Results\n\n")
+        f.write(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+        f.write(f"**Overall Status: {'PASSED' if passed_count == total_count else 'FAILED'}**\n")
+        f.write(f"**Passed: {passed_count} / {total_count}**\n\n")
+        f.write("| Test Name | Status | Description |\n")
+        f.write("| :--- | :---: | :--- |\n")
+        for job, passed in results:
+            status = "✅ PASS" if passed else "❌ FAIL"
+            f.write(f"| {job.name} | {status} | {job.description} |\n")
+
+    if passed_count != total_count:
         sys.exit(1)
+    else:
+        sys.exit(0)
 
 if __name__ == "__main__":
     main()

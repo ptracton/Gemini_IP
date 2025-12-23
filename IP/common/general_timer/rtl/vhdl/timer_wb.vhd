@@ -9,19 +9,19 @@ entity timer_wb is
   port (
     wb_clk_i : in std_logic;
     wb_rst_i : in std_logic;
-    wb_adr_i : in std_logic_vector(31 downto 0);
-    wb_dat_i : in std_logic_vector(31 downto 0);
-    wb_we_i  : in std_logic;
-    wb_stb_i : in std_logic;
-    wb_cyc_i : in std_logic;
-    wb_sel_i : in std_logic_vector(3 downto 0);
+    wb_adr_i : in std_logic_vector(31 downto 0) := (others => '0');
+    wb_dat_i : in std_logic_vector(31 downto 0) := (others => '0');
+    wb_we_i  : in std_logic                     := '0';
+    wb_stb_i : in std_logic                     := '0';
+    wb_cyc_i : in std_logic                     := '0';
+    wb_sel_i : in std_logic_vector(3 downto 0)  := (others => '0');
     wb_dat_o : out std_logic_vector(31 downto 0);
     wb_ack_o : out std_logic;
     wb_err_o : out std_logic;
 
     -- External IO
-    ext_meas_i : in std_logic;
-    capture_i  : in std_logic;
+    ext_meas_i : in std_logic := '0';
+    capture_i  : in std_logic := '0';
     pwm_o      : out std_logic;
     trigger_o  : out std_logic;
 
@@ -87,14 +87,14 @@ architecture rtl of timer_wb is
     );
   end component timer_core;
 
-  signal cs, we, presetn                                         : std_logic;
-  signal addr                                                    : std_logic_vector(5 downto 0);
-  signal rdata                                                   : std_logic_vector(31 downto 0);
-  signal en, mode, dir, pwm_en, ext_en, cap_en, pre_en, load_cmd : std_logic;
-  signal core_irq_pulse, capture_stb, core_intr                  : std_logic;
-  signal pre_val                                                 : std_logic_vector(15 downto 0);
-  signal load_val, cmp_val, current_val, capture_val             : std_logic_vector(31 downto 0);
-  signal ack_q                                                   : std_logic;
+  signal cs, we, presetn                                         : std_logic                     := '0';
+  signal addr                                                    : std_logic_vector(5 downto 0)  := (others => '0');
+  signal rdata                                                   : std_logic_vector(31 downto 0) := (others => '0');
+  signal en, mode, dir, pwm_en, ext_en, cap_en, pre_en, load_cmd : std_logic                     := '0';
+  signal core_irq_pulse, capture_stb, core_intr                  : std_logic                     := '0';
+  signal pre_val                                                 : std_logic_vector(15 downto 0) := (others => '0');
+  signal load_val, cmp_val, current_val, capture_val             : std_logic_vector(31 downto 0) := (others => '0');
+  signal ack_q                                                   : std_logic                     := '0';
 
 begin
 

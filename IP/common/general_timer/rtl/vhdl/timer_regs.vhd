@@ -15,10 +15,10 @@ entity timer_regs is
     rst_n : in std_logic;
 
     -- Bus Interface
-    cs    : in std_logic;
-    we    : in std_logic;
-    addr  : in std_logic_vector(5 downto 0);
-    wdata : in std_logic_vector(31 downto 0);
+    cs    : in std_logic                     := '0';
+    we    : in std_logic                     := '0';
+    addr  : in std_logic_vector(5 downto 0)  := (others => '0');
+    wdata : in std_logic_vector(31 downto 0) := (others => '0');
     rdata : out std_logic_vector(31 downto 0);
 
     -- Core Interface
@@ -34,10 +34,10 @@ entity timer_regs is
     cmp_val  : out std_logic_vector(31 downto 0);
     load_cmd : out std_logic;
 
-    current_val : in std_logic_vector(31 downto 0);
-    capture_val : in std_logic_vector(31 downto 0);
-    capture_stb : in std_logic;
-    core_irq    : in std_logic;
+    current_val : in std_logic_vector(31 downto 0) := (others => '0');
+    capture_val : in std_logic_vector(31 downto 0) := (others => '0');
+    capture_stb : in std_logic                     := '0';
+    core_irq    : in std_logic                     := '0';
 
     -- System
     intr_o : out std_logic
@@ -56,13 +56,13 @@ architecture rtl of timer_regs is
   constant ADDR_CAP     : unsigned(5 downto 0) := "011100"; -- 0x1C
 
   -- Registers
-  signal reg_ctrl    : std_logic_vector(31 downto 0);
-  signal reg_load    : std_logic_vector(31 downto 0);
-  signal reg_pre     : std_logic_vector(31 downto 0);
-  signal reg_int_en  : std_logic_vector(31 downto 0);
-  signal reg_int_sts : std_logic_vector(31 downto 0);
-  signal reg_cmp     : std_logic_vector(31 downto 0);
-  signal reg_cap     : std_logic_vector(31 downto 0);
+  signal reg_ctrl    : std_logic_vector(31 downto 0) := (others => '0');
+  signal reg_load    : std_logic_vector(31 downto 0) := (others => '0');
+  signal reg_pre     : std_logic_vector(31 downto 0) := (others => '0');
+  signal reg_int_en  : std_logic_vector(31 downto 0) := (others => '0');
+  signal reg_int_sts : std_logic_vector(31 downto 0) := (others => '0');
+  signal reg_cmp     : std_logic_vector(31 downto 0) := (others => '0');
+  signal reg_cap     : std_logic_vector(31 downto 0) := (others => '0');
 
 begin
 
@@ -78,11 +78,11 @@ begin
   pre_val <= reg_pre(15 downto 0);
   cmp_val <= reg_cmp;
 
-  load_cmd <= '1' when (cs = '1' and we = '1' and unsigned(addr) = ADDR_LOAD) else
+  load_cmd <= '1' when (cs = '1' and we = '1' and addr = std_logic_vector(ADDR_LOAD)) else
     '0';
 
   -- Bypass reg_load when writing
-  load_val <= wdata when (cs = '1' and we = '1' and unsigned(addr) = ADDR_LOAD) else
+  load_val <= wdata when (cs = '1' and we = '1' and addr = std_logic_vector(ADDR_LOAD)) else
     reg_load;
 
   -- Interrupt Output
@@ -93,17 +93,25 @@ begin
   begin
     rdata <= (others => '0');
     if cs = '1' then
-      case unsigned(addr) is
-        when ADDR_CTRL    => rdata    <= reg_ctrl;
-        when ADDR_LOAD    => rdata    <= reg_load;
-        when ADDR_VAL     => rdata     <= current_val;
-        when ADDR_PRE     => rdata     <= reg_pre;
-        when ADDR_INT_EN  => rdata  <= reg_int_en;
-        when ADDR_INT_STS => rdata <= reg_int_sts;
-        when ADDR_CMP     => rdata     <= reg_cmp;
-        when ADDR_CAP     => rdata     <= reg_cap;
-        when others => rdata       <= (others => '0');
-      end case;
+      if addr = std_logic_vector(ADDR_CTRL) then
+        rdata <= reg_ctrl;
+      elsif addr = std_logic_vector(ADDR_LOAD) then
+        rdata <= reg_load;
+      elsif addr = std_logic_vector(ADDR_VAL) then
+        rdata <= current_val;
+      elsif addr = std_logic_vector(ADDR_PRE) then
+        rdata <= reg_pre;
+      elsif addr = std_logic_vector(ADDR_INT_EN) then
+        rdata <= reg_int_en;
+      elsif addr = std_logic_vector(ADDR_INT_STS) then
+        rdata <= reg_int_sts;
+      elsif addr = std_logic_vector(ADDR_CMP) then
+        rdata <= reg_cmp;
+      elsif addr = std_logic_vector(ADDR_CAP) then
+        rdata <= reg_cap;
+      else
+        rdata <= (others => '0');
+      end if;
     end if;
   end process;
 
@@ -134,21 +142,24 @@ begin
       end if;
 
       if cs = '1' and we = '1' then
-        case unsigned(addr) is
-          when ADDR_CTRL    => reg_ctrl     <= wdata;
-          when ADDR_LOAD    => reg_load     <= wdata;
-          when ADDR_PRE     => reg_pre       <= wdata;
-          when ADDR_CMP     => reg_cmp       <= wdata;
-          when ADDR_INT_EN  => reg_int_en <= wdata;
-          when ADDR_INT_STS =>
-            if wdata(0) = '1' then
-              reg_int_sts(0) <= '0';
-            end if;
-            if wdata(1) = '1' then
-              reg_int_sts(1) <= '0';
-            end if;
-          when others => null;
-        end case;
+        if addr = std_logic_vector(ADDR_CTRL) then
+          reg_ctrl <= wdata;
+        elsif addr = std_logic_vector(ADDR_LOAD) then
+          reg_load <= wdata;
+        elsif addr = std_logic_vector(ADDR_PRE) then
+          reg_pre <= wdata;
+        elsif addr = std_logic_vector(ADDR_CMP) then
+          reg_cmp <= wdata;
+        elsif addr = std_logic_vector(ADDR_INT_EN) then
+          reg_int_en <= wdata;
+        elsif addr = std_logic_vector(ADDR_INT_STS) then
+          if wdata(0) = '1' then
+            reg_int_sts(0) <= '0';
+          end if;
+          if wdata(1) = '1' then
+            reg_int_sts(1) <= '0';
+          end if;
+        end if;
       end if;
     end if;
   end process;
