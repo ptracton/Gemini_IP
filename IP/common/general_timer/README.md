@@ -202,8 +202,15 @@ cd verif/formal
 ./run_formal.sh  # Runs AXI, APB, and Wishbone tasks
 ```
 
+### UVM Verification
+Universal Verification Methodology (UVM) is used for comprehensive constrained-random verification and functional coverage. Supports mixed-language simulation (SV UVM TB + SV/VHDL DUT).
+```bash
+cd verif/uvm
+./run_uvm.sh axi verilog timer_reg_test
+```
+
 ### Regression
-To run the full regression suite (16 jobs across all simulators and formal tools):
+To run the full regression suite (22 jobs across all simulators, formal tools, and UVM):
 ```bash
 ./tools/run_regression.py
 ```
@@ -216,9 +223,21 @@ To check the code quality:
 ```
 
 ## Cleanup
-Each simulation environment has a cleanup script to remove temporary artifacts:
-- `sim/modelsim/clean_modelsim.sh`
-- `sim/xilinx/clean_xsim.sh`
-- `sim/iverilog/clean_iverilog.sh`
-- `sim/ghdl/clean_ghdl.sh`
-- `verif/cocotb/clean_cocotb.sh`
+To maintain a clean workspace, the project provides a master cleanup script as well as individual scripts for each environment.
+
+### Master Cleanup (Recommended)
+Resets the entire project by calling all specific cleanup scripts:
+```bash
+./tools/run_clean.sh
+```
+
+### Individual Cleanup Scripts
+- **Native Simulators**:
+    - `sim/modelsim/clean_modelsim.sh`
+    - `sim/xilinx/clean_xsim.sh`
+    - `sim/ghdl/clean_ghdl.sh`
+    - `sim/iverilog/clean_iverilog.sh`
+- **Verification Frameworks**:
+    - `verif/cocotb/clean_cocotb.sh`
+    - `verif/uvm/clean_uvm.sh`
+    - `verif/formal/clean_formal.sh`

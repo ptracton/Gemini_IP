@@ -163,6 +163,17 @@ def main():
             description=f"Formal Verification ({bus.upper()}) via SymbiYosys"
         ))
 
+    # 9. UVM Verification
+    uvm_dir = os.path.join(verif_dir, "uvm")
+    for lang in ["verilog", "vhdl"]:
+        for bus in ["axi", "apb", "wb"]:
+            jobs.append(TestJob(
+                name=f"UVM_{lang.upper()}_{bus.upper()}",
+                cwd=uvm_dir,
+                command=["./run_uvm.sh", bus, lang, "timer_reg_test"],
+                description=f"UVM Verification ({lang.upper()} {bus.upper()}) via Xilinx xsim"
+            ))
+
     # Execute Jobs
     results = []
     for job in jobs:
