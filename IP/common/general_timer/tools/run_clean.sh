@@ -27,9 +27,12 @@ echo "[3/4] Cleaning UVM..."
 # 4. Formal
 echo "[4/4] Cleaning Formal..."
 (cd "$TIMER_DIR/verif/formal" && chmod +x clean_formal.sh && ./clean_formal.sh)
+# 5. Synthesis
+echo "[5/6] Cleaning Synthesis..."
+(cd "$TIMER_DIR/synthesis" && chmod +x cleanup.sh && ./cleanup.sh)
 
-# 5. General artifacts
-echo "[5/5] Cleaning General artifacts..."
+# 6. General artifacts
+echo "[6/6] Cleaning General artifacts..."
 rm -f "$TIMER_DIR"/*.log
 rm -f "$TIMER_DIR"/*.vcd
 # rm -f "$TIMER_DIR"/timer_regression_results.md

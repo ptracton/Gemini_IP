@@ -251,3 +251,25 @@ Resets the entire project by calling all specific cleanup scripts. Note that thi
     - `verif/cocotb/clean_cocotb.sh`
     - `verif/uvm/clean_uvm.sh`
     - `verif/formal/clean_formal.sh`
+
+## Synthesis
+To verify synthesizability across different FPGA vendors, a unified script runs Vivado (Xilinx), Quartus (Intel/Altera), and Yosys (Open Source) flows.
+```bash
+# Run synthesis for all variants (AXI, APB, WB) on all available tools
+./IP/common/general_timer/synthesis/run_synth.sh
+```
+Results (logs, netlists, reports) are generated in `IP/common/general_timer/synthesis/results/`.
+
+## Synthesis Results
+Resource utilization for default configuration (32-bit Timer).
+
+| Interface | Tool | Resource Usage |
+| :--- | :--- | :--- |
+| **AXI4-Lite** | Vivado (Artix-7) | 331 LUTs, 317 Regs |
+| **APB4** | Vivado (Artix-7) | 319 LUTs, 280 Regs |
+| **Wishbone** | Vivado (Artix-7) | 319 LUTs, 281 Regs |
+| **AXI4-Lite** | Quartus (Cyclone IV) | 760 Logic Cells |
+| **APB4** | Quartus (Cyclone IV) | 748 Logic Cells |
+| **Wishbone** | Quartus (Cyclone IV) | 749 Logic Cells |
+
+*Note: Yosys synthesis was also verified for all variants.*
