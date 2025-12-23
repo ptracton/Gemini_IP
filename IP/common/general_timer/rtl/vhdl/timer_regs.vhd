@@ -89,29 +89,30 @@ begin
   intr_o <= (reg_int_sts(0) and reg_int_en(0)) or (reg_int_sts(1) and reg_int_en(1));
 
   -- Read Logic
-  process (cs, addr, reg_ctrl, reg_load, current_val, reg_pre, reg_int_en, reg_int_sts, reg_cmp, reg_cap)
+  process (all)
   begin
     rdata <= (others => '0');
     if cs = '1' then
-      if addr = std_logic_vector(ADDR_CTRL) then
-        rdata <= reg_ctrl;
-      elsif addr = std_logic_vector(ADDR_LOAD) then
-        rdata <= reg_load;
-      elsif addr = std_logic_vector(ADDR_VAL) then
-        rdata <= current_val;
-      elsif addr = std_logic_vector(ADDR_PRE) then
-        rdata <= reg_pre;
-      elsif addr = std_logic_vector(ADDR_INT_EN) then
-        rdata <= reg_int_en;
-      elsif addr = std_logic_vector(ADDR_INT_STS) then
-        rdata <= reg_int_sts;
-      elsif addr = std_logic_vector(ADDR_CMP) then
-        rdata <= reg_cmp;
-      elsif addr = std_logic_vector(ADDR_CAP) then
-        rdata <= reg_cap;
-      else
-        rdata <= (others => '0');
-      end if;
+      case addr is
+        when std_logic_vector(ADDR_CTRL) =>
+          rdata <= reg_ctrl;
+        when std_logic_vector(ADDR_LOAD) =>
+          rdata <= reg_load;
+        when std_logic_vector(ADDR_VAL) =>
+          rdata <= current_val;
+        when std_logic_vector(ADDR_PRE) =>
+          rdata <= reg_pre;
+        when std_logic_vector(ADDR_INT_EN) =>
+          rdata <= reg_int_en;
+        when std_logic_vector(ADDR_INT_STS) =>
+          rdata <= reg_int_sts;
+        when std_logic_vector(ADDR_CMP) =>
+          rdata <= reg_cmp;
+        when std_logic_vector(ADDR_CAP) =>
+          rdata <= reg_cap;
+        when others      =>
+          rdata <= (others => '0');
+      end case;
     end if;
   end process;
 
@@ -128,19 +129,7 @@ begin
       reg_int_sts <= (others => '0');
     elsif rising_edge(clk) then
 
-      -- Sticky Status
-      if core_irq = '1' then
-        reg_int_sts(0) <= '1';
-      end if;
-      if capture_stb = '1' then
-        reg_int_sts(1) <= '1';
-      end if;
-
-      -- Capture Update
-      if capture_stb = '1' and cap_en = '1' then
-        reg_cap <= capture_val;
-      end if;
-
+      -- Interrupt Status and Write Logic
       if cs = '1' and we = '1' then
         if addr = std_logic_vector(ADDR_CTRL) then
           reg_ctrl <= wdata;
@@ -152,14 +141,27 @@ begin
           reg_cmp <= wdata;
         elsif addr = std_logic_vector(ADDR_INT_EN) then
           reg_int_en <= wdata;
-        elsif addr = std_logic_vector(ADDR_INT_STS) then
-          if wdata(0) = '1' then
-            reg_int_sts(0) <= '0';
-          end if;
-          if wdata(1) = '1' then
-            reg_int_sts(1) <= '0';
-          end if;
         end if;
+      end if;
+
+      -- Capture Update
+      if capture_stb = '1' and cap_en = '1' then
+        reg_cap <= capture_val;
+      end if;
+
+      -- Interrupt Status (Sticky bits)
+      reg_int_sts(31 downto 2) <= (others => '0');
+
+      if (core_irq = '1') then
+        reg_int_sts(0) <= '1';
+      elsif (cs = '1' and we = '1' and addr = std_logic_vector(ADDR_INT_STS) and wdata(0) = '1') then
+        reg_int_sts(0) <= '0';
+      end if;
+
+      if (capture_stb = '1') then
+        reg_int_sts(1) <= '1';
+      elsif (cs = '1' and we = '1' and addr = std_logic_vector(ADDR_INT_STS) and wdata(1) = '1') then
+        reg_int_sts(1) <= '0';
       end if;
     end if;
   end process;

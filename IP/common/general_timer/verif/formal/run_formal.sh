@@ -4,14 +4,30 @@
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 cd "$SCRIPT_DIR"
 
+# Source setup
+# formal -> verif -> general_timer -> common -> IP -> Gemini_IP (5 levels)
+source ../../../../../setup.sh
+
 echo "=================================================="
 echo "Running Formal Verification: General Timer"
 echo "=================================================="
 
 FAILED=0
 
+# Usage: ./run_formal.sh [bus] [lang (sv|vhdl)]
+
+BUS=${1:-all}
+LANG=${2:-sv}
+
 run_sby() {
-    TASK=$1
+    BUS_TYPE=$1
+    LANGUAGE=$2
+    if [ "$LANGUAGE" == "vhdl" ]; then
+        TASK="${BUS_TYPE}_vhdl"
+    else
+        TASK="$BUS_TYPE"
+    fi
+    
     echo "--- Running $TASK ---"
     sby -f $TASK.sby
     if [ $? -eq 0 ]; then
@@ -22,12 +38,12 @@ run_sby() {
     fi
 }
 
-if [ -n "$1" ]; then
-    run_sby $1
+if [ "$BUS" == "all" ]; then
+    for b in axi apb wb; do
+        run_sby $b $LANG
+    done
 else
-    run_sby axi
-    run_sby apb
-    run_sby wb
+    run_sby $BUS $LANG
 fi
 
 if [ $FAILED -eq 1 ]; then

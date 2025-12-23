@@ -8,6 +8,11 @@ SV_RTL_DIR="$IP_DIR/rtl/verilog"
 VHDL_RTL_DIR="$IP_DIR/rtl/vhdl"
 UVM_DIR="$SCRIPT_DIR"
 
+# Source Setup
+# IP_DIR is general_timer
+# general_timer -> common -> IP -> Gemini_IP (3 levels up)
+source $IP_DIR/../../../setup.sh
+
 # Working Directory
 mkdir -p work
 cd work
@@ -87,10 +92,18 @@ xvlog -sv -L uvm $DEFINES \
     $UVM_DIR/tb/$TOP.sv
 
 echo "--- Elaborating ---"
-xelab -debug all $TOP -s top_sim -timescale 1ns/1ps -L uvm
+xelab -debug all $TOP -s top_sim -timescale 1ns/1ps -L uvm -cc_type bbc
 
 echo "--- Simulating ---"
 xsim top_sim -runall -testplusarg UVM_TESTNAME=$TEST_NAME -testplusarg BUS_TYPE=${BUS_TYPE^^} -log uvm_sim.log
+
+# Archive Coverage
+COV_REPO_DIR="$IP_DIR/coverage_repo"
+mkdir -p $COV_REPO_DIR
+if [ -d "xsim.codeCov/top_sim" ]; then
+    rm -rf $COV_REPO_DIR/uvm_${TEST_NAME}_${BUS_TYPE}_${LANG}
+    cp -r xsim.codeCov/top_sim $COV_REPO_DIR/uvm_${TEST_NAME}_${BUS_TYPE}_${LANG}
+fi
 
 # Check Result
 if grep -q "UVM_ERROR :    0" uvm_sim.log && grep -q "UVM_FATAL :    0" uvm_sim.log; then

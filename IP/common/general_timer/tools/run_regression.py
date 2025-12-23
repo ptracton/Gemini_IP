@@ -31,14 +31,24 @@ def run_job(job: TestJob) -> bool:
     start_time = time.time()
     
     try:
+        # Determine setup.sh path
+        # Script is in tools/ -> tools_dir
+        # tools_dir/../../../.. -> setup.sh
+        tools_dir = os.path.dirname(os.path.abspath(__file__))
+        setup_script = os.path.abspath(os.path.join(tools_dir, "../../../..", "setup.sh"))
+        
+        # Wrap command in bash to source setup.sh
+        # bash -c 'source setup_script && exec "$@"' -- cmd args...
+        wrapped_command = ["bash", "-c", f"source {setup_script} && exec \"$@\"", "--"] + job.command
+
         # Run command and capture output
         # Logs are saved in the same directory as the script
-        log_dir = os.path.dirname(os.path.abspath(__file__))
+        log_dir = tools_dir
         log_file = os.path.join(log_dir, f"regression_{job.name.lower()}.log")
         
         with open(log_file, "w") as f:
             result = subprocess.run(
-                job.command,
+                wrapped_command,
                 cwd=job.cwd,
                 stdout=f,
                 stderr=subprocess.STDOUT,
@@ -150,34 +160,60 @@ def main():
         description="GHDL VHDL Native TB"
     ))
 
-    # 7. Linting
+    # 7. Linting & CDC
     jobs.append(TestJob(
         name="Linting",
         cwd=tools_dir,
         command=["./run_lint.sh"],
         description="Verilator & GHDL Linting"
     ))
+    jobs.append(TestJob(
+        name="CDC_Analysis",
+        cwd=tools_dir,
+        command=["./run_cdc.sh"],
+        description="Verilator CDC/Structural Check"
+    ))
 
     # 8. Formal Verification
     formal_dir = os.path.join(verif_dir, "formal")
-    for bus in ["axi", "apb", "wb"]:
-        jobs.append(TestJob(
-            name=f"Formal_{bus.upper()}",
-            cwd=formal_dir,
-            command=["./run_formal.sh", bus],
-            description=f"Formal Verification ({bus.upper()}) via SymbiYosys"
-        ))
+    for lang in ["sv", "vhdl"]:
+        for bus in ["axi", "apb", "wb"]:
+            jobs.append(TestJob(
+                name=f"Formal_{bus.upper()}_{lang.upper()}",
+                cwd=formal_dir,
+                command=["./run_formal.sh", bus, lang],
+                description=f"Formal Verification ({bus.upper()} {lang.upper()}) via SymbiYosys"
+            ))
 
     # 9. UVM Verification
     uvm_dir = os.path.join(verif_dir, "uvm")
+    # Register/Count tests for all configs
     for lang in ["verilog", "vhdl"]:
         for bus in ["axi", "apb", "wb"]:
-            jobs.append(TestJob(
-                name=f"UVM_{lang.upper()}_{bus.upper()}",
-                cwd=uvm_dir,
-                command=["./run_uvm.sh", bus, lang, "timer_reg_test"],
-                description=f"UVM Verification ({lang.upper()} {bus.upper()}) via Xilinx xsim"
-            ))
+            for test in ["timer_reg_test", "timer_count_test"]:
+                jobs.append(TestJob(
+                    name=f"UVM_{lang.upper()}_{bus.upper()}_{test}",
+                    cwd=uvm_dir,
+                    command=["./run_uvm.sh", bus, lang, test],
+                    description=f"UVM {test} ({lang.upper()} {bus.upper()}) via Xilinx xsim"
+                ))
+    
+    # Specialized tests (AXI only for performance/sweep)
+    for test in ["timer_pwm_perf_test", "timer_capture_stress_test", "timer_prescaler_sweep_test"]:
+        jobs.append(TestJob(
+            name=f"UVM_AXI_SV_{test}",
+            cwd=uvm_dir,
+            command=["./run_uvm.sh", "axi", "verilog", test],
+            description=f"Specialized {test} (AXI SV) via Xilinx xsim"
+        ))
+        
+    # Specialized Full Mode Test
+    jobs.append(TestJob(
+        name="UVM_AXI_SV_timer_full_mode_test",
+        cwd=uvm_dir,
+        command=["./run_uvm.sh", "axi", "verilog", "timer_full_mode_test"],
+        description="Specialized timer_full_mode_test (AXI SV) via Xilinx xsim"
+    ))
 
     # Execute Jobs
     results = []

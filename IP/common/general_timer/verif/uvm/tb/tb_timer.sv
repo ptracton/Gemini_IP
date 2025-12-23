@@ -99,6 +99,8 @@ module tb_timer;
     // Reset Generation
     initial begin
         rst_n = 0;
+        t_inst.ext_meas_i = 0;
+        t_inst.capture_i = 0;
         #100 rst_n = 1;
     end
 

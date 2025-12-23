@@ -108,4 +108,112 @@ package timer_test_pkg;
         endtask
     endclass
 
+    // Specialized PWM Test
+    class timer_pwm_perf_test extends timer_base_test;
+        `uvm_component_utils(timer_pwm_perf_test)
+        function new(string name = "timer_pwm_perf_test", uvm_component parent = null);
+            super.new(name, parent);
+        endfunction
+
+        virtual task run_phase(uvm_phase phase);
+            timer_pwm_seq seq = timer_pwm_seq::type_id::create("seq");
+            phase.raise_objection(this);
+            seq.start(env.axi_agt.sequencer);
+            phase.drop_objection(this);
+        endtask
+    endclass
+
+    // Specialized Capture Stress Test
+    class timer_capture_stress_test extends timer_base_test;
+        `uvm_component_utils(timer_capture_stress_test)
+        function new(string name = "timer_capture_stress_test", uvm_component parent = null);
+            super.new(name, parent);
+        endfunction
+
+        virtual task run_phase(uvm_phase phase);
+            timer_axi_reg_seq reg_seq = timer_axi_reg_seq::type_id::create("reg_seq");
+            timer_capture_trigger_seq trig_seq = timer_capture_trigger_seq::type_id::create("trig_seq");
+            phase.raise_objection(this);
+            
+            // Enable capture via registers
+            reg_seq.start(env.axi_agt.sequencer);
+            reg_seq.write_reg(32'h00, 32'h0000_0041); // EN=1, CAP_EN=1
+            
+            // Start triggers
+            trig_seq.start(env.t_agt.sequencer);
+            
+            phase.drop_objection(this);
+        endtask
+    endclass
+
+    // Specialized Prescaler Sweep Test
+    class timer_prescaler_sweep_test extends timer_base_test;
+        `uvm_component_utils(timer_prescaler_sweep_test)
+        function new(string name = "timer_prescaler_sweep_test", uvm_component parent = null);
+            super.new(name, parent);
+        endfunction
+
+        virtual task run_phase(uvm_phase phase);
+            timer_prescaler_seq seq = timer_prescaler_seq::type_id::create("seq");
+            phase.raise_objection(this);
+            seq.start(env.axi_agt.sequencer);
+            phase.drop_objection(this);
+        endtask
+    endclass
+
+    // Full Mode Verification Test (Maximizing Code Coverage)
+    class timer_full_mode_test extends timer_base_test;
+        `uvm_component_utils(timer_full_mode_test)
+        function new(string name = "timer_full_mode_test", uvm_component parent = null);
+            super.new(name, parent);
+        endfunction
+
+        virtual task run_phase(uvm_phase phase);
+            timer_axi_reg_seq seq;
+            phase.raise_objection(this);
+            seq = timer_axi_reg_seq::type_id::create("seq");
+            seq.start(env.axi_agt.sequencer);
+
+            `uvm_info("TEST", "Starting Full Mode Coverage Test...", UVM_LOW)
+
+            // 1. One-Shot Down Counting (Default)
+            seq.write_reg(32'h04, 32'h0000_0020); // LOAD = 32
+            seq.write_reg(32'h00, 32'h0000_0001); // EN=1, MODE=0, DIR=0
+            #1000;
+            seq.read_reg(32'h14); // Clear IRQ
+            seq.write_reg(32'h00, 32'h0000_0000); // Disable
+
+            // 2. Repeat Down Counting
+            `uvm_info("TEST", "Testing Repeat Down Mode...", UVM_LOW)
+            seq.write_reg(32'h04, 32'h0000_0010); // LOAD = 16
+            seq.write_reg(32'h00, 32'h0000_0003); // EN=1, MODE=1, DIR=0
+            #1000; // Should expire multiple times
+            seq.read_reg(32'h14); // Read IRQ (Sticky)
+            seq.write_reg(32'h14, 32'h0000_0001); // Clear IRQ
+            seq.write_reg(32'h00, 32'h0000_0000); // Disable
+
+            // 3. One-Shot Up Counting
+            `uvm_info("TEST", "Testing One-Shot Up Mode...", UVM_LOW)
+            seq.write_reg(32'h04, 32'h0000_0020); // LOAD = 32
+            seq.write_reg(32'h0C, 32'h0000_0000); // PRE = 0
+            seq.write_reg(32'h18, 32'h0000_0010); // CMP = 16 (for PWM trigger coverage)
+            seq.write_reg(32'h00, 32'h0000_0019); // EN=1, DIR=1 (Up), PWM_EN=1
+            #1000;
+            seq.read_reg(32'h14);
+            seq.write_reg(32'h14, 32'h0000_0001);
+            seq.write_reg(32'h00, 32'h0000_0000);
+
+            // 4. Repeat Up Counting with Prescaler
+            `uvm_info("TEST", "Testing Repeat Up Mode with Prescaler...", UVM_LOW)
+            seq.write_reg(32'h04, 32'h0000_0010); // LOAD = 16
+            seq.write_reg(32'h0C, 32'h0000_0001); // PRE = 1 (Divide by 2)
+            seq.write_reg(32'h00, 32'h0000_001F); // EN=1, MODE=1, DIR=1, PWM_EN=1, PRE_EN=1
+            #2000; 
+            seq.read_reg(32'h14);
+            seq.write_reg(32'h00, 32'h0000_0000);
+
+            phase.drop_objection(this);
+        endtask
+    endclass
+
 endpackage

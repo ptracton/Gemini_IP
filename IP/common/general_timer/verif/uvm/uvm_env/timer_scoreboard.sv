@@ -3,11 +3,6 @@
  * Description: Scoreboard for General Timer IP
  */
 
-// Macros for multiple analysis implementations
-`uvm_analysis_imp_decl(_apb)
-`uvm_analysis_imp_decl(_axi)
-`uvm_analysis_imp_decl(_wb)
-`uvm_analysis_imp_decl(_timer)
 
 class timer_scoreboard extends uvm_scoreboard;
     `uvm_component_utils(timer_scoreboard)

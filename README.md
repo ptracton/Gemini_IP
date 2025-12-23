@@ -21,18 +21,21 @@ The repository has transitioned from initial implementation to a fully verified 
 ### Interface
 - **[GPIO](IP/interface/GPIO/README.md)**: Configurable GPIO with Interrupts, PWM, Debouncing, and multi-bus support.
 
+### Common
+- **[General Timer](IP/common/general_timer/README.md)**: A 32-bit configurable timer with PWM, Input Capture, Prescaler, and multi-bus support (AXI/APB/WB).
+
 ## Feature Overview
 
-| Feature | GPIO |
-| :--- | :---: |
-| **AXI4-Lite** | ✅ |
-| **APB4** | ✅ |
-| **Wishbone B4** | ✅ |
-| **SystemVerilog** | ✅ |
-| **VHDL-2008** | ✅ |
-| **UVM Random** | ✅ |
-| **Regression Tool** | ✅ |
-| **Synthesis (Vivado/Yosys)** | ✅ |
+| Feature | GPIO | General Timer |
+| :--- | :---: | :---: |
+| **AXI4-Lite** | ✅ | ✅ |
+| **APB4** | ✅ | ✅ |
+| **Wishbone B4** | ✅ | ✅ |
+| **SystemVerilog** | ✅ | ✅ |
+| **VHDL-2008** | ✅ | ✅ |
+| **UVM Random** | ✅ | ✅ |
+| **Regression Tool** | ✅ | ✅ |
+| **Synthesis (Vivado/Yosys)** | ✅ | ✅ |
 
 ## Running Verifications & Tools
 
