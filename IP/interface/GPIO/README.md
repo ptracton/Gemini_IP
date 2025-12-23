@@ -243,7 +243,7 @@ Performs static analysis on both SystemVerilog and VHDL source files.
 | UVM Pwr-Reset | SV | Xilinx Vivado | ✅ PASS |
 | UVM Random | SV | Xilinx Vivado | ✅ PASS |
 
-Full report available in: [regression_results.md](../../../regression_results.md)
+Full report available in: [gpio_regression_results.md](gpio_regression_results.md)
 
 ### 9. Synthesis Results (Artix-7)
 Resource utilization for default configuration (32-bit GPIO).

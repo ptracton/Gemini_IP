@@ -43,6 +43,7 @@ NEW_IP/
 - [ ] **Linting**: Run `run_lint.sh` (Verilator for SV, GHDL for VHDL).
 - [ ] **Cocotb**: Implement multi-language cross-verification.
 - [ ] **Formal**: Add **SVA** properties and run **SymbiYosys**.
+- [ ] **Code Coverage**: Achieve >95% code coverage (Line, Branch, Condition, Toggle) using Xilinx or other coverage tools.
 - [ ] **UVM**: Build a full UVM environment for coverage-driven and Constrained Random Verification.
 
 ## 5. Synthesis Validation
