@@ -271,5 +271,8 @@ Resource utilization for default configuration (32-bit Timer).
 | **AXI4-Lite** | Quartus (Cyclone IV) | 760 Logic Cells |
 | **APB4** | Quartus (Cyclone IV) | 748 Logic Cells |
 | **Wishbone** | Quartus (Cyclone IV) | 749 Logic Cells |
+| **AXI4-Lite** | Yosys (Artix-7) | 391 LUTs, 317 Regs |
+| **APB4** | Yosys (Artix-7) | 378 LUTs, 280 Regs |
+| **Wishbone** | Yosys (Artix-7) | 379 LUTs, 281 Regs |
 
-*Note: Yosys synthesis was also verified for all variants.*
+*Note: Resource counts vary by tool due to different optimization algorithms and target mapping.*
