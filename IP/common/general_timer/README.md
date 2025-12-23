@@ -17,6 +17,69 @@ The General Purpose Timer is a 32-bit configurable timer IP designed for embedde
     - AXI4-Lite
     - Wishbone B4
 
+## Architecture
+
+### System Overview
+```mermaid
+graph LR
+    subgraph "Host System"
+        A[External Bus Master]
+    end
+    
+    subgraph "Timer IP Core"
+        direction TB
+        B["Bus Wrapper (AXI/APB/WB)"]
+        C["Register Interface (timer_regs)"]
+        D["Timer Core (timer_core)"]
+    end
+    
+    subgraph "External World"
+        E[PWM Output]
+        F[Capture Input]
+        G[Interrupt]
+    end
+    
+    A <--> B
+    B <--> C
+    C <--> D
+    D --> E
+    F --> D
+    D --> G
+```
+
+### Core Logic Flow
+```mermaid
+graph TD
+    CLK[System Clock] --> PRE[Prescaler]
+    PRE -- Tick --> CNT[32-bit Counter]
+    
+    subgraph "Control"
+        DIR[Direction Control] --> CNT
+        LOAD[Load Value] --> CNT
+        MODE[One-Shot / Continuous] --> CNT
+    end
+
+    subgraph "Output Generation"
+        CNT --> CMP[Comparator]
+        CMP_VAL[Compare Value] --> CMP
+        CMP --> PWM[PWM Logic]
+        PWM --> OUT[pwm_o]
+    end
+
+    subgraph "Input Capture"
+        CAP_IN[capture_i] --> SYNC[Synchronizer]
+        SYNC --> LATCH[Capture Latch]
+        CNT --> LATCH
+        LATCH --> CAP_REG[CAP Register]
+    end
+
+    subgraph "Interrupts"
+        CNT -- Overflow --> IRQ[Interrupt Logic]
+        LATCH -- Event --> IRQ
+        IRQ --> INTR_O[intr_o]
+    end
+```
+
 ## Directory Structure
 ```
 general_timer/
