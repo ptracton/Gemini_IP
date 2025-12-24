@@ -1,0 +1,86 @@
+SBY 13:25:29 [axi] Removing directory '/home/ptracton/src/Gemini_IP/IP/common/bus_matrix/verif/formal/axi'.
+SBY 13:25:29 [axi] Copy '/home/ptracton/src/Gemini_IP/IP/common/bus_matrix/verif/formal/../../rtl/verilog/bus_matrix_pkg.sv' to '/home/ptracton/src/Gemini_IP/IP/common/bus_matrix/verif/formal/axi/src/bus_matrix_pkg.sv'.
+SBY 13:25:29 [axi] Copy '/home/ptracton/src/Gemini_IP/IP/common/bus_matrix/verif/formal/../../rtl/verilog/bus_matrix_decoder.sv' to '/home/ptracton/src/Gemini_IP/IP/common/bus_matrix/verif/formal/axi/src/bus_matrix_decoder.sv'.
+SBY 13:25:29 [axi] Copy '/home/ptracton/src/Gemini_IP/IP/common/bus_matrix/verif/formal/../../rtl/verilog/bus_matrix_arbiter.sv' to '/home/ptracton/src/Gemini_IP/IP/common/bus_matrix/verif/formal/axi/src/bus_matrix_arbiter.sv'.
+SBY 13:25:29 [axi] Copy '/home/ptracton/src/Gemini_IP/IP/common/bus_matrix/verif/formal/../../rtl/verilog/bus_matrix_register_slice.sv' to '/home/ptracton/src/Gemini_IP/IP/common/bus_matrix/verif/formal/axi/src/bus_matrix_register_slice.sv'.
+SBY 13:25:29 [axi] Copy '/home/ptracton/src/Gemini_IP/IP/common/bus_matrix/verif/formal/../../rtl/verilog/bus_matrix_axi.sv' to '/home/ptracton/src/Gemini_IP/IP/common/bus_matrix/verif/formal/axi/src/bus_matrix_axi.sv'.
+SBY 13:25:29 [axi] Copy '/home/ptracton/src/Gemini_IP/IP/common/bus_matrix/verif/formal/bus_matrix_props.sv' to '/home/ptracton/src/Gemini_IP/IP/common/bus_matrix/verif/formal/axi/src/bus_matrix_props.sv'.
+SBY 13:25:29 [axi] Copy '/home/ptracton/src/Gemini_IP/IP/common/bus_matrix/verif/formal/bus_matrix_binds.sv' to '/home/ptracton/src/Gemini_IP/IP/common/bus_matrix/verif/formal/axi/src/bus_matrix_binds.sv'.
+SBY 13:25:29 [axi] engine_0: smtbmc z3
+SBY 13:25:29 [axi] base: starting process "cd axi/src; yosys -ql ../model/design.log ../model/design.ys"
+SBY 13:25:29 [axi] base: Warning: Wire bus_matrix_axi.\s_arprot_o [5] is used but has no driver.
+SBY 13:25:29 [axi] base: Warning: Wire bus_matrix_axi.\s_arprot_o [4] is used but has no driver.
+SBY 13:25:29 [axi] base: Warning: Wire bus_matrix_axi.\s_arprot_o [3] is used but has no driver.
+SBY 13:25:29 [axi] base: Warning: Wire bus_matrix_axi.\s_arprot_o [2] is used but has no driver.
+SBY 13:25:29 [axi] base: Warning: Wire bus_matrix_axi.\s_arprot_o [1] is used but has no driver.
+SBY 13:25:29 [axi] base: Warning: Wire bus_matrix_axi.\s_arprot_o [0] is used but has no driver.
+SBY 13:25:29 [axi] base: finished (returncode=0)
+SBY 13:25:29 [axi] prep: starting process "cd axi/model; yosys -ql design_prep.log design_prep.ys"
+SBY 13:25:29 [axi] prep: Warning: Wire bus_matrix_axi.\s_arprot_o [5] is used but has no driver.
+SBY 13:25:29 [axi] prep: Warning: Wire bus_matrix_axi.\s_arprot_o [4] is used but has no driver.
+SBY 13:25:29 [axi] prep: Warning: Wire bus_matrix_axi.\s_arprot_o [3] is used but has no driver.
+SBY 13:25:29 [axi] prep: Warning: Wire bus_matrix_axi.\s_arprot_o [2] is used but has no driver.
+SBY 13:25:29 [axi] prep: Warning: Wire bus_matrix_axi.\s_arprot_o [1] is used but has no driver.
+SBY 13:25:29 [axi] prep: Warning: Wire bus_matrix_axi.\s_arprot_o [0] is used but has no driver.
+SBY 13:25:29 [axi] prep: finished (returncode=0)
+SBY 13:25:29 [axi] smt2: starting process "cd axi/model; yosys -ql design_smt2.log design_smt2.ys"
+SBY 13:25:29 [axi] smt2: finished (returncode=0)
+SBY 13:25:29 [axi] engine_0.basecase: starting process "cd axi; yosys-smtbmc -s z3 --presat --noprogress -t 20  --append 0 --dump-vcd engine_0/trace.vcd --dump-yw engine_0/trace.yw --dump-vlogtb engine_0/trace_tb.v --dump-smtc engine_0/trace.smtc model/design_smt2.smt2"
+SBY 13:25:29 [axi] engine_0.induction: starting process "cd axi; yosys-smtbmc -s z3 --presat -i --noprogress -t 20  --append 0 --dump-vcd engine_0/trace_induct.vcd --dump-yw engine_0/trace_induct.yw --dump-vlogtb engine_0/trace_induct_tb.v --dump-smtc engine_0/trace_induct.smtc model/design_smt2.smt2"
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Solver: z3
+SBY 13:25:29 [axi] engine_0.induction: ##   0:00:00  Solver: z3
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 0..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 0..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 1..
+SBY 13:25:29 [axi] engine_0.induction: ##   0:00:00  Trying induction in step 20..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 1..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 2..
+SBY 13:25:29 [axi] engine_0.induction: ##   0:00:00  Temporal induction successful.
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 2..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 3..
+SBY 13:25:29 [axi] engine_0.induction: ##   0:00:00  Status: passed
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 3..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 4..
+SBY 13:25:29 [axi] engine_0.induction: finished (returncode=0)
+SBY 13:25:29 [axi] engine_0.induction: Status returned by engine for induction: pass
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 4..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 5..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 5..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 6..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 6..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 7..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 7..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 8..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 8..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 9..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 9..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 10..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 10..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 11..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 11..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 12..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 12..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 13..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 13..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 14..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 14..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 15..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 15..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 16..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 16..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 17..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 17..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 18..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 18..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assumptions in step 19..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Checking assertions in step 19..
+SBY 13:25:29 [axi] engine_0.basecase: ##   0:00:00  Status: passed
+SBY 13:25:29 [axi] engine_0.basecase: finished (returncode=0)
+SBY 13:25:29 [axi] engine_0.basecase: Status returned by engine for basecase: pass
+SBY 13:25:29 [axi] summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0)
+SBY 13:25:29 [axi] summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0)
+SBY 13:25:29 [axi] summary: engine_0 (smtbmc z3) returned pass for basecase
+SBY 13:25:29 [axi] summary: engine_0 (smtbmc z3) returned pass for induction
+SBY 13:25:29 [axi] summary: engine_0 did not produce any traces
+SBY 13:25:29 [axi] summary: successful proof by k-induction.
+SBY 13:25:29 [axi] DONE (PASS, rc=0)

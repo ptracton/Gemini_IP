@@ -7,7 +7,7 @@ Generated on: 2025-12-24 13:10:00 (Manual Verification & Automation Fix)
 |---|---|---|
 | **Regression Tests** | ✅ **Passed** | 100% Pass across Xilinx, ModelSim, GHDL |
 | **Code Coverage** | **Pending** | Planning for coverage collection |
-| **Formal Proofs** | **In Progress** | Connectivity proofs defined |
+| **Formal Proofs** | ✅ **Passed** | SymbiYosys (BMC + Prove) across AXI, AHB, WB |
 | **Linting** | ✅ **Passed** | Clean for core matrix logic |
 
 ## Summary

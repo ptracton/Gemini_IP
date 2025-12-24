@@ -10,16 +10,16 @@ read_verilog -sv -formal bus_matrix_pkg.sv
 read_verilog -sv -formal bus_matrix_decoder.sv
 read_verilog -sv -formal bus_matrix_arbiter.sv
 read_verilog -sv -formal bus_matrix_register_slice.sv
-read_verilog -sv -formal bus_matrix_wb.sv
+read_verilog -sv -formal bus_matrix_ahb.sv
 read_verilog -sv -formal bus_matrix_props.sv
 read_verilog -sv -formal bus_matrix_binds.sv
-prep -top bus_matrix_wb
+prep -top bus_matrix_ahb
 
 [files]
 ../../rtl/verilog/bus_matrix_pkg.sv
 ../../rtl/verilog/bus_matrix_decoder.sv
 ../../rtl/verilog/bus_matrix_arbiter.sv
 ../../rtl/verilog/bus_matrix_register_slice.sv
-../../rtl/verilog/bus_matrix_wb.sv
+../../rtl/verilog/bus_matrix_ahb.sv
 bus_matrix_props.sv
 bus_matrix_binds.sv

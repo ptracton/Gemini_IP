@@ -1,0 +1,2511 @@
+{
+  "$schema": "https://raw.githubusercontent.com/YosysHQ/yosys/main/misc/jny.schema.json",
+  "generator": "Yosys 0.60+36 (git sha1 2833a4450, clang++ 18.1.8 -fPIC -O3)",
+  "version": "0.0.1",
+  "invocation": "write_jny -no-connections ../model/design.json ",
+  "features": ["attributes", "properties"],
+  "modules": [
+      {
+        "name": "$paramod$622da07fe2f3adbd6b8f6deb4e4b5926ce34eb9f\\bus_matrix_arbiter",
+        "cell_sorts": [
+          {
+            "type": "$sub",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [2, 0]
+                },
+                {
+                  "name": "B",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [2, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$sub$bus_matrix_arbiter.sv:30$219",
+                  "attributes": {
+                    "src": "bus_matrix_arbiter.sv:30.34-30.46"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000010",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000010"
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$mux",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [2, 0]
+                },
+                {
+                  "name": "B",
+                  "direction": "io",
+                  "range": [2, 0]
+                },
+                {
+                  "name": "S",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [2, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$procmux$351",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_arbiter.sv:41.17-41.33|bus_matrix_arbiter.sv:41.13-46.16"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procmux$354",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_arbiter.sv:29.13-29.19|bus_matrix_arbiter.sv:29.9-33.12"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$reduce_or",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [2, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [0, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$reduce_or$bus_matrix_arbiter.sv:29$218",
+                  "attributes": {
+                    "src": "bus_matrix_arbiter.sv:29.13-29.19"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000010",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$reduce_or$bus_matrix_arbiter.sv:41$224",
+                  "attributes": {
+                    "src": "bus_matrix_arbiter.sv:41.27-41.33"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000010",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$not",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [2, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [2, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$not$bus_matrix_arbiter.sv:30$220",
+                  "attributes": {
+                    "src": "bus_matrix_arbiter.sv:30.32-30.47"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000010",
+                    "Y_WIDTH": "00000000000000000000000000000010"
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$logic_and",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "B",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [0, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$logic_and$bus_matrix_arbiter.sv:41$225",
+                  "attributes": {
+                    "src": "bus_matrix_arbiter.sv:41.17-41.33"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$adff",
+            "ports": [
+                {
+                  "name": "ARST",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "CLK",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "D",
+                  "direction": "io",
+                  "range": [2, 0]
+                },
+                {
+                  "name": "Q",
+                  "direction": "",
+                  "range": [2, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$procdff$812",
+                  "attributes": {
+                    "always_ff": "00000000000000000000000000000001",
+                    "src": "bus_matrix_arbiter.sv:37.5-48.8"
+                  },
+                  "parameters": {
+                    "ARST_POLARITY": "00000000000000000000000000000000",
+                    "ARST_VALUE": "00",
+                    "CLK_POLARITY": "1",
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$and",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [2, 0]
+                },
+                {
+                  "name": "B",
+                  "direction": "io",
+                  "range": [2, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [2, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$and$bus_matrix_arbiter.sv:30$221",
+                  "attributes": {
+                    "src": "bus_matrix_arbiter.sv:30.24-30.47"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000010",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000010",
+                    "Y_WIDTH": "00000000000000000000000000000010"
+                  }
+                }
+            ]
+          }
+        ],
+        "attributes": {
+            "dynports": "00000000000000000000000000000001",
+            "hdlname": "bus_matrix_arbiter",
+            "src": "bus_matrix_arbiter.sv:10.1-50.10"
+        }
+      },
+      {
+        "name": "$paramod$c0dc4d1e27d279b3c9b462a91333c3e0034e3a37\\bus_matrix_decoder",
+        "cell_sorts": [
+          {
+            "type": "$logic_not",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [0, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$logic_not$bus_matrix_decoder.sv:66$239",
+                  "attributes": {
+                    "src": "bus_matrix_decoder.sv:66.21-66.33"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$logic_and",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "B",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [0, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$logic_and$bus_matrix_decoder.sv:66$235",
+                  "attributes": {
+                    "src": "bus_matrix_decoder.sv:66.21-66.95"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_and$bus_matrix_decoder.sv:66$241",
+                  "attributes": {
+                    "src": "bus_matrix_decoder.sv:66.21-66.65"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_and$bus_matrix_decoder.sv:66$243",
+                  "attributes": {
+                    "src": "bus_matrix_decoder.sv:66.21-66.95"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$mux",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "B",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "S",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [0, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$procmux$249",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_decoder.sv:61.13-61.20|bus_matrix_decoder.sv:61.9-86.12"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$253",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_decoder.sv:79.17-79.29|bus_matrix_decoder.sv:79.13-85.16"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$283",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_decoder.sv:66.21-66.95|bus_matrix_decoder.sv:66.17-76.20"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$289",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_decoder.sv:66.21-66.95|bus_matrix_decoder.sv:66.17-76.20"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$291",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_decoder.sv:61.13-61.20|bus_matrix_decoder.sv:61.9-86.12"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$319",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_decoder.sv:66.21-66.95|bus_matrix_decoder.sv:66.17-76.20"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$327",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_decoder.sv:61.13-61.20|bus_matrix_decoder.sv:61.9-86.12"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$330",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_decoder.sv:61.13-61.20|bus_matrix_decoder.sv:61.9-86.12"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$342",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_decoder.sv:61.13-61.20|bus_matrix_decoder.sv:61.9-86.12"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$le",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [32, 0]
+                },
+                {
+                  "name": "B",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [0, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$le$bus_matrix_decoder.sv:66$234",
+                  "attributes": {
+                    "src": "bus_matrix_decoder.sv:66.70-66.94"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000100000",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$ge",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [32, 0]
+                },
+                {
+                  "name": "B",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [0, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$ge$bus_matrix_decoder.sv:66$232",
+                  "attributes": {
+                    "src": "bus_matrix_decoder.sv:66.38-66.64"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000100000",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                }
+            ]
+          }
+        ],
+        "attributes": {
+            "dynports": "00000000000000000000000000000001",
+            "hdlname": "bus_matrix_decoder",
+            "src": "bus_matrix_decoder.sv:27.1-89.10"
+        }
+      },
+      {
+        "name": "bus_matrix_axi",
+        "cell_sorts": [
+          {
+            "type": "$not",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [0, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$procmux$531_CMP0",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:297.31-297.31|bus_matrix_axi.sv:297.17-300.24"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$545_CMP0",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:297.31-297.31|bus_matrix_axi.sv:297.17-300.24"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$pmux",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "B",
+                  "direction": "io",
+                  "range": [2, 0]
+                },
+                {
+                  "name": "S",
+                  "direction": "io",
+                  "range": [2, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [0, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$procmux$529",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:298.94-298.94|bus_matrix_axi.sv:297.17-300.24"
+                  },
+                  "parameters": {
+                    "S_WIDTH": "00000000000000000000000000000010",
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$543",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:298.94-298.94|bus_matrix_axi.sv:297.17-300.24"
+                  },
+                  "parameters": {
+                    "S_WIDTH": "00000000000000000000000000000010",
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$778",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:168.103-168.103|bus_matrix_axi.sv:166.17-170.24"
+                  },
+                  "parameters": {
+                    "S_WIDTH": "00000000000000000000000000000011",
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procmux$804",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:168.103-168.103|bus_matrix_axi.sv:166.17-170.24"
+                  },
+                  "parameters": {
+                    "S_WIDTH": "00000000000000000000000000000011",
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$adff",
+            "ports": [
+                {
+                  "name": "ARST",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "CLK",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "D",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "Q",
+                  "direction": "",
+                  "range": [0, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$procdff$817",
+                  "attributes": {
+                    "always_ff": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:290.14-293.16"
+                  },
+                  "parameters": {
+                    "ARST_POLARITY": "00000000000000000000000000000000",
+                    "ARST_VALUE": "0",
+                    "CLK_POLARITY": "1",
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procdff$822",
+                  "attributes": {
+                    "always_ff": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:290.14-293.16"
+                  },
+                  "parameters": {
+                    "ARST_POLARITY": "00000000000000000000000000000000",
+                    "ARST_VALUE": "0",
+                    "CLK_POLARITY": "1",
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procdff$827",
+                  "attributes": {
+                    "always_ff": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:159.13-162.16"
+                  },
+                  "parameters": {
+                    "ARST_POLARITY": "00000000000000000000000000000000",
+                    "ARST_VALUE": "00",
+                    "CLK_POLARITY": "1",
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procdff$832",
+                  "attributes": {
+                    "always_ff": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:159.13-162.16"
+                  },
+                  "parameters": {
+                    "ARST_POLARITY": "00000000000000000000000000000000",
+                    "ARST_VALUE": "00",
+                    "CLK_POLARITY": "1",
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$paramod$622da07fe2f3adbd6b8f6deb4e4b5926ce34eb9f\\bus_matrix_arbiter",
+            "ports": [
+                {
+                  "name": "clk",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "gnt_o",
+                  "direction": "",
+                  "range": [2, 0]
+                },
+                {
+                  "name": "hold_i",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "req_i",
+                  "direction": "io",
+                  "range": [2, 0]
+                },
+                {
+                  "name": "rst_n",
+                  "direction": "io",
+                  "range": [0, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "GEN_AR_ARBITERS[0].u_arb_ar",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:305.65-310.14"
+                  },
+                  "parameters": {
+
+                  }
+                },
+                {
+                  "name": "GEN_AR_ARBITERS[1].u_arb_ar",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:305.65-310.14"
+                  },
+                  "parameters": {
+
+                  }
+                },
+                {
+                  "name": "GEN_AW_ARBITERS[0].u_arb_aw",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:176.65-181.14"
+                  },
+                  "parameters": {
+
+                  }
+                },
+                {
+                  "name": "GEN_AW_ARBITERS[1].u_arb_aw",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:176.65-181.14"
+                  },
+                  "parameters": {
+
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$eq",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [2, 0]
+                },
+                {
+                  "name": "B",
+                  "direction": "io",
+                  "range": [2, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [0, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$procmux$761_CMP0",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:168.103-168.103|bus_matrix_axi.sv:166.17-170.24"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000010",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000010",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$768_CMP0",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:167.101-167.101|bus_matrix_axi.sv:166.17-170.24"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000010",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$787_CMP0",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:168.103-168.103|bus_matrix_axi.sv:166.17-170.24"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000010",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000010",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$794_CMP0",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:167.101-167.101|bus_matrix_axi.sv:166.17-170.24"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000010",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$or",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "B",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [0, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$or$bus_matrix_axi.sv:129$44",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:129.39-129.56"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$or$bus_matrix_axi.sv:129$46",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:129.39-129.56"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$or$bus_matrix_axi.sv:268$78",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:268.39-268.56"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$or$bus_matrix_axi.sv:268$80",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:268.39-268.56"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$mux",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [2, 0]
+                },
+                {
+                  "name": "B",
+                  "direction": "io",
+                  "range": [2, 0]
+                },
+                {
+                  "name": "S",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [2, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$procmux$357",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:348.29-348.54|bus_matrix_axi.sv:348.25-353.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procmux$363",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:348.29-348.54|bus_matrix_axi.sv:348.25-353.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000100000"
+                  }
+                },
+                {
+                  "name": "$procmux$369",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:348.29-348.54|bus_matrix_axi.sv:348.25-353.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$375",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:348.29-348.54|bus_matrix_axi.sv:348.25-353.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$381",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:348.29-348.54|bus_matrix_axi.sv:348.25-353.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procmux$387",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:348.29-348.54|bus_matrix_axi.sv:348.25-353.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000100000"
+                  }
+                },
+                {
+                  "name": "$procmux$393",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:348.29-348.54|bus_matrix_axi.sv:348.25-353.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$399",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:348.29-348.54|bus_matrix_axi.sv:348.25-353.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$408",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:344.21-344.37|bus_matrix_axi.sv:344.17-355.20"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$411",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:344.21-344.37|bus_matrix_axi.sv:344.17-355.20"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procmux$414",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:344.21-344.37|bus_matrix_axi.sv:344.17-355.20"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000100000"
+                  }
+                },
+                {
+                  "name": "$procmux$417",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:344.21-344.37|bus_matrix_axi.sv:344.17-355.20"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$420",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:348.29-348.54|bus_matrix_axi.sv:348.25-353.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procmux$426",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:348.29-348.54|bus_matrix_axi.sv:348.25-353.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000100000"
+                  }
+                },
+                {
+                  "name": "$procmux$432",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:348.29-348.54|bus_matrix_axi.sv:348.25-353.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$438",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:348.29-348.54|bus_matrix_axi.sv:348.25-353.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$444",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:348.29-348.54|bus_matrix_axi.sv:348.25-353.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procmux$450",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:348.29-348.54|bus_matrix_axi.sv:348.25-353.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000100000"
+                  }
+                },
+                {
+                  "name": "$procmux$456",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:348.29-348.54|bus_matrix_axi.sv:348.25-353.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$462",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:348.29-348.54|bus_matrix_axi.sv:348.25-353.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$471",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:344.21-344.37|bus_matrix_axi.sv:344.17-355.20"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$474",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:344.21-344.37|bus_matrix_axi.sv:344.17-355.20"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procmux$477",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:344.21-344.37|bus_matrix_axi.sv:344.17-355.20"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000100000"
+                  }
+                },
+                {
+                  "name": "$procmux$480",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:344.21-344.37|bus_matrix_axi.sv:344.17-355.20"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$483",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:324.25-324.50|bus_matrix_axi.sv:324.21-328.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$486",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:324.25-324.50|bus_matrix_axi.sv:324.21-328.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000100000"
+                  }
+                },
+                {
+                  "name": "$procmux$489",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:324.25-324.50|bus_matrix_axi.sv:324.21-328.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$492",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:324.25-324.50|bus_matrix_axi.sv:324.21-328.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$495",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:324.25-324.50|bus_matrix_axi.sv:324.21-328.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000100000"
+                  }
+                },
+                {
+                  "name": "$procmux$498",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:324.25-324.50|bus_matrix_axi.sv:324.21-328.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$501",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:324.25-324.50|bus_matrix_axi.sv:324.21-328.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$504",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:324.25-324.50|bus_matrix_axi.sv:324.21-328.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000100000"
+                  }
+                },
+                {
+                  "name": "$procmux$507",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:324.25-324.50|bus_matrix_axi.sv:324.21-328.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$510",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:324.25-324.50|bus_matrix_axi.sv:324.21-328.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$513",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:324.25-324.50|bus_matrix_axi.sv:324.21-328.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000100000"
+                  }
+                },
+                {
+                  "name": "$procmux$516",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:324.25-324.50|bus_matrix_axi.sv:324.21-328.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$519",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:299.39-299.69|bus_matrix_axi.sv:299.35-299.94"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$525",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:298.38-298.70|bus_matrix_axi.sv:298.34-298.94"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$533",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:299.39-299.69|bus_matrix_axi.sv:299.35-299.94"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$539",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:298.38-298.70|bus_matrix_axi.sv:298.34-298.94"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$547",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:232.29-232.54|bus_matrix_axi.sv:232.25-237.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procmux$553",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:232.29-232.54|bus_matrix_axi.sv:232.25-237.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$559",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:232.29-232.54|bus_matrix_axi.sv:232.25-237.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$565",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:232.29-232.54|bus_matrix_axi.sv:232.25-237.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$571",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:232.29-232.54|bus_matrix_axi.sv:232.25-237.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procmux$577",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:232.29-232.54|bus_matrix_axi.sv:232.25-237.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$583",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:232.29-232.54|bus_matrix_axi.sv:232.25-237.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$589",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:232.29-232.54|bus_matrix_axi.sv:232.25-237.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$598",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:228.21-228.37|bus_matrix_axi.sv:228.17-239.20"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$601",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:228.21-228.37|bus_matrix_axi.sv:228.17-239.20"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procmux$604",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:228.21-228.37|bus_matrix_axi.sv:228.17-239.20"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$607",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:228.21-228.37|bus_matrix_axi.sv:228.17-239.20"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$610",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:232.29-232.54|bus_matrix_axi.sv:232.25-237.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procmux$616",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:232.29-232.54|bus_matrix_axi.sv:232.25-237.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$622",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:232.29-232.54|bus_matrix_axi.sv:232.25-237.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$628",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:232.29-232.54|bus_matrix_axi.sv:232.25-237.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$634",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:232.29-232.54|bus_matrix_axi.sv:232.25-237.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procmux$640",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:232.29-232.54|bus_matrix_axi.sv:232.25-237.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$646",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:232.29-232.54|bus_matrix_axi.sv:232.25-237.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$652",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:232.29-232.54|bus_matrix_axi.sv:232.25-237.28"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$661",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:228.21-228.37|bus_matrix_axi.sv:228.17-239.20"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$664",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:228.21-228.37|bus_matrix_axi.sv:228.17-239.20"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procmux$667",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:228.21-228.37|bus_matrix_axi.sv:228.17-239.20"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$670",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:228.21-228.37|bus_matrix_axi.sv:228.17-239.20"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$673",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$676",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000100"
+                  }
+                },
+                {
+                  "name": "$procmux$679",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000100000"
+                  }
+                },
+                {
+                  "name": "$procmux$682",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$685",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000011"
+                  }
+                },
+                {
+                  "name": "$procmux$688",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000100000"
+                  }
+                },
+                {
+                  "name": "$procmux$691",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$694",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$697",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000100"
+                  }
+                },
+                {
+                  "name": "$procmux$700",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000100000"
+                  }
+                },
+                {
+                  "name": "$procmux$703",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$706",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000011"
+                  }
+                },
+                {
+                  "name": "$procmux$709",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000100000"
+                  }
+                },
+                {
+                  "name": "$procmux$712",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$715",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$718",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000100"
+                  }
+                },
+                {
+                  "name": "$procmux$721",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000100000"
+                  }
+                },
+                {
+                  "name": "$procmux$724",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$727",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000011"
+                  }
+                },
+                {
+                  "name": "$procmux$730",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000100000"
+                  }
+                },
+                {
+                  "name": "$procmux$733",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$736",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$739",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000100"
+                  }
+                },
+                {
+                  "name": "$procmux$742",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000100000"
+                  }
+                },
+                {
+                  "name": "$procmux$745",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$748",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000011"
+                  }
+                },
+                {
+                  "name": "$procmux$751",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000100000"
+                  }
+                },
+                {
+                  "name": "$procmux$754",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:199.25-199.50|bus_matrix_axi.sv:199.21-209.24"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$758",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:169.39-169.69|bus_matrix_axi.sv:169.35-169.100"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procmux$765",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:168.39-168.69|bus_matrix_axi.sv:168.35-168.103"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procmux$773",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:167.36-167.68|bus_matrix_axi.sv:167.32-167.101"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procmux$784",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:169.39-169.69|bus_matrix_axi.sv:169.35-169.100"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procmux$791",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:168.39-168.69|bus_matrix_axi.sv:168.35-168.103"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                },
+                {
+                  "name": "$procmux$799",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:167.36-167.68|bus_matrix_axi.sv:167.32-167.101"
+                  },
+                  "parameters": {
+                    "WIDTH": "00000000000000000000000000000010"
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$reduce_bool",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [2, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [0, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$ne$bus_matrix_axi.sv:174$53",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:174.34-174.57"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000010",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$ne$bus_matrix_axi.sv:174$63",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:174.34-174.57"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000010",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$paramod$c0dc4d1e27d279b3c9b462a91333c3e0034e3a37\\bus_matrix_decoder",
+            "ports": [
+                {
+                  "name": "addr_i",
+                  "direction": "io",
+                  "range": [32, 0]
+                },
+                {
+                  "name": "dec_error_o",
+                  "direction": "",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "sec_error_o",
+                  "direction": "",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "secure_i",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "slave_sel_o",
+                  "direction": "",
+                  "range": [2, 0]
+                },
+                {
+                  "name": "valid_i",
+                  "direction": "io",
+                  "range": [0, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "GEN_AR_DECODERS[0].u_dec_ar",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:259.116-266.14"
+                  },
+                  "parameters": {
+
+                  }
+                },
+                {
+                  "name": "GEN_AR_DECODERS[1].u_dec_ar",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:259.116-266.14"
+                  },
+                  "parameters": {
+
+                  }
+                },
+                {
+                  "name": "GEN_AW_DECODERS[0].u_dec_aw",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:120.116-127.14"
+                  },
+                  "parameters": {
+
+                  }
+                },
+                {
+                  "name": "GEN_AW_DECODERS[1].u_dec_aw",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:120.116-127.14"
+                  },
+                  "parameters": {
+
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$logic_or",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "B",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [0, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$logic_or$bus_matrix_axi.sv:174$56",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:174.33-174.97"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_or$bus_matrix_axi.sv:174$66",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:174.33-174.97"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_or$bus_matrix_axi.sv:303$89",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:303.33-303.96"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_or$bus_matrix_axi.sv:303$98",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:303.33-303.96"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$logic_not",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [0, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$logic_not$bus_matrix_axi.sv:123$43",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:123.27-123.45"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_not$bus_matrix_axi.sv:123$45",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:123.27-123.45"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_not$bus_matrix_axi.sv:174$54",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:174.81-174.96"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_not$bus_matrix_axi.sv:174$64",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:174.81-174.96"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_not$bus_matrix_axi.sv:262$77",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:262.27-262.43"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_not$bus_matrix_axi.sv:262$79",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:262.27-262.43"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_not$bus_matrix_axi.sv:303$87",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:303.80-303.95"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_not$bus_matrix_axi.sv:303$96",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:303.80-303.95"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$776_CMP0",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:166.34-166.34|bus_matrix_axi.sv:166.17-170.24"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000010",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$procmux$802_CMP0",
+                  "attributes": {
+                    "full_case": "00000000000000000000000000000001",
+                    "src": "bus_matrix_axi.sv:166.34-166.34|bus_matrix_axi.sv:166.17-170.24"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000010",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                }
+            ]
+          },
+          {
+            "type": "$logic_and",
+            "ports": [
+                {
+                  "name": "A",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "B",
+                  "direction": "io",
+                  "range": [0, 0]
+                },
+                {
+                  "name": "Y",
+                  "direction": "",
+                  "range": [0, 0]
+                }
+            ],
+            "cells": [
+                {
+                  "name": "$logic_and$bus_matrix_axi.sv:167$50",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:167.36-167.68"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_and$bus_matrix_axi.sv:167$60",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:167.36-167.68"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_and$bus_matrix_axi.sv:168$51",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:168.39-168.69"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_and$bus_matrix_axi.sv:168$61",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:168.39-168.69"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_and$bus_matrix_axi.sv:169$52",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:169.39-169.69"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_and$bus_matrix_axi.sv:169$62",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:169.39-169.69"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_and$bus_matrix_axi.sv:174$55",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:174.63-174.96"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_and$bus_matrix_axi.sv:174$65",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:174.63-174.96"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_and$bus_matrix_axi.sv:298$84",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:298.38-298.70"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_and$bus_matrix_axi.sv:298$93",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:298.38-298.70"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_and$bus_matrix_axi.sv:299$85",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:299.39-299.69"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_and$bus_matrix_axi.sv:299$94",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:299.39-299.69"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_and$bus_matrix_axi.sv:303$88",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:303.62-303.95"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                },
+                {
+                  "name": "$logic_and$bus_matrix_axi.sv:303$97",
+                  "attributes": {
+                    "src": "bus_matrix_axi.sv:303.62-303.95"
+                  },
+                  "parameters": {
+                    "A_SIGNED": "00000000000000000000000000000000",
+                    "A_WIDTH": "00000000000000000000000000000001",
+                    "B_SIGNED": "00000000000000000000000000000000",
+                    "B_WIDTH": "00000000000000000000000000000001",
+                    "Y_WIDTH": "00000000000000000000000000000001"
+                  }
+                }
+            ]
+          }
+        ],
+        "attributes": {
+            "dynports": "00000000000000000000000000000001",
+            "top": "00000000000000000000000000000001",
+            "src": "bus_matrix_axi.sv:20.1-360.10"
+        }
+      }
+  ]
+}

@@ -1,11 +1,4 @@
-[options]
-mode prove
-depth 20
-
-[engines]
-smtbmc z3
-
-[script]
+# running in wb/src/
 read_verilog -sv -formal bus_matrix_pkg.sv
 read_verilog -sv -formal bus_matrix_decoder.sv
 read_verilog -sv -formal bus_matrix_arbiter.sv
@@ -15,11 +8,7 @@ read_verilog -sv -formal bus_matrix_props.sv
 read_verilog -sv -formal bus_matrix_binds.sv
 prep -top bus_matrix_wb
 
-[files]
-../../rtl/verilog/bus_matrix_pkg.sv
-../../rtl/verilog/bus_matrix_decoder.sv
-../../rtl/verilog/bus_matrix_arbiter.sv
-../../rtl/verilog/bus_matrix_register_slice.sv
-../../rtl/verilog/bus_matrix_wb.sv
-bus_matrix_props.sv
-bus_matrix_binds.sv
+hierarchy -smtcheck
+rename -witness
+write_jny -no-connections ../model/design.json
+write_rtlil ../model/design.il
