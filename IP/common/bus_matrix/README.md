@@ -22,12 +22,9 @@ The Bus Matrix IP provides a high-performance, configurable interconnect for sys
     - **AHB-to-APB Adapter**: Bridge for connecting low-speed APB4 peripherals to the high-speed AHB matrix.
 
 ## Verification Status
-| Metric | Status | Notes |
-|---|---|---|
-| **Regression Tests** | ✅ **Passed** | 100% Pass across Xilinx, ModelSim, GHDL |
-| **Code Coverage** | **Pending** | Planning for coverage collection |
-| **Formal Proofs** | **In Progress** | Connectivity proofs defined |
-| **Linting** | ✅ **Passed** | Clean for core matrix logic |
+The Bus Matrix IP follows the project's standardized verification flow. For a detailed breakdown of test results, coverage metrics, and simulator logs, please refer to the:
+
+**[Bus Matrix Regression Results](bus_matrix_regression_results.md)**
 
 ## Architecture
 
