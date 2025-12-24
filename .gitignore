@@ -253,3 +253,7 @@ transcript_*
 
 # Allow IP shared code library
 !IP/common/lib/
+
+# Coverage repositories
+coverage_repo/
+joined_coverage_repo/
