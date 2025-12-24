@@ -14,54 +14,64 @@ fi
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-MODULES=("timer_apb" "timer_axi" "timer_wb")
+LANGS=("verilog" "vhdl")
+BUS_TYPES=("apb" "axi" "wb")
 
-for MODULE in "${MODULES[@]}"; do
-    echo "----------------------------------------------------------------"
-    echo "Synthesizing $MODULE for part $PART..."
-    echo "----------------------------------------------------------------"
-    
-    # Create log directory if needed
-    mkdir -p "results/$MODULE"
-    
-    vivado -mode batch -source run_vivado.tcl -tclargs "$MODULE" "$PART" > "results/$MODULE/vivado.log" 2>&1
-    
-    if [ $? -eq 0 ]; then
-        echo "PASS: $MODULE Vivado synthesis successful."
-        echo "      Report: results/$MODULE/${MODULE}_utilization.rpt"
-    else
-        echo "FAIL: $MODULE Vivado synthesis failed."
-        echo "      Check log: results/$MODULE/vivado.log"
-    fi
-    # Quartus Synthesis
-    echo "Synthesizing $MODULE with Quartus..."
-    if command -v quartus_sh &> /dev/null; then
-        quartus_sh -t run_quartus.tcl "$MODULE" > "results/$MODULE/quartus.log" 2>&1
+for LANG in "${LANGS[@]}"; do
+    for BUS in "${BUS_TYPES[@]}"; do
+        MODULE="timer_$BUS"
+        RESULT_DIR="results/${MODULE}_${LANG}"
+        echo "----------------------------------------------------------------"
+        echo "Synthesizing $MODULE ($LANG) for part $PART..."
+        echo "----------------------------------------------------------------"
+        
+        # Create log directory if needed
+        mkdir -p "$RESULT_DIR"
+        
+        # Vivado Synthesis
+        echo "Running Vivado..."
+        vivado -mode batch -source run_vivado.tcl -tclargs "$MODULE" "$PART" "$RESULT_DIR" > "$RESULT_DIR/vivado.log" 2>&1
+        
         if [ $? -eq 0 ]; then
-            echo "PASS: $MODULE Quartus synthesis successful."
-            echo "      Log: results/$MODULE/quartus.log"
+            echo "PASS: $MODULE ($LANG) Vivado synthesis successful."
+            echo "      Report: $RESULT_DIR/${MODULE}_utilization.rpt"
         else
-            echo "FAIL: $MODULE Quartus synthesis failed."
-            echo "      Check log: results/$MODULE/quartus.log"
+            echo "FAIL: $MODULE ($LANG) Vivado synthesis failed."
+            echo "      Check log: $RESULT_DIR/vivado.log"
         fi
-    else
-        echo "SKIP: Quartus not found in PATH."
-    fi
 
-    # Yosys Synthesis
-    echo "Synthesizing $MODULE with Yosys..."
-    if command -v yosys &> /dev/null; then
-        yosys -c run_yosys.tcl -- "$MODULE" > "results/$MODULE/yosys.log" 2>&1
-        if [ $? -eq 0 ]; then
-            echo "PASS: $MODULE Yosys synthesis successful."
-            echo "      Log: results/$MODULE/yosys.log"
+        # Quartus Synthesis
+        echo "Running Quartus..."
+        if command -v quartus_sh &> /dev/null; then
+            quartus_sh -t run_quartus.tcl "$MODULE" "$RESULT_DIR" > "$RESULT_DIR/quartus.log" 2>&1
+            if [ $? -eq 0 ]; then
+                echo "PASS: $MODULE ($LANG) Quartus synthesis successful."
+                echo "      Log: $RESULT_DIR/quartus.log"
+            else
+                echo "FAIL: $MODULE ($LANG) Quartus synthesis failed."
+                echo "      Check log: $RESULT_DIR/quartus.log"
+            fi
         else
-            echo "FAIL: $MODULE Yosys synthesis failed."
-            echo "      Check log: results/$MODULE/yosys.log"
+            echo "SKIP: Quartus not found in PATH."
         fi
-    else
-        echo "SKIP: Yosys not found in PATH."
-    fi
+
+        # Yosys Synthesis (Verilog/SV only for now)
+        if [ "$LANG" == "verilog" ]; then
+            echo "Running Yosys..."
+            if command -v yosys &> /dev/null; then
+                yosys -c run_yosys.tcl -- "$MODULE" "$RESULT_DIR" > "$RESULT_DIR/yosys.log" 2>&1
+                if [ $? -eq 0 ]; then
+                    echo "PASS: $MODULE ($LANG) Yosys synthesis successful."
+                    echo "      Log: $RESULT_DIR/yosys.log"
+                else
+                    echo "FAIL: $MODULE ($LANG) Yosys synthesis failed."
+                    echo "      Check log: $RESULT_DIR/yosys.log"
+                fi
+            else
+                echo "SKIP: Yosys not found in PATH."
+            fi
+        fi
+    done
 done
 
 echo "----------------------------------------------------------------"

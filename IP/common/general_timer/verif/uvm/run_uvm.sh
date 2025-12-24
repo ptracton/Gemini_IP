@@ -13,21 +13,24 @@ UVM_DIR="$SCRIPT_DIR"
 # general_timer -> common -> IP -> Gemini_IP (3 levels up)
 source $IP_DIR/../../../setup.sh
 
-# Working Directory
-mkdir -p work
-cd work
-
 # Defaults
 BUS_TYPE="axi"
 TEST_NAME="timer_reg_test"
 LANG="verilog"
-DEFINES=""
-TOP="tb_timer"
 
 # Parse arguments
 if [ -n "$1" ]; then BUS_TYPE=$1; fi
 if [ -n "$2" ]; then LANG=$2; fi
 if [ -n "$3" ]; then TEST_NAME=$3; fi
+
+# Working Directory
+WORK_DIR="work_${BUS_TYPE}_${TEST_NAME}_${LANG}"
+mkdir -p $WORK_DIR
+cd $WORK_DIR
+
+# Initial Defines
+DEFINES=""
+TOP="tb_timer"
 
 echo "=================================================="
 echo "Running UVM Simulation: $BUS_TYPE ($LANG)"
@@ -52,7 +55,11 @@ rm -rf xsim.dir *.log *.jou *.pb
 # Compile RTL
 if [ "$LANG" == "verilog" ]; then
     echo "--- Compiling SV RTL ---"
+    SHARED_RTL_DIR="$IP_DIR/../../common/lib/rtl"
     xvlog -sv -d SIMULATION \
+        $SHARED_RTL_DIR/axi4lite_slave_adapter.sv \
+        $SHARED_RTL_DIR/apb_slave_adapter.sv \
+        $SHARED_RTL_DIR/wb_slave_adapter.sv \
         $SV_RTL_DIR/timer_core.sv \
         $SV_RTL_DIR/timer_regs.sv \
         $SV_RTL_DIR/timer_apb.sv \
@@ -60,28 +67,33 @@ if [ "$LANG" == "verilog" ]; then
         $SV_RTL_DIR/timer_wb.sv
 else
     echo "--- Compiling VHDL RTL ---"
-    xvhdl -2008 $VHDL_RTL_DIR/timer_core.vhd
+    SHARED_RTL_DIR="$IP_DIR/../../common/lib/rtl"
+    xvhdl -2008 $SHARED_RTL_DIR/axi4lite_slave_adapter.vhd
+    xvhdl -2008 $SHARED_RTL_DIR/apb_slave_adapter.vhd
+    xvhdl -2008 $SHARED_RTL_DIR/wb_slave_adapter.vhd
     xvhdl -2008 $VHDL_RTL_DIR/timer_regs.vhd
+    xvhdl -2008 $VHDL_RTL_DIR/timer_core.vhd
     xvhdl -2008 $VHDL_RTL_DIR/timer_apb.vhd
     xvhdl -2008 $VHDL_RTL_DIR/timer_axi.vhd
     xvhdl -2008 $VHDL_RTL_DIR/timer_wb.vhd
 fi
 
 echo "--- Compiling UVM Components ---"
+SHARED_AGENTS_DIR="$IP_DIR/../../common/lib/verif/uvm/agents"
 xvlog -sv -L uvm \
     -i $UVM_DIR/seq \
     -i $UVM_DIR/tests \
     -i $UVM_DIR/agents/timer_agent \
-    -i $UVM_DIR/agents/axi_agent \
-    -i $UVM_DIR/agents/apb_agent \
-    -i $UVM_DIR/agents/wb_agent \
+    -i $SHARED_AGENTS_DIR/axi_agent \
+    -i $SHARED_AGENTS_DIR/apb_agent \
+    -i $SHARED_AGENTS_DIR/wb_agent \
     -i $UVM_DIR/uvm_env \
-    $UVM_DIR/agents/apb_agent/apb_if.sv \
-    $UVM_DIR/agents/apb_agent/apb_agent_pkg.sv \
-    $UVM_DIR/agents/axi_agent/axi_if.sv \
-    $UVM_DIR/agents/axi_agent/axi_agent_pkg.sv \
-    $UVM_DIR/agents/wb_agent/wb_if.sv \
-    $UVM_DIR/agents/wb_agent/wb_agent_pkg.sv \
+    $SHARED_AGENTS_DIR/apb_agent/apb_if.sv \
+    $SHARED_AGENTS_DIR/apb_agent/apb_agent_pkg.sv \
+    $SHARED_AGENTS_DIR/axi_agent/axi_if.sv \
+    $SHARED_AGENTS_DIR/axi_agent/axi_agent_pkg.sv \
+    $SHARED_AGENTS_DIR/wb_agent/wb_if.sv \
+    $SHARED_AGENTS_DIR/wb_agent/wb_agent_pkg.sv \
     $UVM_DIR/agents/timer_agent/timer_if.sv \
     $UVM_DIR/agents/timer_agent/timer_agent_pkg.sv \
     $UVM_DIR/uvm_env/timer_env_pkg.sv \

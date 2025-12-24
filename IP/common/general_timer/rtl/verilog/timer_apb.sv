@@ -49,23 +49,78 @@ module timer_apb (
     /* verilator lint_on UNUSEDSIGNAL */
     logic        core_intr;
 
-    assign pready  = 1'b1; // Zero-wait state
-    assign pslverr = 1'b0;
-    assign prdata  = rdata;
-    assign irq     = core_intr;
+    // APB Slave Adapter
+    /* verilator lint_off UNUSEDSIGNAL */
+    logic [31:0] reg_addr;
+    logic [31:0] reg_wdata;
+    logic        reg_we;
+    logic        reg_re;
+    /* verilator lint_on UNUSEDSIGNAL */
     
-    assign cs   = psel && penable;
-    assign we   = pwrite;
-    assign addr = paddr[5:0];
+    /* verilator lint_off PINCONNECTEMPTY */
+    apb_slave_adapter #(
+        .ADDR_WIDTH(32),
+        .DATA_WIDTH(32)
+    ) u_apb_adapter (
+        .pclk      (pclk),
+        .presetn   (presetn),
+        .paddr     (paddr),
+        .pprot     (pprot),
+        .psel      (psel),
+        .penable   (penable),
+        .pwrite    (pwrite),
+        .pwdata    (pwdata),
+        .pstrb     (pstrb),
+        .pready    (pready),
+        .prdata    (prdata),
+        .pslverr   (pslverr),
+        .reg_addr  (reg_addr),
+        .reg_wdata (reg_wdata),
+        .reg_rdata (rdata),
+        .reg_we    (reg_we),
+        .reg_re    (reg_re),
+        .reg_be    ()
+    );
+    /* verilator lint_on PINCONNECTEMPTY */
+
+    // Map Adapter outputs to Timer Regs inputs
+    assign cs   = reg_we || reg_re;
+    assign we   = reg_we;
+    assign addr = reg_addr[5:0];
+    
+    // Note: Timer Regs uses pwdata directly? 
+    // In original: .wdata(pwdata).
+    // Adapter provides reg_wdata (which is pwdata).
+    // Let's use reg_wdata from Adapter for cleanliness? 
+    // But reg_wdata output from adapter is logic.
+    // I need to connect it.
+    // Let's modify instantiation above to bind reg_wdata.
+    // And update timer_regs instantiation.
+    // Actually, timer_regs takes .wdata(pwdata).
+    // I can leave it or change it.
+    // I'll leave it as pwdata to minimize diffs in instantiation, 
+    // OR change it to use reg_wdata to be strictly utilizing the adapter.
+    // Let's leave it as pwdata (adapter pass-through is just assign reg_wdata = pwdata).
+    
+    // No, wait. I should use reg_wdata from adapter to be clean.
+    // But timer_regs instantiation is below this block.
+    // I am replacing lines 52-60.
+    // timer_regs instantiation starts line 62.
+    // I cannot change timer_regs instantiation in this edit.
+    // So I must stick to using pwdata in timer_regs (which is fine).
+    // So reg_wdata from adapter can be unused or open.
+    // I'll leave it open.
 
     // Register Block Instantiation
+    assign irq = core_intr;
+
     timer_regs u_timer_regs (
         .clk(pclk),
         .rst_n(presetn),
         .cs(cs),
         .we(we),
         .addr(addr),
-        .wdata(pwdata),
+        .wdata(reg_wdata),
         .rdata(rdata),
         
         .en(en),

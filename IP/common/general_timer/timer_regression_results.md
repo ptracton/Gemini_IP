@@ -1,9 +1,9 @@
 # General Timer Regression Results
 
-Generated on: 2025-12-22 21:10:00
+Generated on: 2025-12-23 19:12:25
 
 **Overall Status: PASSED**
-**Passed: 35 / 35**
+**Passed: 36 / 36**
 
 | Test Name | Status | Description |
 | :--- | :---: | :--- |
@@ -42,16 +42,4 @@ Generated on: 2025-12-22 21:10:00
 | UVM_AXI_SV_timer_pwm_perf_test | ✅ PASS | Specialized timer_pwm_perf_test (AXI SV) via Xilinx xsim |
 | UVM_AXI_SV_timer_capture_stress_test | ✅ PASS | Specialized timer_capture_stress_test (AXI SV) via Xilinx xsim |
 | UVM_AXI_SV_timer_prescaler_sweep_test | ✅ PASS | Specialized timer_prescaler_sweep_test (AXI SV) via Xilinx xsim |
-
-## Code Coverage Results (Code Coverage)
-**Global Branch Coverage**: ~21% (Note: Diluted by potentially un-instrumented testbench code in scope)
-
-| Module | Branch Coverage | Condition Coverage | Notes |
-| :--- | :---: | :---: | :--- |
-| **timer_core** | **96.77%** | 71.43% | Primary DUT Logic. Exceeds >95% Goal. |
-| **timer_axi** | **100.00%** | 0.00% | AXI Wrapper Interface |
-| **timer_wb** | **100.00%** | 0.00% | Wishbone Wrapper Interface |
-| **timer_regs** | 73.33% | 100.00% | Register Block (Unreachable default cases) |
-| **timer_apb** | 0.00%* | 0.00% | *No Branching Logic Present (Pure Wire Mapping)* |
-
-**Coverage Conclusion**: The core timer logic (`timer_core`) and complex bus wrappers (`timer_axi`, `timer_wb`) are fully verified. `timer_apb` is structurally simple and verified via passing regression tests.
+| UVM_AXI_SV_timer_full_mode_test | ✅ PASS | Specialized timer_full_mode_test (AXI SV) via Xilinx xsim |

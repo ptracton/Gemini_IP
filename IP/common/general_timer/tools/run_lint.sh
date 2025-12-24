@@ -15,20 +15,27 @@ SCRIPT_DIR=$(dirname "$0")
 IP_DIR="$SCRIPT_DIR/.."
 RTL_DIR_SV="$IP_DIR/rtl/verilog"
 RTL_DIR_VHDL="$IP_DIR/rtl/vhdl"
+SHARED_RTL_DIR="$IP_DIR/../../common/lib/rtl"
 
 echo "=================================================="
 echo "Linting SystemVerilog (Verilator)"
 echo "=================================================="
 # Lint all source files
-# Note: We check files individually or as a set. Checking as a set is better for package/macro visibility.
-# However, Verilator with --lint-only usually processes one top at a time perfectly fine.
-for file in $RTL_DIR_SV/timer_regs.sv \
+for file in $SHARED_RTL_DIR/axi4lite_slave_adapter.sv \
+            $SHARED_RTL_DIR/apb_slave_adapter.sv \
+            $SHARED_RTL_DIR/wb_slave_adapter.sv \
+            $RTL_DIR_SV/timer_regs.sv \
             $RTL_DIR_SV/timer_core.sv \
             $RTL_DIR_SV/timer_apb.sv \
             $RTL_DIR_SV/timer_axi.sv \
             $RTL_DIR_SV/timer_wb.sv; do
     echo "Linting $(basename $file)..."
-    verilator --lint-only -Wall -I$RTL_DIR_SV $file
+    SHARED_VERIF_DIR="$IP_DIR/../../common/lib/verif"
+    verilator --lint-only -Wall \
+        -I$RTL_DIR_SV \
+        -I$SHARED_RTL_DIR \
+        -I$SHARED_VERIF_DIR \
+        $file
 done
 
 echo "=================================================="
@@ -36,7 +43,10 @@ echo "Checking VHDL (GHDL)"
 echo "=================================================="
 mkdir -p lint_vhdl
 # Analyze in dependency order
-for file in $RTL_DIR_VHDL/timer_regs.vhd \
+for file in $SHARED_RTL_DIR/axi4lite_slave_adapter.vhd \
+            $SHARED_RTL_DIR/apb_slave_adapter.vhd \
+            $SHARED_RTL_DIR/wb_slave_adapter.vhd \
+            $RTL_DIR_VHDL/timer_regs.vhd \
             $RTL_DIR_VHDL/timer_core.vhd \
             $RTL_DIR_VHDL/timer_apb.vhd \
             $RTL_DIR_VHDL/timer_axi.vhd \

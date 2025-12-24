@@ -57,7 +57,10 @@ module timer_axi (
     // Internal signals
     logic cs, we;
     logic [5:0] addr;
+    /* verilator lint_off UNUSEDSIGNAL */
     logic [31:0] reg_rdata;
+    logic [31:0] reg_wdata;
+    /* verilator lint_on UNUSEDSIGNAL */
     
     /* verilator lint_off UNUSEDSIGNAL */
     logic en, mode, dir, pwm_en, ext_en, cap_en, pre_en, load_cmd, core_irq_pulse, capture_stb, core_intr;
@@ -69,76 +72,63 @@ module timer_axi (
     // logic aw_en; // Removed unused signal
     // State Machine / Handshaking
     
-    // Write Channel
-    always_ff @(posedge aclk or negedge aresetn) begin
-        if (!aresetn) begin
-            awready <= 1'b0;
-            wready  <= 1'b0;
-            bvalid  <= 1'b0;
-            bresp   <= 2'b00;
-        end else begin
-            // Address Handshake
-            if (awvalid && !awready) awready <= 1'b1;
-            else awready <= 1'b0;
-            
-            // Data Handshake
-            if (wvalid && !wready) wready <= 1'b1;
-            else wready <= 1'b0;
-            
-            // Response Handshake
-            if (awready && awvalid && wready && wvalid && !bvalid) begin
-                bvalid <= 1'b1;
-                bresp  <= 2'b00; // OKAY
-            end else if (bready && bvalid) begin
-                bvalid <= 1'b0;
-            end
-        end
-    end
 
-    // Read Channel
-    always_ff @(posedge aclk or negedge aresetn) begin
-        if (!aresetn) begin
-            arready <= 1'b0;
-            rvalid  <= 1'b0;
-            rresp   <= 2'b00;
-        end else begin
-            // Read Address Handshake
-            if (arvalid && !arready) arready <= 1'b1;
-            else arready <= 1'b0;
-            
-            // Read Data Handshake
-            if (arready && arvalid && !rvalid) begin
-                rvalid <= 1'b1;
-                rresp  <= 2'b00; // OKAY
-            end else if (rready && rvalid) begin
-                rvalid <= 1'b0;
-            end
-        end
-    end
-
-    // Address and Data Routing
+    logic read_en;
     /* verilator lint_off UNUSEDSIGNAL */
-    logic [31:0] axi_addr;
+    logic [31:0] axi_addr_32;
     /* verilator lint_on UNUSEDSIGNAL */
-    always_comb begin
-        if (awvalid) axi_addr = awaddr;
-        else         axi_addr = araddr;
-    end
-    
-    assign addr   = axi_addr[5:0];
-    // CS generation: High when address/data valid handshake occurs for write, or address valid for read
-    // Note: This logic assumes single cycle access for registers
-    assign cs     = (awready && awvalid && wready && wvalid) || (arready && arvalid); 
-    assign we     = (awready && awvalid && wready && wvalid);
+    logic [31:0] rdata_q;
+
+    // AXI4-Lite Slave Adapter
+    /* verilator lint_off PINCONNECTEMPTY */
+    axi4lite_slave_adapter #(
+        .ADDR_WIDTH(32),
+        .DATA_WIDTH(32)
+    ) u_axi_adapter (
+        .aclk           (aclk),
+        .aresetn        (aresetn),
+        .s_axi_awaddr   (awaddr),
+        .s_axi_awprot   (awprot),
+        .s_axi_awvalid  (awvalid),
+        .s_axi_awready  (awready),
+        .s_axi_wdata    (wdata),
+        .s_axi_wstrb    (wstrb),
+        .s_axi_wvalid   (wvalid),
+        .s_axi_wready   (wready),
+        .s_axi_bresp    (bresp),
+        .s_axi_bvalid   (bvalid),
+        .s_axi_bready   (bready),
+        .s_axi_araddr   (araddr),
+        .s_axi_arprot   (arprot),
+        .s_axi_arvalid  (arvalid),
+        .s_axi_arready  (arready),
+        .s_axi_rdata    (rdata), // Adapter output connected to port
+        // Wait, adapter drives rdata port? Yes.
+        // But I need to intercept it?
+        // Adapter.s_axi_rdata = reg_rdata_input.
+        // I feed rdata_q into reg_rdata_input.
+        // So .s_axi_rdata(rdata) is correct.
+        .s_axi_rresp    (rresp),
+        .s_axi_rvalid   (rvalid),
+        .s_axi_rready   (rready),
+        .reg_addr       (axi_addr_32),
+        .reg_wdata      (reg_wdata),
+        .reg_rdata      (rdata_q),
+        .reg_we         (we),
+        .reg_re         (read_en),
+        .reg_be         ()
+    );
+    /* verilator lint_on PINCONNECTEMPTY */
+
+    assign addr = axi_addr_32[5:0];
+    assign cs = we || read_en;
     
     // Latch Read Data
-    logic [31:0] rdata_q;
     always_ff @(posedge aclk) begin
-        if (arready && arvalid) begin
+        if (read_en) begin
             rdata_q <= reg_rdata;
         end
-    end
-    assign rdata = rdata_q; 
+    end 
 
     // Assign interrupt
     assign irq = core_intr;
@@ -150,7 +140,7 @@ module timer_axi (
         .cs         (cs),
         .we         (we),
         .addr       (addr),
-        .wdata      (wdata),
+        .wdata      (reg_wdata),
         .rdata      (reg_rdata),
         .en         (en),
         .mode       (mode),

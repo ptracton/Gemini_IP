@@ -9,7 +9,7 @@ rm -rf work
 mkdir -p work
 
 # Compile
-iverilog -g2012 \
+iverilog -g2012 -I../../../lib/verif \
     -o work/timer_core.vvp \
     -s tb_timer_core \
     ../../rtl/verilog/timer_core.sv \
@@ -22,9 +22,10 @@ cd ..
 
 # Compile & Run APB
 echo "--- Compiling APB Test ---"
-iverilog -g2012 \
+iverilog -g2012 -I../../../lib/verif \
     -o work/timer_apb.vvp \
     -s tb_timer_apb \
+    ../../../lib/rtl/apb_slave_adapter.sv \
     ../../rtl/verilog/timer_core.sv \
     ../../rtl/verilog/timer_regs.sv \
     ../../rtl/verilog/timer_apb.sv \
@@ -36,9 +37,10 @@ cd ..
 
 # Compile & Run AXI
 echo "--- Compiling AXI Test ---"
-iverilog -g2012 \
+iverilog -g2012 -I../../../lib/verif \
     -o work/timer_axi.vvp \
     -s tb_timer_axi \
+    ../../../lib/rtl/axi4lite_slave_adapter.sv \
     ../../rtl/verilog/timer_core.sv \
     ../../rtl/verilog/timer_regs.sv \
     ../../rtl/verilog/timer_axi.sv \
@@ -50,9 +52,10 @@ cd ..
 
 # Compile & Run Wishbone
 echo "--- Compiling Wishbone Test ---"
-iverilog -g2012 \
+iverilog -g2012 -I../../../lib/verif \
     -o work/timer_wb.vvp \
     -s tb_timer_wb \
+    ../../../lib/rtl/wb_slave_adapter.sv \
     ../../rtl/verilog/timer_core.sv \
     ../../rtl/verilog/timer_regs.sv \
     ../../rtl/verilog/timer_wb.sv \

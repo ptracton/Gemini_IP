@@ -3,18 +3,20 @@
 
 yosys -import
 
-if { $argc != 1 } {
-    puts "Usage: yosys -c run_yosys.tcl -- <TOP_MODULE>"
+if { $argc != 2 } {
+    puts "Usage: yosys -c run_yosys.tcl -- <TOP_MODULE> <OUTPUT_DIR>"
     exit 1
 }
 
 set TOP_MODULE [lindex $argv 0]
+set OUTPUT_DIR [lindex $argv 1]
+set SHARED_RTL_DIR "../../lib/rtl"
 set RTL_DIR "../rtl/verilog"
-set OUTPUT_DIR "results/$TOP_MODULE"
 
 puts "========================================================"
 puts " Starting Yosys Synthesis for $TOP_MODULE"
 puts " RTL Dir: $RTL_DIR"
+puts " Shared RTL Dir: $SHARED_RTL_DIR"
 puts " Output Dir: $OUTPUT_DIR"
 puts "========================================================"
 
@@ -22,6 +24,15 @@ puts "========================================================"
 read_verilog -sv $RTL_DIR/timer_regs.sv
 read_verilog -sv $RTL_DIR/timer_core.sv
 read_verilog -sv $RTL_DIR/$TOP_MODULE.sv
+
+# Read Shared Adapters
+if { [string match "*_axi" $TOP_MODULE] } {
+    read_verilog -sv "$SHARED_RTL_DIR/axi4lite_slave_adapter.sv"
+} elseif { [string match "*_apb" $TOP_MODULE] } {
+    read_verilog -sv "$SHARED_RTL_DIR/apb_slave_adapter.sv"
+} elseif { [string match "*_wb" $TOP_MODULE] } {
+    read_verilog -sv "$SHARED_RTL_DIR/wb_slave_adapter.sv"
+}
 
 # Check Hierarchy
 hierarchy -top $TOP_MODULE

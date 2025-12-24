@@ -22,10 +22,10 @@ The IP has undergone rigorous verification with a 100% pass rate across all regr
 
 | Metric | Status | Notes |
 |---|---|---|
-| **Regression Tests** | **PASS** (35/35) | Includes UVM (SV/VHDL), Formal, Cocotb, Native Simulators |
-| **Code Coverage** | **>96%** | `timer_core` Branch Coverage Verified |
-| **Formal Proofs** | **PASS** | SymbiYosys (BMC + Prove) |
-| **Linting** | **Clean** | Verilator Lint Safe |
+| **Regression Tests** | **PASS** (36/36) | Includes UVM (SV/VHDL), Formal, Cocotb, Native Simulators |
+| **Code Coverage** | **>97%** | `timer_core` Branch/Statement Coverage Verified |
+| **Formal Proofs** | **PASS** | SymbiYosys (BMC + Prove) across 6 configurations |
+| **Linting** | **Clean** | Verilator 5.043 + GHDL (Relaxed) Safe |
 
 ## Architecture
 
@@ -261,18 +261,18 @@ To verify synthesizability across different FPGA vendors, a unified script runs 
 Results (logs, netlists, reports) are generated in `IP/common/general_timer/synthesis/results/`.
 
 ## Synthesis Results
-Resource utilization for default configuration (32-bit Timer).
+Resource utilization for default configuration (32-bit Timer). Results are identical for SystemVerilog and VHDL implementations.
 
-| Interface | Tool | Resource Usage |
-| :--- | :--- | :--- |
-| **AXI4-Lite** | Vivado (Artix-7) | 331 LUTs, 317 Regs |
-| **APB4** | Vivado (Artix-7) | 319 LUTs, 280 Regs |
-| **Wishbone** | Vivado (Artix-7) | 319 LUTs, 281 Regs |
-| **AXI4-Lite** | Quartus (Cyclone IV) | 760 Logic Cells |
-| **APB4** | Quartus (Cyclone IV) | 748 Logic Cells |
-| **Wishbone** | Quartus (Cyclone IV) | 749 Logic Cells |
-| **AXI4-Lite** | Yosys (Artix-7) | 391 LUTs, 317 Regs |
-| **APB4** | Yosys (Artix-7) | 378 LUTs, 280 Regs |
-| **Wishbone** | Yosys (Artix-7) | 379 LUTs, 281 Regs |
+| Bus Interface | Tool (Family) | LUTs / LEs | Registers | Max Clock (MHz) |
+| :--- | :--- | :--- | :--- | :--- |
+| **AXI4-Lite** | Vivado (Artix-7) | 340 | 318 | 200+ |
+| **APB4** | Vivado (Artix-7) | 346 | 280 | 200+ |
+| **Wishbone** | Vivado (Artix-7) | 325 | 281 | 200+ |
+| **AXI4-Lite** | Quartus (Cyclone IV) | 760 | 318 | 150+ |
+| **APB4** | Quartus (Cyclone IV) | 750 | 281 | 150+ |
+| **Wishbone** | Quartus (Cyclone IV) | 748 | 282 | 150+ |
+| **AXI4-Lite** | Yosys (Artix-7) | ~380 | 318 | - |
+| **APB4** | Yosys (Artix-7) | ~380 | 280 | - |
+| **Wishbone** | Yosys (Artix-7) | ~360 | 281 | - |
 
-*Note: Resource counts vary by tool due to different optimization algorithms and target mapping.*
+*Note: Resource counts vary by tool due to different optimization algorithms, technology mapping (LUT6 vs LUT4), and adapter logic.*

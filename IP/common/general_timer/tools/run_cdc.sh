@@ -11,11 +11,13 @@ echo "Running CDC and structural linting with Verilator"
 echo "=================================================="
 
 # Run Verilator Lint
-# --lint-only: Only perform linting
-# -Wall: Enable all warnings
-# -Wno-DECLFILENAME: Ignore filename vs module name mismatch
+SHARED_RTL_DIR="$IP_DIR/../../common/lib/rtl"
+SHARED_VERIF_DIR="$IP_DIR/../../common/lib/verif"
 verilator --lint-only -Wall -Wno-DECLFILENAME \
-    -I$SV_RTL_DIR \
+    -I$SV_RTL_DIR -I$SHARED_RTL_DIR -I$SHARED_VERIF_DIR \
+    $SHARED_RTL_DIR/axi4lite_slave_adapter.sv \
+    $SHARED_RTL_DIR/apb_slave_adapter.sv \
+    $SHARED_RTL_DIR/wb_slave_adapter.sv \
     $SV_RTL_DIR/timer_core.sv \
     $SV_RTL_DIR/timer_regs.sv \
     $SV_RTL_DIR/timer_apb.sv \

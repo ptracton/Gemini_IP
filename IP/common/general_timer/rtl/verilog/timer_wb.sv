@@ -23,6 +23,7 @@ module timer_wb (
     output logic [31:0] wb_dat_o,
     output logic        wb_ack_o,
     output logic        wb_err_o,
+    output logic        wb_stall_o,
 
     // External IO
     input  logic        ext_meas_i,
@@ -44,40 +45,63 @@ module timer_wb (
     logic        core_irq_pulse, capture_stb, core_intr;
     logic [15:0] pre_val;
     logic [31:0] load_val, cmp_val, current_val, capture_val;
-    logic        ack_q;
 
     assign presetn = ~wb_rst_i;
-    assign wb_err_o = 1'b0;
-    assign wb_dat_o = rdata;
-    assign irq      = core_intr;
+    // Wishbone Slave Adapter
+    /* verilator lint_off UNUSEDSIGNAL */
+    logic reg_we, reg_re;
+    logic [31:0] reg_addr_wire;
+    logic [31:0] reg_wdata;
+    /* verilator lint_on UNUSEDSIGNAL */
 
-    assign cs   = wb_stb_i && wb_cyc_i;
-    assign we   = wb_we_i;
-    assign addr = wb_adr_i[5:0];
+    /* verilator lint_off PINCONNECTEMPTY */
+    wb_slave_adapter #(
+        .ADDR_WIDTH(32),
+        .DATA_WIDTH(32)
+    ) u_wb_adapter (
+        .wb_clk_i  (wb_clk_i),
+        .wb_rst_i  (wb_rst_i),
+        .wb_adr_i  (wb_adr_i),
+        .wb_dat_i  (wb_dat_i),
+        .wb_dat_o  (wb_dat_o),
+        .wb_we_i   (wb_we_i),
+        .wb_sel_i  (wb_sel_i),
+        .wb_stb_i  (wb_stb_i),
+        .wb_cyc_i  (wb_cyc_i),
+        .wb_ack_o  (wb_ack_o),
+        .wb_err_o  (wb_err_o),
+        .wb_stall_o(wb_stall_o),
+        // .wb_rty_o  (), // Not supported by adapter
+        .reg_addr  (reg_addr_wire),
+        .reg_wdata (reg_wdata),
+        .reg_rdata (rdata),
+        .reg_we    (reg_we),
+        .reg_re    (reg_re),
+        .reg_be    ()
+        // .reg_ack   (ack_q) // Adapter generates Ack internally
+    );
+    /* verilator lint_on PINCONNECTEMPTY */
+
     
-    assign wb_ack_o = ack_q;
+    // Internal Wiring
+    assign addr = reg_addr_wire[5:0];
+    assign cs   = reg_we || reg_re;
+    assign we   = reg_we;
+    
 
-    // ACK Logic (0-wait state, register output)
-    always_ff @(posedge wb_clk_i or posedge wb_rst_i) begin
-        if (wb_rst_i) begin
-            ack_q <= 1'b0;
-        end else begin
-            if (wb_stb_i && wb_cyc_i && !ack_q) begin
-                ack_q <= 1'b1;
-            end else begin
-                ack_q <= 1'b0;
-            end
-        end
-    end
+    // ACK Logic (Handled by u_wb_adapter)
+    // always_ff @(posedge wb_clk_i or posedge wb_rst_i) begin ... end
 
     // Register Instantiation
+    assign irq = core_intr;
+
     timer_regs u_timer_regs (
         .clk(wb_clk_i),
         .rst_n(presetn),
         .cs(cs),
         .we(we),
         .addr(addr),
-        .wdata(wb_dat_i),
+        .wdata(reg_wdata),
         .rdata(rdata),
         
         .en(en),

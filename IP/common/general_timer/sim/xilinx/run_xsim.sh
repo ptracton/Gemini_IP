@@ -40,7 +40,12 @@ for test in "${TESTS[@]}"; do
     echo "=================================================="
     
     echo "--- Compiling RTL ---"
-    xvlog -sv \
+    SHARED_RTL_DIR="$IP_DIR/common/lib/rtl"
+    SHARED_VERIF_DIR="$IP_DIR/common/lib/verif"
+    xvlog -sv -i $SHARED_VERIF_DIR \
+        $SHARED_RTL_DIR/axi4lite_slave_adapter.sv \
+        $SHARED_RTL_DIR/apb_slave_adapter.sv \
+        $SHARED_RTL_DIR/wb_slave_adapter.sv \
         $RTL_DIR/timer_regs.sv \
         $RTL_DIR/timer_core.sv \
         $RTL_DIR/timer_apb.sv \
@@ -48,7 +53,7 @@ for test in "${TESTS[@]}"; do
         $RTL_DIR/timer_wb.sv
 
     echo "--- Compiling Testbench ---"
-    xvlog -sv $TB_DIR/tb_timer_$test.sv
+    xvlog -sv -i $SHARED_VERIF_DIR $TB_DIR/tb_timer_$test.sv
 
     echo "--- Elaborating ---"
     # Note: top level module is named tb_timer_<test>
