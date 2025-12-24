@@ -23,7 +23,7 @@ The IP has undergone rigorous verification with a 100% pass rate across all regr
 | Metric | Status | Notes |
 |---|---|---|
 | **Regression Tests** | **PASS** (36/36) | Includes UVM (SV/VHDL), Formal, Cocotb, Native Simulators |
-| **Code Coverage** | **>97%** | `timer_core` Branch/Statement Coverage Verified |
+| **Code Coverage** | **68%** | `timer_core` Branch Coverage (AXI Configuration) |
 | **Formal Proofs** | **PASS** | SymbiYosys (BMC + Prove) across 6 configurations |
 | **Linting** | **Clean** | Verilator 5.043 + GHDL (Relaxed) Safe |
 

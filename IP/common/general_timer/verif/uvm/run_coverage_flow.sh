@@ -10,7 +10,7 @@ source ../../../../../setup.sh
 
 # 2. Run other tests using the SAME snapshot
 # Move into work dir where the snapshot exists
-cd work
+cd work_axi_timer_count_test_verilog
 
 # Rename first test coverage
 if [ -d "xsim.codeCov/top_sim" ]; then
@@ -25,15 +25,22 @@ echo "--------------------------------------------------"
 for TEST in timer_pwm_perf_test timer_capture_stress_test timer_prescaler_sweep_test; do
     echo "--- Running $TEST ---"
     # Run simulation
-    xsim top_sim -runall -testplusarg UVM_TESTNAME=$TEST -testplusarg BUS_TYPE=AXI -log uvm_sim_$TEST.log \
-        -cov_db_name uvm_cov -cov_db_dir ./cov_db
+    # Ensure clean state for default coverage export
+    rm -rf xsim.codeCov/top_sim
+
+    # Run simulation (defaults to xsim.codeCov/top_sim)
+    xsim top_sim -runall -testplusarg UVM_TESTNAME=$TEST -testplusarg BUS_TYPE=AXI -log uvm_sim_$TEST.log
     
+    ls -R xsim.codeCov
+
     # Rename code coverage DB to preserve it
     # Default location: xsim.codeCov/top_sim
     # Target location: xsim.codeCov/${TEST}_axi_verilog
     if [ -d "xsim.codeCov/top_sim" ]; then
         rm -rf xsim.codeCov/${TEST}_axi_verilog
         mv xsim.codeCov/top_sim xsim.codeCov/${TEST}_axi_verilog
+    else
+         echo "ERROR: xsim.codeCov/top_sim not found for test $TEST"
     fi
 done
 
