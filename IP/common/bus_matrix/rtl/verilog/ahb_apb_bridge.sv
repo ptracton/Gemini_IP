@@ -1,3 +1,18 @@
+// ------------------------------------------------------------------------------
+// File: ahb_apb_bridge.sv
+// Description: AHB-Lite to APB4 Bridge module.
+//              Converts high-speed AHB transactions into APB4 transactions.
+//              Supports single-wait SETUP and variable-wait ACCESS phases.
+//
+// Parameters:
+//   ADDR_WIDTH - Width of the address bus (default: 32)
+//   DATA_WIDTH - Width of the data bus (default: 32)
+//
+// Ports:
+//   HCLK/HRESETn - Clock and active-low asynchronous reset
+//   AHB Slave Interface (HSEL, HADDR, HTRANS, HWRITE, etc.)
+//   APB Master Interface (PADDR, PSEL, PENABLE, PWRITE, etc.)
+// ------------------------------------------------------------------------------
 module ahb_apb_bridge #(
     parameter int ADDR_WIDTH = 32,
     parameter int DATA_WIDTH = 32
