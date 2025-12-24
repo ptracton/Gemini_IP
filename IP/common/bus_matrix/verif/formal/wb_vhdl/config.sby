@@ -1,0 +1,38 @@
+[options]
+mode prove
+depth 20
+
+[engines]
+smtbmc z3
+
+[script]
+plugin -i ghdl
+ghdl --std=08 wb_slave_adapter.vhd bus_matrix_core.vhd bus_matrix_regs.vhd bus_matrix_wb.vhd -e bus_matrix_wb
+read -formal bus_matrix_props.sv
+read -formal bus_matrix_binds.sv
+read -formal -D BUS_WB bus_matrix_wb_vhdl_binds.sv
+prep -top bus_matrix_wb
+
+[files]
+../../rtl/vhdl/bus_matrix_regs.vhd
+../../rtl/vhdl/bus_matrix_core.vhd
+../../rtl/vhdl/bus_matrix_wb.vhd
+../../../../common/lib/rtl/wb_slave_adapter.vhd
+bus_matrix_props.sv
+bus_matrix_binds.sv
+
+[file bus_matrix_wb_vhdl_binds.sv]
+module bus_matrix_wb_vhdl_binds;
+    bind bus_matrix_wb wb_props props_wb (
+        .clk_i(clk_i),
+        .rst_i(rst_i),
+        .adr_i(adr_i),
+        .dat_i(dat_i),
+        .we_i(we_i),
+        .sel_i(sel_i),
+        .stb_i(stb_i),
+        .cyc_i(cyc_i),
+        .dat_o(dat_o),
+        .ack_o(ack_o)
+    );
+endmodule

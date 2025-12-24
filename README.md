@@ -23,19 +23,21 @@ The repository has transitioned from initial implementation to a fully verified 
 
 ### Common
 - **[General Timer](IP/common/general_timer/README.md)**: A 32-bit configurable timer with PWM, Input Capture, Prescaler, and multi-bus support (AXI/APB/WB).
+- **[Bus Matrix](IP/common/bus_matrix/README.md)**: High-performance N:M interconnect supporting AXI4-Lite, AHB5-Lite, and Wishbone B4 with configurable arbitration and security firewall.
 
 ## Feature Overview
 
-| Feature | GPIO | General Timer |
-| :--- | :---: | :---: |
-| **AXI4-Lite** | ✅ | ✅ |
-| **APB4** | ✅ | ✅ |
-| **Wishbone B4** | ✅ | ✅ |
-| **SystemVerilog** | ✅ | ✅ |
-| **VHDL-2008** | ✅ | ✅ |
-| **UVM Random** | ✅ | ✅ |
-| **Regression Tool** | ✅ | ✅ |
-| **Synthesis (Vivado/Yosys)** | ✅ | ✅ |
+| Feature | GPIO | General Timer | Bus Matrix |
+| :--- | :---: | :---: | :---: |
+| **AXI4-Lite** | ✅ | ✅ | ✅ |
+| **APB4** | ✅ | ✅ | ❌ |
+| **AHB5-Lite** | ❌ | ❌ | ✅ |
+| **Wishbone B4** | ✅ | ✅ | ✅ |
+| **SystemVerilog** | ✅ | ✅ | ✅ |
+| **VHDL-2008** | ✅ | ✅ | ✅ |
+| **UVM Random** | ✅ | ✅ | ✅ |
+| **Regression Tool** | ✅ | ✅ | ✅ |
+| **Synthesis (Vivado/Yosys)** | ✅ | ✅ | ✅ |
 
 ## Running Verifications & Tools
 
@@ -45,6 +47,7 @@ Please refer to the specific IP documentation for detailed instructions on runni
 
 - **[GPIO Verification Guide](IP/interface/GPIO/README.md#verification--tooling)**
 - **[General Timer Verification Guide](IP/common/general_timer/README.md#verification-status)**
+- **[Bus Matrix Verification Guide](IP/common/bus_matrix/README.md#verification-status)**
 
 ## Development Standards
 

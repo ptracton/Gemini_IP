@@ -1,0 +1,38 @@
+[options]
+mode prove
+depth 20
+
+[engines]
+smtbmc z3
+
+[script]
+plugin -i ghdl
+ghdl --std=08 apb_slave_adapter.vhd bus_matrix_core.vhd bus_matrix_regs.vhd bus_matrix_apb.vhd -e bus_matrix_apb
+read -formal bus_matrix_props.sv
+read -formal bus_matrix_binds.sv
+read -formal -D BUS_APB bus_matrix_apb_vhdl_binds.sv
+prep -top bus_matrix_apb
+
+[files]
+../../rtl/vhdl/bus_matrix_regs.vhd
+../../rtl/vhdl/bus_matrix_core.vhd
+../../rtl/vhdl/bus_matrix_apb.vhd
+../../../../common/lib/rtl/apb_slave_adapter.vhd
+bus_matrix_props.sv
+bus_matrix_binds.sv
+
+[file bus_matrix_apb_vhdl_binds.sv]
+module bus_matrix_apb_vhdl_binds;
+    bind bus_matrix_apb apb_props props_apb (
+        .pclk(pclk),
+        .presetn(presetn),
+        .psel(psel),
+        .penable(penable),
+        .pwrite(pwrite),
+        .paddr(paddr),
+        .pwdata(pwdata),
+        .pready(pready),
+        .prdata(prdata),
+        .pslverr(pslverr)
+    );
+endmodule
