@@ -50,44 +50,8 @@ module tb_timer_apb;
         .irq(irq)
     );
 
-    // APB Write Task
-    task apb_write(input [31:0] addr, input [31:0] data);
-        begin
-            @(posedge pclk);
-            paddr   <= addr;
-            pwrite  <= 1;
-            psel    <= 1;
-            pwdata  <= data;
-            penable <= 0;
-            @(posedge pclk);
-            penable <= 1;
-            wait(pready);
-            @(posedge pclk);
-            psel    <= 0;
-            penable <= 0;
-            pwrite  <= 0;
-        end
-    endtask
-
-    // APB Read Task
-    task apb_read(input [31:0] addr, output [31:0] data);
-        begin
-            @(posedge pclk);
-            paddr   <= addr;
-            pwrite  <= 0;
-            psel    <= 1;
-            penable <= 0;
-            @(posedge pclk);
-            penable <= 1;
-            
-            @(posedge pclk); // Wait for Access Phase
-            while (!pready) @(posedge pclk);
-
-            data = prdata;
-            psel    <= 0;
-            penable <= 0;
-        end
-    endtask
+    // Shared BFM Tasks
+    `include "apb_bfm_tasks.sv"
 
     // Register Map Offsets
     localparam ADDR_CTRL    = 32'h00;

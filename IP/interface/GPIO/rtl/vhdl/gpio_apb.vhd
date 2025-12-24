@@ -67,16 +67,33 @@ architecture rtl of gpio_apb is
 
 begin
 
-  -- APB Logic
-  reg_addr  <= paddr;
-  reg_wdata <= pwdata;
-  reg_we    <= psel and pwrite and penable;
-  reg_re    <= psel and (not pwrite);
-  reg_be    <= pstrb;
-
-  pready  <= '1';
-  pslverr <= '0';
-  prdata  <= reg_rdata;
+  -- APB Slave Adapter
+  u_apb_adapter : entity work.apb_slave_adapter
+    generic map(
+      ADDR_WIDTH => 32,
+      DATA_WIDTH => 32
+    )
+    port map
+    (
+      pclk      => pclk,
+      presetn   => presetn,
+      paddr     => paddr,
+      pprot     => pprot,
+      psel      => psel,
+      penable   => penable,
+      pwrite    => pwrite,
+      pwdata    => pwdata,
+      pstrb     => pstrb,
+      prdata    => prdata,
+      pready    => pready,
+      pslverr   => pslverr,
+      reg_addr  => reg_addr,
+      reg_wdata => reg_wdata,
+      reg_rdata => reg_rdata,
+      reg_we    => reg_we,
+      reg_re    => reg_re,
+      reg_be    => reg_be
+    );
 
   -- Register Block
   u_gpio_regs : entity work.gpio_regs

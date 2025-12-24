@@ -214,7 +214,10 @@ def main():
     print("="*80)
 
     # Generate Markdown Report
-    report_path = os.path.join(root_dir, "regression_results.md")
+    # Write to IP/interface/GPIO/gpio_regression_results.md
+    # We are in tools/, so report is ../gpio_regression_results.md relative to this script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    report_path = os.path.join(script_dir, "../gpio_regression_results.md")
     with open(report_path, "w") as f:
         f.write("# Gemini_IP Regression Results\n\n")
         f.write(f"Generated on: {time.ctime()}\n\n")

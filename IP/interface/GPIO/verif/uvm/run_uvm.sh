@@ -49,7 +49,11 @@ echo "Running UVM Simulation ($BUS_TYPE)"
 echo "=================================================="
 
 echo "--- Compiling RTL ---"
+SHARED_RTL_DIR="$IP_DIR/../../common/lib/rtl"
 xvlog -sv -d SIMULATION \
+    $SHARED_RTL_DIR/axi4lite_slave_adapter.sv \
+    $SHARED_RTL_DIR/apb_slave_adapter.sv \
+    $SHARED_RTL_DIR/wb_slave_adapter.sv \
     $RTL_DIR/gpio_bit.sv \
     $RTL_DIR/gpio_wrapper.sv \
     $RTL_DIR/gpio_regs.sv \
@@ -58,13 +62,14 @@ xvlog -sv -d SIMULATION \
     $RTL_DIR/gpio_wb.sv
 
 echo "--- Compiling Interface & Agents ---"
+SHARED_AGENTS_DIR="$IP_DIR/../../common/lib/verif/uvm/agents"
 xvlog -sv -L uvm \
-    $UVM_DIR/agents/apb_agent/apb_if.sv \
-    $UVM_DIR/agents/apb_agent/apb_agent_pkg.sv \
-    $UVM_DIR/agents/axi_agent/axi_if.sv \
-    $UVM_DIR/agents/axi_agent/axi_agent_pkg.sv \
-    $UVM_DIR/agents/wb_agent/wb_if.sv \
-    $UVM_DIR/agents/wb_agent/wb_agent_pkg.sv \
+    $SHARED_AGENTS_DIR/apb_agent/apb_if.sv \
+    $SHARED_AGENTS_DIR/apb_agent/apb_agent_pkg.sv \
+    $SHARED_AGENTS_DIR/axi_agent/axi_if.sv \
+    $SHARED_AGENTS_DIR/axi_agent/axi_agent_pkg.sv \
+    $SHARED_AGENTS_DIR/wb_agent/wb_if.sv \
+    $SHARED_AGENTS_DIR/wb_agent/wb_agent_pkg.sv \
     $UVM_DIR/agents/gpio_agent/gpio_if.sv \
     $UVM_DIR/agents/gpio_agent/gpio_agent_pkg.sv
 

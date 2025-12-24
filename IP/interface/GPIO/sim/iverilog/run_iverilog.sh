@@ -41,7 +41,12 @@ for bus in "${BUS_TYPES[@]}"; do
     echo "=================================================="
     
     echo "--- Compiling ---"
-    iverilog -g2012 -o gpio_$bus.vvp -D SIMULATION \
+    SHARED_RTL_DIR="$IP_DIR/../../common/lib/rtl"
+    SHARED_VERIF_DIR="$IP_DIR/../../common/lib/verif"
+    iverilog -g2012 -o gpio_$bus.vvp -D SIMULATION -I $SHARED_VERIF_DIR \
+        $SHARED_RTL_DIR/axi4lite_slave_adapter.sv \
+        $SHARED_RTL_DIR/apb_slave_adapter.sv \
+        $SHARED_RTL_DIR/wb_slave_adapter.sv \
         $RTL_DIR/gpio_bit.sv \
         $RTL_DIR/gpio_wrapper.sv \
         $RTL_DIR/gpio_regs.sv \

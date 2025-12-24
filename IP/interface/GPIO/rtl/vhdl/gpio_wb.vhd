@@ -66,17 +66,33 @@ begin
 
   reset_n <= not wb_rst_i;
 
-  -- Wishbone Logic
-  reg_addr  <= wb_adr_i;
-  reg_wdata <= wb_dat_i;
-  reg_we    <= wb_cyc_i and wb_stb_i and wb_we_i;
-  reg_re    <= wb_cyc_i and wb_stb_i and (not wb_we_i);
-  reg_be    <= wb_sel_i;
-
-  wb_dat_o   <= reg_rdata;
-  wb_ack_o   <= reg_ack;
-  wb_err_o   <= '0';
-  wb_stall_o <= '0';
+  -- Wishbone Slave Adapter
+  u_wb_adapter : entity work.wb_slave_adapter
+    generic map(
+      ADDR_WIDTH => 32,
+      DATA_WIDTH => 32
+    )
+    port map
+    (
+      wb_clk_i   => wb_clk_i,
+      wb_rst_i   => wb_rst_i,
+      wb_adr_i   => wb_adr_i,
+      wb_dat_i   => wb_dat_i,
+      wb_dat_o   => wb_dat_o,
+      wb_we_i    => wb_we_i,
+      wb_stb_i   => wb_stb_i,
+      wb_cyc_i   => wb_cyc_i,
+      wb_sel_i   => wb_sel_i,
+      wb_ack_o   => wb_ack_o,
+      wb_err_o   => wb_err_o,
+      wb_stall_o => wb_stall_o,
+      reg_addr   => reg_addr,
+      reg_wdata  => reg_wdata,
+      reg_rdata  => reg_rdata,
+      reg_we     => reg_we,
+      reg_re     => reg_re,
+      reg_be     => reg_be
+    );
 
   -- Register Block
   u_gpio_regs : entity work.gpio_regs

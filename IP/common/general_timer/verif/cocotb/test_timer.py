@@ -15,10 +15,16 @@
 # License: MIT
 #-------------------------------------------------------------------------------
 
+import sys
+import os
 import cocotb
 from cocotb.triggers import Timer, RisingEdge, FallingEdge, ReadOnly
 from cocotb.clock import Clock
-import random
+
+# Add common lib to path
+# IP/common/general_timer/verif/cocotb -> ../../../lib/verif/cocotb = IP/common/lib/verif/cocotb
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "..", "..", "lib", "verif", "cocotb"))
+from gemini_cocotb_utils import GeminiTester, safe_to_int
 
 # Common Register Addresses
 REG_CTRL    = 0x00
@@ -30,21 +36,9 @@ REG_INT_STS = 0x14
 REG_CMP     = 0x18
 REG_CAP     = 0x1C
 
-def safe_to_int(handle):
-    """Safely convert a handle value to integer, treating X/Z/U/W as 0."""
-    try:
-        return int(handle.value)
-    except (ValueError, TypeError, AttributeError):
-        s = str(handle.value).lower()
-        clean = "".join(['1' if c == '1' else '0' for c in s]) # Treat X as 0
-        if not clean: return 0
-        return int(clean, 2)
-
-class TimerTester:
+class TimerTester(GeminiTester):
     def __init__(self, dut, bus_type="AXI"):
-        self.dut = dut
-        self.bus_type = bus_type
-        self.log = dut._log
+        super().__init__(dut, bus_type)
 
     async def reset(self):
         # Initialize all possible input pins to 0 to avoid metavalues in GHDL
@@ -82,148 +76,10 @@ class TimerTester:
             self.dut.wb_rst_i.value = 0
         
         await Timer(20, unit="ns")
-
-    async def write_reg(self, addr, data):
-        if self.bus_type == "AXI":
-            await self._write_axi(addr, data)
-        elif self.bus_type == "APB":
-            await self._write_apb(addr, data)
-        elif self.bus_type == "WB":
-            await self._write_wb(addr, data)
-
-    async def read_reg(self, addr):
-        if self.bus_type == "AXI":
-            return await self._read_axi(addr)
-        elif self.bus_type == "APB":
-            return await self._read_apb(addr)
-        elif self.bus_type == "WB":
-            return await self._read_wb(addr)
-
-    # --- AXI Helpers ---
-    async def _write_axi(self, addr, data):
-        self.dut.awaddr.value = addr
-        self.dut.wdata.value = data
-        self.dut.awvalid.value = 1
-        self.dut.wvalid.value = 1
-        self.dut.wstrb.value = 0xF
         
-        # Wait for ready
-        # In GHDL/VPI, we must be careful about checking ready after the edge
-        while True:
-            await RisingEdge(self.dut.aclk)
-            if safe_to_int(self.dut.awready) and safe_to_int(self.dut.wready):
-                break
-                
-        self.dut.awvalid.value = 0
-        self.dut.wvalid.value = 0
-        
-        self.dut.bready.value = 1
-        while True:
-            await RisingEdge(self.dut.aclk)
-            if safe_to_int(self.dut.bvalid):
-                break
-        self.dut.bready.value = 0
-        await RisingEdge(self.dut.aclk)
-
-    async def _read_axi(self, addr):
-        self.dut.araddr.value = addr
-        self.dut.arvalid.value = 1
-        
-        while True:
-            await RisingEdge(self.dut.aclk)
-            if safe_to_int(self.dut.arready):
-                break
-
-        self.dut.arvalid.value = 0
-        self.dut.rready.value = 1
-        
-        while True:
-            await RisingEdge(self.dut.aclk)
-            if safe_to_int(self.dut.rvalid):
-                break
-
-        data = safe_to_int(self.dut.rdata)
-        self.dut.rready.value = 0
-        await RisingEdge(self.dut.aclk)
-        return data
-
-    # --- APB Helpers ---
-    async def _write_apb(self, addr, data):
-        self.dut.paddr.value = addr
-        self.dut.pwdata.value = data
-        self.dut.pwrite.value = 1
-        self.dut.psel.value = 1
-        self.dut.penable.value = 0
-        
-        await RisingEdge(self.dut.pclk)
-        self.dut.penable.value = 1
-        
-        while True:
-            await RisingEdge(self.dut.pclk)
-            if safe_to_int(self.dut.pready):
-                break
-                
-        self.dut.psel.value = 0
-        self.dut.penable.value = 0
-        self.dut.pwrite.value = 0
-        await RisingEdge(self.dut.pclk)
-
-    async def _read_apb(self, addr):
-        self.dut.paddr.value = addr
-        self.dut.pwrite.value = 0
-        self.dut.psel.value = 1
-        self.dut.penable.value = 0
-        
-        await RisingEdge(self.dut.pclk)
-        self.dut.penable.value = 1
-        
-        while True:
-            await RisingEdge(self.dut.pclk)
-            if safe_to_int(self.dut.pready):
-                break
-                
-        data = safe_to_int(self.dut.prdata)
-        self.dut.psel.value = 0
-        self.dut.penable.value = 0
-        await RisingEdge(self.dut.pclk)
-        return data
-
-    # --- Wishbone Helpers ---
-    async def _write_wb(self, addr, data):
-        self.dut.wb_adr_i.value = addr
-        self.dut.wb_dat_i.value = data
-        self.dut.wb_we_i.value = 1
-        self.dut.wb_stb_i.value = 1
-        self.dut.wb_cyc_i.value = 1
-        self.dut.wb_sel_i.value = 0xF
-        
-        while True:
-            await RisingEdge(self.dut.wb_clk_i)
-            if safe_to_int(self.dut.wb_ack_o):
-                break
-                
-        self.dut.wb_stb_i.value = 0
-        self.dut.wb_cyc_i.value = 0
-        self.dut.wb_we_i.value = 0
-        await RisingEdge(self.dut.wb_clk_i)
-
-    async def _read_wb(self, addr):
-        self.dut.wb_adr_i.value = addr
-        self.dut.wb_we_i.value = 0
-        self.dut.wb_stb_i.value = 1
-        self.dut.wb_cyc_i.value = 1
-        self.dut.wb_sel_i.value = 0xF
-        
-        while True:
-            await RisingEdge(self.dut.wb_clk_i)
-            if safe_to_int(self.dut.wb_ack_o):
-                break
-                
-        data = safe_to_int(self.dut.wb_dat_o)
-        self.dut.wb_stb_i.value = 0
-        self.dut.wb_cyc_i.value = 0
-        await RisingEdge(self.dut.wb_clk_i)
-        return data
+        # Synchronize release of reset with clock to avoid race conditions
+        clk_signal = "aclk" if self.bus_type == "AXI" else ("pclk" if self.bus_type == "APB" else "wb_clk_i")
+        await RisingEdge(getattr(self.dut, clk_signal))
 
 # --- Tests ---
 

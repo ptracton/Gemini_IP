@@ -1,0 +1,12 @@
+# running in apb_vhdl/src/
+plugin -i ghdl
+ghdl --std=08 apb_slave_adapter.vhd timer_core.vhd timer_regs.vhd timer_apb.vhd -e timer_apb
+read -formal timer_props.sv
+read -formal timer_binds.sv
+read -formal -D BUS_APB timer_apb_vhdl_binds.sv
+prep -top timer_apb
+
+hierarchy -smtcheck
+rename -witness
+write_jny -no-connections ../model/design.json
+write_rtlil ../model/design.il

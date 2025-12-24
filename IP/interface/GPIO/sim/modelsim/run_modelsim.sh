@@ -44,14 +44,19 @@ for bus in "${BUS_TYPES[@]}"; do
     vlib work_$bus
 
     echo "--- Compiling RTL ---"
+    SHARED_RTL_DIR="$IP_DIR/../../common/lib/rtl"
     vlog -work work_$bus -sv -timescale "1ns/1ps" \
+        $SHARED_RTL_DIR/axi4lite_slave_adapter.sv \
+        $SHARED_RTL_DIR/apb_slave_adapter.sv \
+        $SHARED_RTL_DIR/wb_slave_adapter.sv \
         $RTL_DIR/gpio_bit.sv \
         $RTL_DIR/gpio_wrapper.sv \
         $RTL_DIR/gpio_regs.sv \
         $RTL_DIR/gpio_$bus.sv
 
     echo "--- Compiling Testbench ---"
-    vlog -work work_$bus -sv -timescale "1ns/1ps" $TB_DIR/tb_gpio_$bus.sv
+    SHARED_VERIF_DIR="$IP_DIR/../../common/lib/verif"
+    vlog -work work_$bus -sv -timescale "1ns/1ps" +incdir+$SHARED_VERIF_DIR $TB_DIR/tb_gpio_$bus.sv
 
     echo "--- Simulating ---"
     vsim -work work_$bus -c -do "run -all; quit" tb_gpio_$bus | tee transcript_$bus

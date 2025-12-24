@@ -22,21 +22,26 @@ NUM_BITS ?= 32
 PWD=$(shell pwd)
 IP_ROOT=$(PWD)/../..
 
+SHARED_RTL_DIR = $(IP_ROOT)/../../common/lib/rtl
+
 ifeq ($(TOPLEVEL_LANG),verilog)
     ifeq ($(BUS_TYPE),AXI)
-        VERILOG_SOURCES = $(IP_ROOT)/rtl/verilog/gpio_axi.sv \
+        VERILOG_SOURCES = $(SHARED_RTL_DIR)/axi4lite_slave_adapter.sv \
+                          $(IP_ROOT)/rtl/verilog/gpio_axi.sv \
                           $(IP_ROOT)/rtl/verilog/gpio_regs.sv \
                           $(IP_ROOT)/rtl/verilog/gpio_wrapper.sv \
                           $(IP_ROOT)/rtl/verilog/gpio_bit.sv
         TOPLEVEL = gpio_axi
     else ifeq ($(BUS_TYPE),APB)
-        VERILOG_SOURCES = $(IP_ROOT)/rtl/verilog/gpio_apb.sv \
+        VERILOG_SOURCES = $(SHARED_RTL_DIR)/apb_slave_adapter.sv \
+                          $(IP_ROOT)/rtl/verilog/gpio_apb.sv \
                           $(IP_ROOT)/rtl/verilog/gpio_regs.sv \
                           $(IP_ROOT)/rtl/verilog/gpio_wrapper.sv \
                           $(IP_ROOT)/rtl/verilog/gpio_bit.sv
         TOPLEVEL = gpio_apb
     else ifeq ($(BUS_TYPE),WB)
-        VERILOG_SOURCES = $(IP_ROOT)/rtl/verilog/gpio_wb.sv \
+        VERILOG_SOURCES = $(SHARED_RTL_DIR)/wb_slave_adapter.sv \
+                          $(IP_ROOT)/rtl/verilog/gpio_wb.sv \
                           $(IP_ROOT)/rtl/verilog/gpio_regs.sv \
                           $(IP_ROOT)/rtl/verilog/gpio_wrapper.sv \
                           $(IP_ROOT)/rtl/verilog/gpio_bit.sv
@@ -48,13 +53,16 @@ else
                    $(IP_ROOT)/rtl/vhdl/gpio_bit.vhd \
                    $(IP_ROOT)/rtl/vhdl/gpio_wrapper.vhd
     ifeq ($(BUS_TYPE),AXI)
-        VHDL_SOURCES += $(IP_ROOT)/rtl/vhdl/gpio_axi.vhd
+        VHDL_SOURCES += $(SHARED_RTL_DIR)/axi4lite_slave_adapter.vhd \
+                        $(IP_ROOT)/rtl/vhdl/gpio_axi.vhd
         TOPLEVEL = gpio_axi
     else ifeq ($(BUS_TYPE),APB)
-        VHDL_SOURCES += $(IP_ROOT)/rtl/vhdl/gpio_apb.vhd
+        VHDL_SOURCES += $(SHARED_RTL_DIR)/apb_slave_adapter.vhd \
+                        $(IP_ROOT)/rtl/vhdl/gpio_apb.vhd
         TOPLEVEL = gpio_apb
     else ifeq ($(BUS_TYPE),WB)
-        VHDL_SOURCES += $(IP_ROOT)/rtl/vhdl/gpio_wb.vhd
+        VHDL_SOURCES += $(SHARED_RTL_DIR)/wb_slave_adapter.vhd \
+                        $(IP_ROOT)/rtl/vhdl/gpio_wb.vhd
         TOPLEVEL = gpio_wb
     endif
     
@@ -70,7 +78,7 @@ PLUSARGS += +BUS_TYPE=$(BUS_TYPE)
 
 # Simulation-specific generics/parameters
 ifeq ($(TOPLEVEL_LANG),verilog)
-    COMPILE_ARGS += -GNUM_BITS=$(NUM_BITS)
+    COMPILE_ARGS += -GNUM_BITS=$(NUM_BITS) +incdir+$(SHARED_RTL_DIR)/../verif
 else
     # GHDL generic setting
     SIM_ARGS += -gNUM_BITS=$(NUM_BITS)

@@ -6,25 +6,25 @@ module tb_timer_axi;
 
     logic        aclk;
     logic        aresetn;
-    logic [31:0] awaddr;
-    logic [2:0]  awprot;
-    logic        awvalid;
-    logic        awready;
-    logic [31:0] wdata;
-    logic [3:0]  wstrb;
-    logic        wvalid;
-    logic        wready;
-    logic [1:0]  bresp;
-    logic        bvalid;
-    logic        bready;
-    logic [31:0] araddr;
-    logic [2:0]  arprot;
-    logic        arvalid;
-    logic        arready;
-    logic [31:0] rdata;
-    logic [1:0]  rresp;
-    logic        rvalid;
-    logic        rready;
+    logic [31:0] s_axi_awaddr;
+    logic [2:0]  s_axi_awprot;
+    logic        s_axi_awvalid;
+    logic        s_axi_awready;
+    logic [31:0] s_axi_wdata;
+    logic [3:0]  s_axi_wstrb;
+    logic        s_axi_wvalid;
+    logic        s_axi_wready;
+    logic [1:0]  s_axi_bresp;
+    logic        s_axi_bvalid;
+    logic        s_axi_bready;
+    logic [31:0] s_axi_araddr;
+    logic [2:0]  s_axi_arprot;
+    logic        s_axi_arvalid;
+    logic        s_axi_arready;
+    logic [31:0] s_axi_rdata;
+    logic [1:0]  s_axi_rresp;
+    logic        s_axi_rvalid;
+    logic        s_axi_rready;
     logic        irq;
 
     logic        ext_meas_i;
@@ -42,25 +42,25 @@ module tb_timer_axi;
     timer_axi dut (
         .aclk(aclk),
         .aresetn(aresetn),
-        .awaddr(awaddr),
-        .awprot(awprot),
-        .awvalid(awvalid),
-        .awready(awready),
-        .wdata(wdata),
-        .wstrb(wstrb),
-        .wvalid(wvalid),
-        .wready(wready),
-        .bresp(bresp),
-        .bvalid(bvalid),
-        .bready(bready),
-        .araddr(araddr),
-        .arprot(arprot),
-        .arvalid(arvalid),
-        .arready(arready),
-        .rdata(rdata),
-        .rresp(rresp),
-        .rvalid(rvalid),
-        .rready(rready),
+        .awaddr(s_axi_awaddr),
+        .awprot(s_axi_awprot),
+        .awvalid(s_axi_awvalid),
+        .awready(s_axi_awready),
+        .wdata(s_axi_wdata),
+        .wstrb(s_axi_wstrb),
+        .wvalid(s_axi_wvalid),
+        .wready(s_axi_wready),
+        .bresp(s_axi_bresp),
+        .bvalid(s_axi_bvalid),
+        .bready(s_axi_bready),
+        .araddr(s_axi_araddr),
+        .arprot(s_axi_arprot),
+        .arvalid(s_axi_arvalid),
+        .arready(s_axi_arready),
+        .rdata(s_axi_rdata),
+        .rresp(s_axi_rresp),
+        .rvalid(s_axi_rvalid),
+        .rready(s_axi_rready),
         .ext_meas_i(ext_meas_i),
         .capture_i(capture_i),
         .pwm_o(pwm_o),
@@ -68,52 +68,8 @@ module tb_timer_axi;
         .irq(irq)
     );
 
-    // AXI Write Task (Simple)
-    task axi_write(input [31:0] addr, input [31:0] data);
-        begin
-            @(posedge aclk);
-            awaddr  <= addr;
-            awvalid <= 1;
-            wdata   <= data;
-            wvalid  <= 1;
-            wstrb   <= 4'hF;
-            bready  <= 1; // Auto-ack response
-            
-            // Wait for address acceptance
-            wait(awready);
-            @(posedge aclk);
-            awvalid <= 0;
-            
-            // Wait for data acceptance
-            wait(wready);
-            @(posedge aclk);
-            wvalid <= 0;
-            
-            // Wait for response
-            wait(bvalid);
-            @(posedge aclk);
-            bready <= 0;
-        end
-    endtask
-
-    // AXI Read Task
-    task axi_read(input [31:0] addr, output [31:0] data);
-        begin
-            @(posedge aclk);
-            araddr  <= addr;
-            arvalid <= 1;
-            rready  <= 1;
-            
-            wait(arready);
-            @(posedge aclk);
-            arvalid <= 0;
-            
-            wait(rvalid);
-            data = rdata;
-            @(posedge aclk);
-            rready <= 0;
-        end
-    endtask
+    // Shared BFM Tasks
+    `include "axi_bfm_tasks.sv"
 
     // Offsets
     localparam ADDR_CTRL    = 32'h00;
@@ -128,17 +84,17 @@ module tb_timer_axi;
         $dumpvars(0, tb_timer_axi);
 
         aresetn = 0;
-        awvalid = 0;
-        awaddr  = 0;
-        awprot  = 0;
-        wvalid  = 0;
-        wdata   = 0;
-        wstrb   = 0;
-        bready  = 0;
-        arvalid = 0;
-        araddr  = 0;
-        arprot  = 0;
-        rready  = 0;
+        s_axi_awvalid = 0;
+        s_axi_awaddr  = 0;
+        s_axi_awprot  = 0;
+        s_axi_wvalid  = 0;
+        s_axi_wdata   = 0;
+        s_axi_wstrb   = 0;
+        s_axi_bready  = 0;
+        s_axi_arvalid = 0;
+        s_axi_araddr  = 0;
+        s_axi_arprot  = 0;
+        s_axi_rready  = 0;
         ext_meas_i = 0;
         capture_i = 0;
         

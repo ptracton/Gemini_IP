@@ -15,6 +15,9 @@ module tb_timer_wb;
     logic [31:0] wb_dat_o;
     logic        wb_ack_o;
     logic        wb_err_o;
+    logic        wb_stall_o;
+    logic [2:0]  wb_cti_i;
+    logic [1:0]  wb_bte_i;
     logic        irq;
 
     logic        ext_meas_i;
@@ -41,6 +44,7 @@ module tb_timer_wb;
         .wb_dat_o(wb_dat_o),
         .wb_ack_o(wb_ack_o),
         .wb_err_o(wb_err_o),
+        .wb_stall_o(wb_stall_o),
         .ext_meas_i(ext_meas_i),
         .capture_i(capture_i),
         .pwm_o(pwm_o),
@@ -48,42 +52,8 @@ module tb_timer_wb;
         .irq(irq)
     );
 
-    // WB Write Task
-    task wb_write(input [31:0] addr, input [31:0] data);
-        begin
-            @(posedge wb_clk_i);
-            wb_adr_i <= addr;
-            wb_dat_i <= data;
-            wb_we_i  <= 1;
-            wb_stb_i <= 1;
-            wb_cyc_i <= 1;
-            wb_sel_i <= 4'hF;
-            
-            wait(wb_ack_o);
-            @(posedge wb_clk_i);
-            wb_stb_i <= 0;
-            wb_cyc_i <= 0;
-            wb_we_i  <= 0;
-        end
-    endtask
-
-    // WB Read Task
-    task wb_read(input [31:0] addr, output [31:0] data);
-        begin
-            @(posedge wb_clk_i);
-            wb_adr_i <= addr;
-            wb_we_i  <= 0;
-            wb_stb_i <= 1;
-            wb_cyc_i <= 1;
-            wb_sel_i <= 4'hF;
-            
-            wait(wb_ack_o);
-            data = wb_dat_o;
-            @(posedge wb_clk_i);
-            wb_stb_i <= 0;
-            wb_cyc_i <= 0;
-        end
-    endtask
+    // Shared BFM Tasks
+    `include "wb_bfm_tasks.sv"
 
     localparam ADDR_CTRL    = 32'h00;
     localparam ADDR_LOAD    = 32'h04;

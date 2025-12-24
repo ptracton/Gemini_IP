@@ -16,6 +16,13 @@ import cocotb
 from cocotb.triggers import Timer, RisingEdge, FallingEdge, ReadOnly
 from cocotb.clock import Clock
 import random
+import sys
+import os
+
+# Add common lib to path
+# IP/interface/GPIO/verif/cocotb -> ../../../../common/lib/verif/cocotb = IP/common/lib/verif/cocotb
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "common", "lib", "verif", "cocotb"))
+from gemini_cocotb_utils import GeminiTester, safe_to_int
 
 # Common Register Addresses
 REG_DATA_I   = 0x00
@@ -43,30 +50,14 @@ REG_PWM_CFG  = 0x50
 def get_pwm_duty_reg(bit_idx):
     return 0x54 + (bit_idx * 4)
 
-def safe_to_int(handle):
-    """Safely convert a handle value to integer, treating X/Z/U/W as 0."""
-    try:
-        # Try direct conversion if it's 0 or 1
-        return int(handle.value)
-    except (ValueError, TypeError, AttributeError):
-        # Fallback for LogicArray or Logic with X/Z/U
-        s = str(handle.value).lower()
-        # Remove any non-binary characters for integer conversion
-        clean = "".join(['1' if c == '1' else '0' for c in s])
-        if not clean:
-            return 0
-        return int(clean, 2)
-
-class GPIOTester:
+class GPIOTester(GeminiTester):
     def __init__(self, dut, bus_type="AXI"):
-        self.dut = dut
-        self.bus_type = bus_type
+        super().__init__(dut, bus_type)
         try:
             self.num_bits = int(dut.NUM_BITS.value)
         except:
             # GHDL might not expose generics directly in some modes
             self.num_bits = 32 # Default fallback
-        self.log = dut._log
 
     async def reset(self):
         if hasattr(self.dut, "s_axi_aresetn"):
@@ -86,108 +77,8 @@ class GPIOTester:
             self.dut.wb_rst_i.value = 0
         
         await Timer(20, unit="ns")
-
-    async def write_reg(self, addr, data):
-        if self.bus_type == "AXI":
-            await self._write_axi(addr, data)
-        elif self.bus_type == "APB":
-            await self._write_apb(addr, data)
-        elif self.bus_type == "WB":
-            await self._write_wb(addr, data)
-
-    async def read_reg(self, addr):
-        if self.bus_type == "AXI":
-            return await self._read_axi(addr)
-        elif self.bus_type == "APB":
-            return await self._read_apb(addr)
-        elif self.bus_type == "WB":
-            return await self._read_wb(addr)
-
-    async def _write_axi(self, addr, data):
-        self.dut.s_axi_awaddr.value = addr
-        self.dut.s_axi_wdata.value = data
-        self.dut.s_axi_awvalid.value = 1
-        self.dut.s_axi_wvalid.value = 1
-        self.dut.s_axi_wstrb.value = 0xF
-        await RisingEdge(self.dut.s_axi_aclk)
-        while not (safe_to_int(self.dut.s_axi_awready) and safe_to_int(self.dut.s_axi_wready)):
-            await RisingEdge(self.dut.s_axi_aclk)
-        self.dut.s_axi_awvalid.value = 0
-        self.dut.s_axi_wvalid.value = 0
-        while not safe_to_int(self.dut.s_axi_bvalid):
-            await RisingEdge(self.dut.s_axi_aclk)
-        self.dut.s_axi_bready.value = 1
-        await RisingEdge(self.dut.s_axi_aclk)
-        self.dut.s_axi_bready.value = 0
-
-    async def _read_axi(self, addr):
-        self.dut.s_axi_araddr.value = addr
-        self.dut.s_axi_arvalid.value = 1
-        await RisingEdge(self.dut.s_axi_aclk)
-        while not safe_to_int(self.dut.s_axi_arready):
-            await RisingEdge(self.dut.s_axi_aclk)
-        self.dut.s_axi_arvalid.value = 0
-        while not safe_to_int(self.dut.s_axi_rvalid):
-            await RisingEdge(self.dut.s_axi_aclk)
-        data = safe_to_int(self.dut.s_axi_rdata)
-        self.dut.s_axi_rready.value = 1
-        await RisingEdge(self.dut.s_axi_aclk)
-        self.dut.s_axi_rready.value = 0
-        return data
-
-    async def _write_apb(self, addr, data):
-        self.dut.paddr.value = addr
-        self.dut.pwdata.value = data
-        self.dut.pwrite.value = 1
-        self.dut.psel.value = 1
-        self.dut.pstrb.value = 0xF
-        await RisingEdge(self.dut.pclk)
-        self.dut.penable.value = 1
-        await RisingEdge(self.dut.pclk)
-        while not safe_to_int(self.dut.pready):
-            await RisingEdge(self.dut.pclk)
-        self.dut.psel.value = 0
-        self.dut.penable.value = 0
-
-    async def _read_apb(self, addr):
-        self.dut.paddr.value = addr
-        self.dut.pwrite.value = 0
-        self.dut.psel.value = 1
-        await RisingEdge(self.dut.pclk)
-        self.dut.penable.value = 1
-        await RisingEdge(self.dut.pclk)
-        while not safe_to_int(self.dut.pready):
-            await RisingEdge(self.dut.pclk)
-        data = safe_to_int(self.dut.prdata)
-        self.dut.psel.value = 0
-        self.dut.penable.value = 0
-        return data
-
-    async def _write_wb(self, addr, data):
-        self.dut.wb_adr_i.value = addr
-        self.dut.wb_dat_i.value = data
-        self.dut.wb_we_i.value = 1
-        self.dut.wb_sel_i.value = 0xF
-        self.dut.wb_cyc_i.value = 1
-        self.dut.wb_stb_i.value = 1
-        await RisingEdge(self.dut.wb_clk_i)
-        while not safe_to_int(self.dut.wb_ack_o):
-            await RisingEdge(self.dut.wb_clk_i)
-        self.dut.wb_cyc_i.value = 0
-        self.dut.wb_stb_i.value = 0
-
-    async def _read_wb(self, addr):
-        self.dut.wb_adr_i.value = addr
-        self.dut.wb_we_i.value = 0
-        self.dut.wb_cyc_i.value = 1
-        self.dut.wb_stb_i.value = 1
-        await RisingEdge(self.dut.wb_clk_i)
-        while not safe_to_int(self.dut.wb_ack_o):
-            await RisingEdge(self.dut.wb_clk_i)
-        data = safe_to_int(self.dut.wb_dat_o)
-        self.dut.wb_cyc_i.value = 0
-        self.dut.wb_stb_i.value = 0
-        return data
+        clk_signal = "s_axi_aclk" if self.bus_type == "AXI" else ("pclk" if self.bus_type == "APB" else "wb_clk_i")
+        await RisingEdge(getattr(self.dut, clk_signal))
 
 @cocotb.test()
 async def test_gpio_basic(dut):
@@ -200,6 +91,9 @@ async def test_gpio_basic(dut):
 
     mask = (1 << tester.num_bits) - 1
     await tester.write_reg(REG_DIR, mask)
+    val_dir = await tester.read_reg(REG_DIR)
+    assert int(val_dir) == mask, f"DIR mismatch: expected {hex(mask)}, got {hex(int(val_dir))}"
+
     test_data = 0xAAAA5555 & mask
     await tester.write_reg(REG_DATA_O, test_data)
     

@@ -1,0 +1,18 @@
+Analysis & Synthesis Status : Successful - Tue Dec 23 14:45:40 2025
+Quartus Prime Version : 23.1std.1 Build 993 05/14/2024 SC Lite Edition
+Revision Name : gpio_wb
+Top-level Entity Name : gpio_wb
+Family : Cyclone IV GX
+Total logic elements : 4,198
+    Total combinational functions : 3,446
+    Dedicated logic registers : 1,905
+Total registers : 1905
+Total pins : 146
+Total virtual pins : 0
+Total memory bits : 0
+Embedded Multiplier 9-bit elements : 0
+Total GXB Receiver Channel PCS : 0
+Total GXB Receiver Channel PMA : 0
+Total GXB Transmitter Channel PCS : 0
+Total GXB Transmitter Channel PMA : 0
+Total PLLs : 0

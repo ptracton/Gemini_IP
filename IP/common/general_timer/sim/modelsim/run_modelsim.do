@@ -9,17 +9,24 @@ set TB_DIR "$GT_DIR/tb"
 vlib work
 
 # Compile RTL
-vlog -sv $RTL_DIR/timer_regs.sv
-vlog -sv $RTL_DIR/timer_core.sv
-vlog -sv $RTL_DIR/timer_apb.sv
-vlog -sv $RTL_DIR/timer_axi.sv
-vlog -sv $RTL_DIR/timer_wb.sv
+set SHARED_RTL_DIR "$GT_DIR/../../common/lib/rtl"
+set SHARED_VERIF_DIR "$GT_DIR/../../common/lib/verif"
+set VLOG_ARGS "-sv +incdir+$SHARED_VERIF_DIR"
+
+vlog {*}$VLOG_ARGS $SHARED_RTL_DIR/axi4lite_slave_adapter.sv
+vlog {*}$VLOG_ARGS $SHARED_RTL_DIR/apb_slave_adapter.sv
+vlog {*}$VLOG_ARGS $SHARED_RTL_DIR/wb_slave_adapter.sv
+vlog {*}$VLOG_ARGS $RTL_DIR/timer_regs.sv
+vlog {*}$VLOG_ARGS $RTL_DIR/timer_core.sv
+vlog {*}$VLOG_ARGS $RTL_DIR/timer_apb.sv
+vlog {*}$VLOG_ARGS $RTL_DIR/timer_axi.sv
+vlog {*}$VLOG_ARGS $RTL_DIR/timer_wb.sv
 
 # Compile Testbenches
-vlog -sv $TB_DIR/tb_timer_core.sv
-vlog -sv $TB_DIR/tb_timer_apb.sv
-vlog -sv $TB_DIR/tb_timer_axi.sv
-vlog -sv $TB_DIR/tb_timer_wb.sv
+vlog {*}$VLOG_ARGS $TB_DIR/tb_timer_core.sv
+vlog {*}$VLOG_ARGS $TB_DIR/tb_timer_apb.sv
+vlog {*}$VLOG_ARGS $TB_DIR/tb_timer_axi.sv
+vlog {*}$VLOG_ARGS $TB_DIR/tb_timer_wb.sv
 
 puts "=================================================="
 puts "COMPILATION COMPLETE"

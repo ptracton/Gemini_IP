@@ -23,17 +23,20 @@ IP_ROOT=$(PWD)/../..
 
 ifeq ($(TOPLEVEL_LANG),verilog)
     ifeq ($(BUS_TYPE),AXI)
-        VERILOG_SOURCES = $(IP_ROOT)/rtl/verilog/timer_axi.sv \
+        VERILOG_SOURCES = $(IP_ROOT)/../../common/lib/rtl/axi4lite_slave_adapter.sv \
+                          $(IP_ROOT)/rtl/verilog/timer_axi.sv \
                           $(IP_ROOT)/rtl/verilog/timer_regs.sv \
                           $(IP_ROOT)/rtl/verilog/timer_core.sv
         TOPLEVEL = timer_axi
     else ifeq ($(BUS_TYPE),APB)
-        VERILOG_SOURCES = $(IP_ROOT)/rtl/verilog/timer_apb.sv \
+        VERILOG_SOURCES = $(IP_ROOT)/../../common/lib/rtl/apb_slave_adapter.sv \
+                          $(IP_ROOT)/rtl/verilog/timer_apb.sv \
                           $(IP_ROOT)/rtl/verilog/timer_regs.sv \
                           $(IP_ROOT)/rtl/verilog/timer_core.sv
         TOPLEVEL = timer_apb
     else ifeq ($(BUS_TYPE),WB)
-        VERILOG_SOURCES = $(IP_ROOT)/rtl/verilog/timer_wb.sv \
+        VERILOG_SOURCES = $(IP_ROOT)/../../common/lib/rtl/wb_slave_adapter.sv \
+                          $(IP_ROOT)/rtl/verilog/timer_wb.sv \
                           $(IP_ROOT)/rtl/verilog/timer_regs.sv \
                           $(IP_ROOT)/rtl/verilog/timer_core.sv
         TOPLEVEL = timer_wb
@@ -43,13 +46,16 @@ else
     VHDL_SOURCES = $(IP_ROOT)/rtl/vhdl/timer_regs.vhd \
                    $(IP_ROOT)/rtl/vhdl/timer_core.vhd
     ifeq ($(BUS_TYPE),AXI)
-        VHDL_SOURCES += $(IP_ROOT)/rtl/vhdl/timer_axi.vhd
+        VHDL_SOURCES += $(IP_ROOT)/../lib/rtl/axi4lite_slave_adapter.vhd \
+                        $(IP_ROOT)/rtl/vhdl/timer_axi.vhd
         TOPLEVEL = timer_axi
     else ifeq ($(BUS_TYPE),APB)
-        VHDL_SOURCES += $(IP_ROOT)/rtl/vhdl/timer_apb.vhd
+        VHDL_SOURCES += $(IP_ROOT)/../lib/rtl/apb_slave_adapter.vhd \
+                        $(IP_ROOT)/rtl/vhdl/timer_apb.vhd
         TOPLEVEL = timer_apb
     else ifeq ($(BUS_TYPE),WB)
-        VHDL_SOURCES += $(IP_ROOT)/rtl/vhdl/timer_wb.vhd
+        VHDL_SOURCES += $(IP_ROOT)/../lib/rtl/wb_slave_adapter.vhd \
+                        $(IP_ROOT)/rtl/vhdl/timer_wb.vhd
         TOPLEVEL = timer_wb
     endif
     

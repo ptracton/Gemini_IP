@@ -9,6 +9,7 @@ if { $argc != 2 } {
 set TOP_MODULE [lindex $argv 0]
 set PART [lindex $argv 1]
 set RTL_DIR "../rtl/verilog"
+set SHARED_RTL_DIR "../../../common/lib/rtl"
 set OUTPUT_DIR "results/$TOP_MODULE"
 
 file mkdir $OUTPUT_DIR
@@ -17,6 +18,7 @@ puts "========================================================"
 puts " Starting Synthesis for $TOP_MODULE"
 puts " Part: $PART"
 puts " RTL Dir: $RTL_DIR"
+puts " Shared RTL Dir: $SHARED_RTL_DIR"
 puts " Output Dir: $OUTPUT_DIR"
 puts "========================================================"
 
@@ -24,6 +26,16 @@ puts "========================================================"
 read_verilog -sv "$RTL_DIR/gpio_bit.sv"
 read_verilog -sv "$RTL_DIR/gpio_wrapper.sv"
 read_verilog -sv "$RTL_DIR/gpio_regs.sv"
+
+# Select Adapter based on TOP_MODULE
+if { [string match "*axi*" $TOP_MODULE] } {
+    read_verilog -sv "$SHARED_RTL_DIR/axi4lite_slave_adapter.sv"
+} elseif { [string match "*apb*" $TOP_MODULE] } {
+    read_verilog -sv "$SHARED_RTL_DIR/apb_slave_adapter.sv"
+} elseif { [string match "*wb*" $TOP_MODULE] } {
+    read_verilog -sv "$SHARED_RTL_DIR/wb_slave_adapter.sv"
+}
+
 read_verilog -sv "$RTL_DIR/$TOP_MODULE.sv"
 
 # Synthesize

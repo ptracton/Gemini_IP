@@ -1,0 +1,12 @@
+# running in axi_vhdl/src/
+plugin -i ghdl
+ghdl --std=08 axi4lite_slave_adapter.vhd timer_core.vhd timer_regs.vhd timer_axi.vhd -e timer_axi
+read -formal timer_props.sv
+read -formal timer_binds.sv
+read -formal -D BUS_AXI timer_axi_vhdl_binds.sv
+prep -top timer_axi
+
+hierarchy -smtcheck
+rename -witness
+write_jny -no-connections ../model/design.json
+write_rtlil ../model/design.il

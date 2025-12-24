@@ -19,7 +19,7 @@ module tb_gpio_axi;
     parameter real CLK_PERIOD = 10.0;
 
     // Signals
-    logic clk = 0;
+    logic aclk = 0;
     logic rst_n = 0;
     
     // AXI4-Lite Interface
@@ -48,13 +48,13 @@ module tb_gpio_axi;
     logic intr;
 
     // Clock Generation
-    always #(CLK_PERIOD/2) clk = ~clk;
+    always #(CLK_PERIOD/2) aclk = ~aclk;
 
     // DUT Instantiation
     gpio_axi #(
         .NUM_BITS(NUM_BITS)
     ) dut (
-        .s_axi_aclk(clk),
+        .s_axi_aclk(aclk),
         .s_axi_aresetn(rst_n),
         .s_axi_awaddr(s_axi_awaddr),
         .s_axi_awprot(s_axi_awprot),
@@ -103,65 +103,8 @@ module tb_gpio_axi;
     localparam bit [31:0] REG_PWM_CFG = 32'h50;
     localparam bit [31:0] REG_PWM_DUTY= 32'h54;
 
-    // AXI Write Task
-    task axi_write(input [31:0] addr, input [31:0] data);
-        s_axi_awaddr  = addr;
-        s_axi_wdata   = data;
-        s_axi_awvalid = 1;
-        s_axi_wvalid  = 1;
-        s_axi_wstrb   = 4'hF;
-        s_axi_bready  = 1;
-        
-        wait(s_axi_awready && s_axi_wready);
-        @(posedge clk);
-        #1;
-        s_axi_awvalid = 0;
-        s_axi_wvalid  = 0;
-        
-        wait(s_axi_bvalid);
-        @(posedge clk);
-        #1;
-        s_axi_bready  = 0;
-    endtask
-
-    // AXI Write Task with Strobe
-    task axi_write_strb(input [31:0] addr, input [31:0] data, input [3:0] strb);
-        s_axi_awaddr  = addr;
-        s_axi_wdata   = data;
-        s_axi_awvalid = 1;
-        s_axi_wvalid  = 1;
-        s_axi_wstrb   = strb;
-        s_axi_bready  = 1;
-        
-        wait(s_axi_awready && s_axi_wready);
-        @(posedge clk);
-        #1;
-        s_axi_awvalid = 0;
-        s_axi_wvalid  = 0;
-        
-        wait(s_axi_bvalid);
-        @(posedge clk);
-        #1;
-        s_axi_bready  = 0;
-    endtask
-
-    // AXI Read Task
-    task axi_read(input [31:0] addr, output [31:0] data);
-        s_axi_araddr  = addr;
-        s_axi_arvalid = 1;
-        s_axi_rready  = 1;
-        
-        wait(s_axi_arready);
-        @(posedge clk);
-        #1;
-        s_axi_arvalid = 0;
-        
-        wait(s_axi_rvalid);
-        data = s_axi_rdata;
-        @(posedge clk);
-        #1;
-        s_axi_rready  = 0;
-    endtask
+    // Shared BFM Tasks
+    `include "axi_bfm_tasks.sv"
 
     // Main Test Sequence
     initial begin
@@ -174,9 +117,9 @@ module tb_gpio_axi;
         s_axi_bready  = 0;
         s_axi_arvalid = 0;
         s_axi_rready  = 0;
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge aclk);
         rst_n = 1;
-        repeat(2) @(posedge clk);
+        repeat(2) @(posedge aclk);
 
         $display("[%t] Starting Xilinx Directed Test...", $time);
 
@@ -184,7 +127,7 @@ module tb_gpio_axi;
         $display("[%t] Test 1: Basic R/W and DIR", $time);
         axi_write(REG_DIR, 8'hFF); // All outputs
         axi_write(REG_DATA_O, 8'hAA);
-        repeat(10) @(posedge clk);
+        repeat(10) @(posedge aclk);
         axi_read(REG_DATA_O, rdata);
         if (rdata[7:0] !== 8'hAA) $error("Test 1 Failed: DATA_O mismatch");
         axi_read(REG_DATA_I, rdata);
@@ -212,19 +155,19 @@ module tb_gpio_axi;
         axi_write(REG_INT_EN, 8'h02); // Enable Bit 1
         // Default is Edge, Falling
         axi_write(REG_DATA_O, 8'h02); // Bit 1 High
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge aclk);
         axi_write(REG_INT_STS, 8'h02); // Clear Status
-        repeat(2) @(posedge clk);
+        repeat(2) @(posedge aclk);
         
         axi_write(REG_DATA_O, 8'h00); // Falling Edge on Bit 1
-        repeat(10) @(posedge clk);
+        repeat(10) @(posedge aclk);
         
         axi_read(REG_INT_STS, rdata);
         if (!(rdata & 8'h02)) $error("Test 3 Failed: Interrupt status not set");
         if (!intr) $error("Test 3 Failed: Global interrupt not asserted");
         // Clear interrupt
         axi_write(REG_INT_STS, 8'h02); 
-        repeat(2) @(posedge clk);
+        repeat(2) @(posedge aclk);
         if (intr) $error("Test 3 Failed: Interrupt did not clear");
 
         // Test 4: Advanced Interrupts (Rising, High Level, Low Level, Any Edge)
@@ -236,9 +179,9 @@ module tb_gpio_axi;
         axi_write(REG_INT_POL, 8'h04); // Bit 2 Rising
         axi_write(REG_INT_EN,  8'h04); 
         axi_write(REG_DATA_O,  8'h00); 
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge aclk);
         axi_write(REG_DATA_O,  8'h04); // Rising Edge on Bit 2
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge aclk);
         axi_read(REG_INT_STS, rdata);
         if (!(rdata & 8'h04)) $error("Test 4 Failed: Rising Edge Interrupt not detected");
         axi_write(REG_INT_STS, 8'h04); // Clear
@@ -249,10 +192,10 @@ module tb_gpio_axi;
         axi_write(REG_INT_POL, 8'h08); // Bit 3 High
         axi_write(REG_INT_EN,  8'h08);
         axi_write(REG_DATA_O,  8'h08); // Set Bit 3 High
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge aclk);
         if (!intr) $error("Test 4 Failed: Level High Interrupt not detected");
         axi_write(REG_DATA_O,  8'h00); // Clear
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge aclk);
 
         // Level Low
         axi_write(REG_INT_EN,  8'h00);
@@ -260,9 +203,9 @@ module tb_gpio_axi;
         axi_write(REG_INT_POL, 8'h00); // Bit 4 Low (default pol 0)
         axi_write(REG_INT_EN,  8'h10);
         axi_write(REG_DATA_O,  8'h10); // Start High
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge aclk);
         axi_write(REG_DATA_O,  8'h00); // Set Bit 4 Low
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge aclk);
         if (!intr) $error("Test 4 Failed: Level Low Interrupt not detected");
         axi_write(REG_INT_EN,  8'h00); // Disable
 
@@ -271,17 +214,17 @@ module tb_gpio_axi;
         axi_write(REG_INT_ANY, 8'h20); // Bit 5 Any
         axi_write(REG_INT_EN,  8'h20);
         axi_write(REG_DATA_O,  8'h00);
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge aclk);
         axi_write(REG_INT_STS, 8'h20); 
         
         axi_write(REG_DATA_O,  8'h20); // Rising
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge aclk);
         axi_read(REG_INT_STS, rdata);
         if (!(rdata & 8'h20)) $error("Test 4 Failed: Any Edge (Rising) not detected");
         axi_write(REG_INT_STS, 8'h20);
 
         axi_write(REG_DATA_O,  8'h00); // Falling
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge aclk);
         axi_read(REG_INT_STS, rdata);
         if (!(rdata & 8'h20)) $error("Test 4 Failed: Any Edge (Falling) not detected");
         axi_write(REG_INT_STS, 8'h20);
@@ -298,15 +241,15 @@ module tb_gpio_axi;
         
         // Glitch (Pulse < Threshold)
         axi_write(REG_DATA_O, 8'h40);
-        repeat(2) @(posedge clk); // Hold for 2 cycles
+        repeat(2) @(posedge aclk); // Hold for 2 cycles
         axi_write(REG_DATA_O, 8'h00);
-        repeat(10) @(posedge clk);
+        repeat(10) @(posedge aclk);
         axi_read(REG_DATA_I, rdata);
         if (rdata & 8'h40) $error("Test 5 Failed: Glitch was not filtered");
 
         // Stable (Pulse > Threshold)
         axi_write(REG_DATA_O, 8'h40);
-        repeat(10) @(posedge clk); // Hold for 10 cycles
+        repeat(10) @(posedge aclk); // Hold for 10 cycles
         axi_read(REG_DATA_I, rdata);
         if (!(rdata & 8'h40)) $error("Test 5 Failed: Stable signal not captured");
         axi_write(REG_DATA_O, 8'h00);
@@ -317,12 +260,12 @@ module tb_gpio_axi;
         // Inversion
         axi_write(REG_INV_OUT, 8'h80); // Invert Output Bit 7
         axi_write(REG_DATA_O,  8'h00); // Setup 0
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge aclk);
         axi_read(REG_DATA_I,   rdata); // Loopback should see 1
         if (!(rdata & 8'h80)) $error("Test 6 Failed: Output Inversion");
         
         axi_write(REG_INV_IN,  8'h80); // Invert Input Bit 7
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge aclk);
         axi_read(REG_DATA_I,   rdata); // Should read 0 ( 1 inv -> 0)
         if (rdata & 8'h80) $error("Test 6 Failed: Input Inversion");
         axi_write(REG_INV_OUT, 8'h00);
@@ -331,7 +274,7 @@ module tb_gpio_axi;
         // Write Mask
         axi_write(REG_WR_MASK, 8'h01); // Mask Bit 0
         axi_write(REG_DATA_O,  8'hFF); // Write all 1s
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge aclk);
         axi_read(REG_DATA_O,   rdata);
         if (rdata & 8'h01) $error("Test 6 Failed: Write Mask Bit 0");
         axi_write(REG_WR_MASK, 8'h00);
@@ -340,12 +283,12 @@ module tb_gpio_axi;
         // Set DIR to Input (High Z driven by core)
         axi_write(REG_DIR, 8'h00); 
         axi_write(REG_PU_EN, 8'h02); // Pull Up Bit 1
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge aclk);
         if (io[1] !== 1'b1) $error("Test 6 Failed: Pull Up");
         
         axi_write(REG_PU_EN, 8'h00);
         axi_write(REG_PD_EN, 8'h02); // Pull Down Bit 1
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge aclk);
         if (io[1] !== 1'b0) $error("Test 6 Failed: Pull Down");
         axi_write(REG_DIR, 8'hFF); // Restore Output Dir
 
@@ -360,7 +303,7 @@ module tb_gpio_axi;
         // Bit 0: 0x54, Bit 1: 0x58, Bit 2: 0x5C
         axi_write(32'h5C, 32'd25); 
         
-        repeat(200) @(posedge clk);
+        repeat(200) @(posedge aclk);
         // Verify via sampling or waveform inspection. 
         // For self-checking, we can check if it toggles.
         // It's hard to precisely check duty cycle without a monitor, 

@@ -14,7 +14,7 @@ module tb_gpio_wb;
     parameter real CLK_PERIOD = 10.0;
 
     // Signals
-    logic clk = 0;
+    logic wb_clk_i = 0;
     logic rst = 0;
     
     // Wishbone Interface
@@ -35,13 +35,13 @@ module tb_gpio_wb;
     logic intr;
 
     // Clock Generation
-    always #(CLK_PERIOD/2) clk = ~clk;
+    always #(CLK_PERIOD/2) wb_clk_i = ~wb_clk_i;
 
     // DUT Instantiation
     gpio_wb #(
         .NUM_BITS(NUM_BITS)
     ) dut (
-        .wb_clk_i(clk),
+        .wb_clk_i(wb_clk_i),
         .wb_rst_i(rst),
         .wb_adr_i(wb_adr_i),
         .wb_dat_i(wb_dat_i),
@@ -68,40 +68,8 @@ module tb_gpio_wb;
     localparam bit [31:0] REG_CLR_O   = 32'h24;
     localparam bit [31:0] REG_TGL_O   = 32'h28;
 
-    // Wishbone Write Task
-    task wb_write(input [31:0] addr, input [31:0] data);
-        wb_adr_i = addr;
-        wb_dat_i = data;
-        wb_we_i  = 1;
-        wb_cyc_i = 1;
-        wb_stb_i = 1;
-        wb_sel_i = 4'hF;
-        wb_cti_i = 3'b000;
-        wb_bte_i = 2'b00;
-        
-        wait(wb_ack_o);
-        @(posedge clk);
-        #1;
-        wb_cyc_i = 0;
-        wb_stb_i = 0;
-        wb_we_i  = 0;
-    endtask
-
-    // Wishbone Read Task
-    task wb_read(input [31:0] addr, output [31:0] data);
-        wb_adr_i = addr;
-        wb_we_i  = 0;
-        wb_cyc_i = 1;
-        wb_stb_i = 1;
-        wb_sel_i = 4'hF;
-        
-        wait(wb_ack_o);
-        @(posedge clk);
-        #1;
-        data = wb_dat_o;
-        wb_cyc_i = 0;
-        wb_stb_i = 0;
-    endtask
+    // Shared BFM Tasks
+    `include "wb_bfm_tasks.sv"
 
     // Main Test Sequence
     initial begin
@@ -112,17 +80,18 @@ module tb_gpio_wb;
         rst = 1;
         wb_cyc_i = 0;
         wb_stb_i = 0;
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge wb_clk_i);
         rst = 0;
-        repeat(2) @(posedge clk);
+        repeat(2) @(posedge wb_clk_i);
 
         $display("[%t] Starting Wishbone Native Directed Test...", $time);
+        repeat(10) @(posedge wb_clk_i); // Stabilization delay
 
         // Test 1: Basic R/W and DIR
         $display("[%t] Test 1: Basic R/W and DIR", $time);
         wb_write(REG_DIR, 32'hFF);
         wb_write(REG_DATA_O, 32'hAA);
-        repeat(10) @(posedge clk);
+        repeat(10) @(posedge wb_clk_i);
         wb_read(REG_DATA_O, rdata);
         if (rdata[7:0] !== 8'hAA) begin
             $error("Test 1 Failed: DATA_O mismatch, got %h expected AA", rdata[7:0]);
@@ -153,7 +122,7 @@ module tb_gpio_wb;
 
         wb_write(REG_CLR_O,  32'h44);
         wb_read(REG_DATA_O, rdata);
-        if (rdata[7:0] !== 8'h22) begin
+        if (rdata[7:0] !== 32'h22) begin
             $error("Test 2 Failed: CLR failed, got %h expected 22", rdata[7:0]);
             errors++;
         end
@@ -163,22 +132,31 @@ module tb_gpio_wb;
         wb_write(REG_DIR,    32'hFF); // Outputs
         wb_write(REG_INT_EN, 32'h01); // Enable Bit 0
         wb_write(REG_DATA_O, 32'h01); // Bit 0 High
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge wb_clk_i);
         wb_write(REG_INT_STS, 32'h01); // Clear Status
-        repeat(2) @(posedge clk);
+        repeat(2) @(posedge wb_clk_i);
         
         wb_write(REG_DATA_O, 32'h00); // Falling Edge on Bit 0
-        repeat(10) @(posedge clk);
+        repeat(10) @(posedge wb_clk_i);
         
         wb_read(REG_INT_STS, rdata);
-        if (!(rdata & 32'h01)) begin
-             $error("Test 3 Failed: Interrupt status not set");
-             errors++;
+        
+        // Debugging Interrupt Failure
+        if (!(rdata & 8'h01)) begin
+            $error("Test 3 Failed: Interrupt status not set. Read: %h", rdata);
+            $display("Debug: intr=%b", intr);
+            
+            // Check Enable Register
+            wb_read(REG_INT_EN, rdata);
+            $display("Debug: INT_EN Readback: %h", rdata);
+            errors++;
+        end else if (!intr) begin
+            $error("Test 3 Failed: Global interrupt not asserted (STS is set)");
+            wb_read(REG_INT_EN, rdata);
+            $display("Debug: INT_EN Readback: %h", rdata);
+            errors++;
         end
-        if (!intr) begin
-             $error("Test 3 Failed: Global interrupt not asserted");
-             errors++;
-        end
+
         wb_write(REG_INT_STS, 32'h01); // Clear
 
         $display("[%t] Wishbone Native Directed Test Completion.", $time);

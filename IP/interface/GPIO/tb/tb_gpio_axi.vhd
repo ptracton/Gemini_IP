@@ -10,6 +10,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use std.env.all;
+use work.axi_bfm_pkg.all;
 
 entity tb_gpio_axi is
 end entity tb_gpio_axi;
@@ -52,76 +53,6 @@ architecture tb of tb_gpio_axi is
 
   signal io   : std_logic_vector(NUM_BITS - 1 downto 0) := (others => 'Z');
   signal intr : std_logic;
-
-  procedure axi_write(
-    constant addr  : in std_logic_vector(31 downto 0);
-    constant data  : in std_logic_vector(31 downto 0);
-    signal clk     : in std_logic;
-    signal awaddr  : out std_logic_vector(31 downto 0);
-    signal awvalid : out std_logic;
-    signal awready : in std_logic;
-    signal wdata   : out std_logic_vector(31 downto 0);
-    signal wstrb   : out std_logic_vector(3 downto 0);
-    signal wvalid  : out std_logic;
-    signal wready  : in std_logic;
-    signal bready  : out std_logic;
-    signal bvalid  : in std_logic
-  ) is
-  begin
-    wait until rising_edge(clk);
-    awaddr  <= addr;
-    awvalid <= '1';
-    wdata   <= data;
-    wstrb   <= x"F";
-    wvalid  <= '1';
-    bready  <= '1';
-
-    loop
-      wait until rising_edge(clk);
-      wait for 1 ns;
-      if awready = '1' then
-        awvalid <= '0' after CLK_PERIOD;
-      end if;
-      if wready = '1' then
-        wvalid <= '0' after CLK_PERIOD;
-      end if;
-      if bvalid = '1' then
-        bready <= '0';
-        exit;
-      end if;
-    end loop;
-  end procedure;
-
-  procedure axi_read(
-    constant addr  : in std_logic_vector(31 downto 0);
-    variable data  : out std_logic_vector(31 downto 0);
-    signal clk     : in std_logic;
-    signal araddr  : out std_logic_vector(31 downto 0);
-    signal arvalid : out std_logic;
-    signal arready : in std_logic;
-    signal rready  : out std_logic;
-    signal rvalid  : in std_logic;
-    signal rdata   : in std_logic_vector(31 downto 0)
-  ) is
-  begin
-    wait until rising_edge(clk);
-    araddr  <= addr;
-    arvalid <= '1';
-    rready  <= '1';
-
-    loop
-      wait until rising_edge(clk);
-      wait for 1 ns;
-      if arready = '1' then
-        arvalid <= '0' after CLK_PERIOD;
-      end if;
-      if rvalid = '1' then
-        data := rdata;
-        rready <= '0';
-        exit;
-      end if;
-    end loop;
-  end procedure;
 
 begin
 

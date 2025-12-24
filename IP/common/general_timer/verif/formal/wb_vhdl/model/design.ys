@@ -1,0 +1,12 @@
+# running in wb_vhdl/src/
+plugin -i ghdl
+ghdl --std=08 wb_slave_adapter.vhd timer_core.vhd timer_regs.vhd timer_wb.vhd -e timer_wb
+read -formal timer_props.sv
+read -formal timer_binds.sv
+read -formal -D BUS_WB timer_wb_vhdl_binds.sv
+prep -top timer_wb
+
+hierarchy -smtcheck
+rename -witness
+write_jny -no-connections ../model/design.json
+write_rtlil ../model/design.il

@@ -1,0 +1,14 @@
+# running in apb/src/
+read -formal gpio_props.sv
+read -formal gpio_regs.sv
+read -formal gpio_wrapper.sv
+read -formal gpio_bit.sv
+read -formal apb_slave_adapter.sv
+read -formal gpio_apb.sv
+read -formal gpio_binds.sv
+prep -top gpio_apb
+
+hierarchy -smtcheck
+rename -witness
+write_jny -no-connections ../model/design.json
+write_rtlil ../model/design.il

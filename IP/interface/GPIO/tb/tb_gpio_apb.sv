@@ -14,7 +14,7 @@ module tb_gpio_apb;
     parameter real CLK_PERIOD = 10.0;
 
     // Signals
-    logic clk = 0;
+    logic pclk = 0;
     logic rst_n = 0;
     
     // APB4 Interface
@@ -34,13 +34,13 @@ module tb_gpio_apb;
     logic intr;
 
     // Clock Generation
-    always #(CLK_PERIOD/2) clk = ~clk;
+    always #(CLK_PERIOD/2) pclk = ~pclk;
 
     // DUT Instantiation
     gpio_apb #(
         .NUM_BITS(NUM_BITS)
     ) dut (
-        .pclk(clk),
+        .pclk(pclk),
         .presetn(rst_n),
         .paddr(paddr),
         .pprot(pprot),
@@ -66,46 +66,8 @@ module tb_gpio_apb;
     localparam bit [31:0] REG_CLR_O   = 32'h24;
     localparam bit [31:0] REG_TGL_O   = 32'h28;
 
-    // APB Write Task
-    task apb_write(input [31:0] addr, input [31:0] data);
-        paddr   = addr;
-        pwdata  = data;
-        pwrite  = 1;
-        psel    = 1;
-        pprot   = 3'b000;
-        pstrb   = 4'hF;
-        penable = 0;
-        
-        @(posedge clk);
-        #1;
-        penable = 1;
-        
-        wait(pready);
-        @(posedge clk);
-        #1;
-        psel    = 0;
-        penable = 0;
-    endtask
-
-    // APB Read Task
-    task apb_read(input [31:0] addr, output [31:0] data);
-        paddr   = addr;
-        pwrite  = 0;
-        psel    = 1;
-        penable = 0;
-        pprot   = 3'b000;
-        
-        @(posedge clk);
-        #1;
-        penable = 1;
-        
-        wait(pready);
-        @(posedge clk);
-        #1;
-        data = prdata;
-        psel    = 0;
-        penable = 0;
-    endtask
+    // Shared BFM Tasks
+    `include "apb_bfm_tasks.sv"
 
     // Main Test Sequence
     initial begin
@@ -116,9 +78,9 @@ module tb_gpio_apb;
         rst_n = 0;
         psel = 0;
         penable = 0;
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge pclk);
         rst_n = 1;
-        repeat(2) @(posedge clk);
+        repeat(2) @(posedge pclk);
 
         $display("[%t] Starting APB Native Directed Test...", $time);
 
@@ -126,7 +88,7 @@ module tb_gpio_apb;
         $display("[%t] Test 1: Basic R/W and DIR", $time);
         apb_write(REG_DIR, 32'hFF);
         apb_write(REG_DATA_O, 32'hAA);
-        repeat(10) @(posedge clk); // Wait for synchronization/debouncing
+        repeat(10) @(posedge pclk); // Wait for synchronization/debouncing
         apb_read(REG_DATA_O, rdata);
         if (rdata[7:0] !== 8'hAA) begin
             $error("Test 1 Failed: DATA_O mismatch, got %h expected AA", rdata[7:0]);
@@ -167,12 +129,12 @@ module tb_gpio_apb;
         apb_write(REG_DIR,    32'hFF); // Outputs
         apb_write(REG_INT_EN, 32'h01); // Enable Bit 1
         apb_write(REG_DATA_O, 32'h01); // Bit 1 High
-        repeat(5) @(posedge clk);
+        repeat(5) @(posedge pclk);
         apb_write(REG_INT_STS, 32'h01); // Clear Status
-        repeat(2) @(posedge clk);
+        repeat(2) @(posedge pclk);
         
         apb_write(REG_DATA_O, 32'h00); // Falling Edge on Bit 1
-        repeat(10) @(posedge clk);
+        repeat(10) @(posedge pclk);
         
         apb_read(REG_INT_STS, rdata);
         if (!(rdata & 32'h01)) begin

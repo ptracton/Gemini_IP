@@ -1,0 +1,13 @@
+# running in wb/src/
+read -formal timer_props.sv
+read -formal timer_regs.sv
+read -formal timer_core.sv
+read -formal wb_slave_adapter.sv
+read -formal timer_wb.sv
+read -formal timer_binds.sv
+prep -top timer_wb
+
+hierarchy -smtcheck
+rename -witness
+write_jny -no-connections ../model/design.json
+write_rtlil ../model/design.il

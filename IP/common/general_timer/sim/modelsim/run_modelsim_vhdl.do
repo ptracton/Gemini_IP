@@ -9,6 +9,10 @@ set TB_DIR "$GT_DIR/tb"
 vlib work
 
 # Compile RTL (VHDL 2008)
+set SHARED_RTL_DIR "$GT_DIR/../../common/lib/rtl"
+vcom -2008 -work work $SHARED_RTL_DIR/axi4lite_slave_adapter.vhd
+vcom -2008 -work work $SHARED_RTL_DIR/apb_slave_adapter.vhd
+vcom -2008 -work work $SHARED_RTL_DIR/wb_slave_adapter.vhd
 vcom -2008 -work work $RTL_DIR/timer_regs.vhd
 vcom -2008 -work work $RTL_DIR/timer_core.vhd
 vcom -2008 -work work $RTL_DIR/timer_apb.vhd

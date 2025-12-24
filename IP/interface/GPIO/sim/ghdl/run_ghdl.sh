@@ -40,6 +40,22 @@ for bus in "${BUS_TYPES[@]}"; do
     echo "Running GHDL Simulation for BUS: $bus"
     echo "=================================================="
     
+    echo "--- Analyzing Shared Library ---"
+    SHARED_RTL_DIR="$IP_DIR/../../common/lib/rtl"
+    SHARED_VERIF_DIR="$IP_DIR/../../common/lib/verif"
+    
+    # Packages first
+    ghdl -a --std=08 --work=work $SHARED_VERIF_DIR/${bus}_bfm_pkg.vhd
+    
+    # RTL Adapters
+    if [ "$bus" == "axi" ]; then
+        ghdl -a --std=08 --work=work $SHARED_RTL_DIR/axi4lite_slave_adapter.vhd
+    elif [ "$bus" == "apb" ]; then
+        ghdl -a --std=08 --work=work $SHARED_RTL_DIR/apb_slave_adapter.vhd
+    elif [ "$bus" == "wb" ]; then
+        ghdl -a --std=08 --work=work $SHARED_RTL_DIR/wb_slave_adapter.vhd
+    fi
+
     echo "--- Analyzing RTL ---"
     ghdl -a --std=08 --work=work $RTL_DIR/gpio_regs.vhd
     ghdl -a --std=08 --work=work $RTL_DIR/gpio_bit.vhd

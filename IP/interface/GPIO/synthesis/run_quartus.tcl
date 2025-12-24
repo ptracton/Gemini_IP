@@ -9,6 +9,7 @@ set TOP_MODULE [lindex $argv 0]
 set FAMILY "Cyclone IV GX"
 set PART "EP4CGX15BF14C6"
 set RTL_DIR "../rtl/verilog"
+set SHARED_RTL_DIR "../../../common/lib/rtl"
 set OUTPUT_DIR "results/${TOP_MODULE}_quartus"
 
 # Create project
@@ -28,6 +29,16 @@ set_global_assignment -name PROJECT_OUTPUT_DIRECTORY $OUTPUT_DIR
 set_global_assignment -name SYSTEMVERILOG_FILE "$RTL_DIR/gpio_bit.sv"
 set_global_assignment -name SYSTEMVERILOG_FILE "$RTL_DIR/gpio_wrapper.sv"
 set_global_assignment -name SYSTEMVERILOG_FILE "$RTL_DIR/gpio_regs.sv"
+
+# Select Adapter based on TOP_MODULE
+if { [string match "*axi*" $TOP_MODULE] } {
+    set_global_assignment -name SYSTEMVERILOG_FILE "$SHARED_RTL_DIR/axi4lite_slave_adapter.sv"
+} elseif { [string match "*apb*" $TOP_MODULE] } {
+    set_global_assignment -name SYSTEMVERILOG_FILE "$SHARED_RTL_DIR/apb_slave_adapter.sv"
+} elseif { [string match "*wb*" $TOP_MODULE] } {
+    set_global_assignment -name SYSTEMVERILOG_FILE "$SHARED_RTL_DIR/wb_slave_adapter.sv"
+}
+
 set_global_assignment -name SYSTEMVERILOG_FILE "$RTL_DIR/$TOP_MODULE.sv"
 
 # Analysis & Synthesis

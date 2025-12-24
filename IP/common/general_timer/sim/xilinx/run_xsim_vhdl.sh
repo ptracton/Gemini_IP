@@ -38,7 +38,11 @@ for test in "${TESTS[@]}"; do
     echo "=================================================="
     
     echo "--- Compiling RTL ---"
+    SHARED_RTL_DIR="$IP_DIR/common/lib/rtl"
     xvhdl -2008 \
+        $SHARED_RTL_DIR/axi4lite_slave_adapter.vhd \
+        $SHARED_RTL_DIR/apb_slave_adapter.vhd \
+        $SHARED_RTL_DIR/wb_slave_adapter.vhd \
         $RTL_DIR/timer_regs.vhd \
         $RTL_DIR/timer_core.vhd \
         $RTL_DIR/timer_apb.vhd \

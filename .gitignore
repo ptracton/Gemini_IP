@@ -250,4 +250,6 @@ transcript_*
 /tb*
 /*.vvp
 /transcript*
-/work*.cf
+
+# Allow IP shared code library
+!IP/common/lib/

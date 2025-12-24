@@ -85,105 +85,44 @@ architecture rtl of gpio_axi is
   signal pull_up_en   : std_logic_vector(NUM_BITS - 1 downto 0);
   signal pull_down_en : std_logic_vector(NUM_BITS - 1 downto 0);
 
-  signal aw_en     : std_logic := '1';
-  signal s_awready : std_logic := '0';
-  signal s_wready  : std_logic := '0';
-  signal s_bvalid  : std_logic := '0';
-  signal s_arready : std_logic := '0';
-  signal s_rvalid  : std_logic := '0';
-
 begin
 
-  s_axi_awready <= s_awready;
-  s_axi_wready  <= s_wready;
-  s_axi_bvalid  <= s_bvalid;
-  s_axi_arready <= s_arready;
-  s_axi_rvalid  <= s_rvalid;
-
-  -- AXI Logic
-  process (s_axi_aclk, s_axi_aresetn)
-  begin
-    if s_axi_aresetn = '0' then
-      s_awready <= '0';
-      aw_en     <= '1';
-    elsif rising_edge(s_axi_aclk) then
-      if s_awready = '0' and s_axi_awvalid = '1' and s_axi_wvalid = '1' and aw_en = '1' then
-        s_awready <= '1';
-        aw_en     <= '0';
-      elsif s_axi_bready = '1' and s_bvalid = '1' then
-        aw_en     <= '1';
-        s_awready <= '0';
-      else
-        s_awready <= '0';
-      end if;
-    end if;
-  end process;
-
-  process (s_axi_aclk, s_axi_aresetn)
-  begin
-    if s_axi_aresetn = '0' then
-      s_wready <= '0';
-    elsif rising_edge(s_axi_aclk) then
-      if s_wready = '0' and s_axi_wvalid = '1' and s_axi_awvalid = '1' and aw_en = '1' then
-        s_wready <= '1';
-      else
-        s_wready <= '0';
-      end if;
-    end if;
-  end process;
-
-  reg_we   <= s_wready and s_axi_wvalid and s_awready and s_axi_awvalid;
-  reg_addr <= s_axi_awaddr when reg_we = '1' else
-    s_axi_araddr;
-  reg_wdata <= s_axi_wdata;
-  reg_be    <= s_axi_wstrb;
-
-  process (s_axi_aclk, s_axi_aresetn)
-  begin
-    if s_axi_aresetn = '0' then
-      s_bvalid    <= '0';
-      s_axi_bresp <= "00";
-    elsif rising_edge(s_axi_aclk) then
-      if s_awready = '1' and s_axi_awvalid = '1' and s_wready = '1' and s_axi_wvalid = '1' and s_bvalid = '0' then
-        s_bvalid    <= '1';
-        s_axi_bresp <= "00";
-      elsif s_axi_bready = '1' and s_bvalid = '1' then
-        s_bvalid <= '0';
-      end if;
-    end if;
-  end process;
-
-  process (s_axi_aclk, s_axi_aresetn)
-  begin
-    if s_axi_aresetn = '0' then
-      s_arready <= '0';
-    elsif rising_edge(s_axi_aclk) then
-      if s_arready = '0' and s_axi_arvalid = '1' then
-        s_arready <= '1';
-      else
-        s_arready <= '0';
-      end if;
-    end if;
-  end process;
-
-  reg_re <= s_arready and s_axi_arvalid;
-
-  process (s_axi_aclk, s_axi_aresetn)
-  begin
-    if s_axi_aresetn = '0' then
-      s_rvalid    <= '0';
-      s_axi_rresp <= "00";
-    elsif rising_edge(s_axi_aclk) then
-      if s_arready = '1' and s_axi_arvalid = '1' and s_rvalid = '0' then
-        s_rvalid    <= '1';
-        s_axi_rresp <= "00";
-      elsif s_axi_rready = '1' and s_rvalid = '1' then
-        s_rvalid <= '0';
-      end if;
-    end if;
-  end process;
-
-  s_axi_rdata <= reg_rdata;
+  -- AXI4-Lite Slave Adapter
+  u_axi_adapter : entity work.axi4lite_slave_adapter
+    generic map(
+      ADDR_WIDTH => 32,
+      DATA_WIDTH => 32
+    )
+    port map
+    (
+      aclk          => s_axi_aclk,
+      aresetn       => s_axi_aresetn,
+      s_axi_awaddr  => s_axi_awaddr,
+      s_axi_awprot  => s_axi_awprot,
+      s_axi_awvalid => s_axi_awvalid,
+      s_axi_awready => s_axi_awready,
+      s_axi_wdata   => s_axi_wdata,
+      s_axi_wstrb   => s_axi_wstrb,
+      s_axi_wvalid  => s_axi_wvalid,
+      s_axi_wready  => s_axi_wready,
+      s_axi_bresp   => s_axi_bresp,
+      s_axi_bvalid  => s_axi_bvalid,
+      s_axi_bready  => s_axi_bready,
+      s_axi_araddr  => s_axi_araddr,
+      s_axi_arprot  => s_axi_arprot,
+      s_axi_arvalid => s_axi_arvalid,
+      s_axi_arready => s_axi_arready,
+      s_axi_rdata   => s_axi_rdata,
+      s_axi_rresp   => s_axi_rresp,
+      s_axi_rvalid  => s_axi_rvalid,
+      s_axi_rready  => s_axi_rready,
+      reg_addr      => reg_addr,
+      reg_wdata     => reg_wdata,
+      reg_rdata     => reg_rdata,
+      reg_we        => reg_we,
+      reg_re        => reg_re,
+      reg_be        => reg_be
+    );
 
   -- Register Block
   u_gpio_regs : entity work.gpio_regs

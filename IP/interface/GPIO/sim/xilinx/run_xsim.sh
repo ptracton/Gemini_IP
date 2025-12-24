@@ -41,14 +41,19 @@ for bus in "${BUS_TYPES[@]}"; do
     echo "=================================================="
     
     echo "--- Compiling RTL ---"
+    SHARED_RTL_DIR="$IP_DIR/../../common/lib/rtl"
     xvlog -sv -d SIMULATION \
+        $SHARED_RTL_DIR/axi4lite_slave_adapter.sv \
+        $SHARED_RTL_DIR/apb_slave_adapter.sv \
+        $SHARED_RTL_DIR/wb_slave_adapter.sv \
         $RTL_DIR/gpio_bit.sv \
         $RTL_DIR/gpio_wrapper.sv \
         $RTL_DIR/gpio_regs.sv \
         $RTL_DIR/gpio_$bus.sv
 
     echo "--- Compiling Testbench ---"
-    xvlog -sv $TB_DIR/tb_gpio_$bus.sv
+    SHARED_VERIF_DIR="$IP_DIR/../../common/lib/verif"
+    xvlog -sv -i $SHARED_VERIF_DIR $TB_DIR/tb_gpio_$bus.sv
 
     echo "--- Elaborating ---"
     xelab -cc_type sbct -debug typical tb_gpio_$bus -s snapshot_tb_gpio_$bus -timescale 1ns/1ps
