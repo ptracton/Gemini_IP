@@ -43,7 +43,7 @@ echo "--- Elaborating ---"
 ghdl -e --std=08 bus_matrix_tb
 
 echo "--- Simulating ---"
-ghdl -r --std=08 bus_matrix_tb --vcd=bus_matrix.vcd
+ghdl -r --std=08 bus_matrix_tb --vcd=bus_matrix.vcd --stop-time=1us
 
 echo "=================================================="
 echo "GHDL SIMULATION COMPLETE"

@@ -57,7 +57,7 @@ rm -rf xsim.dir *.log *.jou *.pb
     xsim snapshot_tb_bus_matrix -tclbatch ../run_batch.tcl -log xsim_bus_matrix.log
 
     # Check result
-    if grep -q "ALL.*PASSED" xsim_bus_matrix.log || grep -q "TESTS PASSED" xsim_bus_matrix.log || grep -q "OK" xsim_bus_matrix.log; then
+    if (grep -q "ALL.*PASSED" xsim_bus_matrix.log || grep -q "TESTS PASSED" xsim_bus_matrix.log || grep -q "OK" xsim_bus_matrix.log) && ! grep -q "Error:" xsim_bus_matrix.log && ! grep -q "FAIL" xsim_bus_matrix.log; then
         echo "--------------------------"
         echo "XSIM SIMULATION PASSED"
         echo "--------------------------"
@@ -65,7 +65,8 @@ rm -rf xsim.dir *.log *.jou *.pb
         echo "--------------------------"
         echo "XSIM SIMULATION FAILED"
         echo "--------------------------"
-        cat xsim_bus_matrix.log
+        # Print tail of log or grep for errors
+        grep -E "Error:|FAIL" xsim_bus_matrix.log || tail -n 20 xsim_bus_matrix.log
         exit 1
     fi
 

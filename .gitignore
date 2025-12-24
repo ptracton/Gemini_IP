@@ -257,3 +257,10 @@ transcript_*
 # Coverage repositories
 coverage_repo/
 joined_coverage_repo/
+
+# SymbiYosys (Formal)
+**/verif/formal/*/
+*.sby
+!IP/common/bus_matrix/verif/formal/*.sby
+!IP/common/bus_matrix/verif/formal/*.sv
+!IP/common/bus_matrix/verif/formal/*.sh

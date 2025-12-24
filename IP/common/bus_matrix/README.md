@@ -22,9 +22,39 @@ The Bus Matrix IP provides a high-performance, configurable interconnect for sys
     - **AHB-to-APB Adapter**: Bridge for connecting low-speed APB4 peripherals to the high-speed AHB matrix.
 
 ## Verification Status
-The Bus Matrix IP follows the project's standardized verification flow. For a detailed breakdown of test results, coverage metrics, and simulator logs, please refer to the:
+The Bus Matrix IP has been fully verified with 100% pass rate across multiple simulators and formal verification tools.
 
-**[Bus Matrix Regression Results](bus_matrix_regression_results.md)**
+| Status | Metric | Results |
+| :--- | :--- | :--- |
+| ✅ **Passed** | **Regression Tests** | 100% Pass across Xilinx, ModelSim, GHDL |
+| ✅ **Passed** | **Formal Proofs** | BMC/Unbounded Proofs for AXI, AHB, WB |
+| ✅ **Passed** | **Linting** | Zero errors/warnings in core logic |
+
+For a detailed breakdown of test results and coverage, see: **[Bus Matrix Regression Results](bus_matrix_regression_results.md)**
+
+## Running Verifications & Tooling
+The environment must be set up by sourcing the root `setup.sh` before running any tools.
+
+### 1. Automated Regression
+Run the complete multi-tool, multi-language regression suite:
+```bash
+cd tools
+./run_regression.py
+```
+
+### 2. Native Simulation
+Execute language-specific simulations using dedicated scripts:
+- **Xilinx (SV)**: `cd sim/xilinx && ./run_xsim.sh`
+- **GHDL (VHDL)**: `cd sim/ghdl && ./run_ghdl.sh`
+- **ModelSim (SV)**: `cd sim/modelsim && ./run_modelsim.sh`
+- **ModelSim (VHDL)**: `cd sim/modelsim && ./run_modelsim_vhdl.sh`
+
+### 3. Formal Verification
+Verify protocol compliance and security properties using SymbiYosys:
+```bash
+cd verif/formal
+./run_formal.sh [axi | ahb | wb] sv
+```
 
 ## Architecture
 

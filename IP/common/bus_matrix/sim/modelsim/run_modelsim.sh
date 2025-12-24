@@ -23,7 +23,7 @@ echo "ModelSim Simulation Results"
 echo "=================================================="
 
 if grep -q "All tests completed" simulation.log; then
-    if grep -q "Error" simulation.log || grep -q "FAIL" simulation.log; then
+    if grep -q "\*\* Error" simulation.log || grep -q "Error:" simulation.log || grep -q "FAIL" simulation.log; then
         echo "TEST FAILED"
         echo "--------------------------------------------------"
         grep "Error" simulation.log

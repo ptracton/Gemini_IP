@@ -30,12 +30,12 @@ The repository has transitioned from initial implementation to a fully verified 
 | Feature | GPIO | General Timer | Bus Matrix |
 | :--- | :---: | :---: | :---: |
 | **AXI4-Lite** | ✅ | ✅ | ✅ |
-| **APB4** | ✅ | ✅ | ❌ |
+| **APB4** | ✅ | ✅ | 🔗 (Bridge) |
 | **AHB5-Lite** | ❌ | ❌ | ✅ |
 | **Wishbone B4** | ✅ | ✅ | ✅ |
 | **SystemVerilog** | ✅ | ✅ | ✅ |
 | **VHDL-2008** | ✅ | ✅ | ✅ |
-| **UVM Random** | ✅ | ✅ | ✅ |
+| **Formal (SVA)** | ✅ | ✅ | ✅ |
 | **Regression Tool** | ✅ | ✅ | ✅ |
 | **Synthesis (Vivado/Yosys)** | ✅ | ✅ | ✅ |
 

@@ -133,7 +133,39 @@ architecture rtl of bus_matrix_axi is
   signal slave_ar_req_vector  : matrix_mn_t;
   signal slave_ar_gnt_vector  : matrix_mn_t;
 
+  signal bvalid_err : std_logic_vector(N_MASTERS - 1 downto 0)     := (others => '0');
+  signal rvalid_err : std_logic_vector(N_MASTERS - 1 downto 0)     := (others => '0');
+  signal bresp_err  : std_logic_vector(N_MASTERS * 2 - 1 downto 0) := (others => '0');
+  signal rresp_err  : std_logic_vector(N_MASTERS * 2 - 1 downto 0) := (others => '0');
+
 begin
+
+  -- Error Responder Process
+  process (aclk, aresetn)
+  begin
+    if aresetn = '0' then
+      bvalid_err <= (others => '0');
+      rvalid_err <= (others => '0');
+    elsif rising_edge(aclk) then
+      for i in 0 to N_MASTERS - 1 loop
+        -- Write Error Capture
+        if master_aw_err(i) = '1' and m_awvalid(i) = '1' and m_awready(i) = '1' then
+          bvalid_err(i)                           <= '1';
+          bresp_err((i + 1) * 2 - 1 downto i * 2) <= "11"; -- DECERR
+        elsif bvalid_o(i) = '1' and bready_i(i) = '1' then
+          bvalid_err(i) <= '0';
+        end if;
+
+        -- Read Error Capture
+        if master_ar_err(i) = '1' and m_arvalid(i) = '1' and m_arready(i) = '1' then
+          rvalid_err(i)                           <= '1';
+          rresp_err((i + 1) * 2 - 1 downto i * 2) <= "11"; -- DECERR
+        elsif rvalid_o(i) = '1' and rready_i(i) = '1' then
+          rvalid_err(i) <= '0';
+        end if;
+      end loop;
+    end if;
+  end process;
 
   -- =================================================================================
   -- INPUT PIPELINING (Just direct connection for now, logic placeholder)
@@ -258,19 +290,15 @@ end generate;
 
   GEN_B_MUX : for m in 0 to N_MASTERS - 1 generate
   begin
-    process (master_aw_err(m), slave_aw_gnt_vector, s_awready_int, s_wready_int, s_bvalid_i, s_bresp_i)
+    process (master_aw_err(m), bvalid_err(m), slave_aw_gnt_vector, s_awready_int, s_wready_int, s_bvalid_i, s_bresp_i)
     begin
-      m_awready(m)                          <= '0';
-      m_wready(m)                           <= '0';
-      bvalid_o(m)                           <= '0';
-      bresp_o((m + 1) * 2 - 1 downto m * 2) <= (others => '0');
+      -- Default to combinational error response for ready if error
+      m_awready(m)                          <= master_aw_err(m);
+      m_wready(m)                           <= master_aw_err(m);
+      bvalid_o(m)                           <= bvalid_err(m);
+      bresp_o((m + 1) * 2 - 1 downto m * 2) <= bresp_err((m + 1) * 2 - 1 downto m * 2);
 
-      if master_aw_err(m) = '1' then
-        bresp_o((m + 1) * 2 - 1 downto m * 2) <= "11"; -- DECERR
-        m_awready(m)                          <= '1';
-        m_wready(m)                           <= '1';
-        bvalid_o(m)                           <= '1'; -- Imm Resp
-      else
+      if master_aw_err(m) = '0' and bvalid_err(m) = '0' then
         for i in 0 to M_SLAVES - 1 loop
           if slave_aw_gnt_vector(i)(m) = '1' then
             m_awready(m)                          <= s_awready_int(i);
@@ -374,18 +402,18 @@ end generate;
 
   GEN_R_MUX : for m in 0 to N_MASTERS - 1 generate
   begin
-    process (master_ar_err(m), slave_ar_gnt_vector, s_arready_int, s_rvalid_i, s_rdata_i, s_rresp_i)
+    process (master_ar_err(m), rvalid_err(m), slave_ar_gnt_vector, s_arready_int, s_rvalid_i, s_rdata_i, s_rresp_i)
     begin
-      m_arready(m)                                            <= '0';
-      rvalid_o(m)                                             <= '0';
+      m_arready(m)                                            <= master_ar_err(m);
+      rvalid_o(m)                                             <= rvalid_err(m);
       rdata_o((m + 1) * DATA_WIDTH - 1 downto m * DATA_WIDTH) <= (others => '0');
-      rresp_o((m + 1) * 2 - 1 downto m * 2)                   <= (others => '0');
+      rresp_o((m + 1) * 2 - 1 downto m * 2)                   <= rresp_err((m + 1) * 2 - 1 downto m * 2);
 
-      if master_ar_err(m) = '1' then
-        rresp_o((m + 1) * 2 - 1 downto m * 2) <= "11"; -- DECERR
-        m_arready(m)                          <= '1';
-        rvalid_o(m)                           <= '1';
-      else
+      if rvalid_err(m) = '1' then
+        rdata_o((m + 1) * DATA_WIDTH - 1 downto m * DATA_WIDTH) <= x"DEADBEEF";
+      end if;
+
+      if master_ar_err(m) = '0' and rvalid_err(m) = '0' then
         for i in 0 to M_SLAVES - 1 loop
           if slave_ar_gnt_vector(i)(m) = '1' then
             m_arready(m)                                            <= s_arready_int(i);

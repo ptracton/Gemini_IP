@@ -108,9 +108,12 @@ module bus_matrix_axi #(
     
     // 1. Write Address Decoder
     // ---------------------------------------------------------
+    // Channels
     logic [N_MASTERS-1:0][M_SLAVES-1:0] master_aw_req_matrix;
     logic [N_MASTERS-1:0]               master_aw_err;
-    
+    logic [N_MASTERS-1:0][M_SLAVES-1:0] master_ar_req_matrix;
+    logic [N_MASTERS-1:0]               master_ar_err;
+
     genvar m, s;
     generate
         for (m = 0; m < N_MASTERS; m++) begin : GEN_AW_DECODERS
@@ -212,22 +215,57 @@ module bus_matrix_axi #(
         end
     endgenerate
 
+    // ---------------------------------------------------------
+    // 5. Error Responder Logic (Registered)
+    // ---------------------------------------------------------
+    // ---------------------------------------------------------
+    // 5. Error Responder Logic (Registered)
+    // ---------------------------------------------------------
+    logic [N_MASTERS-1:0] bvalid_err, rvalid_err;
+    logic [N_MASTERS-1:0][1:0] bresp_err, rresp_err;
+    
+    always_ff @(posedge aclk or negedge aresetn) begin
+        if (!aresetn) begin
+            bvalid_err <= '0;
+            rvalid_err <= '0;
+            bresp_err  <= '0;
+            rresp_err  <= '0;
+        end else begin
+            for (int i = 0; i < N_MASTERS; i++) begin
+                // Write Error Capture
+                if (master_aw_err[i] && awvalid_i[i] && awready_o[i]) begin
+                    bvalid_err[i] <= 1'b1;
+                    bresp_err[i]  <= 2'b11; // DECERR
+                end else if (bvalid_o[i] && bready_i[i]) begin
+                    bvalid_err[i] <= 1'b0;
+                end
+                    
+                // Read Error Capture
+                if (master_ar_err[i] && arvalid_i[i] && arready_o[i]) begin
+                    rvalid_err[i] <= 1'b1;
+                    rresp_err[i]  <= 2'b11; // DECERR
+                end else if (rvalid_o[i] && rready_i[i]) begin
+                    rvalid_err[i] <= 1'b0;
+                end
+            end
+        end
+    end
+
     // 4. Return Path Muxing (B Channel: Slave -> Master)
     // ---------------------------------------------------------
-    // Need to route Slave response to the correct Master.
-    // Since we locked the arbiter, the grant vector is still valid pointing to the master.
-    
     generate
         for (m = 0; m < N_MASTERS; m++) begin : GEN_B_MUX
             always_comb begin
+                // Defaults
                 awready_o[m] = 1'b0;
                 wready_o[m]  = 1'b0;
-                bvalid_o[m]  = 1'b0;
-                bresp_o[m*2 +: 2] = 2'b00; // OKAY
+                bvalid_o[m]  = bvalid_err[m];
+                bresp_o[m*2 +: 2] = bresp_err[m];
 
                 if (master_aw_err[m]) begin
-                     // Decode Error Logic ... (Omitted for brevity, assumed compliant master)
-                end else begin
+                    awready_o[m] = 1'b1;
+                    wready_o[m]  = 1'b1;
+                end else if (!bvalid_err[m]) begin
                     for (int i = 0; i < M_SLAVES; i++) begin
                         if (slave_aw_gnt_vector[i][m]) begin
                             awready_o[m] = s_awready_i[i];
@@ -246,10 +284,7 @@ module bus_matrix_axi #(
     // READ PATH (AR + R)
     // =========================================================================================================
 
-    // 1. Read Address Decoder
     // ---------------------------------------------------------
-    logic [N_MASTERS-1:0][M_SLAVES-1:0] master_ar_req_matrix;
-    logic [N_MASTERS-1:0]               master_ar_err; // Add logic for decode error
     
     generate
         for (m = 0; m < N_MASTERS; m++) begin : GEN_AR_DECODERS
@@ -336,14 +371,15 @@ module bus_matrix_axi #(
     generate
         for (m = 0; m < N_MASTERS; m++) begin : GEN_R_MUX
             always_comb begin
+                // Defaults
                 arready_o[m] = 1'b0;
-                rvalid_o[m]  = 1'b0;
-                rdata_o[m*DATA_WIDTH +: DATA_WIDTH] = '0;
-                rresp_o[m*2 +: 2] = 2'b00;
+                rvalid_o[m]  = rvalid_err[m];
+                rdata_o[m*DATA_WIDTH +: DATA_WIDTH] = rvalid_err[m] ? 32'hDEAD_BEEF : 32'h0;
+                rresp_o[m*2 +: 2] = rresp_err[m];
 
                 if (master_ar_err[m]) begin
-                    // Decode Error
-                end else begin
+                    arready_o[m] = 1'b1;
+                end else if (!rvalid_err[m]) begin
                     for (int i = 0; i < M_SLAVES; i++) begin
                         if (slave_ar_gnt_vector[i][m]) begin
                             arready_o[m] = s_arready_i[i];
