@@ -133,77 +133,131 @@ class GeminiTester:
 
     # --- APB Helpers ---
     async def _write_apb(self, addr, data):
-        self.dut.paddr.value = addr
-        self.dut.pwdata.value = data
-        self.dut.pwrite.value = 1
-        self.dut.psel.value = 1
+        def get_sig(name):
+            if hasattr(self.dut, f"p{name}"): return getattr(self.dut, f"p{name}")
+            if hasattr(self.dut, name): return getattr(self.dut, name)
+            raise AttributeError(f"Signal {name} not found on DUT")
+
+        paddr   = get_sig("addr")
+        pwdata  = get_sig("wdata")
+        pwrite  = get_sig("write")
+        psel    = get_sig("sel")
+        penable = get_sig("enable")
+        pclk    = get_sig("clk")
+        pready  = get_sig("ready")
+
+        paddr.value = addr
+        pwdata.value = data
+        pwrite.value = 1
+        psel.value = 1
         
         # Optional pstrb
-        if hasattr(self.dut, "pstrb"):
-            self.dut.pstrb.value = 0xF
+        if hasattr(self.dut, "pstrb"): self.dut.pstrb.value = 0xF
+        elif hasattr(self.dut, "strb"): self.dut.strb.value = 0xF
             
-        await RisingEdge(self.dut.pclk)
-        self.dut.penable.value = 1
-        await RisingEdge(self.dut.pclk)
+        await RisingEdge(pclk)
+        penable.value = 1
+        await RisingEdge(pclk)
         
-        while not safe_to_int(self.dut.pready):
-            await RisingEdge(self.dut.pclk)
+        while not safe_to_int(pready):
+            await RisingEdge(pclk)
             
-        self.dut.psel.value = 0
-        self.dut.penable.value = 0
-        self.dut.pwrite.value = 0 # Good practice to de-assert write
+        psel.value = 0
+        penable.value = 0
+        pwrite.value = 0
 
     async def _read_apb(self, addr):
-        self.dut.paddr.value = addr
-        self.dut.pwrite.value = 0
-        self.dut.psel.value = 1
-        await RisingEdge(self.dut.pclk)
-        self.dut.penable.value = 1
-        await RisingEdge(self.dut.pclk)
+        def get_sig(name):
+            if hasattr(self.dut, f"p{name}"): return getattr(self.dut, f"p{name}")
+            if hasattr(self.dut, name): return getattr(self.dut, name)
+            raise AttributeError(f"Signal {name} not found on DUT")
+
+        paddr   = get_sig("addr")
+        pwrite  = get_sig("write")
+        psel    = get_sig("sel")
+        penable = get_sig("enable")
+        pclk    = get_sig("clk")
+        pready  = get_sig("ready")
+        prdata  = get_sig("rdata")
+
+        paddr.value = addr
+        pwrite.value = 0
+        psel.value = 1
+        await RisingEdge(pclk)
+        penable.value = 1
+        await RisingEdge(pclk)
         
-        while not safe_to_int(self.dut.pready):
-            await RisingEdge(self.dut.pclk)
+        while not safe_to_int(pready):
+            await RisingEdge(pclk)
             
-        data = safe_to_int(self.dut.prdata)
-        self.dut.psel.value = 0
-        self.dut.penable.value = 0
+        data = safe_to_int(prdata)
+        psel.value = 0
+        penable.value = 0
         return data
 
     # --- Wishbone Helpers ---
     async def _write_wb(self, addr, data):
-        self.dut.wb_adr_i.value = addr
-        self.dut.wb_dat_i.value = data
-        self.dut.wb_we_i.value = 1
-        self.dut.wb_sel_i.value = 0xF
-        self.dut.wb_cyc_i.value = 1
-        self.dut.wb_stb_i.value = 1
+        def get_sig(name):
+            if hasattr(self.dut, f"wb_{name}"): return getattr(self.dut, f"wb_{name}")
+            if hasattr(self.dut, name): return getattr(self.dut, name)
+            raise AttributeError(f"Signal {name} not found on DUT")
+
+        adr_i  = get_sig("adr_i")
+        dat_i  = get_sig("dat_i")
+        we_i   = get_sig("we_i")
+        sel_i  = get_sig("sel_i")
+        cyc_i  = get_sig("cyc_i")
+        stb_i  = get_sig("stb_i")
+        clk_i  = get_sig("clk")
+        ack_o  = get_sig("ack_o")
+
+        adr_i.value = addr
+        dat_i.value = data
+        we_i.value  = 1
+        sel_i.value = 0xF
+        cyc_i.value = 1
+        stb_i.value = 1
         
-        await RisingEdge(self.dut.wb_clk_i)
-        while not safe_to_int(self.dut.wb_ack_o):
-            await RisingEdge(self.dut.wb_clk_i)
+        await RisingEdge(clk_i)
+        while not safe_to_int(ack_o):
+            await RisingEdge(clk_i)
             
-        self.dut.wb_cyc_i.value = 0
-        self.dut.wb_stb_i.value = 0
-        self.dut.wb_we_i.value = 0 # Cleanup
+        cyc_i.value = 0
+        stb_i.value = 0
+        we_i.value  = 0
         
         # CRITICAL FIX: 1ns delay to ensure GHDL sees the de-assertion
         # prevents back-to-back transaction merging issues.
         await Timer(1, unit="ns")
 
     async def _read_wb(self, addr):
-        self.dut.wb_adr_i.value = addr
-        self.dut.wb_we_i.value = 0
-        self.dut.wb_cyc_i.value = 1
-        self.dut.wb_stb_i.value = 1
-        self.dut.wb_sel_i.value = 0xF
+        def get_sig(name):
+            if hasattr(self.dut, f"wb_{name}"): return getattr(self.dut, f"wb_{name}")
+            if hasattr(self.dut, name): return getattr(self.dut, name)
+            raise AttributeError(f"Signal {name} not found on DUT")
+
+        adr_i  = get_sig("adr_i")
+        we_i   = get_sig("we_i")
+        cyc_i  = get_sig("cyc_i")
+        stb_i  = get_sig("stb_i")
+        sel_i  = get_sig("sel_i")
+        clk_i  = get_sig("clk")
+        ack_o  = get_sig("ack_o")
+        dat_o  = get_sig("dat_o")
+
+        adr_i.value = addr
+        we_i.value  = 0
+        cyc_i.value = 1
+        stb_i.value = 1
+        sel_i.value = 0xF
         
-        await RisingEdge(self.dut.wb_clk_i)
-        while not safe_to_int(self.dut.wb_ack_o):
-            await RisingEdge(self.dut.wb_clk_i)
+        await RisingEdge(clk_i)
+        while not safe_to_int(ack_o):
+            await RisingEdge(clk_i)
             
-        data = safe_to_int(self.dut.wb_dat_o)
-        self.dut.wb_cyc_i.value = 0
-        self.dut.wb_stb_i.value = 0
+        data = safe_to_int(dat_o)
+        cyc_i.value = 0
+        stb_i.value = 0
         
         # CRITICAL FIX: 1ns delay
         await Timer(1, unit="ns")

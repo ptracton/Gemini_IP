@@ -141,6 +141,48 @@ def main():
         description="Formal Verification (WB) via SymbiYosys"
     ))
 
+    # 8. Cocotb Verification (AXI)
+    jobs.append(TestJob(
+        name="Cocotb_AXI_Basic",
+        cwd=os.path.join(ip_root, "verif", "cocotb"),
+        command=["make", "BUS_TYPE=AXI", "SIM=verilator", "TESTCASE=test_basic_rw", "clean", "sim"],
+        description="Cocotb AXI: Basic R/W"
+    ))
+    jobs.append(TestJob(
+        name="Cocotb_AXI_Adv",
+        cwd=os.path.join(ip_root, "verif", "cocotb"),
+        command=["make", "BUS_TYPE=AXI", "SIM=verilator", "TESTCASE=test_concurrent_access,test_arbitration,test_security_violation", "clean", "sim"],
+        description="Cocotb AXI: Concurrent, Arb, Security"
+    ))
+
+    # 9. Cocotb Verification (AHB)
+    jobs.append(TestJob(
+        name="Cocotb_AHB_Basic",
+        cwd=os.path.join(ip_root, "verif", "cocotb"),
+        command=["make", "BUS_TYPE=AHB", "SIM=verilator", "TESTCASE=test_basic_rw", "clean", "sim"],
+        description="Cocotb AHB: Basic R/W"
+    ))
+    jobs.append(TestJob(
+        name="Cocotb_AHB_Adv",
+        cwd=os.path.join(ip_root, "verif", "cocotb"),
+        command=["make", "BUS_TYPE=AHB", "SIM=verilator", "TESTCASE=test_concurrent_access,test_arbitration,test_security_violation", "clean", "sim"],
+        description="Cocotb AHB: Concurrent, Arb, Security"
+    ))
+
+    # 10. Cocotb Verification (Wishbone)
+    jobs.append(TestJob(
+        name="Cocotb_WB_Basic",
+        cwd=os.path.join(ip_root, "verif", "cocotb"),
+        command=["make", "BUS_TYPE=WB", "SIM=verilator", "TESTCASE=test_basic_rw", "clean", "sim"],
+        description="Cocotb WB: Basic R/W"
+    ))
+    jobs.append(TestJob(
+        name="Cocotb_WB_Adv",
+        cwd=os.path.join(ip_root, "verif", "cocotb"),
+        command=["make", "BUS_TYPE=WB", "SIM=verilator", "TESTCASE=test_concurrent_access,test_arbitration,test_security_violation", "clean", "sim"],
+        description="Cocotb WB: Concurrent, Arb, Security"
+    ))
+
     # Execute Jobs
     results = []
     for job in jobs:
@@ -175,7 +217,7 @@ def main():
         f.write("| :--- | :--- | :--- |\n")
         
         reg_pass = all(p for j, p in results if not j.name.startswith("Formal"))
-        f.write(f"| **Regression Tests** | {'✅ **Passed**' if reg_pass else '❌ **FAILED**'} | 100% Pass across Xilinx, ModelSim, GHDL |\n")
+        f.write(f"| **Regression Tests** | {'✅ **Passed**' if reg_pass else '❌ **FAILED**'} | 100% Pass across Xilinx, ModelSim, GHDL, Cocotb |\n")
         f.write("| **Code Coverage** | **Pending** | Planning for coverage collection |\n")
         
         formal_pass = all(p for j, p in results if j.name.startswith("Formal"))
@@ -189,34 +231,25 @@ def main():
         f.write("| Variant | Simulator/Tool | Status | Notes |\n")
         f.write("| :--- | :--- | :--- | :--- |\n")
         
-        # Mapping job names to table format
-        # Xilinx SV
-        xsim_sv = next((p for j, p in results if j.name == "Xilinx_SV"), False)
-        f.write(f"| **SystemVerilog (Sim)** | Xilinx Vivado (XSIM) | **{'PASS' if xsim_sv else 'FAIL'}** | Verified Arbitration, Pipeline, Default Slave, Security |\n")
+        def write_row(j_name, tool, notes):
+            p = next((res for name, res in [(j.name, r) for j, r in results] if name == j_name), False)
+            f.write(f"| **{j_name}** | {tool} | **{'PASS' if p else 'FAIL'}** | {notes} |\n")
+
+        write_row("Xilinx_SV", "Xilinx Vivado (XSIM)", "SystemVerilog (Sim): Native TB")
+        write_row("ModelSim_SV", "ModelSim (Intel)", "SystemVerilog (Sim): Native TB")
+        write_row("GHDL_VHDL", "GHDL (0.37+)", "VHDL (Sim): Native TB")
+        write_row("ModelSim_VHDL", "ModelSim (Intel)", "VHDL (Sim): Native TB")
         
-        # ModelSim SV
-        msim_sv = next((p for j, p in results if j.name == "ModelSim_SV"), False)
-        f.write(f"| **SystemVerilog (Sim)** | ModelSim (Intel FPGA Ed) | **{'PASS' if msim_sv else 'FAIL'}** | Verified full regression with shared BFMs |\n")
-        
-        # GHDL VHDL
-        ghdl_vhdl = next((p for j, p in results if j.name == "GHDL_VHDL"), False)
-        f.write(f"| **VHDL (Sim)** | GHDL (0.37+) | **{'PASS' if ghdl_vhdl else 'FAIL'}** | Verified Wishbone & AHB wrappers + Security Logic |\n")
+        write_row("Cocotb_AXI_Basic", "Verilator (Cocotb)", "AXI Basic R/W")
+        write_row("Cocotb_AXI_Adv",   "Verilator (Cocotb)", "AXI Advanced (Conc/Arb/Sec)")
+        write_row("Cocotb_AHB_Basic", "Verilator (Cocotb)", "AHB Basic R/W")
+        write_row("Cocotb_AHB_Adv",   "Verilator (Cocotb)", "AHB Advanced (Conc/Arb/Sec)")
+        write_row("Cocotb_WB_Basic",  "Verilator (Cocotb)", "WB Basic R/W")
+        write_row("Cocotb_WB_Adv",    "Verilator (Cocotb)", "WB Advanced (Conc/Arb/Sec)")
 
-        # ModelSim VHDL
-        msim_vhdl = next((p for j, p in results if j.name == "ModelSim_VHDL"), False)
-        f.write(f"| **VHDL (Sim)** | ModelSim (Intel FPGA Ed) | **{'PASS' if msim_vhdl else 'FAIL'}** | Verified full regression with shared BFMs |\n")
-
-        # Formal AXI
-        f_axi = next((p for j, p in results if j.name == "Formal_AXI"), False)
-        f.write(f"| **Formal AXI** | SymbiYosys (z3) | **{'PASS' if f_axi else 'FAIL'}** | Verified protocol and mutual exclusion |\n")
-
-        # Formal AHB
-        f_ahb = next((p for j, p in results if j.name == "Formal_AHB"), False)
-        f.write(f"| **Formal AHB** | SymbiYosys (z3) | **{'PASS' if f_ahb else 'FAIL'}** | Verified protocol and mutual exclusion |\n")
-
-        # Formal WB
-        f_wb = next((p for j, p in results if j.name == "Formal_WB"), False)
-        f.write(f"| **Formal WB** | SymbiYosys (z3) | **{'PASS' if f_wb else 'FAIL'}** | Verified protocol and mutual exclusion |\n")
+        write_row("Formal_AXI", "SymbiYosys (z3)", "Formal AXI: Protocol & Mutex")
+        write_row("Formal_AHB", "SymbiYosys (z3)", "Formal AHB: Protocol & Mutex")
+        write_row("Formal_WB", "SymbiYosys (z3)", "Formal WB: Protocol & Mutex")
         
         f.write("\n## Detailed Logs\n")
         f.write("See individual log files in `tools/` directory for details.\n")

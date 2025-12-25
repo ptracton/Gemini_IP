@@ -26,7 +26,7 @@ The Bus Matrix IP has been fully verified with 100% pass rate across multiple si
 
 | Status | Metric | Results |
 | :--- | :--- | :--- |
-| ✅ **Passed** | **Regression Tests** | 100% Pass across Xilinx, ModelSim, GHDL |
+| ✅ **Passed** | **Regression Tests** | 100% Pass across Xilinx, ModelSim, GHDL, and Cocotb (Verilator) |
 | ✅ **Passed** | **Formal Proofs** | BMC/Unbounded Proofs for AXI, AHB, WB |
 | ✅ **Passed** | **Linting** | Zero errors/warnings in core logic |
 

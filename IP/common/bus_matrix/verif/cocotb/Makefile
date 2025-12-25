@@ -1,73 +1,35 @@
 #-------------------------------------------------------------------------------
 # File: Makefile
-# Description: Cocotb simulation Makefile for Bus Matrix IP.
-#
-# How it operates:
-# This Makefile manages the compilation and execution of Cocotb tests.
-# It supports Verilator (SV) and GHDL (VHDL) simulators. User can select
-# BUS_TYPE (AXI/APB/WB) and TOPLEVEL_LANG (verilog/vhdl).
-#
-# Usage: make BUS_TYPE=AXI SIM=verilator
-# For VHDL: make BUS_TYPE=AXI SIM=ghdl TOPLEVEL_LANG=vhdl
-#
-# Author: Gemini-3 AI
-# License: MIT
+# Description: Cocotb Makefile for Bus Matrix IP.
 #-------------------------------------------------------------------------------
 
 SIM ?= verilator
 TOPLEVEL_LANG ?= verilog
+
+# Default to AXI
 BUS_TYPE ?= AXI
 
-PWD=$(shell pwd)
-IP_ROOT=$(PWD)/../..
-
-ifeq ($(TOPLEVEL_LANG),verilog)
-    ifeq ($(BUS_TYPE),AXI)
-        VERILOG_SOURCES = $(IP_ROOT)/../../common/lib/rtl/axi4lite_slave_adapter.sv \
-                          $(IP_ROOT)/rtl/verilog/bus_matrix_axi.sv \
-                          $(IP_ROOT)/rtl/verilog/bus_matrix_regs.sv \
-                          $(IP_ROOT)/rtl/verilog/bus_matrix_core.sv
-        TOPLEVEL = bus_matrix_axi
-    else ifeq ($(BUS_TYPE),APB)
-        VERILOG_SOURCES = $(IP_ROOT)/../../common/lib/rtl/apb_slave_adapter.sv \
-                          $(IP_ROOT)/rtl/verilog/bus_matrix_apb.sv \
-                          $(IP_ROOT)/rtl/verilog/bus_matrix_regs.sv \
-                          $(IP_ROOT)/rtl/verilog/bus_matrix_core.sv
-        TOPLEVEL = bus_matrix_apb
-    else ifeq ($(BUS_TYPE),WB)
-        VERILOG_SOURCES = $(IP_ROOT)/../../common/lib/rtl/wb_slave_adapter.sv \
-                          $(IP_ROOT)/rtl/verilog/bus_matrix_wb.sv \
-                          $(IP_ROOT)/rtl/verilog/bus_matrix_regs.sv \
-                          $(IP_ROOT)/rtl/verilog/bus_matrix_core.sv
-        TOPLEVEL = bus_matrix_wb
-    endif
-else
-    # VHDL Path
-    VHDL_SOURCES = $(IP_ROOT)/rtl/vhdl/bus_matrix_regs.vhd \
-                   $(IP_ROOT)/rtl/vhdl/bus_matrix_core.vhd
-    ifeq ($(BUS_TYPE),AXI)
-        VHDL_SOURCES += $(IP_ROOT)/../lib/rtl/axi4lite_slave_adapter.vhd \
-                        $(IP_ROOT)/rtl/vhdl/bus_matrix_axi.vhd
-        TOPLEVEL = bus_matrix_axi
-    else ifeq ($(BUS_TYPE),APB)
-        VHDL_SOURCES += $(IP_ROOT)/../lib/rtl/apb_slave_adapter.vhd \
-                        $(IP_ROOT)/rtl/vhdl/bus_matrix_apb.vhd
-        TOPLEVEL = bus_matrix_apb
-    else ifeq ($(BUS_TYPE),WB)
-        VHDL_SOURCES += $(IP_ROOT)/../lib/rtl/wb_slave_adapter.vhd \
-                        $(IP_ROOT)/rtl/vhdl/bus_matrix_wb.vhd
-        TOPLEVEL = bus_matrix_wb
-    endif
-    
-    ifeq ($(SIM),ghdl)
-        EXTRA_ARGS += --std=08
-    endif
+ifeq ($(BUS_TYPE),AXI)
+    DUT = bus_matrix_axi
+    VERILOG_SOURCES += $(GEMINI_IP_ROOT)/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv
+else ifeq ($(BUS_TYPE),AHB)
+    DUT = bus_matrix_ahb
+    VERILOG_SOURCES += $(GEMINI_IP_ROOT)/IP/common/bus_matrix/rtl/verilog/bus_matrix_ahb.sv
+else ifeq ($(BUS_TYPE),WB)
+    DUT = bus_matrix_wb
+    VERILOG_SOURCES += $(GEMINI_IP_ROOT)/IP/common/bus_matrix/rtl/verilog/bus_matrix_wb.sv
 endif
 
+# Common Sources
+VERILOG_SOURCES += $(GEMINI_IP_ROOT)/IP/common/bus_matrix/rtl/verilog/bus_matrix_pkg.sv
+VERILOG_SOURCES += $(GEMINI_IP_ROOT)/IP/common/bus_matrix/rtl/verilog/bus_matrix_decoder.sv
+VERILOG_SOURCES += $(GEMINI_IP_ROOT)/IP/common/bus_matrix/rtl/verilog/bus_matrix_arbiter.sv
+
+TOPLEVEL = $(DUT)
 MODULE = test_bus_matrix
 
-# Cocotb 2.x uses PLUSARGS for command line arguments
+# Parameters
+EXTRA_ARGS += -GN_MASTERS=2 -GM_SLAVES=2
 PLUSARGS += +BUS_TYPE=$(BUS_TYPE)
 
-SIM_BUILD = sim_build_$(TOPLEVEL_LANG)_$(BUS_TYPE)
 include $(shell cocotb-config --makefiles)/Makefile.sim
