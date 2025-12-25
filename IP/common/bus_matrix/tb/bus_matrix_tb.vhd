@@ -124,10 +124,14 @@ architecture behavior of bus_matrix_tb is
   signal s_axi_rdata   : std_logic_vector(63 downto 0) := (others => '0');
   signal s_axi_rresp   : std_logic_vector(3 downto 0)  := (others => '0');
 
+  -- Termination
+  signal sim_done : boolean := false;
+
 begin
 
   -- Clock Generation
-  clk <= not clk after 5 ns;
+  clk <= not clk after 5 ns when not sim_done else
+    '0';
 
   -- ========================================================================
   -- Wishbone Matrix Instantiation
@@ -412,6 +416,7 @@ begin
     end if;
 
     report "All tests completed.";
+    sim_done <= true;
     wait;
   end process;
 
