@@ -26,7 +26,7 @@ The Bus Matrix IP has been fully verified with 100% pass rate across multiple si
 
 | Status | Metric | Results |
 | :--- | :--- | :--- |
-| ✅ **Passed** | **Regression Tests** | 100% Pass across Xilinx, ModelSim, GHDL, and Cocotb (Verilator) |
+| ✅ **Passed** | **Regression Tests** | 100% Pass across Xilinx, ModelSim, GHDL, Cocotb, and **UVM** |
 | ✅ **Passed** | **Formal Proofs** | BMC/Unbounded Proofs for AXI, AHB, WB |
 | ✅ **Passed** | **Linting** | Zero errors/warnings in core logic |
 
@@ -54,6 +54,13 @@ Verify protocol compliance and security properties using SymbiYosys:
 ```bash
 cd verif/formal
 ./run_formal.sh [axi | ahb | wb] sv
+```
+
+### 4. UVM Verification
+Run universal verification methodology (UVM) tests using Xilinx Vivado:
+```bash
+cd verif/uvm
+./run_uvm.sh [bus_matrix_base_test | bus_matrix_rand_test]
 ```
 
 ## Architecture

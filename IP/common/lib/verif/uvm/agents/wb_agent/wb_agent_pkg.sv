@@ -8,6 +8,7 @@ package wb_agent_pkg;
     `include "uvm_macros.svh"
 
     `include "wb_seq_item.sv"
+    `include "wb_seq.sv"
     `include "wb_driver.sv"
     `include "wb_monitor.sv"
     `include "wb_agent.sv"
