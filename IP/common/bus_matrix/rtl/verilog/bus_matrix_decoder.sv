@@ -54,13 +54,13 @@ module bus_matrix_decoder #(
     endgenerate
 
     always_comb begin
+        logic match_found;
         slave_sel_o = '0;
         dec_error_o = 1'b0;
         sec_error_o = 1'b0;
+        match_found = 1'b0;
         
         if (valid_i) begin
-            logic match_found;
-            match_found = 1'b0;
             
             for (int i = 0; i < M_SLAVES; i++) begin
                 if (!match_found && (addr_i >= region_starts[i]) && (addr_i <= region_ends[i])) begin

@@ -167,9 +167,10 @@ module bus_matrix_axi #(
             always_comb begin
                 next_lock_state = lock_state;
                 case (lock_state)
-                    LOCK_IDLE: if (s_awvalid_o[s] && s_awready_i[s]) next_lock_state = LOCK_W_PHASE; // AW accepted
+                    LOCK_IDLE:    if (s_awvalid_o[s] && s_awready_i[s]) next_lock_state = LOCK_W_PHASE; // AW accepted
                     LOCK_W_PHASE: if (s_wvalid_o[s] && s_wready_i[s])  next_lock_state = LOCK_B_PHASE; // W accepted
                     LOCK_B_PHASE: if (s_bvalid_i[s] && s_bready_o[s])  next_lock_state = LOCK_IDLE;    // B accepted
+                    default: next_lock_state = LOCK_IDLE;
                 endcase
             end
             
@@ -330,8 +331,9 @@ module bus_matrix_axi #(
             always_comb begin
                 r_next = r_state;
                 case (r_state)
-                    LOCK_IDLE_R: if (s_arvalid_o[s] && s_arready_i[s]) r_next = LOCK_R_PHASE;
-                    LOCK_R_PHASE: if (s_rvalid_i[s] && s_rready_o[s])   r_next = LOCK_IDLE_R; // Single beat Lite
+                    LOCK_IDLE_R:    if (s_arvalid_o[s] && s_arready_i[s]) r_next = LOCK_R_PHASE;
+                    LOCK_R_PHASE:   if (s_rvalid_i[s] && s_rready_o[s])   r_next = LOCK_IDLE_R; // Single beat Lite
+                    default: r_next = LOCK_IDLE_R;
                 endcase
             end
             
