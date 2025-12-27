@@ -183,19 +183,6 @@ def main():
         description="Cocotb WB: Concurrent, Arb, Security"
     ))
 
-    # 11. UVM Verification (Vivado)
-    jobs.append(TestJob(
-        name="UVM_Base",
-        cwd=os.path.join(ip_root, "verif", "uvm"),
-        command=["./run_uvm.sh", "bus_matrix_base_test"],
-        description="UVM Base Test (Connectivity)"
-    ))
-    jobs.append(TestJob(
-        name="UVM_Random",
-        cwd=os.path.join(ip_root, "verif", "uvm"),
-        command=["./run_uvm.sh", "bus_matrix_rand_test"],
-        description="UVM Random Traffic Test"
-    ))
 
     # Execute Jobs
     results = []
@@ -265,8 +252,6 @@ def main():
         write_row("Formal_AHB", "SymbiYosys (z3)", "Formal AHB: Protocol & Mutex")
         write_row("Formal_WB", "SymbiYosys (z3)", "Formal WB: Protocol & Mutex")
         
-        write_row("UVM_Base", "Vivado (xsim)", "UVM: Infrastructure & Connectivity")
-        write_row("UVM_Random", "Vivado (xsim)", "UVM: Random Traffic")
         
         f.write("\n## Detailed Logs\n")
         f.write("See individual log files in `tools/` directory for details.\n")

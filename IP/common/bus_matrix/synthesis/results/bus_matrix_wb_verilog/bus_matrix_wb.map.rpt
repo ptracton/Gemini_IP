@@ -1,5 +1,5 @@
 Analysis & Synthesis report for bus_matrix_wb
-Fri Dec 26 18:23:53 2025
+Sat Dec 27 12:58:03 2025
 Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 
 
@@ -52,7 +52,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                        ;
 +------------------------------------+------------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Fri Dec 26 18:23:53 2025          ;
+; Analysis & Synthesis Status        ; Successful - Sat Dec 27 12:58:03 2025          ;
 ; Quartus Prime Version              ; 23.1std.1 Build 993 05/14/2024 SC Lite Edition ;
 ; Revision Name                      ; bus_matrix_wb                                  ;
 ; Top-level Entity Name              ; bus_matrix_wb                                  ;
@@ -374,7 +374,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
-    Info: Processing started: Fri Dec 26 18:23:46 2025
+    Info: Processing started: Sat Dec 27 12:57:56 2025
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off bus_matrix_wb -c bus_matrix_wb
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 6 of the 6 processors detected
@@ -394,6 +394,8 @@ Info (12021): Found 1 design units, including 1 entities, in source file /home/p
     Info (12023): Found entity 1: bus_matrix_register_slice File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_register_slice.sv Line: 21
 Info (12127): Elaborating entity "bus_matrix_wb" for the top level hierarchy
 Info (12128): Elaborating entity "bus_matrix_decoder" for hierarchy "bus_matrix_decoder:GEN_DECODERS[0].u_dec" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_wb.sv Line: 155
+Info (10648): Verilog HDL Display System Task info at bus_matrix_decoder.sv(59): DECODER ...|bus_matrix_decoder: Slave 0: 0x00000000 - 0x00000000 (Sec:.) File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_decoder.sv Line: 59
+Info (10648): Verilog HDL Display System Task info at bus_matrix_decoder.sv(59): DECODER ...|bus_matrix_decoder: Slave 1: 0x00000000 - 0x00000000 (Sec:.) File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_decoder.sv Line: 59
 Info (12128): Elaborating entity "bus_matrix_arbiter" for hierarchy "bus_matrix_arbiter:GEN_ARBITERS[0].u_arb" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_wb.sv Line: 181
 Warning (13024): Output pins are stuck at VCC or GND
     Warning (13410): Pin "slv_cyc_o[1]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_wb.sv Line: 50
@@ -510,9 +512,9 @@ Info (21057): Implemented 590 device resources after synthesis - the final resou
     Info (21059): Implemented 210 output pins
     Info (21061): Implemented 168 logic cells
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 110 warnings
-    Info: Peak virtual memory: 470 megabytes
-    Info: Processing ended: Fri Dec 26 18:23:53 2025
+    Info: Peak virtual memory: 473 megabytes
+    Info: Processing ended: Sat Dec 27 12:58:03 2025
     Info: Elapsed time: 00:00:07
-    Info: Total CPU time (on all processors): 00:00:18
+    Info: Total CPU time (on all processors): 00:00:16
 
 

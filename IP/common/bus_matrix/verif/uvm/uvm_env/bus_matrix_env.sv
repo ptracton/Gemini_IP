@@ -54,7 +54,21 @@ class bus_matrix_env extends uvm_env;
   endfunction
 
   function void connect_phase(uvm_phase phase);
-    // Connect Monitors to Scoreboard
+    // Master Monitors to Scoreboard
+    m_axi_agent_0.monitor.item_collected_port.connect(scbd.m_axi_0_export);
+    m_axi_agent_1.monitor.item_collected_port.connect(scbd.m_axi_1_export);
+    m_ahb_agent_0.monitor.item_collected_port.connect(scbd.m_ahb_0_export);
+    m_ahb_agent_1.monitor.item_collected_port.connect(scbd.m_ahb_1_export);
+    m_wb_agent_0.monitor.item_collected_port.connect(scbd.m_wb_0_export);
+    m_wb_agent_1.monitor.item_collected_port.connect(scbd.m_wb_1_export);
+
+    // Slave Monitors to Scoreboard
+    s_axi_agent_0.monitor.item_collected_port.connect(scbd.s_axi_0_export);
+    s_axi_agent_1.monitor.item_collected_port.connect(scbd.s_axi_1_export);
+    s_ahb_agent_0.monitor.item_collected_port.connect(scbd.s_ahb_0_export);
+    s_ahb_agent_1.monitor.item_collected_port.connect(scbd.s_ahb_1_export);
+    s_wb_agent_0.monitor.item_collected_port.connect(scbd.s_wb_0_export);
+    s_wb_agent_1.monitor.item_collected_port.connect(scbd.s_wb_1_export);
   endfunction
 
 endclass

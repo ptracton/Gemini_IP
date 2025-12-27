@@ -29,7 +29,7 @@ TOPLEVEL = $(DUT)
 MODULE = test_bus_matrix
 
 # Parameters
-EXTRA_ARGS += -GN_MASTERS=2 -GM_SLAVES=2
+EXTRA_ARGS += -GN_MASTERS=2 -GM_SLAVES=2 --timing
 PLUSARGS += +BUS_TYPE=$(BUS_TYPE)
 
 include $(shell cocotb-config --makefiles)/Makefile.sim

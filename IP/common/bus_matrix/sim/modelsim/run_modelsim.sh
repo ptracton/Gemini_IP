@@ -15,7 +15,7 @@ cd work_sim
 # Run ModelSim in batch mode
 # Using -do with the absolute path to the .do file we just created
 # We assume the script is executed from sim/modelsim/
-vsim -c -do ../run_modelsim.do > simulation.log 2>&1
+vsim -64 -c -do ../run_modelsim.do > simulation.log 2>&1
 
 # Check results
 echo "=================================================="

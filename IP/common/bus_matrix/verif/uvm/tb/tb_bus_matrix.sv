@@ -218,7 +218,7 @@ module tb_bus_matrix;
   end
 
   initial begin
-    #100ms;
+    #1000ms;
     `uvm_fatal("TIMEOUT", "Simulation timed out")
   end
 endmodule

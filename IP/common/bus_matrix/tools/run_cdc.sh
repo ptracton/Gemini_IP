@@ -6,13 +6,16 @@ SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 IP_DIR="$SCRIPT_DIR/.."
 SV_RTL_DIR="$IP_DIR/rtl/verilog"
 
+# Source setup
+source $IP_DIR/../../setup.sh
+
 echo "=================================================="
 echo "Running CDC and structural linting with Verilator"
 echo "=================================================="
 
 # Run Verilator Lint
-SHARED_RTL_DIR="$IP_DIR/../../common/lib/rtl"
-SHARED_VERIF_DIR="$IP_DIR/../../common/lib/verif"
+SHARED_RTL_DIR="${GEMINI_IP_ROOT}/IP/common/lib/rtl"
+SHARED_VERIF_DIR="${GEMINI_IP_ROOT}/IP/common/lib/verif"
 verilator --lint-only -Wall -Wno-DECLFILENAME \
     -I$SV_RTL_DIR -I$SHARED_RTL_DIR -I$SHARED_VERIF_DIR \
     $SHARED_RTL_DIR/axi4lite_slave_adapter.sv \

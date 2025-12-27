@@ -70,6 +70,6 @@ def parse_coverage(report_path):
     return 0.0
 
 if __name__ == "__main__":
-    ip_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../.."))
-    report_file = os.path.join(ip_root, "IP/common/bus_matrix/joined_code_cov_report/dashboard.html")
+    gemini_ip_root = os.environ.get("GEMINI_IP_ROOT", "")
+    report_file = os.path.join(gemini_ip_root, "IP/common/bus_matrix/joined_code_cov_report/dashboard.html")
     parse_coverage(report_file)

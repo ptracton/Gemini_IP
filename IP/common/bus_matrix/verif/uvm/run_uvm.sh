@@ -7,10 +7,10 @@ IP_DIR="$SCRIPT_DIR/../.."
 SV_RTL_DIR="$IP_DIR/rtl/verilog"
 VHDL_RTL_DIR="$IP_DIR/rtl/vhdl"
 UVM_DIR="$SCRIPT_DIR"
-SHARED_AGENTS_DIR="$IP_DIR/../../common/lib/verif/uvm/agents"
-
 # Source Setup
 source $IP_DIR/../../../setup.sh
+
+SHARED_AGENTS_DIR="${GEMINI_IP_ROOT}/IP/common/lib/verif/uvm/agents"
 
 # Defaults
 BUS_TYPE="mixed" 

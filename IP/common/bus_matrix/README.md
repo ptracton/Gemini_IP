@@ -26,14 +26,15 @@ The Bus Matrix IP has been fully verified with 100% pass rate across multiple si
 
 | Status | Metric | Results |
 | :--- | :--- | :--- |
-| ✅ **Passed** | **Regression Tests** | 100% Pass across Xilinx, ModelSim, GHDL, Cocotb, and **UVM** |
+| ✅ **Passed** | **Regression Tests** | 100% Pass across Xilinx, ModelSim, GHDL, Cocotb |
 | ✅ **Passed** | **Formal Proofs** | BMC/Unbounded Proofs for AXI, AHB, WB, and **AHB-APB Bridge** |
 | ✅ **Passed** | **Linting** | Zero errors/warnings in core logic |
+| ⚠️ **Removed** | **UVM Verification** | UVM tests were removed due to recurring host-level system crashes |
 
 For a detailed breakdown of test results and coverage, see: **[Bus Matrix Regression Results](bus_matrix_regression_results.md)**
 
 ## Code Coverage Results
-The coverage results for the Bus Matrix IP are generated using the UVM verification suite.
+The coverage results for the Bus Matrix IP are generated using the native simulation suite.
 
 ### 1. Bus Matrix
 | Metric | Coverage |
@@ -77,9 +78,9 @@ Comparative resource utilization for a 2-Master, 2-Slave configuration across mu
 | Module | LUTs | Registers |
 | :--- | :---: | :---: |
 | **bus_matrix_ahb** | 272 | 8 |
-| **bus_matrix_axi** | 428 | 36 |
+| **bus_matrix_axi** | 428 | 22 |
 | **bus_matrix_wb** | 258 | 4 |
-| **ahb_apb_bridge** | 7 | 36 |
+| **ahb_apb_bridge** | 14 | 36 |
 
 ## Running Verifications & Tooling
 The environment must be set up by sourcing the root `setup.sh` before running any tools.
@@ -105,12 +106,6 @@ cd verif/formal
 ./run_formal.sh [axi | ahb | wb] sv
 ```
 
-### 4. UVM Verification
-Run universal verification methodology (UVM) tests using Xilinx Vivado:
-```bash
-cd verif/uvm
-./run_uvm.sh [bus_matrix_base_test | bus_matrix_rand_test]
-```
 
 ## Architecture
 

@@ -292,34 +292,42 @@ module \$paramod$c0dc4d1e27d279b3c9b462a91333c3e0034e3a37\bus_matrix_decoder (ad
     .I5(addr_i[26]),
     .O(_04_[5])
   );
-  CARRY4 _31_ (
+  CARRY4 _33_ (
     .CI(1'h0),
     .CO(_00_[3:0]),
     .CYINIT(1'h1),
     .DI(_01_[3:0]),
     .S(_04_[3:0])
   );
-  CARRY4 _32_ (
+  CARRY4 _34_ (
     .CI(_00_[3]),
     .CO({ _03_[7:6], _07_, _00_[4] }),
     .CYINIT(1'h0),
     .DI({ 2'h0, _09_, _01_[4] }),
     .S({ 2'h0, _04_[5:4] })
   );
-  CARRY4 _33_ (
+  CARRY4 _35_ (
     .CI(1'h0),
     .CO(_05_[3:0]),
     .CYINIT(1'h1),
     .DI(4'h0),
     .S(_02_[3:0])
   );
-  CARRY4 _34_ (
+  CARRY4 _36_ (
     .CI(_05_[3]),
     .CO({ _06_[7:6], _08_, _05_[4] }),
     .CYINIT(1'h0),
     .DI(4'h0),
     .S({ 2'h0, _10_, _02_[4] })
   );
+  initial begin
+    if (1'h1) begin
+      $write("DECODER $paramod$c0dc4d1e27d279b3c9b462a91333c3e0034e3a37\\bus_matrix_decoder: Slave %0d: 0x%08h - 0x%08h (Sec:%0b)\n", $signed(32'd0), $unsigned(32'd0), $unsigned(32'd0), $unsigned(1'h0));
+    end
+    if (1'h1) begin
+      $write("DECODER $paramod$c0dc4d1e27d279b3c9b462a91333c3e0034e3a37\\bus_matrix_decoder: Slave %0d: 0x%08h - 0x%08h (Sec:%0b)\n", $signed(32'd1), $unsigned(32'd0), $unsigned(32'd0), $unsigned(1'h0));
+    end
+  end
   assign _00_[5] = _07_;
   assign _01_[5] = _09_;
   assign _02_[5] = _10_;

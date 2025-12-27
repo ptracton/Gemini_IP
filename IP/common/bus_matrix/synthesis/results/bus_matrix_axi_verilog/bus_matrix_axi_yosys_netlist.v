@@ -292,34 +292,42 @@ module \$paramod$c0dc4d1e27d279b3c9b462a91333c3e0034e3a37\bus_matrix_decoder (ad
     .I5(addr_i[28]),
     .O(_04_[5])
   );
-  CARRY4 _31_ (
+  CARRY4 _33_ (
     .CI(1'h0),
     .CO(_00_[3:0]),
     .CYINIT(1'h1),
     .DI(_01_[3:0]),
     .S(_04_[3:0])
   );
-  CARRY4 _32_ (
+  CARRY4 _34_ (
     .CI(_00_[3]),
     .CO({ _03_[7:6], _07_, _00_[4] }),
     .CYINIT(1'h0),
     .DI({ 2'h0, _09_, _01_[4] }),
     .S({ 2'h0, _04_[5:4] })
   );
-  CARRY4 _33_ (
+  CARRY4 _35_ (
     .CI(1'h0),
     .CO(_05_[3:0]),
     .CYINIT(1'h1),
     .DI(4'h0),
     .S(_02_[3:0])
   );
-  CARRY4 _34_ (
+  CARRY4 _36_ (
     .CI(_05_[3]),
     .CO({ _06_[7:6], _08_, _05_[4] }),
     .CYINIT(1'h0),
     .DI(4'h0),
     .S({ 2'h0, _10_, _02_[4] })
   );
+  initial begin
+    if (1'h1) begin
+      $write("DECODER $paramod$c0dc4d1e27d279b3c9b462a91333c3e0034e3a37\\bus_matrix_decoder: Slave %0d: 0x%08h - 0x%08h (Sec:%0b)\n", $signed(32'd0), $unsigned(32'd0), $unsigned(32'd0), $unsigned(1'h0));
+    end
+    if (1'h1) begin
+      $write("DECODER $paramod$c0dc4d1e27d279b3c9b462a91333c3e0034e3a37\\bus_matrix_decoder: Slave %0d: 0x%08h - 0x%08h (Sec:%0b)\n", $signed(32'd1), $unsigned(32'd0), $unsigned(32'd0), $unsigned(1'h0));
+    end
+  end
   assign _00_[5] = _07_;
   assign _01_[5] = _09_;
   assign _02_[5] = _10_;
@@ -4206,11 +4214,11 @@ module bus_matrix_axi(aclk, aresetn, awaddr_i, awprot_i, awvalid_i, awready_o, w
   );
   INV _0855_ (
     .I(_0500_),
-    .O(_0337_)
+    .O(_0336_)
   );
   INV _0856_ (
     .I(_0501_),
-    .O(_0336_)
+    .O(_0337_)
   );
   INV _0857_ (
     .I(_0497_),
@@ -6852,7 +6860,7 @@ module bus_matrix_axi(aclk, aresetn, awaddr_i, awprot_i, awvalid_i, awready_o, w
     .addr_i({ _0418_[1], _0417_[1], _0416_[1], _0415_[1], _0414_[1], _0413_[1], _0412_[1], _0411_[1], _0410_[1], _0409_[1], _0408_[1], _0407_[1], _0406_[1], _0405_[1], _0404_[1], _0403_[1], _0402_[1], _0401_[1], _0400_[1], _0399_[1], _0398_[1], _0397_[1], _0396_[1], _0395_[1], _0394_[1], _0393_[1], _0392_[1], _0391_[1], _0390_[1], _0389_[1], _0388_[1], _0387_[1] }),
     .dec_error_o(\GEN_AR_DECODERS[0].dec_err ),
     .sec_error_o(\GEN_AR_DECODERS[0].sec_err ),
-    .secure_i(_0337_),
+    .secure_i(_0336_),
     .slave_sel_o(\GEN_AR_DECODERS[0].sel ),
     .valid_i(_0351_[2])
   );
@@ -6860,7 +6868,7 @@ module bus_matrix_axi(aclk, aresetn, awaddr_i, awprot_i, awvalid_i, awready_o, w
     .addr_i({ _0418_[2], _0417_[2], _0416_[2], _0415_[2], _0414_[2], _0413_[2], _0412_[2], _0411_[2], _0410_[2], _0409_[2], _0408_[2], _0407_[2], _0406_[2], _0405_[2], _0404_[2], _0403_[2], _0402_[2], _0401_[2], _0400_[2], _0399_[2], _0398_[2], _0397_[2], _0396_[2], _0395_[2], _0394_[2], _0393_[2], _0392_[2], _0391_[2], _0390_[2], _0389_[2], _0388_[2], _0387_[2] }),
     .dec_error_o(\GEN_AR_DECODERS[1].dec_err ),
     .sec_error_o(\GEN_AR_DECODERS[1].sec_err ),
-    .secure_i(_0336_),
+    .secure_i(_0337_),
     .slave_sel_o(\GEN_AR_DECODERS[1].sel ),
     .valid_i(_0349_[2])
   );

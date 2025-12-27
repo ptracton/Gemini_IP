@@ -13,9 +13,12 @@ set -e
 # Project Paths
 SCRIPT_DIR=$(dirname "$0")
 IP_DIR="$SCRIPT_DIR/.."
+# Source setup
+source $IP_DIR/../../setup.sh
+
 RTL_DIR_SV="$IP_DIR/rtl/verilog"
 RTL_DIR_VHDL="$IP_DIR/rtl/vhdl"
-SHARED_RTL_DIR="$IP_DIR/../../common/lib/rtl"
+SHARED_RTL_DIR="${GEMINI_IP_ROOT}/IP/common/lib/rtl"
 
 echo "=================================================="
 echo "Linting SystemVerilog (Verilator)"
@@ -30,7 +33,7 @@ for file in $SHARED_RTL_DIR/axi4lite_slave_adapter.sv \
             $RTL_DIR_SV/bus_matrix_axi.sv \
             $RTL_DIR_SV/bus_matrix_wb.sv; do
     echo "Linting $(basename $file)..."
-    SHARED_VERIF_DIR="$IP_DIR/../../common/lib/verif"
+    SHARED_VERIF_DIR="${GEMINI_IP_ROOT}/IP/common/lib/verif"
     verilator --lint-only -Wall \
         -I$RTL_DIR_SV \
         -I$SHARED_RTL_DIR \
