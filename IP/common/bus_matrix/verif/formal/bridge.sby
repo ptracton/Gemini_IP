@@ -1,0 +1,17 @@
+[options]
+mode prove
+depth 20
+
+[engines]
+smtbmc z3
+
+[script]
+read_verilog -sv -formal ahb_apb_bridge.sv
+read_verilog -sv -formal bridge_props.sv
+read_verilog -sv -formal bridge_binds.sv
+prep -top ahb_apb_bridge
+
+[files]
+../../rtl/verilog/ahb_apb_bridge.sv
+bridge_props.sv
+bridge_binds.sv

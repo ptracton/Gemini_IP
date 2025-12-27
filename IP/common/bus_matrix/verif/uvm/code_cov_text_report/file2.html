@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Xcrg Code Coverage Report - File</title>	
+<link type="text/css" rel="stylesheet" href="cssCodeCov/file.css">
+
+<!--script type="text/javascript" src=".js/.stickyheader.js"></script-->  
+
+</head>
+
+
+<body>
+
+<div class='header'>
+<a  class='logo'>  </a>
+<div class='header-right'>
+<a href='dashboard.html'>Dashboard</a>
+<a href='files.html'>Files</a>
+<a href='modules.html'>Modules</a>
+</div>
+</div>
+<br clear=all>
+
+<div class=fader>
+
+<div class = fileHTMLlayout>
+
+<div class='fileSummary'>
+<font size='2' face='verdana' padding-left:'2px'><b> File Summary of /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_decoder.sv </b></font>
+<br clear=all>
+<br clear=all>
+<font face='arial' color=black style='font-size: 12px'>
+<table class='fileSummaryTable'>
+<tr>
+<td class='fileSummaryTable' bgcolor='#BCC7CC' width='50px'> File ID </td>
+<td class='fileSummaryTable' bgcolor='#BCC7CC' width='60px'> Modules Count </td>
+<td class='fileSummaryTable' bgcolor='#BCC7CC' width='100px'> Total Instances Count </td>
+<td class='fileSummaryTable' bgcolor='#BCC7CC' width='80px'> Total Lines</td>
+<td class='fileSummaryTable' bgcolor='#BCC7CC' width='80px'> Total Statements</td>
+<td class='fileSummaryTable' bgcolor='#BCC7CC' width='80px'> Statement Coverage Score</td>
+<td class='fileSummaryTable' bgcolor='#BCC7CC' width='70px'> Show Statement Coverage </td>
+<td class='fileSummaryTable' bgcolor='#BCC7CC' width='80px'> Branch Coverage Score</td>
+<td class='fileSummaryTable' bgcolor='#BCC7CC' width='70px'> Show Branch Coverage </td>
+<td class='fileSummaryTable' bgcolor='#BCC7CC' width='80px'> Condition Coverage Score</td>
+<td class='fileSummaryTable' bgcolor='#BCC7CC' width='70px'> Show Condition Coverage </td>
+<td class='fileSummaryTable' bgcolor='#BCC7CC' width='80px'> Toggle Coverage Score</td>
+<td class='fileSummaryTable' bgcolor='#BCC7CC' width='70px'> Show Toggle Coverage </td>
+</tr>
+<tr>
+<td class='fileSummaryTable'>2</td>
+<td class='fileSummaryTable'>1</td>
+<td class='fileSummaryTable'>40</td>
+<td class='fileSummaryTable'>15</td>
+<td class='fileSummaryTable'>15</td>
+<td class='fileSummaryTable'>93.3333</td>
+<td class='fileSummaryTable' bgcolor='#FFFFFF' align='center'>
+<label class = 'fileLineCovContainer'>
+<input type='checkbox' id='checkbox_file_linecov' onclick="checkdisplay('checkbox_file_linecov', 'file_linecov');
+openFileContent('button_file_linecov');">
+<span class='fileLineCovCheckmark'> </span> </label>
+</td>
+<td class='fileSummaryTable'>85.7143</td>
+<td class='fileSummaryTable' bgcolor='#FFFFFF' align='center'>
+<label class = 'fileBranchCovContainer'>
+<input type='checkbox' id='checkbox_file_branchcov' onclick="checkdisplay('checkbox_file_branchcov', 'file_branchcov');
+openFileContent('button_file_branchcov');">
+<span class='fileBranchCovCheckmark'> </span> </label>
+</td>
+<td class='fileSummaryTable'>100</td>
+<td class='fileSummaryTable' bgcolor='#FFFFFF' align='center'>
+<label class = 'fileCondCovContainer'>
+<input type='checkbox' id='checkbox_file_condcov' onclick="checkdisplay('checkbox_file_condcov', 'file_condcov');
+openFileContent('button_file_condcov');">
+<span class='fileCondCovCheckmark'> </span> </label>
+</td>
+<td class='fileSummaryTable'>7.27</td>
+<td class='fileSummaryTable' bgcolor='#FFFFFF' align='center'>
+<label class = 'fileToggleCovContainer'>
+<input type='checkbox' id='checkbox_file_togglecov' onclick="checkdisplay('checkbox_file_togglecov', 'file_togglecov');
+openFileContent('button_file_togglecov');">
+<span class='fileToggleCovCheckmark'> </span> </label>
+</td>
+</tr>
+</table>
+</font>
+</div>
+<hr>
+<div class ='linesSection' style='padding-left:20px; padding-right:20px;'>
+<font face='arial' color=black style='font-size: 14px'>
+<div style='display:none' id='file_linecov'>
+<button class='fileCollapsible' id='button_file_linecov'> <font size='4' color=#009933> &#9776; </font>
+ Statement Coverage of File 2 : /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_decoder.sv</button> 
+<div class='fileContent'>
+<br clear=all>
+<font size='2' face='arial' style='padding-left:6px'> Statement Coverage Summary for File : /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_decoder.sv</font>
+<br clear=all>
+<table class='fileScoreTable'>
+<tr>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> Total Statements </th>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> Covered Statements </th>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> Uncovered Statements </th>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> Statement Coverage Score </th>
+</tr>
+<tr>
+<td class='fileScoreTable'>15</td>
+<td class='fileScoreTable' bgcolor='#FFFFC2'>14</td>
+<td class='fileScoreTable' bgcolor='#FFD2D2'>1</td>
+<td class='fileScoreTable' bgcolor='#98FF98'>93.3333</td>
+</tr>
+</table>
+<br clear=all>
+<div class='lineCoverageTable'>
+<table class='lineTable'>
+<tr>
+<th class='lineTable' style='background-color:#ccffff; line-height:0;' width='80px'> LineNumber </th>
+<th class='lineTable' style='background-color:#FFEB99; line-height:0;'> LineContent </th>
+<th class='lineTable' style='background-color:#80FFBF; line-height:1;' width='140px'> Execution Count </th>
+<th class='lineTable' style='background-color:#FFE6E6; line-height:1;' width='140px'> Num Of Statements </th>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>1</td>
+<td class='lineTable'> <pre class='codegrey'>import bus_matrix_pkg::*;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>2</td>
+<td class='lineTable'> <pre class='codegrey'> </pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>3</td>
+<td class='lineTable'> <pre class='codegrey'>// -----------------------------------------------------------------------------</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>4</td>
+<td class='lineTable'> <pre class='codegrey'>// File: bus_matrix_decoder.sv</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>5</td>
+<td class='lineTable'> <pre class='codegrey'>// Module: bus_matrix_decoder</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>6</td>
+<td class='lineTable'> <pre class='codegrey'>// Description:</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>7</td>
+<td class='lineTable'> <pre class='codegrey'>//   Address decoder/firewall for a single Master within the Bus Matrix.</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>8</td>
+<td class='lineTable'> <pre class='codegrey'>//   Determines which Slave to select based on the input address and checks</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>9</td>
+<td class='lineTable'> <pre class='codegrey'>//   security permissions.</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>10</td>
+<td class='lineTable'> <pre class='codegrey'>//</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>11</td>
+<td class='lineTable'> <pre class='codegrey'>// Parameters:</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>12</td>
+<td class='lineTable'> <pre class='codegrey'>//   - M_SLAVES: Number of slaves.</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>13</td>
+<td class='lineTable'> <pre class='codegrey'>//   - ADDR_WIDTH: Width of the address bus.</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>14</td>
+<td class='lineTable'> <pre class='codegrey'>//   - REGION_MAP_FLAT: Flattened array of `region_attr_t` defining memory map</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>15</td>
+<td class='lineTable'> <pre class='codegrey'>//                      and security attributes for each slave.</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>16</td>
+<td class='lineTable'> <pre class='codegrey'>//   - USE_DEFAULT_SLAVE: Enable routing to a default slave for unmatched addresses.</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>17</td>
+<td class='lineTable'> <pre class='codegrey'>//   - DEFAULT_SLAVE_INDEX: Index of the default slave.</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>18</td>
+<td class='lineTable'> <pre class='codegrey'>//</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>19</td>
+<td class='lineTable'> <pre class='codegrey'>// Signals:</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>20</td>
+<td class='lineTable'> <pre class='codegrey'>//   - addr_i: Input address from Master.</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>21</td>
+<td class='lineTable'> <pre class='codegrey'>//   - valid_i: Indicates address is valid (request active).</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>22</td>
+<td class='lineTable'> <pre class='codegrey'>//   - secure_i: Security level of the current transaction (1=Secure, 0=Non-Secure).</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>23</td>
+<td class='lineTable'> <pre class='codegrey'>//   - slave_sel_o: One-hot vector selecting the target slave.</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>24</td>
+<td class='lineTable'> <pre class='codegrey'>//   - dec_error_o: Asserted if address matches no region (and no default slave).</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>25</td>
+<td class='lineTable'> <pre class='codegrey'>//   - sec_error_o: Asserted if access violates security attributes (e.g. NS-&gtSecure).</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>26</td>
+<td class='lineTable'> <pre class='codegrey'>// -----------------------------------------------------------------------------</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>27</td>
+<td class='lineTable'> <pre class='codegrey'>module bus_matrix_decoder #(</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>28</td>
+<td class='lineTable'> <pre class='codegrey'>    parameter int M_SLAVES = 2,</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>29</td>
+<td class='lineTable'> <pre class='codegrey'>    parameter int ADDR_WIDTH = 32,</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>30</td>
+<td class='lineTable'> <pre class='codegrey'>    parameter logic [M_SLAVES*66-1:0] REGION_MAP_FLAT = '0,</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>31</td>
+<td class='lineTable'> <pre class='codegrey'>    parameter bit USE_DEFAULT_SLAVE = 0,</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>32</td>
+<td class='lineTable'> <pre class='codegrey'>    parameter int DEFAULT_SLAVE_INDEX = 0</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>33</td>
+<td class='lineTable'> <pre class='codegrey'>)(</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>34</td>
+<td class='lineTable'> <pre class='codegrey'>    input  logic [ADDR_WIDTH-1:0] addr_i,</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>35</td>
+<td class='lineTable'> <pre class='codegrey'>    input  logic                  valid_i,</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>36</td>
+<td class='lineTable'> <pre class='codegrey'>    input  logic                  secure_i, // 1 = Secure Access, 0 = Non-Secure</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>37</td>
+<td class='lineTable'> <pre class='codegrey'>    output logic [M_SLAVES-1:0]   slave_sel_o,</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>38</td>
+<td class='lineTable'> <pre class='codegrey'>    output logic                  dec_error_o, // No slave mapped</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>39</td>
+<td class='lineTable'> <pre class='codegrey'>    output logic                  sec_error_o  // Security violation</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>40</td>
+<td class='lineTable'> <pre class='codegrey'>);</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>41</td>
+<td class='lineTable'> <pre class='codegrey'> </pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>42</td>
+<td class='lineTable'> <pre class='codegrey'>    // Unpack regions using generate to avoid complex procedural indexing</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>43</td>
+<td class='lineTable'> <pre class='codegrey'>    logic [M_SLAVES-1:0][31:0] region_starts;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>44</td>
+<td class='lineTable'> <pre class='codegrey'>    logic [M_SLAVES-1:0][31:0] region_ends;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>45</td>
+<td class='lineTable'> <pre class='codegrey'>    logic [M_SLAVES-1:0]       region_secures;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>46</td>
+<td class='lineTable'> <pre class='codegrey'>    </pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>47</td>
+<td class='lineTable'> <pre class='codegrey'>    genvar i_gen;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>48</td>
+<td class='lineTable'> <pre class='codegrey'>    generate</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>49</td>
+<td class='lineTable'> <pre class='codegrey'>        for (i_gen = 0; i_gen &lt M_SLAVES; i_gen++) begin : GEN_UNPACK</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>50</td>
+<td class='lineTable'> <pre class='codegrey'>            assign region_starts[i_gen]  = REGION_MAP_FLAT[i_gen*66 + 34 +: 32];</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>51</td>
+<td class='lineTable'> <pre class='codegrey'>            assign region_ends[i_gen]    = REGION_MAP_FLAT[i_gen*66 + 2 +: 32];</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>52</td>
+<td class='lineTable'> <pre class='codegrey'>            assign region_secures[i_gen] = REGION_MAP_FLAT[i_gen*66 + 1];</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>53</td>
+<td class='lineTable'> <pre class='codegrey'>        end</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>54</td>
+<td class='lineTable'> <pre class='codegrey'>    endgenerate</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>55</td>
+<td class='lineTable'> <pre class='codegrey'> </pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>56</td>
+<td class='lineTable'> <pre class='codegrey'>    always_comb begin</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>57</td>
+<td class='lineTable'> <pre class='codegrey'>        logic match_found;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>58</td>
+<td class='lineTable'> <pre class='codegreen'>        slave_sel_o = '0;</pre> </td>
+<td class='lineTable'>6856</td>
+<td class='lineTable'>1</td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>59</td>
+<td class='lineTable'> <pre class='codegreen'>        dec_error_o = 1'b0;</pre> </td>
+<td class='lineTable'>6856</td>
+<td class='lineTable'>1</td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>60</td>
+<td class='lineTable'> <pre class='codegreen'>        sec_error_o = 1'b0;</pre> </td>
+<td class='lineTable'>6856</td>
+<td class='lineTable'>1</td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>61</td>
+<td class='lineTable'> <pre class='codegreen'>        match_found = 1'b0;</pre> </td>
+<td class='lineTable'>6856</td>
+<td class='lineTable'>1</td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>62</td>
+<td class='lineTable'> <pre class='codegrey'>        </pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>63</td>
+<td class='lineTable'> <pre class='codegreen'>        if (valid_i) begin</pre> </td>
+<td class='lineTable'>1720</td>
+<td class='lineTable'>1</td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>64</td>
+<td class='lineTable'> <pre class='codegrey'>            </pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>65</td>
+<td class='lineTable'> <pre class='codegreen'>            for (int i = 0; i &lt M_SLAVES; i++) begin</pre> </td>
+<td class='lineTable'>1656</td>
+<td class='lineTable'>1</td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>66</td>
+<td class='lineTable'> <pre class='codegreen'>                if (!match_found && (addr_i &gt= region_starts[i]) && (addr_i &lt= region_ends[i])) begin</pre> </td>
+<td class='lineTable'>1656</td>
+<td class='lineTable'>1</td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>67</td>
+<td class='lineTable'> <pre class='codegrey'>                    // Address Match</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>68</td>
+<td class='lineTable'> <pre class='codegreen'>                    match_found = 1'b1;</pre> </td>
+<td class='lineTable'>100</td>
+<td class='lineTable'>1</td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>69</td>
+<td class='lineTable'> <pre class='codegrey'>                    </pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>70</td>
+<td class='lineTable'> <pre class='codegrey'>                    // Security Check</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>71</td>
+<td class='lineTable'> <pre class='codegreen'>                    if (region_secures[i] && !secure_i) begin</pre> </td>
+<td class='lineTable'>100</td>
+<td class='lineTable'>1</td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>72</td>
+<td class='lineTable'> <pre class='codegreen'>                        sec_error_o = 1'b1; // Access Violation</pre> </td>
+<td class='lineTable'>36</td>
+<td class='lineTable'>1</td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>73</td>
+<td class='lineTable'> <pre class='codegrey'>                    end else begin</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>74</td>
+<td class='lineTable'> <pre class='codegreen'>                        slave_sel_o[i] = 1'b1;</pre> </td>
+<td class='lineTable'>64</td>
+<td class='lineTable'>1</td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>75</td>
+<td class='lineTable'> <pre class='codegrey'>                    end</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>76</td>
+<td class='lineTable'> <pre class='codegrey'>                end</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>77</td>
+<td class='lineTable'> <pre class='codegrey'>            end</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>78</td>
+<td class='lineTable'> <pre class='codegrey'>            </pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>79</td>
+<td class='lineTable'> <pre class='codegreen'>            if (!match_found) begin</pre> </td>
+<td class='lineTable'>828</td>
+<td class='lineTable'>1</td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>80</td>
+<td class='lineTable'> <pre class='codegreen'>                if (USE_DEFAULT_SLAVE) begin</pre> </td>
+<td class='lineTable'>728</td>
+<td class='lineTable'>1</td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>81</td>
+<td class='lineTable'> <pre class='codered'>                    slave_sel_o[DEFAULT_SLAVE_INDEX] = 1'b1;</pre> </td>
+<td class='lineTable'> 0 </td>
+<td class='lineTable'>1</td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>82</td>
+<td class='lineTable'> <pre class='codegrey'>                end else begin</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>83</td>
+<td class='lineTable'> <pre class='codegreen'>                    dec_error_o = 1'b1;</pre> </td>
+<td class='lineTable'>728</td>
+<td class='lineTable'>1</td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>84</td>
+<td class='lineTable'> <pre class='codegrey'>                end</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>85</td>
+<td class='lineTable'> <pre class='codegrey'>            end</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>86</td>
+<td class='lineTable'> <pre class='codegrey'>        end</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>87</td>
+<td class='lineTable'> <pre class='codegrey'>    end</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>88</td>
+<td class='lineTable'> <pre class='codegrey'> </pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>89</td>
+<td class='lineTable'> <pre class='codegrey'>endmodule</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+</table>
+</div>
+<br clear=all>
+</div>
+<br clear=all>
+</div>
+</font>
+</div>
+<div class ='linesSection' style='padding-left:20px; padding-right:20px;'>
+<font face='arial' color=black style='font-size: 14px'>
+<div style='display:none' id='file_branchcov'>
+<button class='fileBranchCollapsible' id='button_file_branchcov'> <font size='4' color=#003399> &#8380; </font>
+ Branch Coverage of File 2 : /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_decoder.sv</button> 
+<div class='fileBranchContent'>
+<br clear=all>
+<font size='2' face='arial' style='padding-left:6px'>
+Branch Coverage Summary for File : /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_decoder.sv
+</font>
+<br clear=all>
+<table class='fileScoreTable'>
+<tr>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> Total Branches </th>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> Covered Branches </th>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> Uncovered Branches </th>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> Branch Coverage Score </th>
+</tr>
+<tr>
+<td class='fileScoreTable'>7</td>
+<td class='fileScoreTable'>6</td>
+<td class='fileScoreTable'>1</td>
+<td class='fileScoreTable' bgcolor='#98FF98'>85.7143</td>
+</tr>
+</table>
+<br clear=all>
+<div class='branchCoverageTable'>
+<table class='lineTable'>
+<tr>
+<th class='lineTable' style='background-color:#FFDD99; line-height:0;' width='80px'> LineNumber </th>
+<th class='lineTable' style='background-color:#FFEB99; line-height:0;'> Branch </th>
+<th class='lineTable' style='background-color:#80FFBF; line-height:1;' width='120px'> Desicion Evaluated  </th>
+<th class='lineTable' style='background-color:#FFE6E6; line-height:1;' width='140px'> TRUE/FALSE Branch Execution Count[s]  </th>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>1</td>
+<td class='lineTable'> <pre class='codegrey'>import bus_matrix_pkg::*;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>2</td>
+<td class='lineTable'> <pre class='codegrey'> </pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>3</td>
+<td class='lineTable'> <pre class='codegrey'>// -----------------------------------------------------------------------------</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>4</td>
+<td class='lineTable'> <pre class='codegrey'>// File: bus_matrix_decoder.sv</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>5</td>
+<td class='lineTable'> <pre class='codegrey'>// Module: bus_matrix_decoder</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>6</td>
+<td class='lineTable'> <pre class='codegrey'>// Description:</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>7</td>
+<td class='lineTable'> <pre class='codegrey'>//   Address decoder/firewall for a single Master within the Bus Matrix.</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>8</td>
+<td class='lineTable'> <pre class='codegrey'>//   Determines which Slave to select based on the input address and checks</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>9</td>
+<td class='lineTable'> <pre class='codegrey'>//   security permissions.</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>10</td>
+<td class='lineTable'> <pre class='codegrey'>//</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>11</td>
+<td class='lineTable'> <pre class='codegrey'>// Parameters:</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>12</td>
+<td class='lineTable'> <pre class='codegrey'>//   - M_SLAVES: Number of slaves.</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>13</td>
+<td class='lineTable'> <pre class='codegrey'>//   - ADDR_WIDTH: Width of the address bus.</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>14</td>
+<td class='lineTable'> <pre class='codegrey'>//   - REGION_MAP_FLAT: Flattened array of `region_attr_t` defining memory map</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>15</td>
+<td class='lineTable'> <pre class='codegrey'>//                      and security attributes for each slave.</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>16</td>
+<td class='lineTable'> <pre class='codegrey'>//   - USE_DEFAULT_SLAVE: Enable routing to a default slave for unmatched addresses.</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>17</td>
+<td class='lineTable'> <pre class='codegrey'>//   - DEFAULT_SLAVE_INDEX: Index of the default slave.</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>18</td>
+<td class='lineTable'> <pre class='codegrey'>//</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>19</td>
+<td class='lineTable'> <pre class='codegrey'>// Signals:</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>20</td>
+<td class='lineTable'> <pre class='codegrey'>//   - addr_i: Input address from Master.</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>21</td>
+<td class='lineTable'> <pre class='codegrey'>//   - valid_i: Indicates address is valid (request active).</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>22</td>
+<td class='lineTable'> <pre class='codegrey'>//   - secure_i: Security level of the current transaction (1=Secure, 0=Non-Secure).</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>23</td>
+<td class='lineTable'> <pre class='codegrey'>//   - slave_sel_o: One-hot vector selecting the target slave.</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>24</td>
+<td class='lineTable'> <pre class='codegrey'>//   - dec_error_o: Asserted if address matches no region (and no default slave).</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>25</td>
+<td class='lineTable'> <pre class='codegrey'>//   - sec_error_o: Asserted if access violates security attributes (e.g. NS-&gtSecure).</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>26</td>
+<td class='lineTable'> <pre class='codegrey'>// -----------------------------------------------------------------------------</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>27</td>
+<td class='lineTable'> <pre class='codegrey'>module bus_matrix_decoder #(</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>28</td>
+<td class='lineTable'> <pre class='codegrey'>    parameter int M_SLAVES = 2,</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>29</td>
+<td class='lineTable'> <pre class='codegrey'>    parameter int ADDR_WIDTH = 32,</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>30</td>
+<td class='lineTable'> <pre class='codegrey'>    parameter logic [M_SLAVES*66-1:0] REGION_MAP_FLAT = '0,</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>31</td>
+<td class='lineTable'> <pre class='codegrey'>    parameter bit USE_DEFAULT_SLAVE = 0,</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>32</td>
+<td class='lineTable'> <pre class='codegrey'>    parameter int DEFAULT_SLAVE_INDEX = 0</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>33</td>
+<td class='lineTable'> <pre class='codegrey'>)(</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>34</td>
+<td class='lineTable'> <pre class='codegrey'>    input  logic [ADDR_WIDTH-1:0] addr_i,</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>35</td>
+<td class='lineTable'> <pre class='codegrey'>    input  logic                  valid_i,</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>36</td>
+<td class='lineTable'> <pre class='codegrey'>    input  logic                  secure_i, // 1 = Secure Access, 0 = Non-Secure</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>37</td>
+<td class='lineTable'> <pre class='codegrey'>    output logic [M_SLAVES-1:0]   slave_sel_o,</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>38</td>
+<td class='lineTable'> <pre class='codegrey'>    output logic                  dec_error_o, // No slave mapped</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>39</td>
+<td class='lineTable'> <pre class='codegrey'>    output logic                  sec_error_o  // Security violation</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>40</td>
+<td class='lineTable'> <pre class='codegrey'>);</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>41</td>
+<td class='lineTable'> <pre class='codegrey'> </pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>42</td>
+<td class='lineTable'> <pre class='codegrey'>    // Unpack regions using generate to avoid complex procedural indexing</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>43</td>
+<td class='lineTable'> <pre class='codegrey'>    logic [M_SLAVES-1:0][31:0] region_starts;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>44</td>
+<td class='lineTable'> <pre class='codegrey'>    logic [M_SLAVES-1:0][31:0] region_ends;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>45</td>
+<td class='lineTable'> <pre class='codegrey'>    logic [M_SLAVES-1:0]       region_secures;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>46</td>
+<td class='lineTable'> <pre class='codegrey'>    </pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>47</td>
+<td class='lineTable'> <pre class='codegrey'>    genvar i_gen;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>48</td>
+<td class='lineTable'> <pre class='codegrey'>    generate</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>49</td>
+<td class='lineTable'> <pre class='codegrey'>        for (i_gen = 0; i_gen &lt M_SLAVES; i_gen++) begin : GEN_UNPACK</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>50</td>
+<td class='lineTable'> <pre class='codegrey'>            assign region_starts[i_gen]  = REGION_MAP_FLAT[i_gen*66 + 34 +: 32];</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>51</td>
+<td class='lineTable'> <pre class='codegrey'>            assign region_ends[i_gen]    = REGION_MAP_FLAT[i_gen*66 + 2 +: 32];</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>52</td>
+<td class='lineTable'> <pre class='codegrey'>            assign region_secures[i_gen] = REGION_MAP_FLAT[i_gen*66 + 1];</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>53</td>
+<td class='lineTable'> <pre class='codegrey'>        end</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>54</td>
+<td class='lineTable'> <pre class='codegrey'>    endgenerate</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>55</td>
+<td class='lineTable'> <pre class='codegrey'> </pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>56</td>
+<td class='lineTable'> <pre class='codegrey'>    always_comb begin</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>57</td>
+<td class='lineTable'> <pre class='codegrey'>        logic match_found;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>58</td>
+<td class='lineTable'> <pre class='codegrey'>        slave_sel_o = '0;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>59</td>
+<td class='lineTable'> <pre class='codegrey'>        dec_error_o = 1'b0;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>60</td>
+<td class='lineTable'> <pre class='codegrey'>        sec_error_o = 1'b0;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>61</td>
+<td class='lineTable'> <pre class='codegrey'>        match_found = 1'b0;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>62</td>
+<td class='lineTable'> <pre class='codegrey'>        </pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>63</td>
+<td class='lineTable'> <pre class='codegrey'>        if (valid_i) begin</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'> </td>
+<td class='lineTable' align ='left'> <pre class='codered'> MISSING ELSE </pre> <font face='arial' color=orange style='font-size: 12px'><b> Branch 1</b></font></td>
+<td class='lineTable'> </td>
+<td class='lineTable'> 892</td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>64</td>
+<td class='lineTable'> <pre class='codegrey'>            </pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>65</td>
+<td class='lineTable'> <pre class='codegrey'>            for (int i = 0; i &lt M_SLAVES; i++) begin</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>66</td>
+<td class='lineTable'> <pre class='codegrey'>                if (!match_found && (addr_i &gt= region_starts[i]) && (addr_i &lt= region_ends[i])) begin</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'> </td>
+<td class='lineTable' align ='left'> <pre class='codered'> MISSING ELSE </pre> <font face='arial' color=orange style='font-size: 12px'><b> Branch 2</b></font></td>
+<td class='lineTable'> </td>
+<td class='lineTable'> 1556</td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>67</td>
+<td class='lineTable'> <pre class='codegrey'>                    // Address Match</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>68</td>
+<td class='lineTable'> <pre class='codegrey'>                    match_found = 1'b1;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>69</td>
+<td class='lineTable'> <pre class='codegrey'>                    </pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>70</td>
+<td class='lineTable'> <pre class='codegrey'>                    // Security Check</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>71</td>
+<td class='lineTable'> <pre class='codegreen'>                    if (region_secures[i] && !secure_i) begin</pre>
+ <font face='arial' color=orange style='font-size: 12px'><b> Branch 3</b></font></td>
+<td class='lineTable'>100</td>
+<td class='lineTable'>36T 64F </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>72</td>
+<td class='lineTable'> <pre class='codegrey'>                        sec_error_o = 1'b1; // Access Violation</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>73</td>
+<td class='lineTable'> <pre class='codegreen'>                    end else begin</pre>
+ <font face='arial' color=orange style='font-size: 12px'><b> Branch 4</b></font></td>
+<td class='lineTable'>64</td>
+<td class='lineTable'>64T </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>74</td>
+<td class='lineTable'> <pre class='codegrey'>                        slave_sel_o[i] = 1'b1;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>75</td>
+<td class='lineTable'> <pre class='codegrey'>                    end</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>76</td>
+<td class='lineTable'> <pre class='codegrey'>                end</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>77</td>
+<td class='lineTable'> <pre class='codegrey'>            end</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>78</td>
+<td class='lineTable'> <pre class='codegrey'>            </pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>79</td>
+<td class='lineTable'> <pre class='codegrey'>            if (!match_found) begin</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'> </td>
+<td class='lineTable' align ='left'> <pre class='codered'> MISSING ELSE </pre> <font face='arial' color=orange style='font-size: 12px'><b> Branch 5</b></font></td>
+<td class='lineTable'> </td>
+<td class='lineTable'> 100</td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>80</td>
+<td class='lineTable'> <pre class='codegreen'>                if (USE_DEFAULT_SLAVE) begin</pre>
+ <font face='arial' color=orange style='font-size: 12px'><b> Branch 6</b></font></td>
+<td class='lineTable'>728</td>
+<td class='lineTable'>0T 728F </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>81</td>
+<td class='lineTable'> <pre class='codegrey'>                    slave_sel_o[DEFAULT_SLAVE_INDEX] = 1'b1;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>82</td>
+<td class='lineTable'> <pre class='codegreen'>                end else begin</pre>
+ <font face='arial' color=orange style='font-size: 12px'><b> Branch 7</b></font></td>
+<td class='lineTable'>728</td>
+<td class='lineTable'>728T </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>83</td>
+<td class='lineTable'> <pre class='codegrey'>                    dec_error_o = 1'b1;</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>84</td>
+<td class='lineTable'> <pre class='codegrey'>                end</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>85</td>
+<td class='lineTable'> <pre class='codegrey'>            end</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>86</td>
+<td class='lineTable'> <pre class='codegrey'>        end</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>87</td>
+<td class='lineTable'> <pre class='codegrey'>    end</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>88</td>
+<td class='lineTable'> <pre class='codegrey'> </pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+<tr class='lineTableHoverGrey'>
+<td class='lineTable'>89</td>
+<td class='lineTable'> <pre class='codegrey'>endmodule</pre> </td>
+<td class='lineTable'> </td>
+<td class='lineTable'> </td>
+</tr>
+</table>
+</div>
+<br clear=all>
+</div>
+<br clear=all>
+</div>
+</font>
+</div>
+<div class ='linesSection' style='padding-left:20px; padding-right:20px;'>
+<font face='arial' color=black style='font-size: 14px'>
+<div style='display:none' id='file_condcov'>
+<button class='fileCondCollapsible' id='button_file_condcov'> <font size='4' color=#b38f00> &#169; </font>
+ Condition Coverage of File 2 : /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_decoder.sv</button> 
+<div class='fileCondContent'>
+<br clear=all>
+<font size='2' face='arial' style='padding-left:6px'>
+Condition Coverage Summary for File : /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_decoder.sv
+</font>
+<br clear=all>
+<table class='fileScoreTable'>
+<tr>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> Total Conditions </th>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> Covered Conditions </th>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> Uncovered Conditions </th>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> Condition Coverage Score </th>
+</tr>
+<tr>
+<td class='fileScoreTable'>2</td>
+<td class='fileScoreTable'>2</td>
+<td class='fileScoreTable'>0</td>
+<td class='fileScoreTable' bgcolor='#98FF98'>100</td>
+</tr>
+</table>
+<br clear=all>
+<div class='condCoverageTable'>
+<table class='lineTable'>
+<tr>
+<th class='lineTable' style='background-color:#FFDD99; line-height:0;' width='80px'> LineNumber </th>
+<th class='lineTable' style='background-color:#FFEB99; line-height:0;'> Condition Result </th>
+<th class='lineTable' style='background-color:#80FFBF; line-height:1;' width='120px'> Evaluation Count </th>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>66</td>
+<td class='lineTable'> <pre class='codegreen'>(addr_i >= region_starts[i])__TRUE</pre> </td>
+<td class='lineTable'>1556 </td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'> </td>
+<td class='lineTable'> <pre class='codegreen'>(addr_i >= region_starts[i])__FALSE</pre> </td>
+<td class='lineTable'>55 </td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>66</td>
+<td class='lineTable'> <pre class='codegreen'>(addr_i <= region_ends[i])__TRUE</pre> </td>
+<td class='lineTable'>100 </td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'> </td>
+<td class='lineTable'> <pre class='codegreen'>(addr_i <= region_ends[i])__FALSE</pre> </td>
+<td class='lineTable'>1456 </td>
+</tr>
+</table>
+</div>
+<br clear=all>
+</div>
+<br clear=all>
+</div>
+</font>
+</div>
+<div class ='linesSection' style='padding-left:20px; padding-right:20px;'>
+<font face='arial' color=black style='font-size: 14px'>
+<div style='display:none' id='file_togglecov'>
+<button class='fileToggleCollapsible' id='button_file_togglecov'> <font size='4' color=#9999bb> &#8376; </font>
+ Toggle Coverage of File 2 : /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_decoder.sv</button> 
+<div class='fileToggleContent'>
+<br clear=all>
+<font size='2' face='arial' style='padding-left:6px'>
+Toggle Coverage Summary for File : /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_decoder.sv
+</font>
+<br clear=all>
+<table class='fileScoreTable'>
+<tr>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> Total Toggles Variables </th>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> Covered Variables </th>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> Uncovered Variables </th>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> Score </th>
+</tr>
+<tr>
+<td class='fileScoreTable'>48</td>
+<td class='fileScoreTable'>2</td>
+<td class='fileScoreTable'>46</td>
+<td class='fileScoreTable' bgcolor='#FF0000'>4.16</td>
+</tr>
+</table>
+<br clear=all>
+<table class='fileScoreTable'>
+<tr>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> </th>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> Total </th>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> Covered </th>
+<th class='fileScoreTable' bgcolor='#DEE8EE'> Toggle Coverage Score </th>
+</tr>
+<tr>
+<td class='fileScoreTable'> <font size='2'> Total Bits </font> </td>
+<td class='fileScoreTable'> <font size='2'>2872</font> </td>
+<td class='fileScoreTable'> <font size='2'>209</font> </td>
+<td class='fileScoreTable' bgcolor='#FF0000'> <font size='2'>7.27</td>
+</tr>
+<tr>
+<td class='fileScoreTable'> <font size='2'> Bits 0->1 </font> </td>
+<td class='fileScoreTable'> <font size='2'>1436</font> </td>
+<td class='fileScoreTable'> <font size='2'>115 </font> </td>
+<td class='fileScoreTable' bgcolor='#FF0000'> <font size='2'>8</font> </td>
+</tr>
+<tr>
+<td class='fileScoreTable'> <font size='2'> Bits 1->0 </font> </td>
+<td class='fileScoreTable'> <font size='2'>1436</font> </td>
+<td class='fileScoreTable'> <font size='2'>94</font> </td>
+<td class='fileScoreTable' bgcolor='#FF0000'> <font size='2'>6.54</font> </td>
+</tr>
+</table>
+<br clear=all>
+<div class='toggleCoverageTable'>
+<table class='lineTable' id='sortable1'>
+<tr>
+<th class='lineTable' style='background-color:#FFDD99; line-height:1;' width='80px' onclick='sortTable(1,0)'> LineNumber <button class='sortbutton1'> &#8645; </button></th>
+<th class='lineTable' style='background-color:#FFDD99; line-height:1;' width='80px' onclick='sortTable(1,1)'> Variable Type <button class='sortbutton1'> &#8645; </button></th>
+<th class='lineTable' style='background-color:#FFEB99; line-height:0;' onclick='sortTable(1,2)'> Variable <button class='sortbutton1'> &#8645; </button></th>
+<th class='lineTable' style='background-color:#80FFBF; line-height:1;' width='120px'> Toggle 0->1 </th>
+<th class='lineTable' style='background-color:#80FFBF; line-height:1;' width='120px'> Toggle 1->0 </th>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>34</td>
+<td class='lineTable'>input wire</td>
+<td class='lineTable'> <pre class='codegreen'> All bits of addr_i</pre> </td>
+<td class='lineTable'> <pre class='codegreen'> 1 </pre> </td>
+<td class='lineTable'> <pre class='codegreen'> 1 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>35</td>
+<td class='lineTable'>input wire</td>
+<td class='lineTable'> <pre class='codered'>valid_i</pre> </td>
+<td class='lineTable'> <pre class='codegreen'> 1 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>34</td>
+<td class='lineTable'>input wire</td>
+<td class='lineTable'> <pre class='codered'>addr_i [0:8]</pre> </td>
+<td class='lineTable'> <pre class='codegreen'> 1 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable' style='color:white;opacity:0'>34</td>
+<td class='lineTable' style='color:white;opacity:0'>input wire</td>
+<td class='lineTable'> <pre class='codered'>addr_i [10:12]</pre> </td>
+<td class='lineTable'> <pre class='codegreen'> 1 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable' style='color:white;opacity:0'>34</td>
+<td class='lineTable' style='color:white;opacity:0'>input wire</td>
+<td class='lineTable'> <pre class='codered'>addr_i [14]</pre> </td>
+<td class='lineTable'> <pre class='codegreen'> 1 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable' style='color:white;opacity:0'>34</td>
+<td class='lineTable' style='color:white;opacity:0'>input wire</td>
+<td class='lineTable'> <pre class='codered'>addr_i [16:17]</pre> </td>
+<td class='lineTable'> <pre class='codegreen'> 1 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable' style='color:white;opacity:0'>34</td>
+<td class='lineTable' style='color:white;opacity:0'>input wire</td>
+<td class='lineTable'> <pre class='codered'>addr_i [23]</pre> </td>
+<td class='lineTable'> <pre class='codegreen'> 1 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable' style='color:white;opacity:0'>34</td>
+<td class='lineTable' style='color:white;opacity:0'>input wire</td>
+<td class='lineTable'> <pre class='codered'>addr_i [26:28]</pre> </td>
+<td class='lineTable'> <pre class='codegreen'> 1 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable' style='color:white;opacity:0'>34</td>
+<td class='lineTable' style='color:white;opacity:0'>input wire</td>
+<td class='lineTable'> <pre class='codered'> All Other bits of addr_i</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>35</td>
+<td class='lineTable'>input wire</td>
+<td class='lineTable'> <pre class='codered'>valid_i</pre> </td>
+<td class='lineTable'> <pre class='codegreen'> 1 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>34</td>
+<td class='lineTable'>input wire</td>
+<td class='lineTable'> <pre class='codegreen'>addr_i [2:31]</pre> </td>
+<td class='lineTable'> <pre class='codegreen'> 1 </pre> </td>
+<td class='lineTable'> <pre class='codegreen'> 1 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable' style='color:white;opacity:0'>34</td>
+<td class='lineTable' style='color:white;opacity:0'>input wire</td>
+<td class='lineTable'> <pre class='codered'> All Other bits of addr_i</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>34</td>
+<td class='lineTable'>input wire</td>
+<td class='lineTable'> <pre class='codegreen'>addr_i [2:31]</pre> </td>
+<td class='lineTable'> <pre class='codegreen'> 1 </pre> </td>
+<td class='lineTable'> <pre class='codegreen'> 1 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable' style='color:white;opacity:0'>34</td>
+<td class='lineTable' style='color:white;opacity:0'>input wire</td>
+<td class='lineTable'> <pre class='codered'> All Other bits of addr_i</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>39</td>
+<td class='lineTable'>output reg</td>
+<td class='lineTable'> <pre class='codered'> All bits of sec_error_o</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>43</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_starts</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>44</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_ends</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>45</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_secures</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>57</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codegreen'> All bits of match_found</pre> </td>
+<td class='lineTable'> <pre class='codegreen'> 1 </pre> </td>
+<td class='lineTable'> <pre class='codegreen'> 1 </pre> </td>
+</tr>
+<tr class='lineTableHoverGreen'>
+<td class='lineTable'>65</td>
+<td class='lineTable'>int</td>
+<td class='lineTable'> <pre class='codegreen'>i [1]</pre> </td>
+<td class='lineTable'> <pre class='codegreen'> 1 </pre> </td>
+<td class='lineTable'> <pre class='codegreen'> 1 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable' style='color:white;opacity:0'>65</td>
+<td class='lineTable' style='color:white;opacity:0'>int</td>
+<td class='lineTable'> <pre class='codered'> All Other bits of i</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>39</td>
+<td class='lineTable'>output reg</td>
+<td class='lineTable'> <pre class='codered'> All bits of sec_error_o</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>43</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_starts</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>44</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_ends</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>45</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_secures</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>57</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of match_found</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>65</td>
+<td class='lineTable'>int</td>
+<td class='lineTable'> <pre class='codered'> All bits of i</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>43</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_starts</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>44</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_ends</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>45</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_secures</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>57</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of match_found</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>65</td>
+<td class='lineTable'>int</td>
+<td class='lineTable'> <pre class='codered'> All bits of i</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>43</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_starts</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>44</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_ends</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>45</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_secures</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>57</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of match_found</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>65</td>
+<td class='lineTable'>int</td>
+<td class='lineTable'> <pre class='codered'> All bits of i</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>43</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_starts</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>44</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_ends</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>45</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_secures</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>57</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of match_found</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>65</td>
+<td class='lineTable'>int</td>
+<td class='lineTable'> <pre class='codered'> All bits of i</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>43</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_starts</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>44</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_ends</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>45</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_secures</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>57</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of match_found</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>65</td>
+<td class='lineTable'>int</td>
+<td class='lineTable'> <pre class='codered'> All bits of i</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>43</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_starts</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>44</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_ends</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>45</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_secures</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>57</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of match_found</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>65</td>
+<td class='lineTable'>int</td>
+<td class='lineTable'> <pre class='codered'> All bits of i</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>43</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_starts</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>44</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_ends</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>45</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of region_secures</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>57</td>
+<td class='lineTable'>logic</td>
+<td class='lineTable'> <pre class='codered'> All bits of match_found</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+<tr class='lineTableHoverRed'>
+<td class='lineTable'>65</td>
+<td class='lineTable'>int</td>
+<td class='lineTable'> <pre class='codered'> All bits of i</pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+<td class='lineTable'> <pre class='codered'> 0 </pre> </td>
+</tr>
+</table>
+</div>
+<br clear=all>
+</div>
+<br clear=all>
+</div>
+</font>
+</div>
+</div>
+</div>
+
+<script type='text/javascript' src='jsCodeCov/fileCollapse.js'></script>
+<script type='text/javascript' src='jsCodeCov/checkdisplay.js'></script>
+<script> function openFileContent(id) {document.getElementById(id).click();} </script>
+<script> sortTable(1,0) </script>
+</body>
+</html>

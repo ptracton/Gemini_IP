@@ -1,13 +1,13 @@
 # Bus Matrix Verification Results
 
-Generated on: 2025-12-24 17:11:05
+Generated on: 2025-12-26 17:55:00
 
 ## Status Metrics
 | Metric | Status | Notes |
 | :--- | :--- | :--- |
 | **Regression Tests** | ✅ **Passed** | 100% Pass across Xilinx, ModelSim, GHDL, Cocotb |
-| **Code Coverage** | **Pending** | Planning for coverage collection |
-| **Formal Proofs** | ✅ **Passed** | SymbiYosys (BMC + Prove) across AXI, AHB, WB |
+| **Code Coverage** | ✅ **Passed** | Matrix: 97.4% Line / Bridge: ~100% Line (DUT) |
+| **Formal Proofs** | ✅ **Passed** | SymbiYosys (BMC + Prove) across AXI, AHB, WB, **Bridge** |
 | **Linting** | ✅ **Passed** | Clean for core matrix logic |
 
 ## Summary
@@ -29,8 +29,11 @@ Generated on: 2025-12-24 17:11:05
 | **Formal_AXI** | SymbiYosys (z3) | **PASS** | Formal AXI: Protocol & Mutex |
 | **Formal_AHB** | SymbiYosys (z3) | **PASS** | Formal AHB: Protocol & Mutex |
 | **Formal_WB** | SymbiYosys (z3) | **PASS** | Formal WB: Protocol & Mutex |
+| **Formal_Bridge** | SymbiYosys (z3) | **PASS** | Formal Bridge: Protocol Consistency |
 | **UVM_Base** | Vivado (xsim) | **PASS** | UVM: Infrastructure & Connectivity |
 | **UVM_Random** | Vivado (xsim) | **PASS** | UVM: Random Traffic |
+| **UVM_Bridge_SV** | Vivado (xsim) | **PASS** | AHB-APB Bridge (SystemVerilog) |
+| **UVM_Bridge_VHDL** | Vivado (xsim) | **PASS** | AHB-APB Bridge (VHDL) |
 
 ## Detailed Logs
 See individual log files in `tools/` directory for details.

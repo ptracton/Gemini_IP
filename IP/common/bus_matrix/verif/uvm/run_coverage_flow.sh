@@ -1,68 +1,48 @@
 #!/bin/bash
-# Description: Run Coverage flow (One compile, multiple tests, merge)
+# Description: Run Coverage flow (Multi-build, merge)
 
 # Source setup script
 source ../../../../../setup.sh
 
-# 1. Compile, Elab, and Run First Test
-# This establishes the snapshot and runs the first test.
-./run_uvm.sh axi verilog bus_matrix_count_test
-
-# 2. Run other tests using the SAME snapshot
-# Move into work dir where the snapshot exists
-cd work_axi_bus_matrix_count_test_verilog
-
-# Rename first test coverage
-if [ -d "xsim.codeCov/top_sim" ]; then
-    rm -rf xsim.codeCov/bus_matrix_count_test_axi_verilog
-    mv xsim.codeCov/top_sim xsim.codeCov/bus_matrix_count_test_axi_verilog
-fi
-
 echo "--------------------------------------------------"
-echo "Running Additional Tests for Coverage..."
+echo "Running Tests with Coverage..."
 echo "--------------------------------------------------"
 
-for TEST in bus_matrix_pwm_perf_test bus_matrix_capture_stress_test bus_matrix_prescaler_sweep_test; do
-    echo "--- Running $TEST ---"
-    # Run simulation
-    # Ensure clean state for default coverage export
-    rm -rf xsim.codeCov/top_sim
+TESTS=("bus_matrix_base_test" "bus_matrix_rand_test" "bus_matrix_error_test" "bus_matrix_contention_test" "bus_matrix_stress_test")
 
-    # Run simulation (defaults to xsim.codeCov/top_sim)
-    xsim top_sim -runall -testplusarg UVM_TESTNAME=$TEST -testplusarg BUS_TYPE=AXI -log uvm_sim_$TEST.log
-    
-    ls -R xsim.codeCov
-
-    # Rename code coverage DB to preserve it
-    # Default location: xsim.codeCov/top_sim
-    # Target location: xsim.codeCov/${TEST}_axi_verilog
-    if [ -d "xsim.codeCov/top_sim" ]; then
-        rm -rf xsim.codeCov/${TEST}_axi_verilog
-        mv xsim.codeCov/top_sim xsim.codeCov/${TEST}_axi_verilog
-    else
-         echo "ERROR: xsim.codeCov/top_sim not found for test $TEST"
-    fi
+for TEST in "${TESTS[@]}"; do
+    echo "--- Building and Running $TEST ---"
+    ./run_uvm.sh $TEST -cov
 done
 
-# 3. Merge Coverage
 echo "--------------------------------------------------"
 echo "Merging Code Coverage..."
 echo "--------------------------------------------------"
 
-# Note: The first test (bus_matrix_count_test) run by run_uvm.sh also saved to xsim.codeCov/top_sim
-# We should have renamed it too. 
-# But run_uvm.sh was unmodified to rename.
-# Let's fix the first test handling.
+# 1. Merge all database into a consolidated report
+MERGE_CMD="xcrg -merge_cc -cc_report code_cov_report"
+for TEST in "${TESTS[@]}"; do
+    # Each test run created its own work directory
+    # We point xcrg to the xsim.codeCov directory inside each work dir
+    MERGE_CMD="$MERGE_CMD -cc_dir work_${TEST}_verilog/xsim.codeCov -cc_db $TEST"
+done
 
-xcrg -merge_cc -cc_dir ./xsim.codeCov \
-    -cc_db bus_matrix_count_test_axi_verilog \
-    -cc_db bus_matrix_pwm_perf_test_axi_verilog \
-    -cc_db bus_matrix_capture_stress_test_axi_verilog \
-    -cc_db bus_matrix_prescaler_sweep_test_axi_verilog \
-    -cc_report code_cov_report
+echo "Executing: $MERGE_CMD"
+eval $MERGE_CMD
+
+# 2. Generate a text report for easy summary viewing
+echo "--- Generating Text Report ---"
+TEXT_REPORT_CMD="xcrg -merge_cc -report_format text -cc_report code_cov_text_report"
+for TEST in "${TESTS[@]}"; do
+    TEXT_REPORT_CMD="$TEXT_REPORT_CMD -cc_dir work_${TEST}_verilog/xsim.codeCov -cc_db $TEST"
+done
+eval $TEXT_REPORT_CMD
 
 echo "--------------------------------------------------"
-echo "Done. Report in work/code_cov_report/index.html"
+echo "Done. Report in $(pwd)/code_cov_report/index.html"
 echo "Text summary:"
-grep -r "Score" code_cov_report
+if [ -d "code_cov_text_report" ]; then
+    cat code_cov_text_report/*.txt 2>/dev/null | grep -A 20 "Overall Score"
+fi
 echo "--------------------------------------------------"
+

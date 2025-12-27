@@ -10,6 +10,7 @@ package ahb_agent_pkg;
     `include "ahb_seq_item.sv"
     `include "ahb_seq.sv"
     `include "ahb_driver.sv"
+    `include "ahb_slave_driver.sv"
     `include "ahb_monitor.sv"
     `include "ahb_agent.sv"
 

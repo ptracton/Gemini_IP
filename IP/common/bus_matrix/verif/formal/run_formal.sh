@@ -39,7 +39,7 @@ run_sby() {
 }
 
 if [ "$BUS" == "all" ]; then
-    for b in axi ahb wb; do
+    for b in axi ahb wb bridge; do
         run_sby $b $LANG
     done
 else

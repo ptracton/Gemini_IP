@@ -6,7 +6,8 @@
 class axi_agent extends uvm_agent;
     `uvm_component_utils(axi_agent)
 
-    axi_driver    driver;
+    bit is_slave = 0;
+    uvm_driver #(axi_seq_item) driver;
     uvm_sequencer #(axi_seq_item) sequencer;
     axi_monitor   monitor;
 
@@ -16,9 +17,14 @@ class axi_agent extends uvm_agent;
 
     function void build_phase(uvm_phase phase);
         super.build_phase(phase);
+        void'(uvm_config_db#(bit)::get(this, "", "is_slave", is_slave));
+        
         monitor = axi_monitor::type_id::create("monitor", this);
         if (get_is_active() == UVM_ACTIVE) begin
-            driver = axi_driver::type_id::create("driver", this);
+            if (is_slave)
+                driver = axi_slave_driver::type_id::create("driver", this);
+            else
+                driver = axi_driver::type_id::create("driver", this);
             sequencer = uvm_sequencer#(axi_seq_item)::type_id::create("sequencer", this);
         end
     endfunction

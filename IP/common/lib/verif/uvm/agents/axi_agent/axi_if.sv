@@ -45,6 +45,12 @@ interface axi_if (input logic aclk, input logic aresetn);
         input  rdata, rresp, rvalid;
     endclocking
     
+    clocking slave_cb @(posedge aclk);
+        default input #1ns output #1ns;
+        input  awaddr, awprot, awvalid, wdata, wstrb, wvalid, bready, araddr, arprot, arvalid, rready;
+        output awready, wready, bresp, bvalid, arready, rdata, rresp, rvalid;
+    endclocking
+
     modport master (clocking cb, input aclk, aresetn);
     modport monitor (input aclk, aresetn, 
                      awaddr, awprot, awvalid, awready,

@@ -18,6 +18,8 @@ class ahb_driver extends uvm_driver #(ahb_seq_item);
             `uvm_fatal("NO_VIF", {"virtual interface must be set for: ", get_full_name(), ".vif"});
     endfunction
 
+    semaphore pipeline_lock = new(1);
+
     task run_phase(uvm_phase phase);
         // Reset
         vif.cb.hsel   <= 0;
@@ -28,52 +30,70 @@ class ahb_driver extends uvm_driver #(ahb_seq_item);
         
         wait(vif.hresetn == 1);
         
+        fork
+            address_phase_handler();
+            idle_handler();
+        join
+    endtask
+
+    task address_phase_handler();
         forever begin
-            seq_item_port.get_next_item(req);
-            drive_transfer(req);
-            seq_item_port.item_done();
+            seq_item_port.get(req);
+            
+            // Address Phase must be exclusive
+            pipeline_lock.get(1);
+            
+            // Address Phase
+            vif.cb.haddr  <= req.addr;
+            vif.cb.htrans <= req.trans_type; 
+            vif.cb.hwrite <= req.write;
+            vif.cb.hsize  <= req.size;
+            vif.cb.hburst <= req.burst;
+            vif.cb.hsel   <= 1;
+            vif.cb.hprot  <= req.prot;
+            
+            // Wait for Address Phase acceptance
+            @ (vif.cb);
+            while (vif.cb.hready !== 1) @ (vif.cb);
+            
+            // Release lock so next address phase can start
+            pipeline_lock.put(1);
+            
+            // Data Phase (starts in next cycle)
+            fork
+                begin
+                    ahb_seq_item item = req;
+                    if (item.write) begin
+                        vif.cb.hwdata <= item.data;
+                    end
+                    
+                    // Wait for Data Phase completion
+                    @ (vif.cb);
+                    while (vif.cb.hready !== 1) @ (vif.cb);
+                    
+                    // Capture Read Data / Response
+                    if (!item.write) item.rdata = vif.cb.hrdata;
+                    item.resp = vif.cb.hresp;
+                    
+                    if (item.write) vif.cb.hwdata <= 0;
+                    
+                    // Signal completion -- since we used get(), we don't need item_done() 
+                    // but we can send a response if the sequence is waiting for it.
+                    // seq_item_port.put_response(item); 
+                end
+            join_none
         end
     endtask
 
-    task drive_transfer(ahb_seq_item item);
-        // Address Phase
-        @ (vif.cb);
-        wait (vif.cb.hready === 1); // Wait for previous to finish?
-        
-        vif.cb.haddr  <= item.addr;
-        vif.cb.htrans <= 2; // NONSEQ
-        vif.cb.hwrite <= item.write;
-        vif.cb.hsize  <= item.size;
-        vif.cb.hburst <= item.burst;
-        vif.cb.hsel   <= 1;
-        vif.cb.hprot  <= 1; // Data access
-        
-        // Wait for Address Phase acceptance
-        @ (vif.cb);
-        while (vif.cb.hready !== 1) @ (vif.cb);
-        
-        // Data Phase
-        // Clear Address Phase
-        vif.cb.htrans <= 0; // IDLE
-        vif.cb.hsel   <= 0; // Deselect (simplification for single transaction)
-        
-        if (item.write) begin
-            vif.cb.hwdata <= item.data;
+    task idle_handler();
+        forever begin
+            @ (vif.cb);
+            if (pipeline_lock.try_get(1)) begin
+                vif.cb.htrans <= 0;
+                vif.cb.hsel   <= 0;
+                pipeline_lock.put(1);
+            end
         end
-        
-        // Wait for Data Phase completion
-        @ (vif.cb);
-        while (vif.cb.hready !== 1) @ (vif.cb);
-        
-        // Capture Read Data / Response
-        if (!item.write) begin
-            item.rdata = vif.cb.hrdata;
-        end
-        item.resp = vif.cb.hresp;
-        
-        // Cleanup WDATA
-        vif.cb.hwdata <= 0;
-        
     endtask
 
 endclass

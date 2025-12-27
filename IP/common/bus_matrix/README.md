@@ -27,10 +27,31 @@ The Bus Matrix IP has been fully verified with 100% pass rate across multiple si
 | Status | Metric | Results |
 | :--- | :--- | :--- |
 | ✅ **Passed** | **Regression Tests** | 100% Pass across Xilinx, ModelSim, GHDL, Cocotb, and **UVM** |
-| ✅ **Passed** | **Formal Proofs** | BMC/Unbounded Proofs for AXI, AHB, WB |
+| ✅ **Passed** | **Formal Proofs** | BMC/Unbounded Proofs for AXI, AHB, WB, and **AHB-APB Bridge** |
 | ✅ **Passed** | **Linting** | Zero errors/warnings in core logic |
 
 For a detailed breakdown of test results and coverage, see: **[Bus Matrix Regression Results](bus_matrix_regression_results.md)**
+
+## Code Coverage Results
+The coverage results for the Bus Matrix IP are generated using the UVM verification suite.
+
+### 1. Bus Matrix
+| Metric | Coverage |
+| :--- | :--- |
+| **Line** | 97.4% |
+| **Branch** | 17.1% |
+| **Condition** | 11.6% |
+| **Toggle** | 12.4% |
+
+### 2. AHB-APB Bridge
+| Metric | Coverage |
+| :--- | :--- |
+| **Line** | 93.8% |
+| **Branch** | 6.9% |
+| **Condition** | 5.3% |
+| **Toggle** | 17.1% |
+
+*Note: Branch, Condition, and Toggle coverage gaps are primarily due to the large number of parameterized configurations and unused enumeration states (e.g., protocol error states) not exercised by the randomized testing.*
 
 ## Running Verifications & Tooling
 The environment must be set up by sourcing the root `setup.sh` before running any tools.

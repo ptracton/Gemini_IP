@@ -41,7 +41,7 @@ end entity ahb_apb_bridge;
 
 architecture rtl of ahb_apb_bridge is
 
-  type state_t is (IDLE, SETUP, access);
+  type state_t is (IDLE, SETUP, ACCESS_PHASE);
   signal state, next_state : state_t;
 
   signal addr_reg  : std_logic_vector(ADDR_WIDTH - 1 downto 0);
@@ -75,9 +75,9 @@ begin
         end if;
 
       when SETUP =>
-        next_state <= access;
+        next_state <= ACCESS_PHASE;
 
-      when access =>
+      when ACCESS_PHASE =>
         if PREADY = '1' then
           if HSEL = '1' and HTRANS(1) = '1' then
             next_state <= SETUP;
@@ -92,9 +92,9 @@ begin
   end process;
 
   -- Output Logic
-  PSEL <= '1' when (state = SETUP or state = access) else
+  PSEL <= '1' when (state = SETUP or state = ACCESS_PHASE) else
     '0';
-  PENABLE <= '1' when (state = access) else
+  PENABLE <= '1' when (state = ACCESS_PHASE) else
     '0';
   PADDR  <= addr_reg;
   PWRITE <= write_reg;
@@ -102,10 +102,10 @@ begin
   PPROT  <= "001";
   PSTRB  <= "1111";
 
-  HREADYOUT <= PREADY when (state = access) else
+  HREADYOUT <= PREADY when (state = ACCESS_PHASE) else
     '1';
   HRDATA <= PRDATA;
-  HRESP  <= "01" when (state = access and PSLVERR = '1') else
+  HRESP  <= "01" when (state = ACCESS_PHASE and PSLVERR = '1') else
     "00";
 
 end architecture rtl;

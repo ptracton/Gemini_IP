@@ -19,7 +19,13 @@ interface apb_if (input logic pclk, input logic presetn);
         input  pready, prdata, pslverr;
     endclocking
     
+    clocking slave_cb @(posedge pclk);
+        input  paddr, psel, penable, pwrite, pwdata, pstrb, pprot;
+        output pready, prdata, pslverr;
+    endclocking
+
     modport master (clocking cb, input pclk, presetn);
+    modport slave  (clocking slave_cb, input pclk, presetn);
     modport monitor (input pclk, presetn, paddr, psel, penable, pwrite, pwdata, pstrb, pprot, pready, prdata, pslverr);
 
 endinterface
