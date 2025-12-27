@@ -25,32 +25,24 @@ puts "========================================================"
 # Determine if this is VHDL or SV based on file existence
 if { [file exists "$VERILOG_RTL_DIR/$TOP_MODULE.sv"] } {
     puts "Detected SystemVerilog Design"
-    read_verilog -sv "$VERILOG_RTL_DIR/bus_matrix_regs.sv"
-    read_verilog -sv "$VERILOG_RTL_DIR/bus_matrix_core.sv"
+    read_verilog -sv "$VERILOG_RTL_DIR/bus_matrix_pkg.sv"
+    
+    if { [string match "bus_matrix_*" $TOP_MODULE] } {
+        read_verilog -sv "$VERILOG_RTL_DIR/bus_matrix_decoder.sv"
+        read_verilog -sv "$VERILOG_RTL_DIR/bus_matrix_arbiter.sv"
+        read_verilog -sv "$VERILOG_RTL_DIR/bus_matrix_register_slice.sv"
+    }
+    
     read_verilog -sv "$VERILOG_RTL_DIR/$TOP_MODULE.sv"
     
-    # Read Shared Adapters
-    if { [string match "*_axi" $TOP_MODULE] } {
-        read_verilog -sv "$SHARED_RTL_DIR/axi4lite_slave_adapter.sv"
-    } elseif { [string match "*_apb" $TOP_MODULE] } {
-        read_verilog -sv "$SHARED_RTL_DIR/apb_slave_adapter.sv"
-    } elseif { [string match "*_wb" $TOP_MODULE] } {
-        read_verilog -sv "$SHARED_RTL_DIR/wb_slave_adapter.sv"
+    # Read Shared Adapters if needed (for Bridge or Matrix variants if they use them)
+    if { [string match "ahb_apb_bridge" $TOP_MODULE] } {
+         # Bridge implementation might be self-contained or use common logic
     }
 } elseif { [file exists "$VHDL_RTL_DIR/$TOP_MODULE.vhd"] } {
     puts "Detected VHDL Design"
-    read_vhdl -vhdl2008 "$VHDL_RTL_DIR/bus_matrix_regs.vhd"
-    read_vhdl -vhdl2008 "$VHDL_RTL_DIR/bus_matrix_core.vhd"
+    # Note: VHDL variants might need similar logic if they exist
     read_vhdl -vhdl2008 "$VHDL_RTL_DIR/$TOP_MODULE.vhd"
-    
-    # Read Shared Adapters
-    if { [string match "*_axi" $TOP_MODULE] } {
-        read_vhdl -vhdl2008 "$SHARED_RTL_DIR/axi4lite_slave_adapter.vhd"
-    } elseif { [string match "*_apb" $TOP_MODULE] } {
-        read_vhdl -vhdl2008 "$SHARED_RTL_DIR/apb_slave_adapter.vhd"
-    } elseif { [string match "*_wb" $TOP_MODULE] } {
-        read_vhdl -vhdl2008 "$SHARED_RTL_DIR/wb_slave_adapter.vhd"
-    }
 } else {
     puts "Error: Could not find source for $TOP_MODULE"
     exit 1

@@ -1,0 +1,1365 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "HREADYOUT_o[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HREADYOUT_o[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HRESP_o[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HRESP_o[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HRESP_o[2]",
+					"strict" : false
+				},
+				{
+					"name" : "HRESP_o[3]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[2]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[3]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[4]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[5]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[6]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[7]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[8]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[9]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[10]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[11]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[12]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[13]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[14]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[15]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[16]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[17]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[18]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[19]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[20]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[21]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[22]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[23]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[24]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[25]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[26]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[27]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[28]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[29]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[30]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[31]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[32]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[33]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[34]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[35]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[36]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[37]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[38]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[39]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[40]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[41]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[42]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[43]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[44]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[45]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[46]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[47]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[48]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[49]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[50]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[51]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[52]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[53]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[54]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[55]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[56]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[57]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[58]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[59]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[60]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[61]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[62]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_o[63]",
+					"strict" : false
+				},
+				{
+					"name" : "HSEL_o[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[2]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[3]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[4]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[5]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[6]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[7]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[8]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[9]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[10]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[11]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[12]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[13]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[14]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[15]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[16]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[17]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[18]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[19]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[20]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[21]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[22]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[23]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[24]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[25]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[26]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[27]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[28]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[29]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[30]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_o[31]",
+					"strict" : false
+				},
+				{
+					"name" : "HTRANS_o[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HTRANS_o[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HWRITE_o[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HSIZE_o[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HSIZE_o[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HSIZE_o[2]",
+					"strict" : false
+				},
+				{
+					"name" : "HBURST_o[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HBURST_o[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HBURST_o[2]",
+					"strict" : false
+				},
+				{
+					"name" : "HPROT_o[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HPROT_o[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HPROT_o[2]",
+					"strict" : false
+				},
+				{
+					"name" : "HPROT_o[3]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[2]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[3]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[4]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[5]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[6]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[7]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[8]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[9]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[10]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[11]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[12]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[13]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[14]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[15]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[16]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[17]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[18]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[19]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[20]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[21]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[22]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[23]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[24]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[25]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[26]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[27]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[28]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[29]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[30]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_o[31]",
+					"strict" : false
+				},
+				{
+					"name" : "HREADY_i[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HTRANS_i[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[2]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[3]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[4]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[5]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[6]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[7]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[8]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[9]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[10]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[11]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[12]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[13]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[14]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[15]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[16]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[17]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[18]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[19]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[20]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[21]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[22]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[23]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[24]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[25]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[26]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[27]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[28]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[29]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[30]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[31]",
+					"strict" : false
+				},
+				{
+					"name" : "HTRANS_i[3]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[32]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[33]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[34]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[35]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[36]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[37]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[38]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[39]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[40]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[41]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[42]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[43]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[44]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[45]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[46]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[47]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[48]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[49]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[50]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[51]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[52]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[53]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[54]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[55]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[56]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[57]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[58]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[59]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[60]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[61]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[62]",
+					"strict" : false
+				},
+				{
+					"name" : "HADDR_i[63]",
+					"strict" : false
+				},
+				{
+					"name" : "HRESP_i[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HRESP_i[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[2]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[3]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[4]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[5]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[6]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[7]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[8]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[9]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[10]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[11]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[12]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[13]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[14]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[15]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[16]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[17]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[18]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[19]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[20]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[21]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[22]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[23]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[24]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[25]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[26]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[27]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[28]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[29]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[30]",
+					"strict" : false
+				},
+				{
+					"name" : "HRDATA_i[31]",
+					"strict" : false
+				},
+				{
+					"name" : "HTRANS_i[2]",
+					"strict" : false
+				},
+				{
+					"name" : "HTRANS_i[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HWRITE_i[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HWRITE_i[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HSIZE_i[3]",
+					"strict" : false
+				},
+				{
+					"name" : "HSIZE_i[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HSIZE_i[4]",
+					"strict" : false
+				},
+				{
+					"name" : "HSIZE_i[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HSIZE_i[5]",
+					"strict" : false
+				},
+				{
+					"name" : "HSIZE_i[2]",
+					"strict" : false
+				},
+				{
+					"name" : "HBURST_i[3]",
+					"strict" : false
+				},
+				{
+					"name" : "HBURST_i[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HBURST_i[4]",
+					"strict" : false
+				},
+				{
+					"name" : "HBURST_i[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HBURST_i[5]",
+					"strict" : false
+				},
+				{
+					"name" : "HBURST_i[2]",
+					"strict" : false
+				},
+				{
+					"name" : "HPROT_i[4]",
+					"strict" : false
+				},
+				{
+					"name" : "HPROT_i[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HPROT_i[5]",
+					"strict" : false
+				},
+				{
+					"name" : "HPROT_i[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HPROT_i[6]",
+					"strict" : false
+				},
+				{
+					"name" : "HPROT_i[2]",
+					"strict" : false
+				},
+				{
+					"name" : "HPROT_i[7]",
+					"strict" : false
+				},
+				{
+					"name" : "HPROT_i[3]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[32]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[33]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[34]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[2]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[35]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[3]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[36]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[4]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[37]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[5]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[38]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[6]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[39]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[7]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[40]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[8]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[41]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[9]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[42]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[10]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[43]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[11]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[44]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[12]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[45]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[13]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[46]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[14]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[47]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[15]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[48]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[16]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[49]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[17]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[50]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[18]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[51]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[19]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[52]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[20]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[53]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[21]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[54]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[22]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[55]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[23]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[56]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[24]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[57]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[25]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[58]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[26]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[59]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[27]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[60]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[28]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[61]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[29]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[62]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[30]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[63]",
+					"strict" : false
+				},
+				{
+					"name" : "HWDATA_i[31]",
+					"strict" : false
+				},
+				{
+					"name" : "HCLK",
+					"strict" : false
+				},
+				{
+					"name" : "HRESETn",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

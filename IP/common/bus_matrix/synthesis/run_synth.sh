@@ -14,12 +14,11 @@ fi
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-LANGS=("verilog" "vhdl")
-BUS_TYPES=("apb" "axi" "wb")
+LANGS=("verilog")
+TARGET_MODULES=("bus_matrix_ahb" "bus_matrix_axi" "bus_matrix_wb" "ahb_apb_bridge")
 
 for LANG in "${LANGS[@]}"; do
-    for BUS in "${BUS_TYPES[@]}"; do
-        MODULE="bus_matrix_$BUS"
+    for MODULE in "${TARGET_MODULES[@]}"; do
         RESULT_DIR="results/${MODULE}_${LANG}"
         echo "----------------------------------------------------------------"
         echo "Synthesizing $MODULE ($LANG) for part $PART..."

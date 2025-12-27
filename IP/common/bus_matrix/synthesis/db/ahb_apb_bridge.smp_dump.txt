@@ -1,0 +1,6 @@
+
+State Machine - |ahb_apb_bridge|state
+Name state.IDLE state.ACCESS state.SETUP 
+state.IDLE 0 0 0 
+state.SETUP 1 0 1 
+state.ACCESS 1 1 0 

@@ -1,0 +1,628 @@
+Analysis & Synthesis report for bus_matrix_axi
+Fri Dec 26 18:22:58 2025
+Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. Registers Removed During Synthesis
+  9. General Register Statistics
+ 10. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 11. Parameter Settings for User Entity Instance: Top-level Entity: |bus_matrix_axi
+ 12. Parameter Settings for User Entity Instance: bus_matrix_decoder:GEN_AW_DECODERS[0].u_dec_aw
+ 13. Parameter Settings for User Entity Instance: bus_matrix_decoder:GEN_AW_DECODERS[1].u_dec_aw
+ 14. Parameter Settings for User Entity Instance: bus_matrix_arbiter:GEN_AW_ARBITERS[0].u_arb_aw
+ 15. Parameter Settings for User Entity Instance: bus_matrix_arbiter:GEN_AW_ARBITERS[1].u_arb_aw
+ 16. Parameter Settings for User Entity Instance: bus_matrix_decoder:GEN_AR_DECODERS[0].u_dec_ar
+ 17. Parameter Settings for User Entity Instance: bus_matrix_decoder:GEN_AR_DECODERS[1].u_dec_ar
+ 18. Parameter Settings for User Entity Instance: bus_matrix_arbiter:GEN_AR_ARBITERS[0].u_arb_ar
+ 19. Parameter Settings for User Entity Instance: bus_matrix_arbiter:GEN_AR_ARBITERS[1].u_arb_ar
+ 20. Post-Synthesis Netlist Statistics for Top Partition
+ 21. Elapsed Time Per Partition
+ 22. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2024  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+
+
+
++-------------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                        ;
++------------------------------------+------------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Fri Dec 26 18:22:58 2025          ;
+; Quartus Prime Version              ; 23.1std.1 Build 993 05/14/2024 SC Lite Edition ;
+; Revision Name                      ; bus_matrix_axi                                 ;
+; Top-level Entity Name              ; bus_matrix_axi                                 ;
+; Family                             ; Cyclone IV GX                                  ;
+; Total logic elements               ; 265                                            ;
+;     Total combinational functions  ; 265                                            ;
+;     Dedicated logic registers      ; 15                                             ;
+; Total registers                    ; 15                                             ;
+; Total pins                         ; 610                                            ;
+; Total virtual pins                 ; 0                                              ;
+; Total memory bits                  ; 0                                              ;
+; Embedded Multiplier 9-bit elements ; 0                                              ;
+; Total GXB Receiver Channel PCS     ; 0                                              ;
+; Total GXB Receiver Channel PMA     ; 0                                              ;
+; Total GXB Transmitter Channel PCS  ; 0                                              ;
+; Total GXB Transmitter Channel PMA  ; 0                                              ;
+; Total PLLs                         ; 0                                              ;
++------------------------------------+------------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                              ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                           ; Setting            ; Default Value      ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                           ; EP4CGX15BF14C6     ;                    ;
+; Top-level entity name                                            ; bus_matrix_axi     ; bus_matrix_axi     ;
+; Family name                                                      ; Cyclone IV GX      ; Cyclone V          ;
+; Use smart compilation                                            ; Off                ; Off                ;
+; Enable parallel Assembler and Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                      ; Off                ; Off                ;
+; Restructure Multiplexers                                         ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                              ; Off                ; Off                ;
+; Preserve fewer node names                                        ; On                 ; On                 ;
+; Intel FPGA IP Evaluation Mode                                    ; Enable             ; Enable             ;
+; Verilog Version                                                  ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                     ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                         ; Auto               ; Auto               ;
+; Safe State Machine                                               ; Off                ; Off                ;
+; Extract Verilog State Machines                                   ; On                 ; On                 ;
+; Extract VHDL State Machines                                      ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                       ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                   ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                          ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                        ; On                 ; On                 ;
+; Parallel Synthesis                                               ; On                 ; On                 ;
+; DSP Block Balancing                                              ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                               ; On                 ; On                 ;
+; Power-Up Don't Care                                              ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                     ; Off                ; Off                ;
+; Remove Duplicate Registers                                       ; On                 ; On                 ;
+; Ignore CARRY Buffers                                             ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                           ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                            ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                        ; Off                ; Off                ;
+; Ignore LCELL Buffers                                             ; Off                ; Off                ;
+; Ignore SOFT Buffers                                              ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                   ; Off                ; Off                ;
+; Optimization Technique                                           ; Balanced           ; Balanced           ;
+; Carry Chain Length                                               ; 70                 ; 70                 ;
+; Auto Carry Chains                                                ; On                 ; On                 ;
+; Auto Open-Drain Pins                                             ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                            ; Off                ; Off                ;
+; Auto ROM Replacement                                             ; On                 ; On                 ;
+; Auto RAM Replacement                                             ; On                 ; On                 ;
+; Auto DSP Block Replacement                                       ; On                 ; On                 ;
+; Auto Shift Register Replacement                                  ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                  ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                    ; On                 ; On                 ;
+; Strict RAM Replacement                                           ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                           ; Off                ; Off                ;
+; Auto RAM Block Balancing                                         ; On                 ; On                 ;
+; Auto RAM to Logic Cell Conversion                                ; Off                ; Off                ;
+; Auto Resource Sharing                                            ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                    ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing              ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                ; Off                ; Off                ;
+; Timing-Driven Synthesis                                          ; On                 ; On                 ;
+; Report Parameter Settings                                        ; On                 ; On                 ;
+; Report Source Assignments                                        ; On                 ; On                 ;
+; Report Connectivity Checks                                       ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                               ; Off                ; Off                ;
+; Synchronization Register Chain Length                            ; 2                  ; 2                  ;
+; Power Optimization During Synthesis                              ; Normal compilation ; Normal compilation ;
+; HDL message level                                                ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                  ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report         ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report               ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report        ; 100                ; 100                ;
+; Clock MUX Protection                                             ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                      ; Off                ; Off                ;
+; Block Design Naming                                              ; Auto               ; Auto               ;
+; SDC constraint protection                                        ; Off                ; Off                ;
+; Synthesis Effort                                                 ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal     ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                             ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                               ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                      ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                           ; On                 ; On                 ;
++------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 12          ;
+; Maximum allowed            ; 6           ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 6           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processor 2            ;   0.0%      ;
+;     Processors 3-6         ;   0.0%      ;
++----------------------------+-------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                                ;
++--------------------------------------+-----------------+------------------------------+-------------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path     ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                                        ; Library ;
++--------------------------------------+-----------------+------------------------------+-------------------------------------------------------------------------------------+---------+
+; ../rtl/verilog/bus_matrix_axi.sv     ; yes             ; User SystemVerilog HDL File  ; /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv     ;         ;
+; ../rtl/verilog/bus_matrix_decoder.sv ; yes             ; User SystemVerilog HDL File  ; /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_decoder.sv ;         ;
+; ../rtl/verilog/bus_matrix_arbiter.sv ; yes             ; User SystemVerilog HDL File  ; /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_arbiter.sv ;         ;
++--------------------------------------+-----------------+------------------------------+-------------------------------------------------------------------------------------+---------+
+
+
++------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                                        ;
++--------------------------+---------------------------------------------------------+
+; Resource                 ; Usage                                                   ;
++--------------------------+---------------------------------------------------------+
+; I/O pins                 ; 610                                                     ;
+;                          ;                                                         ;
+; DSP block 9-bit elements ; 0                                                       ;
+;                          ;                                                         ;
+; Maximum fan-out node     ; bus_matrix_arbiter:GEN_AW_ARBITERS[0].u_arb_aw|gnt_o[1] ;
+; Maximum fan-out          ; 80                                                      ;
+; Total fan-out            ; 1821                                                    ;
+; Average fan-out          ; 1.21                                                    ;
++--------------------------+---------------------------------------------------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                             ;
++-----------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+-----------+------+--------------+----------------------------------------------------------------+--------------------+--------------+
+; Compilation Hierarchy Node                          ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; DSP 36x36 ; Pins ; Virtual Pins ; Full Hierarchy Name                                            ; Entity Name        ; Library Name ;
++-----------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+-----------+------+--------------+----------------------------------------------------------------+--------------------+--------------+
+; |bus_matrix_axi                                     ; 265 (208)           ; 15 (11)                   ; 0           ; 0            ; 0       ; 0         ; 0         ; 610  ; 0            ; |bus_matrix_axi                                                ; bus_matrix_axi     ; work         ;
+;    |bus_matrix_arbiter:GEN_AR_ARBITERS[0].u_arb_ar| ; 14 (14)             ; 2 (2)                     ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |bus_matrix_axi|bus_matrix_arbiter:GEN_AR_ARBITERS[0].u_arb_ar ; bus_matrix_arbiter ; work         ;
+;    |bus_matrix_arbiter:GEN_AW_ARBITERS[0].u_arb_aw| ; 15 (15)             ; 2 (2)                     ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |bus_matrix_axi|bus_matrix_arbiter:GEN_AW_ARBITERS[0].u_arb_aw ; bus_matrix_arbiter ; work         ;
+;    |bus_matrix_decoder:GEN_AR_DECODERS[0].u_dec_ar| ; 13 (13)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |bus_matrix_axi|bus_matrix_decoder:GEN_AR_DECODERS[0].u_dec_ar ; bus_matrix_decoder ; work         ;
+;    |bus_matrix_decoder:GEN_AR_DECODERS[1].u_dec_ar| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |bus_matrix_axi|bus_matrix_decoder:GEN_AR_DECODERS[1].u_dec_ar ; bus_matrix_decoder ; work         ;
+;    |bus_matrix_decoder:GEN_AW_DECODERS[0].u_dec_aw| ; 13 (13)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |bus_matrix_axi|bus_matrix_decoder:GEN_AW_DECODERS[0].u_dec_aw ; bus_matrix_decoder ; work         ;
+;    |bus_matrix_decoder:GEN_AW_DECODERS[1].u_dec_aw| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |bus_matrix_axi|bus_matrix_decoder:GEN_AW_DECODERS[1].u_dec_aw ; bus_matrix_decoder ; work         ;
++-----------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+-----------+------+--------------+----------------------------------------------------------------+--------------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++--------------------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                               ;
++---------------------------------------------------------+----------------------------------------+
+; Register name                                           ; Reason for Removal                     ;
++---------------------------------------------------------+----------------------------------------+
+; bresp_err[0][1]                                         ; Merged with bresp_err[0][0]            ;
+; bresp_err[1][1]                                         ; Merged with bresp_err[1][0]            ;
+; rresp_err[0][1]                                         ; Merged with rresp_err[0][0]            ;
+; rresp_err[1][1]                                         ; Merged with rresp_err[1][0]            ;
+; bus_matrix_arbiter:GEN_AR_ARBITERS[1].u_arb_ar|gnt_o[1] ; Stuck at GND due to stuck port data_in ;
+; bus_matrix_arbiter:GEN_AW_ARBITERS[1].u_arb_aw|gnt_o[1] ; Stuck at GND due to stuck port data_in ;
+; bus_matrix_arbiter:GEN_AR_ARBITERS[1].u_arb_ar|gnt_o[0] ; Stuck at GND due to stuck port data_in ;
+; bus_matrix_arbiter:GEN_AW_ARBITERS[1].u_arb_aw|gnt_o[0] ; Stuck at GND due to stuck port data_in ;
+; GEN_AW_ARBITERS[1].lock_state[0,1]                      ; Stuck at GND due to stuck port data_in ;
+; GEN_AR_ARBITERS[1].r_state                              ; Stuck at GND due to stuck port data_in ;
+; Total Number of Removed Registers = 11                  ;                                        ;
++---------------------------------------------------------+----------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 15    ;
+; Number of registers using Synchronous Clear  ; 0     ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 15    ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 4     ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                 ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                       ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------+
+; 6:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |bus_matrix_axi|GEN_AW_ARBITERS[0].lock_state[1] ;
+; 3:1                ; 74 bits   ; 148 LEs       ; 148 LEs              ; 0 LEs                  ; No         ; |bus_matrix_axi|s_wdata_o                        ;
+; 3:1                ; 34 bits   ; 68 LEs        ; 68 LEs               ; 0 LEs                  ; No         ; |bus_matrix_axi|s_araddr_o                       ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |bus_matrix_axi|awready_o                        ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |bus_matrix_axi|wready_o                         ;
+; 4:1                ; 9 bits    ; 18 LEs        ; 18 LEs               ; 0 LEs                  ; No         ; |bus_matrix_axi|rdata_o                          ;
+; 4:1                ; 25 bits   ; 50 LEs        ; 50 LEs               ; 0 LEs                  ; No         ; |bus_matrix_axi|rvalid_o                         ;
+; 4:1                ; 9 bits    ; 18 LEs        ; 18 LEs               ; 0 LEs                  ; No         ; |bus_matrix_axi|rdata_o                          ;
+; 4:1                ; 25 bits   ; 50 LEs        ; 50 LEs               ; 0 LEs                  ; No         ; |bus_matrix_axi|rvalid_o                         ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: Top-level Entity: |bus_matrix_axi                                                                                               ;
++---------------------+--------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+; Parameter Name      ; Value                                                                                                                                ; Type            ;
++---------------------+--------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+; N_MASTERS           ; 2                                                                                                                                    ; Signed Integer  ;
+; M_SLAVES            ; 2                                                                                                                                    ; Signed Integer  ;
+; DATA_WIDTH          ; 32                                                                                                                                   ; Signed Integer  ;
+; ADDR_WIDTH          ; 32                                                                                                                                   ; Signed Integer  ;
+; REGION_MAP_FLAT     ; 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 ; Unsigned Binary ;
+; USE_DEFAULT_SLAVE   ; 0                                                                                                                                    ; Unsigned Binary ;
+; DEFAULT_SLAVE_INDEX ; 0                                                                                                                                    ; Signed Integer  ;
+; INPUT_PIPE_STAGES   ; 0                                                                                                                                    ; Unsigned Binary ;
+; OUTPUT_PIPE_STAGES  ; 0                                                                                                                                    ; Unsigned Binary ;
++---------------------+--------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: bus_matrix_decoder:GEN_AW_DECODERS[0].u_dec_aw                                                                                  ;
++---------------------+--------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+; Parameter Name      ; Value                                                                                                                                ; Type            ;
++---------------------+--------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+; M_SLAVES            ; 2                                                                                                                                    ; Signed Integer  ;
+; ADDR_WIDTH          ; 32                                                                                                                                   ; Signed Integer  ;
+; REGION_MAP_FLAT     ; 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 ; Unsigned Binary ;
+; USE_DEFAULT_SLAVE   ; 0                                                                                                                                    ; Unsigned Binary ;
+; DEFAULT_SLAVE_INDEX ; 0                                                                                                                                    ; Signed Integer  ;
++---------------------+--------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: bus_matrix_decoder:GEN_AW_DECODERS[1].u_dec_aw                                                                                  ;
++---------------------+--------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+; Parameter Name      ; Value                                                                                                                                ; Type            ;
++---------------------+--------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+; M_SLAVES            ; 2                                                                                                                                    ; Signed Integer  ;
+; ADDR_WIDTH          ; 32                                                                                                                                   ; Signed Integer  ;
+; REGION_MAP_FLAT     ; 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 ; Unsigned Binary ;
+; USE_DEFAULT_SLAVE   ; 0                                                                                                                                    ; Unsigned Binary ;
+; DEFAULT_SLAVE_INDEX ; 0                                                                                                                                    ; Signed Integer  ;
++---------------------+--------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: bus_matrix_arbiter:GEN_AW_ARBITERS[0].u_arb_aw ;
++----------------+-------+--------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                               ;
++----------------+-------+--------------------------------------------------------------------+
+; N_REQ          ; 2     ; Signed Integer                                                     ;
+; SCHEME         ; 0     ; Signed Integer                                                     ;
++----------------+-------+--------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: bus_matrix_arbiter:GEN_AW_ARBITERS[1].u_arb_aw ;
++----------------+-------+--------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                               ;
++----------------+-------+--------------------------------------------------------------------+
+; N_REQ          ; 2     ; Signed Integer                                                     ;
+; SCHEME         ; 0     ; Signed Integer                                                     ;
++----------------+-------+--------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: bus_matrix_decoder:GEN_AR_DECODERS[0].u_dec_ar                                                                                  ;
++---------------------+--------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+; Parameter Name      ; Value                                                                                                                                ; Type            ;
++---------------------+--------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+; M_SLAVES            ; 2                                                                                                                                    ; Signed Integer  ;
+; ADDR_WIDTH          ; 32                                                                                                                                   ; Signed Integer  ;
+; REGION_MAP_FLAT     ; 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 ; Unsigned Binary ;
+; USE_DEFAULT_SLAVE   ; 0                                                                                                                                    ; Unsigned Binary ;
+; DEFAULT_SLAVE_INDEX ; 0                                                                                                                                    ; Signed Integer  ;
++---------------------+--------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: bus_matrix_decoder:GEN_AR_DECODERS[1].u_dec_ar                                                                                  ;
++---------------------+--------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+; Parameter Name      ; Value                                                                                                                                ; Type            ;
++---------------------+--------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+; M_SLAVES            ; 2                                                                                                                                    ; Signed Integer  ;
+; ADDR_WIDTH          ; 32                                                                                                                                   ; Signed Integer  ;
+; REGION_MAP_FLAT     ; 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 ; Unsigned Binary ;
+; USE_DEFAULT_SLAVE   ; 0                                                                                                                                    ; Unsigned Binary ;
+; DEFAULT_SLAVE_INDEX ; 0                                                                                                                                    ; Signed Integer  ;
++---------------------+--------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: bus_matrix_arbiter:GEN_AR_ARBITERS[0].u_arb_ar ;
++----------------+-------+--------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                               ;
++----------------+-------+--------------------------------------------------------------------+
+; N_REQ          ; 2     ; Signed Integer                                                     ;
+; SCHEME         ; 0     ; Signed Integer                                                     ;
++----------------+-------+--------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: bus_matrix_arbiter:GEN_AR_ARBITERS[1].u_arb_ar ;
++----------------+-------+--------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                               ;
++----------------+-------+--------------------------------------------------------------------+
+; N_REQ          ; 2     ; Signed Integer                                                     ;
+; SCHEME         ; 0     ; Signed Integer                                                     ;
++----------------+-------+--------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; boundary_port         ; 610                         ;
+; cycloneiii_ff         ; 15                          ;
+;     CLR               ; 11                          ;
+;     ENA CLR           ; 4                           ;
+; cycloneiii_lcell_comb ; 266                         ;
+;     normal            ; 266                         ;
+;         0 data inputs ; 1                           ;
+;         2 data inputs ; 5                           ;
+;         3 data inputs ; 78                          ;
+;         4 data inputs ; 182                         ;
+;                       ;                             ;
+; Max LUT depth         ; 5.00                        ;
+; Average LUT depth     ; 2.79                        ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:00     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
+    Info: Processing started: Fri Dec 26 18:22:51 2025
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off bus_matrix_axi -c bus_matrix_axi
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 6 of the 6 processors detected
+Warning (12019): Can't analyze file -- file ../rtl/verilog/bus_matrix_regs.sv is missing
+Warning (12019): Can't analyze file -- file ../rtl/verilog/bus_matrix_core.sv is missing
+Info (12021): Found 1 design units, including 1 entities, in source file /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv
+    Info (12023): Found entity 1: bus_matrix_axi File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 20
+Info (12021): Found 1 design units, including 1 entities, in source file /home/ptracton/src/Gemini_IP/IP/common/lib/rtl/axi4lite_slave_adapter.sv
+    Info (12023): Found entity 1: axi4lite_slave_adapter File: /home/ptracton/src/Gemini_IP/IP/common/lib/rtl/axi4lite_slave_adapter.sv Line: 10
+Info (12021): Found 1 design units, including 0 entities, in source file /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_pkg.sv
+    Info (12022): Found design unit 1: bus_matrix_pkg (SystemVerilog) File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_pkg.sv Line: 16
+Info (12021): Found 1 design units, including 1 entities, in source file /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_decoder.sv
+    Info (12023): Found entity 1: bus_matrix_decoder File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_decoder.sv Line: 27
+Info (12021): Found 1 design units, including 1 entities, in source file /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_arbiter.sv
+    Info (12023): Found entity 1: bus_matrix_arbiter File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_arbiter.sv Line: 10
+Info (12021): Found 1 design units, including 1 entities, in source file /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_register_slice.sv
+    Info (12023): Found entity 1: bus_matrix_register_slice File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_register_slice.sv Line: 21
+Info (12127): Elaborating entity "bus_matrix_axi" for the top level hierarchy
+Warning (10034): Output port "s_arprot_o" at bus_matrix_axi.sv(88) has no driver File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 88
+Info (12128): Elaborating entity "bus_matrix_decoder" for hierarchy "bus_matrix_decoder:GEN_AW_DECODERS[0].u_dec_aw" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 142
+Info (12128): Elaborating entity "bus_matrix_arbiter" for hierarchy "bus_matrix_arbiter:GEN_AW_ARBITERS[0].u_arb_aw" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 204
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "s_awaddr_o[32]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[33]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[34]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[35]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[36]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[37]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[38]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[39]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[40]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[41]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[42]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[43]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[44]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[45]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[46]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[47]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[48]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[49]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[50]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[51]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[52]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[53]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[54]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[55]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[56]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[57]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[58]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[59]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[60]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[61]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[62]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awaddr_o[63]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 70
+    Warning (13410): Pin "s_awprot_o[3]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 71
+    Warning (13410): Pin "s_awprot_o[4]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 71
+    Warning (13410): Pin "s_awprot_o[5]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 71
+    Warning (13410): Pin "s_awvalid_o[1]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 72
+    Warning (13410): Pin "s_wdata_o[32]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[33]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[34]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[35]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[36]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[37]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[38]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[39]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[40]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[41]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[42]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[43]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[44]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[45]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[46]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[47]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[48]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[49]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[50]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[51]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[52]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[53]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[54]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[55]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[56]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[57]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[58]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[59]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[60]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[61]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[62]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wdata_o[63]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 76
+    Warning (13410): Pin "s_wstrb_o[4]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 77
+    Warning (13410): Pin "s_wstrb_o[5]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 77
+    Warning (13410): Pin "s_wstrb_o[6]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 77
+    Warning (13410): Pin "s_wstrb_o[7]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 77
+    Warning (13410): Pin "s_wvalid_o[1]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 78
+    Warning (13410): Pin "s_bready_o[1]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 84
+    Warning (13410): Pin "s_araddr_o[32]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[33]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[34]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[35]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[36]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[37]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[38]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[39]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[40]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[41]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[42]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[43]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[44]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[45]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[46]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[47]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[48]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[49]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[50]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[51]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[52]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[53]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[54]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[55]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[56]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[57]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[58]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[59]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[60]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[61]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[62]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_araddr_o[63]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 87
+    Warning (13410): Pin "s_arprot_o[0]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 88
+    Warning (13410): Pin "s_arprot_o[1]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 88
+    Warning (13410): Pin "s_arprot_o[2]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 88
+    Warning (13410): Pin "s_arprot_o[3]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 88
+    Warning (13410): Pin "s_arprot_o[4]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 88
+    Warning (13410): Pin "s_arprot_o[5]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 88
+    Warning (13410): Pin "s_arvalid_o[1]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 89
+    Warning (13410): Pin "s_rready_o[1]" is stuck at GND File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 97
+Info (286030): Timing-Driven Synthesis is running
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Warning (21074): Design contains 47 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "arprot_i[0]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 56
+    Warning (15610): No output dependent on input pin "arprot_i[1]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 56
+    Warning (15610): No output dependent on input pin "arprot_i[2]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 56
+    Warning (15610): No output dependent on input pin "arprot_i[3]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 56
+    Warning (15610): No output dependent on input pin "arprot_i[4]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 56
+    Warning (15610): No output dependent on input pin "arprot_i[5]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 56
+    Warning (15610): No output dependent on input pin "s_awready_i[1]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 73
+    Warning (15610): No output dependent on input pin "s_wready_i[1]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 79
+    Warning (15610): No output dependent on input pin "s_bresp_i[2]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 82
+    Warning (15610): No output dependent on input pin "s_bresp_i[3]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 82
+    Warning (15610): No output dependent on input pin "s_bvalid_i[1]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 83
+    Warning (15610): No output dependent on input pin "s_arready_i[1]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 90
+    Warning (15610): No output dependent on input pin "s_rdata_i[32]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[33]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[34]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[35]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[36]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[37]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[38]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[39]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[40]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[41]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[42]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[43]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[44]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[45]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[46]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[47]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[48]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[49]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[50]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[51]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[52]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[53]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[54]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[55]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[56]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[57]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[58]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[59]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[60]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[61]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[62]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rdata_i[63]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 93
+    Warning (15610): No output dependent on input pin "s_rresp_i[2]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 94
+    Warning (15610): No output dependent on input pin "s_rresp_i[3]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 94
+    Warning (15610): No output dependent on input pin "s_rvalid_i[1]" File: /home/ptracton/src/Gemini_IP/IP/common/bus_matrix/rtl/verilog/bus_matrix_axi.sv Line: 95
+Info (21057): Implemented 875 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 306 input pins
+    Info (21059): Implemented 304 output pins
+    Info (21061): Implemented 265 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 167 warnings
+    Info: Peak virtual memory: 498 megabytes
+    Info: Processing ended: Fri Dec 26 18:22:58 2025
+    Info: Elapsed time: 00:00:07
+    Info: Total CPU time (on all processors): 00:00:18
+
+

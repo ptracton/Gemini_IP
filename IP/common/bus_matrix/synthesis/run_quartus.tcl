@@ -38,31 +38,22 @@ set_global_assignment -name PROJECT_OUTPUT_DIRECTORY $OUTPUT_DIR
 
 # Add Source Files
 if { $LANG == "SV" } {
-    set_global_assignment -name SYSTEMVERILOG_FILE "$VERILOG_RTL_DIR/bus_matrix_regs.sv"
-    set_global_assignment -name SYSTEMVERILOG_FILE "$VERILOG_RTL_DIR/bus_matrix_core.sv"
+    set_global_assignment -name SYSTEMVERILOG_FILE "$VERILOG_RTL_DIR/bus_matrix_pkg.sv"
+    
+    if { [string match "bus_matrix_*" $TOP_MODULE] } {
+        set_global_assignment -name SYSTEMVERILOG_FILE "$VERILOG_RTL_DIR/bus_matrix_decoder.sv"
+        set_global_assignment -name SYSTEMVERILOG_FILE "$VERILOG_RTL_DIR/bus_matrix_arbiter.sv"
+        set_global_assignment -name SYSTEMVERILOG_FILE "$VERILOG_RTL_DIR/bus_matrix_register_slice.sv"
+    }
+
     set_global_assignment -name SYSTEMVERILOG_FILE "$VERILOG_RTL_DIR/$TOP_MODULE.sv"
     
     # Read Shared Adapters
-    if { [string match "*_axi" $TOP_MODULE] } {
-        set_global_assignment -name SYSTEMVERILOG_FILE "$SHARED_RTL_DIR/axi4lite_slave_adapter.sv"
-    } elseif { [string match "*_apb" $TOP_MODULE] } {
-        set_global_assignment -name SYSTEMVERILOG_FILE "$SHARED_RTL_DIR/apb_slave_adapter.sv"
-    } elseif { [string match "*_wb" $TOP_MODULE] } {
-        set_global_assignment -name SYSTEMVERILOG_FILE "$SHARED_RTL_DIR/wb_slave_adapter.sv"
+    if { [string match "ahb_apb_bridge" $TOP_MODULE] } {
+         # Bridge specific logic if any outside of its main file
     }
 } else {
-    set_global_assignment -name VHDL_FILE "$VHDL_RTL_DIR/bus_matrix_regs.vhd"
-    set_global_assignment -name VHDL_FILE "$VHDL_RTL_DIR/bus_matrix_core.vhd"
     set_global_assignment -name VHDL_FILE "$VHDL_RTL_DIR/$TOP_MODULE.vhd"
-    
-    # Read Shared Adapters
-    if { [string match "*_axi" $TOP_MODULE] } {
-        set_global_assignment -name VHDL_FILE "$SHARED_RTL_DIR/axi4lite_slave_adapter.vhd"
-    } elseif { [string match "*_apb" $TOP_MODULE] } {
-        set_global_assignment -name VHDL_FILE "$SHARED_RTL_DIR/apb_slave_adapter.vhd"
-    } elseif { [string match "*_wb" $TOP_MODULE] } {
-        set_global_assignment -name VHDL_FILE "$SHARED_RTL_DIR/wb_slave_adapter.vhd"
-    }
 }
 
 # Analysis & Synthesis

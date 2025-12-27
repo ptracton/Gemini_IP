@@ -53,6 +53,34 @@ The coverage results for the Bus Matrix IP are generated using the UVM verificat
 
 *Note: Branch, Condition, and Toggle coverage gaps are primarily due to the large number of parameterized configurations and unused enumeration states (e.g., protocol error states) not exercised by the randomized testing.*
 
+## Synthesis Results
+Comparative resource utilization for a 2-Master, 2-Slave configuration across multiple synthesis tools.
+
+### Xilinx Vivado (Artix-7 `xc7a35t`)
+| Module | Slice LUTs | Slice Registers |
+| :--- | :---: | :---: |
+| **bus_matrix_ahb** | 134 | 4 |
+| **bus_matrix_axi** | 245 | 16 |
+| **bus_matrix_wb** | 159 | 2 |
+| **ahb_apb_bridge** | 6 | 36 |
+
+### Intel Quartus Prime (Cyclone IV GX `EP4CGX15`)
+| Module | Logic Cells | Registers |
+| :--- | :---: | :---: |
+| **bus_matrix_ahb** | 178 | *Inc.* |
+| **bus_matrix_axi** | 265 | *Inc.* |
+| **bus_matrix_wb** | 168 | *Inc.* |
+| **ahb_apb_bridge** | 41 | *Inc.* |
+*Note: Logic Cells include registers in this simplified report.*
+
+### Yosys Open SYnthesis (Xilinx 7-series Mapping)
+| Module | LUTs | Registers |
+| :--- | :---: | :---: |
+| **bus_matrix_ahb** | 272 | 8 |
+| **bus_matrix_axi** | 428 | 36 |
+| **bus_matrix_wb** | 258 | 4 |
+| **ahb_apb_bridge** | 7 | 36 |
+
 ## Running Verifications & Tooling
 The environment must be set up by sourcing the root `setup.sh` before running any tools.
 

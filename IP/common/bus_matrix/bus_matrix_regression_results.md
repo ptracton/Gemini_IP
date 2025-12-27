@@ -9,6 +9,7 @@ Generated on: 2025-12-26 17:55:00
 | **Code Coverage** | ✅ **Passed** | Matrix: 97.4% Line / Bridge: ~100% Line (DUT) |
 | **Formal Proofs** | ✅ **Passed** | SymbiYosys (BMC + Prove) across AXI, AHB, WB, **Bridge** |
 | **Linting** | ✅ **Passed** | Clean for core matrix logic |
+| **Synthesis** | ✅ **Passed** | Vivado (Artix-7) utilization confirmed for all variants |
 
 ## Summary
 **Overall Status: PASSED**
@@ -31,9 +32,20 @@ Generated on: 2025-12-26 17:55:00
 | **Formal_WB** | SymbiYosys (z3) | **PASS** | Formal WB: Protocol & Mutex |
 | **Formal_Bridge** | SymbiYosys (z3) | **PASS** | Formal Bridge: Protocol Consistency |
 | **UVM_Base** | Vivado (xsim) | **PASS** | UVM: Infrastructure & Connectivity |
-| **UVM_Random** | Vivado (xsim) | **PASS** | UVM: Random Traffic |
-| **UVM_Bridge_SV** | Vivado (xsim) | **PASS** | AHB-APB Bridge (SystemVerilog) |
-| **UVM_Bridge_VHDL** | Vivado (xsim) | **PASS** | AHB-APB Bridge (VHDL) |
+| **UVM_Random** | Vivado (xsim) | **PASS** | UVM: Random Traffic (97.4% Line Cov) |
+| **UVM_Error** | Vivado (xsim) | **PASS** | UVM: Protocol & Security Errors |
+| **UVM_Contention** | Vivado (xsim) | **PASS** | UVM: Arbiter & Multi-Master Stress |
+| **UVM_Bridge** | Vivado (xsim) | **PASS** | AHB-APB Bridge (SV & VHDL Variants) |
+
+For a detailed breakdown of test results and coverage, see: **[Bus Matrix Verification Report](verif/uvm/code_cov_report/index.html)**
+
+## Synthesis Metrics (Vivado Artix-7)
+| Variant | LUTs | Registers |
+| :--- | :---: | :---: |
+| `bus_matrix_ahb` | 134 | 4 |
+| `bus_matrix_axi` | 245 | 16 |
+| `bus_matrix_wb` | 159 | 2 |
+| `ahb_apb_bridge` | 6 | 36 |
 
 ## Detailed Logs
 See individual log files in `tools/` directory for details.

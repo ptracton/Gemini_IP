@@ -21,17 +21,19 @@ puts " Output Dir: $OUTPUT_DIR"
 puts "========================================================"
 
 # Read Source Files
-read_verilog -sv $RTL_DIR/bus_matrix_regs.sv
-read_verilog -sv $RTL_DIR/bus_matrix_core.sv
+read_verilog -sv $RTL_DIR/bus_matrix_pkg.sv
+
+if { [string match "bus_matrix_*" $TOP_MODULE] } {
+    read_verilog -sv $RTL_DIR/bus_matrix_decoder.sv
+    read_verilog -sv $RTL_DIR/bus_matrix_arbiter.sv
+    read_verilog -sv $RTL_DIR/bus_matrix_register_slice.sv
+}
+
 read_verilog -sv $RTL_DIR/$TOP_MODULE.sv
 
 # Read Shared Adapters
-if { [string match "*_axi" $TOP_MODULE] } {
-    read_verilog -sv "$SHARED_RTL_DIR/axi4lite_slave_adapter.sv"
-} elseif { [string match "*_apb" $TOP_MODULE] } {
-    read_verilog -sv "$SHARED_RTL_DIR/apb_slave_adapter.sv"
-} elseif { [string match "*_wb" $TOP_MODULE] } {
-    read_verilog -sv "$SHARED_RTL_DIR/wb_slave_adapter.sv"
+if { [string match "ahb_apb_bridge" $TOP_MODULE] } {
+     # Bridge specific logic
 }
 
 # Check Hierarchy
