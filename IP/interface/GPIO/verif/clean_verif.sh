@@ -1,14 +1,16 @@
 #!/bin/bash
 # Clean up verification artifacts
 
-# Determine script location regarding execution
-# Assuming run from project root based on previous context, but making it robust
-VERIF_ROOT="IP/interface/GPIO/verif"
-
-if [ ! -d "$VERIF_ROOT" ]; then
-    echo "Error: Directory $VERIF_ROOT not found. Please run from project root."
+# Ensure environment is set up
+if [ -z "$GEMINI_IP_ROOT" ]; then
+    echo "Error: GEMINI_IP_ROOT is not set."
+    echo "Please source the project setup script:"
+    echo "  source <path_to_gemini_ip>/setup.sh"
     exit 1
 fi
+
+# Determine script location regarding execution
+VERIF_ROOT="$GEMINI_IP_ROOT/IP/interface/GPIO/verif"
 
 echo "Cleaning up verification artifacts in $VERIF_ROOT..."
 

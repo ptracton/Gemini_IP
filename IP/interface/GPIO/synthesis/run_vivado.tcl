@@ -6,10 +6,16 @@ if { $argc != 2 } {
     exit 1
 }
 
+if { ![info exists ::env(GEMINI_IP_ROOT)] } {
+    puts "Error: GEMINI_IP_ROOT is not set. Please source setup.sh"
+    exit 1
+}
+
+set GEMINI_IP_ROOT $::env(GEMINI_IP_ROOT)
 set TOP_MODULE [lindex $argv 0]
 set PART [lindex $argv 1]
-set RTL_DIR "../rtl/verilog"
-set SHARED_RTL_DIR "../../../common/lib/rtl"
+set RTL_DIR "$GEMINI_IP_ROOT/IP/interface/GPIO/rtl/verilog"
+set SHARED_RTL_DIR "$GEMINI_IP_ROOT/IP/common/lib/rtl"
 set OUTPUT_DIR "results/$TOP_MODULE"
 
 file mkdir $OUTPUT_DIR

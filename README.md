@@ -8,7 +8,20 @@ The repository has transitioned from initial implementation to a fully verified 
 - **Multi-Language**: Every IP block is implemented in both **SystemVerilog** and **VHDL-2008**.
 - **Bus Agnostic**: Support for **AXI4-Lite**, **APB4**, and **Wishbone B4** interfaces.
 - **Verification Driven**: Cocotb-based testbenches with support for **Verilator**, **GHDL**, and **Vivado**.
-- **Automated**: Integrated environment setup via `setup.sh`.
+- **Automated**: Integrated environment setup via `setup.sh` which exports the mandatory `GEMINI_IP_ROOT` variable.
+
+## Getting Started
+
+To initialize the development environment, source the `setup.sh` script from the repository root:
+
+```bash
+source setup.sh
+```
+
+This script will:
+1. Export `GEMINI_IP_ROOT` to the current directory.
+2. Activate the Python virtual environment located in `virtualenv/GEMINI_IP_PYTHON`.
+3. Verify that all required tools are in the system path.
 
 ## Repository Structure
 - `IP/`: Core library categorized by function (interface, dsp, common).

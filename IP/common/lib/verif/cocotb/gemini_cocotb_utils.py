@@ -208,7 +208,7 @@ class GeminiTester:
         sel_i  = get_sig("sel_i")
         cyc_i  = get_sig("cyc_i")
         stb_i  = get_sig("stb_i")
-        clk_i  = get_sig("clk")
+        clk_i  = get_sig("clk_i")
         ack_o  = get_sig("ack_o")
 
         adr_i.value = addr
@@ -241,7 +241,7 @@ class GeminiTester:
         cyc_i  = get_sig("cyc_i")
         stb_i  = get_sig("stb_i")
         sel_i  = get_sig("sel_i")
-        clk_i  = get_sig("clk")
+        clk_i  = get_sig("clk_i")
         ack_o  = get_sig("ack_o")
         dat_o  = get_sig("dat_o")
 

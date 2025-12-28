@@ -19,9 +19,12 @@ import random
 import sys
 import os
 
-# Add common lib to path
-# IP/interface/GPIO/verif/cocotb -> ../../../../common/lib/verif/cocotb = IP/common/lib/verif/cocotb
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "common", "lib", "verif", "cocotb"))
+# Add common lib to path using environment variable
+if "GEMINI_IP_ROOT" not in os.environ:
+    raise EnvironmentError("GEMINI_IP_ROOT is not set. Please source setup.sh")
+
+GEMINI_IP_ROOT = os.environ["GEMINI_IP_ROOT"]
+sys.path.append(os.path.join(GEMINI_IP_ROOT, "IP", "common", "lib", "verif", "cocotb"))
 from gemini_cocotb_utils import GeminiTester, safe_to_int
 
 # Common Register Addresses

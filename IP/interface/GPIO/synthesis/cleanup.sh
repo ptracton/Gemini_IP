@@ -1,7 +1,15 @@
 #!/bin/bash
 # Clean up synthesis artifacts
 
-SYNTH_DIR="IP/interface/GPIO/synthesis"
+# Ensure environment is set up
+if [ -z "$GEMINI_IP_ROOT" ]; then
+    echo "Error: GEMINI_IP_ROOT is not set."
+    echo "Please source the project setup script:"
+    echo "  source <path_to_gemini_ip>/setup.sh"
+    exit 1
+fi
+
+SYNTH_DIR="$GEMINI_IP_ROOT/IP/interface/GPIO/synthesis"
 
 if [ ! -d "$SYNTH_DIR" ]; then
     echo "Error: Directory $SYNTH_DIR not found. Please run from project root."

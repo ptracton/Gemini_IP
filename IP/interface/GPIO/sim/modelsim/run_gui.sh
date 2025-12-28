@@ -11,8 +11,11 @@ BUS=$1
 BUS_UPPER=$(echo $BUS | tr '[:lower:]' '[:upper:]')
 
 # Source environment
-if [ -f "../../../../setup.sh" ]; then
-    source ../../../../setup.sh
+if [ -z "$GEMINI_IP_ROOT" ]; then
+    echo "Error: GEMINI_IP_ROOT is not set."
+    echo "Please source the project setup script:"
+    echo "  source <path_to_gemini_ip>/setup.sh"
+    exit 1
 fi
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)

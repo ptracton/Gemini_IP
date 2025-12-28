@@ -1,7 +1,15 @@
 #!/bin/bash
 
+# Ensure environment is set up
+if [ -z "$GEMINI_IP_ROOT" ]; then
+    echo "Error: GEMINI_IP_ROOT is not set."
+    echo "Please source the project setup script:"
+    echo "  source <path_to_gemini_ip>/setup.sh"
+    exit 1
+fi
+
 # Define the root of the simulation directory
-SIM_ROOT="$(dirname "$0")"
+SIM_ROOT="$GEMINI_IP_ROOT/IP/interface/GPIO/sim"
 
 echo "Cleaning up simulation artifacts in $SIM_ROOT..."
 

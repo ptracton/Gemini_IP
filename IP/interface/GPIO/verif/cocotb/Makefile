@@ -19,10 +19,12 @@ TOPLEVEL_LANG ?= verilog
 BUS_TYPE ?= AXI
 NUM_BITS ?= 32
 
-PWD=$(shell pwd)
-IP_ROOT=$(PWD)/../..
+ifndef GEMINI_IP_ROOT
+$(error GEMINI_IP_ROOT is not set. Please source setup.sh)
+endif
 
-SHARED_RTL_DIR = $(IP_ROOT)/../../common/lib/rtl
+IP_ROOT = $(GEMINI_IP_ROOT)/IP/interface/GPIO
+SHARED_RTL_DIR = $(GEMINI_IP_ROOT)/IP/common/lib/rtl
 
 ifeq ($(TOPLEVEL_LANG),verilog)
     ifeq ($(BUS_TYPE),AXI)

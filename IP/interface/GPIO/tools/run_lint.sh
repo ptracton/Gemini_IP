@@ -13,6 +13,14 @@
 
 set -e
 
+# Ensure environment is set up
+if [ -z "$GEMINI_IP_ROOT" ]; then
+    echo "Error: GEMINI_IP_ROOT is not set."
+    echo "Please source the project setup script:"
+    echo "  source <path_to_gemini_ip>/setup.sh"
+    exit 1
+fi
+
 # Project Paths
 SCRIPT_DIR=$(dirname "$0")
 IP_DIR="$SCRIPT_DIR/.."

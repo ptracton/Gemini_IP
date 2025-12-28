@@ -15,6 +15,21 @@ Highly configurable General Purpose Input/Output (GPIO) controller with support 
     - **Soft Pulls**: Software-enabled Pull-Up/Pull-Down resistors.
     - **Open-Drain**: Per-bit Open-Drain control.
     - **Write Masking**: Per-bit protection for data writes.
+| **Environment** | **Requirement** |
+| :--- | :--- |
+| **GEMINI_IP_ROOT** | Must be set to the repository root. |
+| **setup.sh** | Run `source setup.sh` to initialize the environment and Python virtualenv. |
+
+## Quick Start (Setup)
+
+Before running any tools or simulations, you must initialize the project environment:
+
+```bash
+# From the repository root
+source setup.sh
+```
+
+All scripts and Makefiles in this IP rely on the `$GEMINI_IP_ROOT` environment variable. If it is not set, tools will exit with an error message.
 
 ## Architecture & Data Flow
 
@@ -205,30 +220,34 @@ Standalone directed tests without external dependencies.
 | APB4 (8,16,32) | SV/VHDL | Verilator/GHDL | ✅ PASS |
 | Wishbone B4 (8,16,32) | SV/VHDL | Verilator/GHDL | ✅ PASS |
 | Native Directed | SV | Xilinx xsim | ✅ PASS |
-| Native Directed | SV | ModelSim vsim | ✅ PASS |
-| Native Directed | SV | Icarus Verilog | ✅ PASS |
-| Native Directed | VHDL | GHDL | ✅ PASS |
+| ModelSim | SV | vsim | ✅ PASS |
+| Icarus Verilog | SV | iverilog | ✅ PASS |
+| GHDL | VHDL | ghdl | ✅ PASS |
 | UVM Simulation | SV | Xilinx Vivado | ✅ PASS |
-| UVM Pwr-Reset | SV | Xilinx Vivado | ✅ PASS |
 | UVM Random | SV | Xilinx Vivado | ✅ PASS |
 
 Full report available in: [gpio_regression_results.md](gpio_regression_results.md)
 
-### 9. Synthesis Results (Artix-7)
-Resource utilization for default 32-bit GPIO configuration. Artix-7 results produced with Vivado 2023.2.
+### 9. Synthesis Results (Multi-Tool)
 
-| Interface | Tool | Slice LUTs | Slice Registers |
-| :--- | :--- | :--- | :--- |
-| **AXI4-Lite** | Vivado | 2344 | 1910 |
-| **AXI4-Lite** | Yosys | 3187 | 2247 |
-| **APB4** | Vivado | 2350 | 1904 |
-| **APB4** | Yosys | 3166 | 2241 |
-| **Wishbone** | Vivado | 2331 | 1905 |
-| **Wishbone** | Yosys | 3162 | 2242 |
+Resource utilization for the default 32-bit GPIO configuration across different FPGA platforms and tools.
+
+| Interface | Tool | Device | Slice LUTs | Slice Registers |
+| :--- | :--- | :--- | :---: | :---: |
+| **AXI4-Lite** | Vivado | Artix-7 | 2344 | 1910 |
+| **AXI4-Lite** | Yosys | Artix-7 | 3187 | 2247 |
+| **AXI4-Lite** | Quartus | Cyclone IV | 4200 (LC) | 1910 |
+| **APB4** | Vivado | Artix-7 | 2350 | 1904 |
+| **APB4** | Yosys | Artix-7 | 3166 | 2241 |
+| **APB4** | Quartus | Cyclone IV | 4195 (LC) | 1904 |
+| **Wishbone** | Vivado | Artix-7 | 2331 | 1905 |
+| **Wishbone** | Yosys | Artix-7 | 3162 | 2242 |
+| **Wishbone** | Quartus | Cyclone IV | 4200 (LC) | 1905 |
 
 ### Multi-Platform Support
-- **Intel Quartus**: Successfully verified on Cyclone IV GX (~4200 Logic Cells).
-- **Yosys**: Supports generic XC7 synthesis flow.
+- **Xilinx Vivado**: Standard flow for Artix-7/7-Series devices.
+- **Intel Quartus**: Verified on Cyclone IV GX (EP4CGX15).
+- **Yosys**: Supports generic XC7 Open-Source synthesis flow.
 
 ## Licensing
 - **Author**: Gemini-3 AI (Google DeepMind)
