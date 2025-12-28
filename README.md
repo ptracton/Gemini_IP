@@ -37,21 +37,21 @@ This script will:
 ### Common
 - **[General Timer](IP/common/general_timer/README.md)**: A 32-bit configurable timer with PWM, Input Capture, Prescaler, and multi-bus support (AXI/APB/WB).
 - **[Bus Matrix](IP/common/bus_matrix/README.md)**: High-performance N:M interconnect supporting AXI4-Lite, AHB5-Lite, and Wishbone B4 with configurable arbitration and security firewall.
-- **[Sync FIFO](IP/common/sync_fifo/README.md)**: Generic synchronous FIFO with configurable width/depth, programmable thresholds, error flags, and peak usage tracking.
+- **[Sync FIFO](IP/common/sync_fifo/README.md)**: Generic synchronous FIFO with configurable width/depth, programmable thresholds, error flags, peak usage tracking, and multiple bus wrappers (AXI/APB/AHB/WB).
 
 ## Feature Overview
 
-| Feature | GPIO | General Timer | Bus Matrix |
-| :--- | :---: | :---: | :---: |
-| **AXI4-Lite** | ✅ | ✅ | ✅ |
-| **APB4** | ✅ | ✅ | 🔗 (Bridge) |
-| **AHB5-Lite** | ❌ | ❌ | ✅ |
-| **Wishbone B4** | ✅ | ✅ | ✅ |
-| **SystemVerilog** | ✅ | ✅ | ✅ |
-| **VHDL-2008** | ✅ | ✅ | ✅ |
-| **Formal (SVA)** | ✅ | ✅ | ✅ |
-| **Regression Tool** | ✅ | ✅ | ✅ |
-| **Synthesis (Vivado/Yosys)** | ✅ | ✅ | ✅ |
+| Feature | GPIO | General Timer | Bus Matrix | Sync FIFO |
+| :--- | :---: | :---: | :---: | :---: |
+| **AXI4-Lite** | ✅ | ✅ | ✅ | ✅ |
+| **APB4** | ✅ | ✅ | 🔗 (Bridge) | ✅ |
+| **AHB5-Lite** | ❌ | ❌ | ✅ | ✅ |
+| **Wishbone B4** | ✅ | ✅ | ✅ | ✅ |
+| **SystemVerilog** | ✅ | ✅ | ✅ | ✅ |
+| **VHDL-2008** | ✅ | ✅ | ✅ | ✅ |
+| **Formal (SVA)** | ✅ | ✅ | ✅ | ✅ |
+| **Regression Tool** | ✅ | ✅ | ✅ | ✅ |
+| **Synthesis (Vivado/Yosys)** | ✅ | ✅ | ✅ | ✅ |
 
 ## Running Verifications & Tools
 
@@ -62,6 +62,7 @@ Please refer to the specific IP documentation for detailed instructions on runni
 - **[GPIO Verification Guide](IP/interface/GPIO/README.md#verification--tooling)**
 - **[General Timer Verification Guide](IP/common/general_timer/README.md#verification-status)**
 - **[Bus Matrix Verification Guide](IP/common/bus_matrix/README.md#verification-status)**
+- **[Sync FIFO Verification Guide](IP/common/sync_fifo/README.md#verification)**
 
 ## Development Standards
 
