@@ -13,16 +13,17 @@
 
 set -e
 
+if [ -z "$GEMINI_IP_ROOT" ]; then
+    echo "Error: GEMINI_IP_ROOT is not set."
+    echo "Please source the project setup script:"
+    echo "  source <path_to_gemini_ip>/setup.sh"
+    exit 1
+fi
+
 # Project Paths
-SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-IP_DIR="$SCRIPT_DIR/../../../.."
+IP_DIR="$GEMINI_IP_ROOT/IP"
 RTL_DIR="$IP_DIR/common/general_timer/rtl/verilog"
 TB_DIR="$IP_DIR/common/general_timer/tb"
-
-# Ensure environment is set up
-# IP_DIR is IP
-# IP -> Gemini_IP (1 level up)
-source $IP_DIR/../setup.sh
 
 # List of tests
 TESTS=("core" "apb" "axi" "wb")

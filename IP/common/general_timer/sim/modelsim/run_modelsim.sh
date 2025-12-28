@@ -1,8 +1,12 @@
-#!/bin/bash
-#-------------------------------------------------------------------------------
-# File: run_modelsim.sh
 # Description: Script to run ModelSim simulations for General Timer (Verilog)
 #-------------------------------------------------------------------------------
+
+if [ -z "$GEMINI_IP_ROOT" ]; then
+    echo "Error: GEMINI_IP_ROOT is not set."
+    echo "Please source the project setup script:"
+    echo "  source <path_to_gemini_ip>/setup.sh"
+    exit 1
+fi
 
 # Create and enter work directory
 mkdir -p work

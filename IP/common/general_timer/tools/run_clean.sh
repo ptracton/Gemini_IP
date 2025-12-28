@@ -2,8 +2,15 @@
 # Description: Master cleanup script for General Timer IP
 # This script calls all individual cleanup scripts across the project.
 
+if [ -z "$GEMINI_IP_ROOT" ]; then
+    echo "Error: GEMINI_IP_ROOT is not set."
+    echo "Please source the project setup script:"
+    echo "  source <path_to_gemini_ip>/setup.sh"
+    exit 1
+fi
+
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-TIMER_DIR=$(cd "$SCRIPT_DIR/.." && pwd)
+TIMER_DIR="$GEMINI_IP_ROOT/IP/common/general_timer"
 
 echo "=================================================="
 echo "General Timer: Starting Full Project Cleanup"

@@ -31,11 +31,13 @@ def run_job(job: TestJob) -> bool:
     start_time = time.time()
     
     try:
-        # Determine setup.sh path
-        # Script is in tools/ -> tools_dir
-        # tools_dir/../../../.. -> setup.sh
-        tools_dir = os.path.dirname(os.path.abspath(__file__))
-        setup_script = os.path.abspath(os.path.join(tools_dir, "../../../..", "setup.sh"))
+        # Environment check and setup.sh path
+        if "GEMINI_IP_ROOT" not in os.environ:
+            print("[ERROR  ] GEMINI_IP_ROOT is not set. Please source setup.sh")
+            return False
+            
+        gemini_ip_root = os.environ["GEMINI_IP_ROOT"]
+        setup_script = os.path.join(gemini_ip_root, "setup.sh")
         
         # Wrap command in bash to source setup.sh
         # bash -c 'source setup_script && exec "$@"' -- cmd args...
@@ -43,6 +45,7 @@ def run_job(job: TestJob) -> bool:
 
         # Run command and capture output
         # Logs are saved in the same directory as the script
+        tools_dir = os.path.dirname(os.path.abspath(__file__))
         log_dir = tools_dir
         log_file = os.path.join(log_dir, f"regression_{job.name.lower()}.log")
         

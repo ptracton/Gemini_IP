@@ -1,8 +1,11 @@
-#!/bin/bash
 # Description: Run Coverage flow (One compile, multiple tests, merge)
 
-# Source setup script
-source ../../../../../setup.sh
+if [ -z "$GEMINI_IP_ROOT" ]; then
+    echo "Error: GEMINI_IP_ROOT is not set."
+    echo "Please source the project setup script:"
+    echo "  source <path_to_gemini_ip>/setup.sh"
+    exit 1
+fi
 
 # 1. Compile, Elab, and Run First Test
 # This establishes the snapshot and runs the first test.

@@ -1,12 +1,15 @@
 #!/bin/bash
 # Description: Run Formal Verification (SymbiYosys) for General Timer IP
 
+if [ -z "$GEMINI_IP_ROOT" ]; then
+    echo "Error: GEMINI_IP_ROOT is not set."
+    echo "Please source the project setup script:"
+    echo "  source <path_to_gemini_ip>/setup.sh"
+    exit 1
+fi
+
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 cd "$SCRIPT_DIR"
-
-# Source setup
-# formal -> verif -> general_timer -> common -> IP -> Gemini_IP (5 levels)
-source ../../../../../setup.sh
 
 echo "=================================================="
 echo "Running Formal Verification: General Timer"

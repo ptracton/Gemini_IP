@@ -1,17 +1,18 @@
 #!/bin/bash
 # Description: Run UVM Simulation for General Timer IP using Xilinx Vivado
 
+if [ -z "$GEMINI_IP_ROOT" ]; then
+    echo "Error: GEMINI_IP_ROOT is not set."
+    echo "Please source the project setup script:"
+    echo "  source <path_to_gemini_ip>/setup.sh"
+    exit 1
+fi
+
 # Paths
-SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-IP_DIR="$SCRIPT_DIR/../.."
+IP_DIR="$GEMINI_IP_ROOT/IP/common/general_timer"
 SV_RTL_DIR="$IP_DIR/rtl/verilog"
 VHDL_RTL_DIR="$IP_DIR/rtl/vhdl"
-UVM_DIR="$SCRIPT_DIR"
-
-# Source Setup
-# IP_DIR is general_timer
-# general_timer -> common -> IP -> Gemini_IP (3 levels up)
-source $IP_DIR/../../../setup.sh
+UVM_DIR="$IP_DIR/verif/uvm"
 
 # Defaults
 BUS_TYPE="axi"

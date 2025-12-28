@@ -1,6 +1,13 @@
 #!/bin/bash
 # Run Vivado Synthesis for all General Timer variants
 
+if [ -z "$GEMINI_IP_ROOT" ]; then
+    echo "Error: GEMINI_IP_ROOT is not set."
+    echo "Please source the project setup script:"
+    echo "  source <path_to_gemini_ip>/setup.sh"
+    exit 1
+fi
+
 # Default Part (Artix-7)
 PART="xc7a35ticsg324-1L"
 

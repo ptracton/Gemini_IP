@@ -17,6 +17,21 @@ The General Purpose Timer is a 32-bit configurable timer IP designed for embedde
     - AXI4-Lite
     - Wishbone B4
 
+## Environment Setup
+
+To run any simulation, verification, or synthesis scripts, you **must** validly set up the project environment.
+
+1.  Navigate to the project root:
+    ```bash
+    cd <path_to_gemini_ip>
+    ```
+2.  Source the setup script:
+    ```bash
+    source setup.sh
+    ```
+
+This sets the `GEMINI_IP_ROOT` environment variable, which is required by all the scripts in this IP.
+
 ## Verification Status
 The IP has undergone rigorous verification with a 100% pass rate across all regression tests and high code coverage.
 

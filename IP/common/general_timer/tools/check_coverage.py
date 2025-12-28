@@ -70,6 +70,10 @@ def parse_coverage(report_path):
     return 0.0
 
 if __name__ == "__main__":
-    ip_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../.."))
-    report_file = os.path.join(ip_root, "IP/common/general_timer/joined_code_cov_report/dashboard.html")
+    if "GEMINI_IP_ROOT" not in os.environ:
+        print("Error: GEMINI_IP_ROOT is not set. Please source setup.sh")
+        sys.exit(1)
+        
+    gemini_ip_root = os.environ["GEMINI_IP_ROOT"]
+    report_file = os.path.join(gemini_ip_root, "IP/common/general_timer/joined_code_cov_report/dashboard.html")
     parse_coverage(report_file)

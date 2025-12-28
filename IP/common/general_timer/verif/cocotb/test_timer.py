@@ -22,8 +22,11 @@ from cocotb.triggers import Timer, RisingEdge, FallingEdge, ReadOnly
 from cocotb.clock import Clock
 
 # Add common lib to path
-# IP/common/general_timer/verif/cocotb -> ../../../lib/verif/cocotb = IP/common/lib/verif/cocotb
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "..", "..", "lib", "verif", "cocotb"))
+if "GEMINI_IP_ROOT" not in os.environ:
+    raise EnvironmentError("GEMINI_IP_ROOT is not set. Please source setup.sh")
+
+IP_ROOT = os.environ["GEMINI_IP_ROOT"]
+sys.path.append(os.path.join(IP_ROOT, "IP", "common", "lib", "verif", "cocotb"))
 from gemini_cocotb_utils import GeminiTester, safe_to_int
 
 # Common Register Addresses

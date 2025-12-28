@@ -1,10 +1,15 @@
 #!/bin/bash
 # Description: Merge all Code Coverage databases in coverage_repo
 
+if [ -z "$GEMINI_IP_ROOT" ]; then
+    echo "Error: GEMINI_IP_ROOT is not set."
+    echo "Please source the project setup script:"
+    echo "  source <path_to_gemini_ip>/setup.sh"
+    exit 1
+fi
+
 # Source Setup
-SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-IP_DIR=$(cd "$SCRIPT_DIR/../.." && pwd)
-source $IP_DIR/../../../setup.sh
+IP_DIR="$GEMINI_IP_ROOT/IP/common/general_timer"
 
 COV_REPO_DIR="$IP_DIR/coverage_repo"
 REPORT_DIR="$IP_DIR/joined_code_cov_report"

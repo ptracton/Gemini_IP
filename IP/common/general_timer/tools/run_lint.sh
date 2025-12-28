@@ -10,12 +10,19 @@
 
 set -e
 
+if [ -z "$GEMINI_IP_ROOT" ]; then
+    echo "Error: GEMINI_IP_ROOT is not set."
+    echo "Please source the project setup script:"
+    echo "  source <path_to_gemini_ip>/setup.sh"
+    exit 1
+fi
+
 # Project Paths
-SCRIPT_DIR=$(dirname "$0")
-IP_DIR="$SCRIPT_DIR/.."
+IP_DIR="$GEMINI_IP_ROOT/IP/common/general_timer"
 RTL_DIR_SV="$IP_DIR/rtl/verilog"
 RTL_DIR_VHDL="$IP_DIR/rtl/vhdl"
-SHARED_RTL_DIR="$IP_DIR/../../common/lib/rtl"
+SHARED_RTL_DIR="$GEMINI_IP_ROOT/IP/common/lib/rtl"
+SHARED_VERIF_DIR="$GEMINI_IP_ROOT/IP/common/lib/verif"
 
 echo "=================================================="
 echo "Linting SystemVerilog (Verilator)"
@@ -30,7 +37,6 @@ for file in $SHARED_RTL_DIR/axi4lite_slave_adapter.sv \
             $RTL_DIR_SV/timer_axi.sv \
             $RTL_DIR_SV/timer_wb.sv; do
     echo "Linting $(basename $file)..."
-    SHARED_VERIF_DIR="$IP_DIR/../../common/lib/verif"
     verilator --lint-only -Wall \
         -I$RTL_DIR_SV \
         -I$SHARED_RTL_DIR \
