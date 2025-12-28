@@ -14,4 +14,4 @@ echo "Linting SystemVerilog..."
 verilator --lint-only -Wall -Wno-DECLFILENAME "$SV_RTL_DIR/sync_fifo.sv" --top-module sync_fifo
 
 echo "Linting VHDL..."
-ghdl -a --std=08 "$VHDL_RTL_DIR/sync_fifo.vhd"
+ghdl -s --std=08 "$GEMINI_IP_ROOT/IP/common/sync_fifo/rtl/vhdl/sync_fifo.vhd"

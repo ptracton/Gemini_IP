@@ -25,8 +25,8 @@ class FifoTester:
         await RisingEdge(self.dut.clk)
         await RisingEdge(self.dut.clk) 
 
-    async def push(self, data):
-        if self.dut.full.value:
+    async def push(self, data, force=False):
+        if self.dut.full.value and not force:
             return False
             
         self.dut.push.value = 1
@@ -36,8 +36,8 @@ class FifoTester:
         self.ref_model.append(data)
         return True
 
-    async def pop(self):
-        if self.dut.empty.value:
+    async def pop(self, force=False):
+        if self.dut.empty.value and not force:
             return None
             
         self.dut.pop.value = 1
@@ -49,9 +49,13 @@ class FifoTester:
         data = int(self.dut.data_out.value)
         await Timer(1, 'ns') # Exit ReadOnly
         
-        expected = self.ref_model.pop(0)
-        assert data == expected, f"Data Mismatch! Got {data}, Expected {expected}"
-        return data
+        expected = None
+        if len(self.ref_model) > 0:
+            expected = self.ref_model.pop(0)
+            assert data == expected, f"Data Mismatch! Got {data}, Expected {expected}"
+            return data
+        else:
+             return data # Underflow case
 
 @cocotb.test()
 async def test_fifo_random(dut):
@@ -128,16 +132,62 @@ async def test_fifo_random(dut):
         
         assert hw_level == sw_level, f"Cycle {i}: Level Mismatch! HW={hw_level}, SW={sw_level}"
         
-        if sw_level == 0:
-            assert dut.empty.value == 1, f"Cycle {i}: Empty Flag Mismatch! Should be empty."
-        else:
-             assert dut.empty.value == 0, f"Cycle {i}: Empty Flag Mismatch! Should NOT be empty."
+        # Standard Flags
+        assert dut.empty.value == (1 if sw_level == 0 else 0)
+        assert dut.full.value == (1 if sw_level == tester.depth else 0)
 
-        if sw_level == tester.depth:
-            assert dut.full.value == 1, f"Cycle {i}: Full Flag Mismatch! Should be full."
-        else:
-            assert dut.full.value == 0, f"Cycle {i}: Full Flag Mismatch! Should NOT be full."
+        # Advanced Flags
+        almost_full_thresh = int(dut.ALMOST_FULL_THRESH.value)
+        almost_empty_thresh = int(dut.ALMOST_EMPTY_THRESH.value)
+        
+        assert dut.almost_full.value == (1 if sw_level >= almost_full_thresh else 0), \
+            f"Almost Full Mismatch! Level={sw_level}, Thresh={almost_full_thresh}"
+            
+        assert dut.almost_empty.value == (1 if sw_level <= almost_empty_thresh else 0), \
+            f"Almost Empty Mismatch! Level={sw_level}, Thresh={almost_empty_thresh}"
+
+        # Max Level (Check if valid)
+        max_level = int(dut.max_level.value)
+        assert max_level >= hw_level, f"Max Level {max_level} < Current Level {hw_level}"
             
         await Timer(1, units='ns')
+
+@cocotb.test()
+async def test_fifo_errors(dut):
+    """Test FIFO Overflow and Underflow flags"""
+    tester = FifoTester(dut)
+    cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
+    await tester.reset()
+    
+    # 1. Test Underflow
+    await tester.pop(force=True) # Pop from empty
+    await ReadOnly()
+    assert dut.underflow.value == 1, "Underflow not asserted!"
+    await Timer(1, 'ns')
+    
+    # Clear error
+    dut.flush.value = 1
+    await RisingEdge(dut.clk)
+    dut.flush.value = 0
+    await ReadOnly()
+    assert dut.underflow.value == 0, "Underflow not cleared!"
+    await RisingEdge(dut.clk)
+    
+    # 2. Test Overflow
+    # Fill FIFO
+    for i in range(tester.depth):
+        await tester.push(i)
+        
+    await ReadOnly()
+    assert dut.full.value == 1, "FIFO should be full"
+    await RisingEdge(dut.clk)
+    
+    # Push to full
+    await tester.push(0xFF, force=True)
+    await ReadOnly()
+    assert dut.overflow.value == 1, "Overflow not asserted!"
+    
+    # Check Max Level
+    assert int(dut.max_level.value) == tester.depth, "Max level should be DEPTH"
 
     dut._log.info("Test Complete!")
