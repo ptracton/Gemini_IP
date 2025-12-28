@@ -37,6 +37,7 @@ This script will:
 ### Common
 - **[General Timer](IP/common/general_timer/README.md)**: A 32-bit configurable timer with PWM, Input Capture, Prescaler, and multi-bus support (AXI/APB/WB).
 - **[Bus Matrix](IP/common/bus_matrix/README.md)**: High-performance N:M interconnect supporting AXI4-Lite, AHB5-Lite, and Wishbone B4 with configurable arbitration and security firewall.
+- **[Sync FIFO](IP/common/sync_fifo/README.md)**: Generic synchronous FIFO with configurable width and depth.
 
 ## Feature Overview
 
