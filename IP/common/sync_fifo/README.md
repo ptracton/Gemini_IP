@@ -60,14 +60,36 @@ Run all:
 ```
 
 ## Synthesis Results
-Utilization targeting Artix-7 (xc7a35t) for Vivado/Yosys and Cyclone IV E (EP4CE115) for Quartus:
+The following results were obtained for a 32-bit width, 16-deep configuration (512 bits) targeting a Xilinx Artix-7 (xc7a35t) and Intel Cyclone IV E (EP4CE115). 
 
-| Tool | Logic Elements (LUTs) | Registers | Memory Bits |
-|---|---|---|---|
-| **Vivado** | 200 | 564 | 0 (Size < Threshold) |
-| **Yosys** | ~250 | 564 | - |
-| **Quartus (SV)** | 156 (LEs) | 126 | 512 |
-| **Quartus (VHDL)** | 190 (LEs) | 158 | 512 |
+### Xilinx Vivado (Artix-7)
+| Module | Language | LUTs | Registers | BRAM |
+|---|---|---|---|---|
+| **sync_fifo** | SV | 200 | 564 | 0 |
+| **sync_fifo** | VHDL | 64 | 52 | 0 |
+| **sync_fifo_apb** | SV | 207 | 532 | 0 |
+| **sync_fifo_apb** | VHDL | 83 | 20 | 0 |
+| **sync_fifo_axi** | SV | 215 | 570 | 0 |
+| **sync_fifo_axi** | VHDL | 82 | 59 | 0 |
+| **sync_fifo_ahb** | SV | 207 | 538 | 0 |
+| **sync_fifo_ahb** | VHDL | 91 | 26 | 0 |
+| **sync_fifo_wb** | SV | 207 | 566 | 0 |
+| **sync_fifo_wb** | VHDL | 84 | 54 | 0 |
+
+### Intel Quartus (Cyclone IV E)
+| Module | Language | Logic Elements | Registers | Memory Bits |
+|---|---|---|---|---|
+| **sync_fifo** | SV | 157 | 126 | 512 |
+| **sync_fifo** | VHDL | 221 | 158 | 512 |
+| **sync_fifo_apb** | SV | 203 | 128 | 512 |
+| **sync_fifo_apb** | VHDL | 267 | 126 | 512 |
+| **sync_fifo_axi** | SV | 203 | 131 | 512 |
+| **sync_fifo_axi** | VHDL | 282 | 164 | 512 |
+| **sync_fifo_ahb** | SV | 210 | 128 | 512 |
+| **sync_fifo_ahb** | VHDL | 272 | 126 | 512 |
+| **sync_fifo_wb** | SV | 193 | 128 | 512 |
+| **sync_fifo_wb** | VHDL | 273 | 160 | 512 |
 
 > [!NOTE]
-> Quartus successfully infers Block RAM/MLAB for both SystemVerilog and VHDL implementations (after removing asynchronous resets on the memory path). Vivado continues to use distributed RAM (registers) for this configuration likely because the 512-bit size is below the threshold for efficient Block RAM usage on Artix-7, even with the `ram_style="block"` attribute.
+> - **RAM Inference**: Quartus successfully infers M9K BRAM blocks (512 bits) for all versions. Vivado implements the 512-bit memory using Distributed RAM (LUTs/Registers), which is more efficient for small depths on Xilinx FPGAs.
+> - **Optimization**: The disparities between SV and VHDL results in Vivado (especially the lower VHDL values) suggest that Vivado's VHDL synthesis engine performs more aggressive cross-boundary optimization or more efficient RAM extraction for the specific coding style used in the VHDL core.

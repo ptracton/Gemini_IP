@@ -74,15 +74,21 @@ architecture rtl of axi4lite_slave_adapter is
 
 begin
 
-  -- Output Assignments
+  -- Output Assignments (Native Bus)
+  reg_we    <= '1' when (awready_i = '1' and s_axi_awvalid = '1' and s_axi_wvalid = '1') else '0';
+  reg_addr  <= s_axi_awaddr when (awready_i = '1') else s_axi_araddr;
+  reg_wdata <= s_axi_wdata;
+  reg_be    <= s_axi_wstrb;
+  reg_re    <= '1' when (arready_i = '1' and s_axi_arvalid = '1') else '0';
+
   s_axi_awready <= awready_i;
   s_axi_wready  <= wready_i;
-  s_axi_bvalid  <= bvalid_i;
   s_axi_arready <= arready_i;
+  s_axi_bvalid  <= bvalid_i;
   s_axi_rvalid  <= rvalid_i;
   s_axi_bresp   <= "00"; -- OKAY
   s_axi_rresp   <= "00"; -- OKAY
-  s_axi_rdata   <= rdata_reg;
+  s_axi_rdata   <= reg_rdata;
 
   -- Write Address Handshake
   process (aclk, aresetn)
@@ -138,7 +144,9 @@ begin
     if aresetn = '0' then
       arready_i <= '0';
     elsif rising_edge(aclk) then
-      if (arready_i = '0' and s_axi_arvalid = '1') then
+      -- Block arready if a read is already in progress (rvalid_i = '1')
+      -- and not being cleared in this cycle.
+      if (arready_i = '0' and s_axi_arvalid = '1' and rvalid_i = '0') then
         arready_i <= '1';
       else
         arready_i <= '0';
@@ -155,39 +163,8 @@ begin
     elsif rising_edge(aclk) then
       if (arready_i = '1' and s_axi_arvalid = '1' and rvalid_i = '0') then
         rvalid_i  <= '1';
-        rdata_reg <= reg_rdata; -- Latch read data here!
       elsif (s_axi_rready = '1' and rvalid_i = '1') then
         rvalid_i <= '0';
-      end if;
-    end if;
-  end process;
-
-  -- Native Register Bus Mapping
-  -- Synchronous Output Generation to avoid glitches
-  process (aclk, aresetn)
-  begin
-    if aresetn = '0' then
-      reg_we    <= '0';
-      reg_re    <= '0';
-      reg_addr  <= (others => '0');
-      reg_wdata <= (others => '0');
-      reg_be    <= (others => '0');
-    elsif rising_edge(aclk) then
-      -- Default: Deassert strobes
-      reg_we <= '0';
-      reg_re <= '0';
-
-      -- Write Trigger (Lookahead: when we are about to assert Ready)
-      if (awready_i = '0' and s_axi_awvalid = '1' and s_axi_wvalid = '1' and aw_en = '1' and wready_i = '0') then
-        reg_we    <= '1';
-        reg_addr  <= s_axi_awaddr;
-        reg_wdata <= s_axi_wdata;
-        reg_be    <= s_axi_wstrb;
-
-        -- Read Trigger
-      elsif (arready_i = '0' and s_axi_arvalid = '1') then
-        reg_re   <= '1';
-        reg_addr <= s_axi_araddr;
       end if;
     end if;
   end process;

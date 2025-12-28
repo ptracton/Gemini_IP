@@ -23,8 +23,16 @@ def run_regression():
         RegressionJob("Lint", [os.path.join(tools_dir, "run_lint.sh")]),
         RegressionJob("Icarus", [os.path.join(ip_dir, "sim/iverilog/run_iverilog.sh")]),
         RegressionJob("GHDL", [os.path.join(ip_dir, "sim/ghdl/run_ghdl.sh")]),
-        RegressionJob("SV_Cocotb", ["make", "-C", os.path.join(ip_dir, "verif/cocotb"), "SIM=verilator", "TOPLEVEL_LANG=verilog"]),
-        RegressionJob("VHDL_Cocotb", ["make", "-C", os.path.join(ip_dir, "verif/cocotb"), "SIM=ghdl", "TOPLEVEL_LANG=vhdl"]),
+        RegressionJob("SV_Cocotb", ["/bin/bash", "-c", "make -C " + os.path.join(ip_dir, "verif/cocotb") + " clean && make -C " + os.path.join(ip_dir, "verif/cocotb") + " SIM=verilator TOPLEVEL_LANG=verilog"]),
+        RegressionJob("VHDL_Cocotb", ["/bin/bash", "-c", "make -C " + os.path.join(ip_dir, "verif/cocotb") + " clean && make -C " + os.path.join(ip_dir, "verif/cocotb") + " SIM=ghdl TOPLEVEL_LANG=vhdl"]),
+        RegressionJob("SV_APB", ["/bin/bash", "-c", "make -C " + os.path.join(ip_dir, "verif/cocotb") + " clean && make -C " + os.path.join(ip_dir, "verif/cocotb") + " SIM=verilator TOPLEVEL_LANG=verilog BUS_TYPE=apb"]),
+        RegressionJob("SV_AHB", ["/bin/bash", "-c", "make -C " + os.path.join(ip_dir, "verif/cocotb") + " clean && make -C " + os.path.join(ip_dir, "verif/cocotb") + " SIM=verilator TOPLEVEL_LANG=verilog BUS_TYPE=ahb"]),
+        RegressionJob("VHDL_AHB", ["/bin/bash", "-c", "make -C " + os.path.join(ip_dir, "verif/cocotb") + " clean && make -C " + os.path.join(ip_dir, "verif/cocotb") + " SIM=ghdl TOPLEVEL_LANG=vhdl BUS_TYPE=ahb"]),
+        RegressionJob("VHDL_APB", ["/bin/bash", "-c", "make -C " + os.path.join(ip_dir, "verif/cocotb") + " clean && make -C " + os.path.join(ip_dir, "verif/cocotb") + " SIM=ghdl TOPLEVEL_LANG=vhdl BUS_TYPE=apb"]),
+        RegressionJob("SV_AXI", ["/bin/bash", "-c", "make -C " + os.path.join(ip_dir, "verif/cocotb") + " clean && make -C " + os.path.join(ip_dir, "verif/cocotb") + " SIM=verilator TOPLEVEL_LANG=verilog BUS_TYPE=axi"]),
+        RegressionJob("VHDL_AXI", ["/bin/bash", "-c", "make -C " + os.path.join(ip_dir, "verif/cocotb") + " clean && make -C " + os.path.join(ip_dir, "verif/cocotb") + " SIM=ghdl TOPLEVEL_LANG=vhdl BUS_TYPE=axi"]),
+        RegressionJob("SV_WB", ["/bin/bash", "-c", "make -C " + os.path.join(ip_dir, "verif/cocotb") + " clean && make -C " + os.path.join(ip_dir, "verif/cocotb") + " SIM=verilator TOPLEVEL_LANG=verilog BUS_TYPE=wb"]),
+        RegressionJob("VHDL_WB", ["/bin/bash", "-c", "make -C " + os.path.join(ip_dir, "verif/cocotb") + " clean && make -C " + os.path.join(ip_dir, "verif/cocotb") + " SIM=ghdl TOPLEVEL_LANG=vhdl BUS_TYPE=wb"]),
     ]
 
     print(f"Regression Started: {datetime.datetime.now()}")

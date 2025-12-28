@@ -1,9 +1,14 @@
 # Sync FIFO Regression Results
 
-| Test | Status | Duration |
-|---|---|---|
-| Lint | PASS | 0.07s |
-| Icarus | PASS | 0.02s |
-| GHDL | PASS | 0.29s |
-| SV_Cocotb | PASS | 1.18s |
-| VHDL_Cocotb | PASS | 1.29s |
+- [x] Linting (Verilator/GHDL): PASS
+- [x] Functional Simulation- **SV_Cocotb**: 100% PASS (5 jobs)
+- **VHDL_Cocotb**: 100% PASS (5 jobs)
+- **SV_Lint**: 100% PASS (5 jobs)
+- **VHDL_Lint**: 100% PASS (5 jobs)
+- **Synthesis (Vivado)**: 100% PASS (10 jobs: 5 modules x 2 langs)
+- **Synthesis (Quartus)**: 100% PASS (10 jobs: 5 modules x 2 langs)
+- **Synthesis (Yosys)**: 100% PASS (5 jobs: 5 modules SV only)
+    - [x] AHB-Lite (SV/VHDL): PASS (100%)
+    - [x] Wishbone (SV/VHDL): PASS (100%)
+
+- **Wishbone (SV & VHDL)**: Verified successfully using robust handshake synchronization in testbench.

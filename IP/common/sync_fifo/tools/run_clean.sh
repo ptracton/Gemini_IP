@@ -17,10 +17,10 @@ rm -rf sim/modelsim/work sim/modelsim/transcript sim/modelsim/*.vcd
 rm -rf sim/xilinx/xsim.dir sim/xilinx/*.pb sim/xilinx/*.jou sim/xilinx/*.log sim/xilinx/*.wdb sim/xilinx/*.str
 
 echo "Cleaning Cocotb..."
-rm -rf verif/cocotb/sim_build verif/cocotb/__pycache__ verif/cocotb/*.xml verif/cocotb/*.vcd verif/cocotb/sync_fifo
+rm -rf verif/cocotb/sim_build verif/cocotb/__pycache__ verif/cocotb/*.xml verif/cocotb/*.vcd verif/cocotb/*.log verif/cocotb/*.o verif/cocotb/sync_fifo*
 
 echo "Cleaning Synthesis..."
-rm -rf synthesis/results synthesis/*.log synthesis/*.jou
+rm -rf synthesis/results synthesis/*.log synthesis/*.jou synthesis/*.str synthesis/*.pb
 
 echo "Cleaning Logs..."
 rm -f tools/*.log

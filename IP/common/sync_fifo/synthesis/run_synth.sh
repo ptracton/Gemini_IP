@@ -1,6 +1,6 @@
 #!/bin/bash
 # synthesis/run_synth.sh
-# Run All Synthesis Flows
+# Run All Synthesis Flows for all FIFO versions
 
 if [ -z "$GEMINI_IP_ROOT" ]; then
     echo "Error: GEMINI_IP_ROOT not set."
@@ -8,60 +8,58 @@ if [ -z "$GEMINI_IP_ROOT" ]; then
 fi
 
 IP_DIR="$GEMINI_IP_ROOT/IP/common/sync_fifo"
-OUTPUT_DIR="$IP_DIR/synthesis/results"
-mkdir -p "$OUTPUT_DIR"
+# Base results directory
+BASE_RESULTS_DIR="$IP_DIR/synthesis/results"
+rm -rf "$BASE_RESULTS_DIR"
+mkdir -p "$BASE_RESULTS_DIR"
+
+MODULES=("sync_fifo" "sync_fifo_apb" "sync_fifo_axi" "sync_fifo_ahb" "sync_fifo_wb")
+LANGS=("sv" "vhdl")
 
 echo "=================================================="
 echo "Starting Synthesis for Sync FIFO"
 echo "=================================================="
 
-# Vivado
-echo "[Vivado] Starting..."
-if command -v vivado >/dev/null 2>&1; then
-    vivado -mode batch -source "$IP_DIR/synthesis/run_vivado.tcl" -tclargs sync_fifo xc7a35tcpg236-1 "$OUTPUT_DIR/vivado" > "$OUTPUT_DIR/vivado.log" 2>&1
-    if [ $? -eq 0 ]; then echo "[Vivado] PASS"; else echo "[Vivado] FAIL"; fi
-else
-    echo "[Vivado] SKIP (Not found)"
-fi
+for module in "${MODULES[@]}"; do
+    echo "----------------------------------------------------"
+    echo "Processing Module: $module"
+    echo "----------------------------------------------------"
 
-# Quartus
-echo "[Quartus] Starting..."
-if command -v quartus_sh >/dev/null 2>&1; then
-    # Quartus SV
-    echo "  [Quartus-SV] Running..."
-    quartus_sh -t "$IP_DIR/synthesis/run_quartus.tcl" sync_fifo verilog "$OUTPUT_DIR/quartus_sv" > "$OUTPUT_DIR/quartus_sv.log" 2>&1
-    if [ $? -eq 0 ]; then echo "  [Quartus-SV] PASS"; else echo "  [Quartus-SV] FAIL"; fi
+    # Define module-specific output dir
+    MODULE_RESULTS_DIR="$BASE_RESULTS_DIR/$module"
+    mkdir -p "$MODULE_RESULTS_DIR"
 
-    # Quartus VHDL
-    echo "  [Quartus-VHDL] Running..."
-    # Clean previous project files to avoid conflicts if strictly necessary, 
-    # but separate output dirs should aid. However, Quartus creates project files in CWD if not careful.
-    # The TCL script opens project "sync_fifo", so we might need to be careful about overlapping project files in the source dir?
-    # Actually, the TCL script does `project_new -revision $top_module $top_module`.
-    # It creates `sync_fifo.qpf` in the current directory (which is where we run it from?)
-    # We should run them in separate directories or ensure the project file location is handled.
-    # The script uses `set_global_assignment -name PROJECT_OUTPUT_DIRECTORY $output_dir`.
-    # But the `.qpf` and `.qsf` are created in CWD.
-    
-    # Let's verify where `quartus_sh` is run. In this script: `quartus_sh -t ...`
-    # We are in `Cwd: /home/ptracton/src/Gemini_IP/IP/common/sync_fifo` usually? No, `run_synth.sh` doesn't cd.
-    # Wait, `run_synth.sh` is executed via `./synthesis/run_synth.sh` from IP root usually?
-    # Ah, let's look at `run_synth.sh` top.
-    
-    quartus_sh -t "$IP_DIR/synthesis/run_quartus.tcl" sync_fifo vhdl "$OUTPUT_DIR/quartus_vhdl" > "$OUTPUT_DIR/quartus_vhdl.log" 2>&1
-    if [ $? -eq 0 ]; then echo "  [Quartus-VHDL] PASS"; else echo "  [Quartus-VHDL] FAIL"; fi
-else
-    echo "[Quartus] SKIP (Not found)"
-fi
+    for lang in "${LANGS[@]}"; do
+        # Vivado
+        if command -v vivado >/dev/null 2>&1; then
+            echo "[Vivado-$lang] Synthesizing $module..."
+            mkdir -p "$MODULE_RESULTS_DIR/vivado/$lang"
+            vivado -mode batch -source "$IP_DIR/synthesis/run_vivado.tcl" -tclargs $module $lang xc7a35tcpg236-1 "$MODULE_RESULTS_DIR/vivado/$lang" > "$MODULE_RESULTS_DIR/vivado_${lang}.log" 2>&1
+            if [ $? -eq 0 ]; then echo "  [Vivado-$lang] PASS"; else echo "  [Vivado-$lang] FAIL"; fi
+        fi
 
-# Yosys
-echo "[Yosys] Starting..."
-if command -v yosys >/dev/null 2>&1; then
-    yosys -c "$IP_DIR/synthesis/run_yosys.tcl" > "$OUTPUT_DIR/yosys.log" 2>&1
-    if [ $? -eq 0 ]; then echo "[Yosys] PASS"; else echo "[Yosys] FAIL"; fi
-else
-    echo "[Yosys] SKIP (Not found)"
-fi
+        # Quartus
+        if command -v quartus_sh >/dev/null 2>&1; then
+            echo "[Quartus-$lang] Synthesizing $module..."
+            # Quartus likes running in a project directory
+            mkdir -p "$MODULE_RESULTS_DIR/quartus/$lang"
+            cd "$MODULE_RESULTS_DIR/quartus/$lang"
+            quartus_sh -t "$IP_DIR/synthesis/run_quartus.tcl" $module $lang "$MODULE_RESULTS_DIR/quartus/$lang" > "$MODULE_RESULTS_DIR/quartus_${lang}.log" 2>&1
+            if [ $? -eq 0 ]; then echo "  [Quartus-$lang] PASS"; else echo "  [Quartus-$lang] FAIL"; fi
+            cd "$IP_DIR"
+        fi
+    done
+
+    # Yosys (SystemVerilog only)
+    if command -v yosys >/dev/null 2>&1; then
+        echo "[Yosys-SV] Synthesizing $module..."
+        export TOP_MODULE=$module
+        export OUTPUT_DIR="$MODULE_RESULTS_DIR/yosys"
+        mkdir -p "$OUTPUT_DIR"
+        yosys -c "$IP_DIR/synthesis/run_yosys.tcl" > "$OUTPUT_DIR/yosys_${module}.log" 2>&1
+        if [ $? -eq 0 ]; then echo "  [Yosys-SV] PASS"; else echo "  [Yosys-SV] FAIL"; fi
+    fi
+done
 
 echo "=================================================="
 echo "Synthesis Complete"
