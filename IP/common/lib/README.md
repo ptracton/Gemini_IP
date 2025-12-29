@@ -9,11 +9,12 @@ This directory contains shared RTL and Verification components used across multi
 
 ## RTL Adapters (`rtl/`)
 
-These modules adapt standard bus protocols (AXI4-Lite, APB4, Wishbone B4) to a simple, generic "Native Register Interface" used by the IP cores.
+These modules adapt standard bus protocols (AXI4-Lite, APB4, AHB-Lite, Wishbone B4) to a simple, generic "Native Register Interface" used by the IP cores.
 
 ### SystemVerilog (`*.sv`)
 - **`axi4lite_slave_adapter.sv`**: Connects an AXI4-Lite master to the native register interface. Handles the AXI handshake state machine.
 - **`apb_slave_adapter.sv`**: Connects an APB4 master to the native register interface. Zero-wait state implementation.
+- **`ahb_slave_adapter.sv`**: Connects an AHB-Lite master to the native register interface. Implements 0-wait state transactions for both read and write during the data phase.
 - **`wb_slave_adapter.sv`**: Connects a Wishbone B4 master to the native register interface.
     - *Note*: Implements a 1-cycle wait state for ack generation.
     - *Critical*: Gates `reg_we` with `!reg_ack` to prevent atomic double-writes. Does *not* gate `reg_re` to ensure read data validity during the ack cycle.
@@ -21,6 +22,7 @@ These modules adapt standard bus protocols (AXI4-Lite, APB4, Wishbone B4) to a s
 ### VHDL (`*.vhd`)
 - **`axi4lite_slave_adapter.vhd`**: VHDL equivalent of the AXI4-Lite adapter.
 - **`apb_slave_adapter.vhd`**: VHDL equivalent of the APB4 adapter.
+- **`ahb_slave_adapter.vhd`**: VHDL equivalent of the AHB-Lite adapter.
 - **`wb_slave_adapter.vhd`**: VHDL equivalent of the Wishbone B4 adapter. Implements the same atomic write projection logic as the SV version.
 
 ### Native Register Interface
