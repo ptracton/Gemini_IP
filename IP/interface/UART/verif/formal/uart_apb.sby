@@ -1,0 +1,22 @@
+[options]
+mode prove
+
+[engines]
+smtbmc
+
+[script]
+read -formal sync_fifo.sv
+read -formal apb_slave_adapter.sv
+read -formal uart_core.sv
+read -formal uart_apb.sv
+read -formal uart_apb_properties.sv
+read -formal uart_apb_bind.sv
+prep -top uart_apb
+
+[files]
+../../../../common/sync_fifo/rtl/verilog/sync_fifo.sv
+../../../../common/lib/rtl/apb_slave_adapter.sv
+../../rtl/verilog/uart_core.sv
+../../rtl/verilog/uart_apb.sv
+uart_apb_properties.sv
+uart_apb_bind.sv

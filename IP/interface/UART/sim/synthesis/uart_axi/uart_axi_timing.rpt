@@ -1,0 +1,44 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2023.2 (lin64) Build 4029153 Fri Oct 13 20:13:54 MDT 2023
+| Date         : Mon Dec 29 09:20:17 2025
+| Host         : salvage running 64-bit unknown
+| Command      : report_timing -file /home/ptracton/src/Gemini_IP/IP/interface/UART/sim/synthesis/uart_axi/uart_axi_timing.rpt
+| Design       : uart_axi
+| Device       : 7a35t-cpg236
+| Speed File   : -1  PRODUCTION 1.23 2018-06-13
+| Design State : Synthesized
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack:                    inf
+  Source:                 s_axi_araddr[4]
+                            (input port)
+  Destination:            s_axi_rdata[5]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        7.382ns  (logic 3.906ns (52.909%)  route 3.476ns (47.091%))
+  Logic Levels:           5  (IBUF=1 LUT4=1 LUT6=2 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                                                      0.000     0.000 r  s_axi_araddr[4] (IN)
+                         net (fo=0)                   0.000     0.000    s_axi_araddr[4]
+                         IBUF (Prop_ibuf_I_O)         0.923     0.923 r  s_axi_araddr_IBUF[4]_inst/O
+                         net (fo=4, unplaced)         0.800     1.722    adapter_inst/s_axi_araddr_IBUF[4]
+                         LUT6 (Prop_lut6_I5_O)        0.124     1.846 r  adapter_inst/s_axi_rdata_OBUF[31]_inst_i_5/O
+                         net (fo=34, unplaced)        0.975     2.821    adapter_inst/s_axi_awready_reg_1
+                         LUT6 (Prop_lut6_I0_O)        0.124     2.945 r  adapter_inst/s_axi_rdata_OBUF[5]_inst_i_2/O
+                         net (fo=1, unplaced)         0.902     3.847    adapter_inst/s_axi_rdata_OBUF[5]_inst_i_2_n_0
+                         LUT4 (Prop_lut4_I0_O)        0.150     3.997 r  adapter_inst/s_axi_rdata_OBUF[5]_inst_i_1/O
+                         net (fo=1, unplaced)         0.800     4.797    s_axi_rdata_OBUF[5]
+                         OBUF (Prop_obuf_I_O)         2.585     7.382 r  s_axi_rdata_OBUF[5]_inst/O
+                         net (fo=0)                   0.000     7.382    s_axi_rdata[5]
+                                                                      r  s_axi_rdata[5] (OUT)
+  -------------------------------------------------------------------    -------------------
+
+
+
+

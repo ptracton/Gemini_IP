@@ -1,0 +1,44 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2023.2 (lin64) Build 4029153 Fri Oct 13 20:13:54 MDT 2023
+| Date         : Mon Dec 29 09:24:33 2025
+| Host         : salvage running 64-bit unknown
+| Command      : report_timing -file /home/ptracton/src/Gemini_IP/IP/interface/UART/sim/synthesis/uart_wb_vhd/uart_wb_vhd_timing.rpt
+| Design       : uart_wb
+| Device       : 7a35t-cpg236
+| Speed File   : -1  PRODUCTION 1.23 2018-06-13
+| Design State : Synthesized
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack:                    inf
+  Source:                 wb_adr_i[4]
+                            (input port)
+  Destination:            wb_dat_o[3]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        6.403ns  (logic 3.906ns (60.999%)  route 2.497ns (39.001%))
+  Logic Levels:           5  (IBUF=1 LUT5=1 LUT6=2 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                                                      0.000     0.000 r  wb_adr_i[4] (IN)
+                         net (fo=0)                   0.000     0.000    wb_adr_i[4]
+                         IBUF (Prop_ibuf_I_O)         0.923     0.923 r  wb_adr_i_IBUF[4]_inst/O
+                         net (fo=51, unplaced)        0.800     1.722    core_inst/wb_adr_i_IBUF[4]
+                         LUT5 (Prop_lut5_I3_O)        0.150     1.872 f  core_inst/wb_dat_o_OBUF[3]_inst_i_3/O
+                         net (fo=1, unplaced)         0.449     2.321    core_inst/wb_dat_o_OBUF[3]_inst_i_3_n_0
+                         LUT6 (Prop_lut6_I5_O)        0.124     2.445 r  core_inst/wb_dat_o_OBUF[3]_inst_i_2/O
+                         net (fo=1, unplaced)         0.449     2.894    core_inst/wb_dat_o_OBUF[3]_inst_i_2_n_0
+                         LUT6 (Prop_lut6_I0_O)        0.124     3.018 r  core_inst/wb_dat_o_OBUF[3]_inst_i_1/O
+                         net (fo=1, unplaced)         0.800     3.818    wb_dat_o_OBUF[3]
+                         OBUF (Prop_obuf_I_O)         2.585     6.403 r  wb_dat_o_OBUF[3]_inst/O
+                         net (fo=0)                   0.000     6.403    wb_dat_o[3]
+                                                                      r  wb_dat_o[3] (OUT)
+  -------------------------------------------------------------------    -------------------
+
+
+
+

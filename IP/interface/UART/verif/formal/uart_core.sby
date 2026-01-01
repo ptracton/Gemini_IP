@@ -1,0 +1,18 @@
+[options]
+mode prove
+
+[engines]
+smtbmc
+
+[script]
+read -formal sync_fifo.sv
+read -formal uart_core.sv
+read -formal uart_core_properties.sv
+read -formal uart_core_bind.sv
+prep -top uart_core
+
+[files]
+../../../../common/sync_fifo/rtl/verilog/sync_fifo.sv
+../../rtl/verilog/uart_core.sv
+uart_core_properties.sv
+uart_core_bind.sv

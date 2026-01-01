@@ -1,0 +1,22 @@
+[options]
+mode prove
+
+[engines]
+smtbmc
+
+[script]
+read -formal sync_fifo.sv
+read -formal wb_slave_adapter.sv
+read -formal uart_core.sv
+read -formal uart_wb.sv
+read -formal uart_wb_properties.sv
+read -formal uart_wb_bind.sv
+prep -top uart_wb
+
+[files]
+../../../../common/sync_fifo/rtl/verilog/sync_fifo.sv
+../../../../common/lib/rtl/wb_slave_adapter.sv
+../../rtl/verilog/uart_core.sv
+../../rtl/verilog/uart_wb.sv
+uart_wb_properties.sv
+uart_wb_bind.sv

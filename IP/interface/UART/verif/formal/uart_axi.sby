@@ -1,0 +1,22 @@
+[options]
+mode prove
+
+[engines]
+smtbmc
+
+[script]
+read -formal sync_fifo.sv
+read -formal axi4lite_slave_adapter.sv
+read -formal uart_core.sv
+read -formal uart_axi.sv
+read -formal uart_axi_properties.sv
+read -formal uart_axi_bind.sv
+prep -top uart_axi
+
+[files]
+../../../../common/sync_fifo/rtl/verilog/sync_fifo.sv
+../../../../common/lib/rtl/axi4lite_slave_adapter.sv
+../../rtl/verilog/uart_core.sv
+../../rtl/verilog/uart_axi.sv
+uart_axi_properties.sv
+uart_axi_bind.sv
