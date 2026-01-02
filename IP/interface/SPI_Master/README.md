@@ -168,3 +168,17 @@ To run the Python-based regression suite (Lint, Sim, Cocotb, UVM):
 ```bash
 ./tools/run_regression.py
 ```
+
+## Synthesis & Backend
+
+The IP has been verified for synthesizability using a multi-tool flow:
+-   **Tools**: Xilinx Vivado, Intel Quartus Prime, Yosys.
+-   **Variants**: APB, AXI4-Lite, Wishbone wrappers.
+-   **Result**: Clean synthesis with no latch inferences.
+
+Resource utilization reports and detailed metrics are available in [spi_master_synthesis_results.md](./spi_master_synthesis_results.md).
+
+To run the synthesis regression:
+```bash
+./IP/interface/SPI_Master/synthesis/run_synth.sh
+```

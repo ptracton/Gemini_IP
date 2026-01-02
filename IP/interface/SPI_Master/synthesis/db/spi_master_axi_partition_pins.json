@@ -1,0 +1,413 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "awready",
+					"strict" : false
+				},
+				{
+					"name" : "wready",
+					"strict" : false
+				},
+				{
+					"name" : "bvalid",
+					"strict" : false
+				},
+				{
+					"name" : "arready",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[0]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[1]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[2]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[3]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[4]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[5]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[6]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[7]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[8]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[9]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[10]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[11]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[12]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[13]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[14]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[15]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[16]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[17]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[18]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[19]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[20]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[21]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[22]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[23]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[24]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[25]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[26]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[27]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[28]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[29]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[30]",
+					"strict" : false
+				},
+				{
+					"name" : "rdata[31]",
+					"strict" : false
+				},
+				{
+					"name" : "rvalid",
+					"strict" : false
+				},
+				{
+					"name" : "spi_sclk",
+					"strict" : false
+				},
+				{
+					"name" : "spi_mosi",
+					"strict" : false
+				},
+				{
+					"name" : "spi_cs_n",
+					"strict" : false
+				},
+				{
+					"name" : "intr",
+					"strict" : false
+				},
+				{
+					"name" : "dma_tx_req",
+					"strict" : false
+				},
+				{
+					"name" : "dma_rx_req",
+					"strict" : false
+				},
+				{
+					"name" : "dma_tx_ack",
+					"strict" : false
+				},
+				{
+					"name" : "dma_rx_ack",
+					"strict" : false
+				},
+				{
+					"name" : "awvalid",
+					"strict" : false
+				},
+				{
+					"name" : "wvalid",
+					"strict" : false
+				},
+				{
+					"name" : "aclk",
+					"strict" : false
+				},
+				{
+					"name" : "aresetn",
+					"strict" : false
+				},
+				{
+					"name" : "bready",
+					"strict" : false
+				},
+				{
+					"name" : "arvalid",
+					"strict" : false
+				},
+				{
+					"name" : "awaddr[3]",
+					"strict" : false
+				},
+				{
+					"name" : "araddr[3]",
+					"strict" : false
+				},
+				{
+					"name" : "awaddr[4]",
+					"strict" : false
+				},
+				{
+					"name" : "araddr[4]",
+					"strict" : false
+				},
+				{
+					"name" : "awaddr[2]",
+					"strict" : false
+				},
+				{
+					"name" : "araddr[2]",
+					"strict" : false
+				},
+				{
+					"name" : "araddr[5]",
+					"strict" : false
+				},
+				{
+					"name" : "awaddr[6]",
+					"strict" : false
+				},
+				{
+					"name" : "araddr[6]",
+					"strict" : false
+				},
+				{
+					"name" : "awaddr[5]",
+					"strict" : false
+				},
+				{
+					"name" : "awaddr[0]",
+					"strict" : false
+				},
+				{
+					"name" : "araddr[0]",
+					"strict" : false
+				},
+				{
+					"name" : "awaddr[1]",
+					"strict" : false
+				},
+				{
+					"name" : "araddr[1]",
+					"strict" : false
+				},
+				{
+					"name" : "awaddr[7]",
+					"strict" : false
+				},
+				{
+					"name" : "araddr[7]",
+					"strict" : false
+				},
+				{
+					"name" : "rready",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[1]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[0]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[2]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[3]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[4]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[5]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[6]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[7]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[8]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[9]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[10]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[11]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[12]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[13]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[14]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[15]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[16]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[17]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[18]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[19]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[20]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[21]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[22]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[23]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[24]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[25]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[26]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[27]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[28]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[29]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[30]",
+					"strict" : false
+				},
+				{
+					"name" : "wdata[31]",
+					"strict" : false
+				},
+				{
+					"name" : "spi_miso",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

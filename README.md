@@ -52,8 +52,8 @@ This script will:
 | SystemVerilog | [x] | [x] | [x] | [x] | [x] |
 | VHDL-2008 | [x] | [x] | [x] | [x] | [x] |
 | Cocotb | [x] | [x] | [x] | [x] | [x] |
-| UVM | [ ] | [x] | [ ] | [x] | [ ] |
-| Synthesis | [x] | [x] | [x] | [x] | [ ] |
+| UVM | [ ] | [x] | [ ] | [x] | [x] |
+| Synthesis | [x] | [x] | [x] | [x] | [x] |
 
 ## Running Verifications & Tools
 
