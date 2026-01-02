@@ -60,6 +60,8 @@ stateDiagram-v2
 
 ## Directory Structure
 
+
+```text
 SPI_Master/
 ├── rtl/
 │   ├── verilog/      # SystemVerilog implementation
