@@ -112,6 +112,28 @@ For detailed verification results, see [Regression Results](uart_regression_resu
 - **Formal**: PASSED (SymbiYosys, Core + Bus Interfaces)
 - **Synthesis**: PASSED (Vivado, Quartus, Yosys)
 
+## Synthesis Characterization
+
+The UART IP has been characterized for area and performance across multiple FPGA architectures. Results are shown for the three bus interface wrappers.
+
+### Resource Utilization (Xilinx Artix-7)
+Target Part: `xc7a35tcpg236-1`
+
+| Interface | LUTs | Flip-Flops |
+|-----------|------|------------|
+| **APB**   | 611  | 618        |
+| **AXI4-Lite**| 628 | 656        |
+| **Wishbone**| 614 | 619        |
+
+### Resource Utilization (iCE40 / Yosys)
+Synthesis Tool: `Yosys` with `synth_ice40`
+
+| Interface | LUT4s | Flip-Flops |
+|-----------|-------|------------|
+| **APB**   | 906   | 647        |
+| **AXI4-Lite**| 911  | 685        |
+| **Wishbone**| 904  | 648        |
+
 ## Formal Verification
 The IP includes a comprehensive formal verification suite using SymbiYosys.
 - **Core Properties**: FIFO invariants, Level tracking, Overflow protection.

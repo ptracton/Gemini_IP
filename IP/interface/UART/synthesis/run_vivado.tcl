@@ -26,6 +26,7 @@ if { [string match "*_vhd" $target_design] } {
         read_vhdl -vhdl2008 $ip_root/IP/common/lib/rtl/wb_slave_adapter.vhd
     }
 } else {
+    read_verilog -sv $ip_root/IP/common/sync_fifo/rtl/verilog/sync_fifo.sv
     read_verilog -sv $ip_root/IP/interface/UART/rtl/verilog/uart_core.sv
     read_verilog -sv $ip_root/IP/interface/UART/rtl/verilog/${target_design}.sv
     set top_module $target_design

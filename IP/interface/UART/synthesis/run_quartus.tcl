@@ -30,6 +30,7 @@ if { [string match "*_vhd" $target_design] } {
         set_global_assignment -name VHDL_FILE $ip_root/IP/common/lib/rtl/wb_slave_adapter.vhd
     }
 } else {
+    set_global_assignment -name SYSTEMVERILOG_FILE $ip_root/IP/common/sync_fifo/rtl/verilog/sync_fifo.sv
     set_global_assignment -name SYSTEMVERILOG_FILE $ip_root/IP/interface/UART/rtl/verilog/uart_core.sv
     set_global_assignment -name SYSTEMVERILOG_FILE $ip_root/IP/interface/UART/rtl/verilog/${target_design}.sv
     set top_module $target_design

@@ -20,6 +20,7 @@ if { [string match "*_vhd" $target_design] } {
     
     yosys ghdl --std=08 {*}$vhdl_files -e ${base_design}
 } else {
+    yosys read_verilog -sv $ip_root/IP/common/sync_fifo/rtl/verilog/sync_fifo.sv
     yosys read_verilog -sv $ip_root/IP/interface/UART/rtl/verilog/uart_core.sv
     if { [string match "uart_axi" $target_design] } {
         yosys read_verilog -sv $ip_root/IP/common/lib/rtl/axi4lite_slave_adapter.sv
