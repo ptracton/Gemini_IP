@@ -34,6 +34,7 @@ This script will:
 ### Interface
 - **[GPIO](IP/interface/GPIO/README.md)**: Configurable GPIO with Interrupts, PWM, Debouncing, and multi-bus support.
 - **[SPI Master](IP/interface/SPI_Master/README.md)**: Configurable SPI Master with FIFOs, programmable word length, and support for AXI4-Lite, APB4, and Wishbone.
+- **[UART](IP/interface/UART/README.md)**: Universal Asynchronous Receiver/Transmitter with configurable baud rate, FIFOs, RS-485, DMA, and multi-bus support.
 
 ### Common
 - **[General Timer](IP/common/general_timer/README.md)**: A 32-bit configurable timer with PWM, Input Capture, Prescaler, and multi-bus support (AXI/APB/WB).
