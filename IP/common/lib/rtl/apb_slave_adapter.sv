@@ -1,4 +1,4 @@
-`timescale 1ps / 1ps
+
 //------------------------------------------------------------------------------
 // File: apb_slave_adapter.sv
 // Description: Generic APB4 Slave Adapter.
@@ -7,6 +7,8 @@
 // Author: Gemini-3 AI
 // License: MIT
 //------------------------------------------------------------------------------
+
+
 
 module apb_slave_adapter #(
     parameter int ADDR_WIDTH = 32,

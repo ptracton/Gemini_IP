@@ -33,6 +33,7 @@ This script will:
 
 ### Interface
 - **[GPIO](IP/interface/GPIO/README.md)**: Configurable GPIO with Interrupts, PWM, Debouncing, and multi-bus support.
+- **[SPI Master](IP/interface/SPI_Master/README.md)**: Configurable SPI Master with FIFOs, programmable word length, and support for AXI4-Lite, APB4, and Wishbone.
 
 ### Common
 - **[General Timer](IP/common/general_timer/README.md)**: A 32-bit configurable timer with PWM, Input Capture, Prescaler, and multi-bus support (AXI/APB/WB).
@@ -41,17 +42,17 @@ This script will:
 
 ## Feature Overview
 
-| Feature | Sync FIFO | GPIO | Timer | UART |
-|---------|-----------|------|-------|------|
-| AXI4-Lite| [x] | [x] | [x] | [x] |
-| APB | [x] | [x] | [x] | [x] |
-| Wishbone | [x] | [x] | [x] | [x] |
-| AHB-Lite | [x] | [ ] | [ ] | [ ] |
-| SystemVerilog | [x] | [x] | [x] | [x] |
-| VHDL-2008 | [x] | [x] | [x] | [x] |
-| Cocotb | [x] | [x] | [x] | [x] |
-| UVM | [ ] | [x] | [ ] | [x] |
-| Synthesis | [x] | [x] | [x] | [x] |
+| Feature | Sync FIFO | GPIO | Timer | UART | SPI |
+|---------|-----------|------|-------|------|-----|
+| AXI4-Lite| [x] | [x] | [x] | [x] | [x] |
+| APB | [x] | [x] | [x] | [x] | [x] |
+| Wishbone | [x] | [x] | [x] | [x] | [x] |
+| AHB-Lite | [x] | [ ] | [ ] | [ ] | [ ] |
+| SystemVerilog | [x] | [x] | [x] | [x] | [x] |
+| VHDL-2008 | [x] | [x] | [x] | [x] | [x] |
+| Cocotb | [x] | [x] | [x] | [x] | [x] |
+| UVM | [ ] | [x] | [ ] | [x] | [ ] |
+| Synthesis | [x] | [x] | [x] | [x] | [ ] |
 
 ## Running Verifications & Tools
 
@@ -64,6 +65,7 @@ Please refer to the specific IP documentation for detailed instructions on runni
 - **[Bus Matrix Verification Guide](IP/common/bus_matrix/README.md#verification-status)**
 - **[Sync FIFO Verification Guide](IP/common/sync_fifo/README.md#verification)**
 - **[UART Verification Guide](IP/interface/UART/README.md#verification-status)**
+- **[SPI Master Verification Guide](IP/interface/SPI_Master/README.md#verification-results)**
 
 ## Development Standards
 

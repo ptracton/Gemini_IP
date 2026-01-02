@@ -70,12 +70,11 @@ package body axi_bfm_pkg is
 
     loop
       wait until rising_edge(clk);
-      wait for 1 ns;
       if awready = '1' then
-        awvalid <= '0' after CLK_PERIOD;
+        awvalid <= '0';
       end if;
       if wready = '1' then
-        wvalid <= '0' after CLK_PERIOD;
+        wvalid <= '0';
       end if;
       if bvalid = '1' then
         bready <= '0';
@@ -103,9 +102,8 @@ package body axi_bfm_pkg is
 
     loop
       wait until rising_edge(clk);
-      wait for 1 ns;
       if arready = '1' then
-        arvalid <= '0' after CLK_PERIOD;
+        arvalid <= '0';
       end if;
       if rvalid = '1' then
         data := rdata;

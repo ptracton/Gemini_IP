@@ -13,45 +13,43 @@
 //   - Clock is 'wb_clk_i'
 //------------------------------------------------------------------------------
 
-    // Wishbone Write Task
-    // Wishbone Write Task
-    task wb_write(input [31:0] addr, input [31:0] data);
-        @(posedge wb_clk_i); // Sync to clock
-        wb_adr_i <= addr;
-        wb_dat_i <= data;
-        wb_we_i  <= 1;
-        wb_cyc_i <= 1;
-        wb_stb_i <= 1;
-        wb_sel_i <= 4'hF;
-        wb_cti_i <= 3'b000;
-        wb_bte_i <= 2'b00;
-        
-        do begin
-            @(posedge wb_clk_i);
-        end while (wb_ack_o === 1'b0);
+// Wishbone Write Task
+// Wishbone Write Task
+task wb_write(input [31:0] addr, input [31:0] data);
+  @(posedge wb_clk_i);  // Sync to clock
+  wb_adr_i <= addr;
+  wb_dat_i <= data;
+  wb_we_i  <= 1;
+  wb_cyc_i <= 1;
+  wb_stb_i <= 1;
+  wb_sel_i <= 4'hF;
+  wb_cti_i <= 3'b000;
+  wb_bte_i <= 2'b00;
 
-        wb_cyc_i <= 0;
-        wb_stb_i <= 0;
-        wb_we_i  <= 0;
-        wb_adr_i <= 32'h0;
-        wb_dat_i <= 32'h0;
-    endtask
+  do begin
+    @(posedge wb_clk_i);
+  end while (wb_ack_o === 1'b0);
 
-    // Wishbone Read Task
-    task wb_read(input [31:0] addr, output [31:0] data);
-        @(posedge wb_clk_i); // Sync to clock
-        wb_adr_i <= addr;
-        wb_we_i  <= 0;
-        wb_cyc_i <= 1;
-        wb_stb_i <= 1;
-        wb_sel_i <= 4'hF;
-        
-        do begin
-            @(posedge wb_clk_i);
-        end while (wb_ack_o === 1'b0);
+  wb_cyc_i <= 0;
+  wb_stb_i <= 0;
+  wb_we_i  <= 0;
+  wb_adr_i <= 32'h0;
+  wb_dat_i <= 32'h0;
+endtask
 
-        data = wb_dat_o; // Sample data before clearing
-        wb_cyc_i <= 0;
-        wb_stb_i <= 0;
-        wb_adr_i <= 32'h0;
-    endtask
+// Wishbone Read Task
+task wb_read(input [31:0] addr, output [31:0] data);
+  @(posedge wb_clk_i);  // Sync to clock
+  wb_adr_i <= addr;
+  wb_we_i  <= 0;
+  wb_cyc_i <= 1;
+  wb_stb_i <= 1;
+  wb_sel_i <= 4'hF;
+
+  wait (wb_ack_o);
+  data = wb_dat_o;
+  @(posedge wb_clk_i);
+  wb_cyc_i <= 0;
+  wb_stb_i <= 0;
+  wb_adr_i <= 32'h0;
+endtask

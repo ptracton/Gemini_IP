@@ -67,7 +67,6 @@ package body apb_bfm_pkg is
 
     loop
       wait until rising_edge(clk);
-      wait for 1 ns;
       if pready_i = '1' then
         exit;
       end if;
@@ -100,7 +99,6 @@ package body apb_bfm_pkg is
 
     loop
       wait until rising_edge(clk);
-      wait for 1 ns;
       if pready_i = '1' then
         data := prdata_i;
         exit;

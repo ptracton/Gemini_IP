@@ -64,7 +64,6 @@ package body wb_bfm_pkg is
 
     loop
       wait until rising_edge(clk);
-      wait for 1 ns;
       if wb_ack = '1' then
         exit;
       end if;
@@ -96,7 +95,6 @@ package body wb_bfm_pkg is
 
     loop
       wait until rising_edge(clk);
-      wait for 1 ns;
       if wb_ack = '1' then
         data := wb_dat_out;
         exit;
