@@ -43,7 +43,11 @@ module spi_master_registers #(
     output logic spi_cs_n,
     output logic intr,
     output logic dma_tx_req,
-    output logic dma_rx_req
+    output logic dma_rx_req,
+
+    // External Inputs
+    input logic dma_tx_ack,
+    input logic dma_rx_ack
 );
 
   // Register Offsets
@@ -108,20 +112,32 @@ module spi_master_registers #(
               $time
           );
       end
-      ADDR_SR:        reg_rdata = {28'h0, rx_almost_empty, tx_almost_full, rx_empty, busy};
-      ADDR_CR:        reg_rdata = reg_cr;
-      ADDR_CR1:       reg_rdata = reg_cr1;
-      ADDR_CS:        reg_rdata = reg_cs;
+      // Status Register (SR) Layout:
+      // [0]: Busy
+      // [1]: RX Empty
+      // [2]: TX Almost Full
+      // [3]: RX Almost Empty
+      // [4]: DMA TX Ack (Monitor)
+      // [5]: DMA RX Ack (Monitor)
+      ADDR_SR:
+      reg_rdata = {26'h0, dma_rx_ack, dma_tx_ack, rx_almost_empty, tx_almost_full, rx_empty, busy};
+      ADDR_CR: reg_rdata = reg_cr;
+      ADDR_CR1: reg_rdata = reg_cr1;
+      ADDR_CS: reg_rdata = reg_cs;
       ADDR_FIFO_STAT: reg_rdata = {31'h0, tx_full};  // Simplified status
       ADDR_FIFO_CTRL: reg_rdata = reg_fifo_ctrl;
-      default:        reg_rdata = 32'h0;
+      default: reg_rdata = 32'h0;
     endcase
   end
 
   // External Signal Assignments
   assign spi_cs_n   = reg_cs[0];
   assign intr       = done_intr;
-  assign dma_tx_req = !tx_almost_full;
-  assign dma_rx_req = !rx_empty;
+
+  // DMA Request Logic (Standard Handshake)
+  // Request is asserted when condition is met (Need Data / Have Data) AND Ack is NOT asserted.
+  // This allows the DMA controller to clear the request by asserting Ack.
+  assign dma_tx_req = !tx_almost_full && !dma_tx_ack;
+  assign dma_rx_req = !rx_empty && !dma_rx_ack;
 
 endmodule

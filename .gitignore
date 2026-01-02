@@ -268,3 +268,7 @@ joined_coverage_repo/
 !IP/interface/UART/verif/formal/*.sv
 !IP/interface/UART/verif/formal/*.sh
 !IP/interface/UART/verif/uvm/env/
+
+# Allow SPI Master UVM
+!IP/interface/SPI_Master/verif/uvm/
+

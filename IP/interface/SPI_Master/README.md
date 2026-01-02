@@ -12,6 +12,7 @@ The SPI Master IP is a flexible, high-performance Serial Peripheral Interface (S
 - **FWFT Mode**: First-Word-Fall-Through FIFOs for zero-latency data access.
 - **Loopback Mode**: Internal digital loopback for self-testing.
 - **Interrupts**: Assertion of interrupt on transfer completion.
+- **DMA Support**: Dedicated TX and RX Request/Acknowledge handshake signals.
 - **Multi-Bus Support**: Wrappers for APB, AXI4-Lite, and Wishbone.
 - **Dual Language Support**: Available in both SystemVerilog and VHDL.
 
@@ -90,6 +91,13 @@ cd tools
 ./run_lint.sh
 ```
 
+To run Cocotb verification (Python-based tests):
+
+```bash
+cd verif/cocotb
+./run_cocotb.sh
+```
+
 ## Register Map
 
 The standard register offset map is common across all bus interfaces:
@@ -126,6 +134,8 @@ The standard register offset map is common across all bus interfaces:
 | 1 | RX Empty | RX FIFO is empty | RO |
 | 2 | TX Almost Full | TX FIFO is almost full (threshold) | RO |
 | 3 | RX Almost Empty | RX FIFO is almost empty (threshold) | RO |
+| 4 | DMA TX Ack | DMA TX Acknowledge Signal Status | RO |
+| 5 | DMA RX Ack | DMA RX Acknowledge Signal Status | RO |
 
 ### Chip Select Transmit (CS) - Offset 0x0C
 | Bit | Name | Description | Access | Default |
@@ -142,3 +152,17 @@ The standard register offset map is common across all bus interfaces:
 The IP has been verified using a unified regression suite covering both languages.
 
 See [spi_master_regression_results.md](./spi_master_regression_results.md) for detailed verification status.
+
+### UVM Verification
+A comprehensive UVM environment is available in `verif/uvm`. It achieves **~88.5% Line Coverage** and validates core protocols, DMA handshakes, and register maps.
+
+To run the UVM regression:
+```bash
+cd verif/uvm
+./run_uvm.sh
+```
+
+To run the Python-based regression suite (Lint, Sim, Cocotb, UVM):
+```bash
+./tools/run_regression.py
+```

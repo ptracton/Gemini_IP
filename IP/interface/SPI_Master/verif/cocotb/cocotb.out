@@ -1,0 +1,190 @@
+Running SPI Master Core Test...
+rm -f results.xml
+"make" -f Makefile results.xml
+make[1]: Entering directory '/home/ptracton/src/Gemini_IP/IP/interface/SPI_Master/verif/cocotb'
+/home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/lib/python3.12/site-packages/cocotb_tools/makefiles/simulators/Makefile.verilator:69: Using MODULE is deprecated, please use COCOTB_TEST_MODULES instead.
+rm -f results.xml
+COCOTB_TEST_MODULES=test_core COCOTB_TESTCASE= COCOTB_TEST_FILTER= COCOTB_TOPLEVEL=spi_master_core TOPLEVEL_LANG=verilog \
+         sim_build_CORE/Vtop     
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:93   in _embed_init_python              Using Python 3.12.4 interpreter at /home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/bin/python
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Verilator version 5.043 devel
+     0.00ns INFO     cocotb                             Seeding Python random module with 1767387435
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/lib/python3.12/site-packages/cocotb
+     0.00ns INFO     cocotb.regression                  pytest not found, install it to enable better AssertionError messages
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test_core.test_spi_core_basic (1/2)
+                                                            Test basic SPI transfer via FIFOs
+     0.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/interface/SPI_Master/verif/cocotb/test_core.py:48: DeprecationWarning: The 'units' argument has been renamed to 'unit'.
+                                                          cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
+     0.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/interface/SPI_Master/verif/cocotb/test_core.py:8: DeprecationWarning: The 'units' argument has been renamed to 'unit'.
+                                                          await Timer(duration_ns, units="ns")
+    60.00ns INFO     cocotb.spi_master_core             Wrote 0xa5 to TX FIFO
+   750.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/interface/SPI_Master/verif/cocotb/test_core.py:37: DeprecationWarning: `logic_array.integer` getter is deprecated. Use `logic_array.to_unsigned()` instead.
+                                                          data = dut.rx_data.value.integer
+   760.00ns INFO     cocotb.spi_master_core             Read 0xa5 from RX FIFO
+   760.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/interface/SPI_Master/verif/cocotb/test_core.py:79: DeprecationWarning: The 'units' argument has been renamed to 'unit'.
+                                                          await Timer(100, units="ns")
+   860.00ns INFO     cocotb.regression                  test_core.test_spi_core_basic passed
+   860.00ns INFO     cocotb.regression                  running test_core.test_spi_core_random (2/2)
+                                                            Randomized SPI transfers
+   860.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/interface/SPI_Master/verif/cocotb/test_core.py:84: DeprecationWarning: The 'units' argument has been renamed to 'unit'.
+                                                          cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
+  8710.00ns INFO     cocotb.spi_master_core             Random Test Passed
+  8710.00ns INFO     cocotb.regression                  test_core.test_spi_core_random passed
+  8710.00ns INFO     cocotb.regression                  ****************************************************************************************
+                                                        ** TEST                            STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        ****************************************************************************************
+                                                        ** test_core.test_spi_core_basic    PASS         860.00           0.00     426673.93  **
+                                                        ** test_core.test_spi_core_random   PASS        7850.00           0.01     640495.01  **
+                                                        ****************************************************************************************
+                                                        ** TESTS=2 PASS=2 FAIL=0 SKIP=0                 8710.00           0.02     565683.28  **
+                                                        ****************************************************************************************
+- :0: Verilog $finish
+make[1]: Leaving directory '/home/ptracton/src/Gemini_IP/IP/interface/SPI_Master/verif/cocotb'
+Running SPI Master APB Test...
+rm -f results.xml
+"make" -f Makefile results.xml
+make[1]: Entering directory '/home/ptracton/src/Gemini_IP/IP/interface/SPI_Master/verif/cocotb'
+/home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/lib/python3.12/site-packages/cocotb_tools/makefiles/simulators/Makefile.verilator:69: Using MODULE is deprecated, please use COCOTB_TEST_MODULES instead.
+rm -f results.xml
+COCOTB_TEST_MODULES=test_apb COCOTB_TESTCASE= COCOTB_TEST_FILTER= COCOTB_TOPLEVEL=spi_master_apb TOPLEVEL_LANG=verilog \
+         sim_build_APB/Vtop     
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:93   in _embed_init_python              Using Python 3.12.4 interpreter at /home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/bin/python
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Verilator version 5.043 devel
+     0.00ns INFO     cocotb                             Seeding Python random module with 1767387436
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/lib/python3.12/site-packages/cocotb
+     0.00ns INFO     cocotb.regression                  pytest not found, install it to enable better AssertionError messages
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test_apb.test_apb_basic (1/1)
+                                                            Test APB Interface using APB_Interface Driver
+     0.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/interface/SPI_Master/verif/cocotb/test_apb.py:27: DeprecationWarning: The 'units' argument has been renamed to 'unit'.
+                                                          cocotb.start_soon(Clock(dut.pclk, 10, units="ns").start())
+     0.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/common/lib/verif/cocotb/bus_drivers.py:21: DeprecationWarning: The 'units' argument has been renamed to 'unit'.
+                                                          await Timer(100, units="ns")
+   100.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/common/lib/verif/cocotb/bus_drivers.py:23: DeprecationWarning: The 'units' argument has been renamed to 'unit'.
+                                                          await Timer(100, units="ns")
+   250.00ns INFO     cocotb.spi_master_apb              Wrote 0x55 to TX FIFO via APB
+   260.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/common/lib/verif/cocotb/bus_drivers.py:128: DeprecationWarning: `logic_array.integer` getter is deprecated. Use `logic_array.to_unsigned()` instead.
+                                                          data = self._sig("rdata").value.integer
+   270.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/interface/SPI_Master/verif/cocotb/test_apb.py:62: DeprecationWarning: The 'units' argument has been renamed to 'unit'.
+                                                          await Timer(10, units="ns")
+   970.00ns INFO     cocotb.spi_master_apb              Read 0x55 from RX FIFO via APB
+   970.00ns INFO     cocotb.regression                  test_apb.test_apb_basic passed
+   970.00ns INFO     cocotb.regression                  **************************************************************************************
+                                                        ** TEST                          STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        **************************************************************************************
+                                                        ** test_apb.test_apb_basic        PASS         970.00           0.00     226214.89  **
+                                                        **************************************************************************************
+                                                        ** TESTS=1 PASS=1 FAIL=0 SKIP=0                970.00           0.01     193221.64  **
+                                                        **************************************************************************************
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000055 reg_rdata=00000055 at time               950000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000055 reg_rdata=00000055 at time               955000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000055 reg_rdata=00000055 at time               955000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000055 reg_rdata=00000055 at time               960000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000055 reg_rdata=00000055 at time               960000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000000 reg_rdata=00000000 at time               960000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000000 reg_rdata=00000000 at time               960000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000000 reg_rdata=00000000 at time               965000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000000 reg_rdata=00000000 at time               965000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000000 reg_rdata=00000000 at time               970000
+- :0: Verilog $finish
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000000 reg_rdata=00000000 at time               970000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000000 reg_rdata=00000000 at time               970000
+make[1]: Leaving directory '/home/ptracton/src/Gemini_IP/IP/interface/SPI_Master/verif/cocotb'
+Running SPI Master AXI Test...
+rm -f results.xml
+"make" -f Makefile results.xml
+make[1]: Entering directory '/home/ptracton/src/Gemini_IP/IP/interface/SPI_Master/verif/cocotb'
+/home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/lib/python3.12/site-packages/cocotb_tools/makefiles/simulators/Makefile.verilator:69: Using MODULE is deprecated, please use COCOTB_TEST_MODULES instead.
+rm -f results.xml
+COCOTB_TEST_MODULES=test_axi COCOTB_TESTCASE= COCOTB_TEST_FILTER= COCOTB_TOPLEVEL=spi_master_axi TOPLEVEL_LANG=verilog \
+         sim_build_AXI/Vtop     
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:93   in _embed_init_python              Using Python 3.12.4 interpreter at /home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/bin/python
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Verilator version 5.043 devel
+     0.00ns INFO     cocotb                             Seeding Python random module with 1767387438
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/lib/python3.12/site-packages/cocotb
+     0.00ns INFO     cocotb.regression                  pytest not found, install it to enable better AssertionError messages
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test_axi.test_axi_basic (1/1)
+                                                            Test AXI Interface using AXI4Lite_Interface Driver
+     0.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/interface/SPI_Master/verif/cocotb/test_axi.py:26: DeprecationWarning: The 'units' argument has been renamed to 'unit'.
+                                                          cocotb.start_soon(Clock(dut.aclk, 10, units="ns").start())
+     0.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/common/lib/verif/cocotb/bus_drivers.py:21: DeprecationWarning: The 'units' argument has been renamed to 'unit'.
+                                                          await Timer(100, units="ns")
+   100.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/common/lib/verif/cocotb/bus_drivers.py:23: DeprecationWarning: The 'units' argument has been renamed to 'unit'.
+                                                          await Timer(100, units="ns")
+   310.00ns INFO     cocotb.spi_master_axi              Wrote 0x55 to TX FIFO via AXI
+   340.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/common/lib/verif/cocotb/bus_drivers.py:74: DeprecationWarning: `logic_array.integer` getter is deprecated. Use `logic_array.to_unsigned()` instead.
+                                                          data = self._sig("rdata").value.integer
+   350.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/interface/SPI_Master/verif/cocotb/test_axi.py:58: DeprecationWarning: The 'units' argument has been renamed to 'unit'.
+                                                          await Timer(10, units="ns")
+  1070.00ns INFO     cocotb.spi_master_axi              Read 0x55 from RX FIFO via AXI
+  1070.00ns INFO     cocotb.regression                  test_axi.test_axi_basic passed
+  1070.00ns INFO     cocotb.regression                  **************************************************************************************
+                                                        ** TEST                          STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        **************************************************************************************
+                                                        ** test_axi.test_axi_basic        PASS        1070.00           0.00     256613.03  **
+                                                        **************************************************************************************
+                                                        ** TESTS=1 PASS=1 FAIL=0 SKIP=0               1070.00           0.01     213313.62  **
+                                                        **************************************************************************************
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000055 reg_rdata=00000055 at time              1040000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000055 reg_rdata=00000055 at time              1045000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000055 reg_rdata=00000055 at time              1045000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000055 reg_rdata=00000055 at time              1050000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000055 reg_rdata=00000055 at time              1050000
+- :0: Verilog $finish
+make[1]: Leaving directory '/home/ptracton/src/Gemini_IP/IP/interface/SPI_Master/verif/cocotb'
+Running SPI Master Wishbone Test...
+rm -f results.xml
+"make" -f Makefile results.xml
+make[1]: Entering directory '/home/ptracton/src/Gemini_IP/IP/interface/SPI_Master/verif/cocotb'
+/home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/lib/python3.12/site-packages/cocotb_tools/makefiles/simulators/Makefile.verilator:69: Using MODULE is deprecated, please use COCOTB_TEST_MODULES instead.
+rm -f results.xml
+COCOTB_TEST_MODULES=test_wb COCOTB_TESTCASE= COCOTB_TEST_FILTER= COCOTB_TOPLEVEL=spi_master_wb TOPLEVEL_LANG=verilog \
+         sim_build_WB/Vtop     
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:93   in _embed_init_python              Using Python 3.12.4 interpreter at /home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/bin/python
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Verilator version 5.043 devel
+     0.00ns INFO     cocotb                             Seeding Python random module with 1767387439
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /home/ptracton/src/Gemini_IP/virtualenv/GEMINI_IP_PYTHON/lib/python3.12/site-packages/cocotb
+     0.00ns INFO     cocotb.regression                  pytest not found, install it to enable better AssertionError messages
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test_wb.test_wb_basic (1/1)
+                                                            Test Wishbone Interface using Wishbone_Interface Driver
+     0.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/interface/SPI_Master/verif/cocotb/test_wb.py:26: DeprecationWarning: The 'units' argument has been renamed to 'unit'.
+                                                          cocotb.start_soon(Clock(dut.clk_i, 10, units="ns").start())
+     0.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/common/lib/verif/cocotb/bus_drivers.py:153: DeprecationWarning: The 'units' argument has been renamed to 'unit'.
+                                                          await Timer(100, units="ns")
+   100.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/common/lib/verif/cocotb/bus_drivers.py:155: DeprecationWarning: The 'units' argument has been renamed to 'unit'.
+                                                          await Timer(100, units="ns")
+   260.00ns INFO     cocotb.spi_master_wb               Wrote 0x55 to TX FIFO via Wishbone
+   270.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/common/lib/verif/cocotb/bus_drivers.py:183: DeprecationWarning: `logic_array.integer` getter is deprecated. Use `logic_array.to_unsigned()` instead.
+                                                          data = self._sig("dat_o").value.integer
+   280.00ns WARNING  py.warnings                        /home/ptracton/src/Gemini_IP/IP/interface/SPI_Master/verif/cocotb/test_wb.py:59: DeprecationWarning: The 'units' argument has been renamed to 'unit'.
+                                                          await Timer(10, units="ns")
+   980.00ns INFO     cocotb.spi_master_wb               Read 0x55 from RX FIFO via Wishbone
+   980.00ns INFO     cocotb.regression                  test_wb.test_wb_basic passed
+   980.00ns INFO     cocotb.regression                  **************************************************************************************
+                                                        ** TEST                          STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        **************************************************************************************
+                                                        ** test_wb.test_wb_basic          PASS         980.00           0.00     210833.91  **
+                                                        **************************************************************************************
+                                                        ** TESTS=1 PASS=1 FAIL=0 SKIP=0                980.00           0.01     180013.05  **
+                                                        **************************************************************************************
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000055 reg_rdata=00000055 at time               960000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000055 reg_rdata=00000055 at time               965000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000055 reg_rdata=00000055 at time               965000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000055 reg_rdata=00000055 at time               970000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000055 reg_rdata=00000055 at time               970000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000000 reg_rdata=00000000 at time               970000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000000 reg_rdata=00000000 at time               975000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000000 reg_rdata=00000000 at time               975000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000000 reg_rdata=00000000 at time               980000
+- :0: Verilog $finish
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000000 reg_rdata=00000000 at time               980000
+REG_READ: ADDR_DATA reg_addr=00000000 rx_data=00000000 reg_rdata=00000000 at time               980000
+make[1]: Leaving directory '/home/ptracton/src/Gemini_IP/IP/interface/SPI_Master/verif/cocotb'
+Cocotb Regression PASSED

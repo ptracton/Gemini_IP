@@ -37,11 +37,15 @@ def main():
         {"name": "Native Sim (VHDL/Xilinx)", "cmd": ["./sim/xilinx/run_xsim_vhdl.sh"], "cwd": ip_dir},
     ]
 
-    # Add Cocotb tests only if Makefile exists
+    # Add Cocotb tests only if script exists
     cocotb_dir = os.path.join(ip_dir, "verif/cocotb")
-    if os.path.exists(os.path.join(cocotb_dir, "Makefile")):
-        tests.insert(3, {"name": "Cocotb Sim (SV/Verilator)", "cmd": ["make", "SIM=verilator", "TOPLEVEL_LANG=verilog"], "cwd": cocotb_dir})
-        tests.insert(4, {"name": "Cocotb Sim (VHDL/GHDL)", "cmd": ["make", "SIM=ghdl", "TOPLEVEL_LANG=vhdl"], "cwd": cocotb_dir})
+    if os.path.exists(os.path.join(cocotb_dir, "run_cocotb.sh")):
+        tests.append({"name": "Cocotb Verification", "cmd": ["./run_cocotb.sh"], "cwd": cocotb_dir})
+
+    # Add UVM tests only if script exists
+    uvm_dir = os.path.join(ip_dir, "verif/uvm")
+    if os.path.exists(os.path.join(uvm_dir, "run_uvm.sh")):
+        tests.append({"name": "UVM Verification", "cmd": ["./run_uvm.sh"], "cwd": uvm_dir})
 
     results = []
     print(f"Starting SPI Master IP Regression at {datetime.now()}")

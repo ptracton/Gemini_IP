@@ -1,10 +1,10 @@
 # SPI Master IP Regression Results
 
-Date: 2026-01-01 19:10:00
+Date: 2026-01-02 14:07:49
 
 | Test Name | Status |
 |-----------|--------|
-| Lint (SV/Verilator & VHDL/GHDL) | PASS |
+| Lint (SV/Verilator) | PASS |
 | Native Sim (SV/Icarus) | PASS |
 | Native Sim (VHDL/GHDL) | PASS |
 | Formal Verification (SymbiYosys) | PASS |
@@ -12,6 +12,16 @@ Date: 2026-01-01 19:10:00
 | Native Sim (VHDL/ModelSim) | PASS |
 | Native Sim (SV/Xilinx) | PASS |
 | Native Sim (VHDL/Xilinx) | PASS |
+| Cocotb Verification | PASS |
+| UVM Verification | PASS |
 
 ## Detailed Results
-Passed: 8/8
+Passed: 10/10
+
+## Code Coverage (UVM)
+- **Line Coverage**: 88.51%
+- **Branch Coverage**: 17.74%
+- **Toggle Coverage**: 18.90%
+- **Condition Coverage**: 13.22%
+
+*Report generated at: `verif/uvm/coverage_report_regression/index.html`*

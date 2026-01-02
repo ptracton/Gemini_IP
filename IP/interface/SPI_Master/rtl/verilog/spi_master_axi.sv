@@ -148,7 +148,9 @@ module spi_master_axi #(
       .spi_cs_n(spi_cs_n),
       .intr(intr),
       .dma_tx_req(dma_tx_req),
-      .dma_rx_req(dma_rx_req)
+      .dma_rx_req(dma_rx_req),
+      .dma_tx_ack(dma_tx_ack),
+      .dma_rx_ack(dma_rx_ack)
   );
 
   // SPI Core
