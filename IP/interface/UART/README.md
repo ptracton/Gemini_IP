@@ -125,6 +125,15 @@ Target Part: `xc7a35tcpg236-1`
 | **AXI4-Lite**| 628 | 656        |
 | **Wishbone**| 614 | 619        |
 
+### Resource Utilization (Intel Cyclone V)
+Target Device: `5CGXFC7C7F23C8` (Quartus Prime)
+
+| Interface | Logic Cells | RAM Segments |
+|-----------|-------------|--------------|
+| **APB**   | 736         | 17           |
+| **AXI4-Lite**| 756        | 17           |
+| **Wishbone**| 743        | 17           |
+
 ### Resource Utilization (iCE40 / Yosys)
 Synthesis Tool: `Yosys` with `synth_ice40`
 
