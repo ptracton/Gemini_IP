@@ -3,13 +3,8 @@
 # Runs all simulations (SV & VHDL) across available tools.
 
 if [ -z "$GEMINI_IP_ROOT" ]; then
-    SETUP_FILE="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../../" && pwd)/setup.sh"
-    if [ -f "$SETUP_FILE" ]; then
-        source "$SETUP_FILE"
-    else
-        echo "Error: GEMINI_IP_ROOT is not set and setup.sh not found."
-        exit 1
-    fi
+    echo "Error: GEMINI_IP_ROOT is not set. Please source setup.sh before running this script."
+    exit 1
 fi
 
 SIM_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -113,6 +108,23 @@ if command -v vsim &> /dev/null; then
     fi
 else
     echo "[SKIPPED] ModelSim (vsim) not found."
+fi
+
+# 5. Cocotb Verification
+echo "Step 5: Cocotb Verification"
+cd "$SIM_DIR/../verif/cocotb"
+if [ -f "run_cocotb.sh" ]; then
+    chmod +x run_cocotb.sh
+    # Source setup inside if needed, but run_cocotb.sh sources it.
+    ./run_cocotb.sh > cocotb.out 2>&1
+    if [ $? -eq 0 ]; then
+        echo "[PASS] Cocotb Verification"
+    else
+        echo "[FAIL] Cocotb Verification. Check log: $SIM_DIR/../verif/cocotb/cocotb.out"
+        FAILED=1
+    fi
+else
+    echo "[SKIPPED] Cocotb script not found."
 fi
 
 echo "========================================"

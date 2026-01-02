@@ -9,10 +9,6 @@ fi
 SIM_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SIM_DIR"
 
-# Generate Temp Timescale
-echo '`timescale 1ns / 1ps' > timescale.sv
-trap "rm -f timescale.sv" EXIT
-
 # Clean up
 rm -rf xsim.dir/ *.jou *.pb *.wdb
 
