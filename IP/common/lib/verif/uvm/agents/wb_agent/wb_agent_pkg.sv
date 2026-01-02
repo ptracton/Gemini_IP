@@ -1,3 +1,4 @@
+`timescale 1ps / 1ps
 /*
  * File: wb_agent_pkg.sv
  * Description: Wishbone Agent Package

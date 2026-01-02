@@ -5,7 +5,7 @@
  * Supports configurable baud rate, parity, stop bits, and interrupts.
  */
 
-`timescale 1ns / 1ps
+`timescale 1ps / 1ps
 
 module uart_core #(
     parameter DEFAULT_BAUD_DIV = 16'd27,  // Example for 115200 @ 50MHz

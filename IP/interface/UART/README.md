@@ -108,6 +108,7 @@ For detailed verification results, see [Regression Results](uart_regression_resu
 - **Lint**: PASSED (Verilator, GHDL)
 - **Native Sim**: PASSED (Icarus, GHDL)
 - **Functional**: PASSED (Cocotb regression suite)
+- **UVM**: PASSED (Comprehensive 9-test suite, **90.5% Core RTL Coverage**)
 - **Formal**: PASSED (SymbiYosys, Core + Bus Interfaces)
 - **Synthesis**: PASSED (Vivado, Quartus, Yosys)
 

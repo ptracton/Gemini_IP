@@ -41,17 +41,17 @@ This script will:
 
 ## Feature Overview
 
-| Feature | GPIO | General Timer | Bus Matrix | Sync FIFO |
-| :--- | :---: | :---: | :---: | :---: |
-| **AXI4-Lite** | ✅ | ✅ | ✅ | ✅ |
-| **APB4** | ✅ | ✅ | 🔗 (Bridge) | ✅ |
-| **AHB5-Lite** | ❌ | ❌ | ✅ | ✅ |
-| **Wishbone B4** | ✅ | ✅ | ✅ | ✅ |
-| **SystemVerilog** | ✅ | ✅ | ✅ | ✅ |
-| **VHDL-2008** | ✅ | ✅ | ✅ | ✅ |
-| **Formal (SVA)** | ✅ | ✅ | ✅ | ✅ |
-| **Regression Tool** | ✅ | ✅ | ✅ | ✅ |
-| **Synthesis (Vivado/Yosys)** | ✅ | ✅ | ✅ | ✅ |
+| Feature | Sync FIFO | GPIO | Timer | UART |
+|---------|-----------|------|-------|------|
+| AXI4-Lite| [x] | [x] | [x] | [x] |
+| APB | [x] | [x] | [x] | [x] |
+| Wishbone | [x] | [x] | [x] | [x] |
+| AHB-Lite | [x] | [ ] | [ ] | [ ] |
+| SystemVerilog | [x] | [x] | [x] | [x] |
+| VHDL-2008 | [x] | [x] | [x] | [x] |
+| Cocotb | [x] | [x] | [x] | [x] |
+| UVM | [ ] | [x] | [ ] | [x] |
+| Synthesis | [x] | [x] | [x] | [x] |
 
 ## Running Verifications & Tools
 
@@ -63,6 +63,7 @@ Please refer to the specific IP documentation for detailed instructions on runni
 - **[General Timer Verification Guide](IP/common/general_timer/README.md#verification-status)**
 - **[Bus Matrix Verification Guide](IP/common/bus_matrix/README.md#verification-status)**
 - **[Sync FIFO Verification Guide](IP/common/sync_fifo/README.md#verification)**
+- **[UART Verification Guide](IP/interface/UART/README.md#verification-status)**
 
 ## Development Standards
 

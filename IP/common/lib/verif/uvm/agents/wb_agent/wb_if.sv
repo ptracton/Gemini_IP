@@ -1,3 +1,4 @@
+`timescale 1ps / 1ps
 /*
  * File: wb_if.sv
  * Description: Wishbone B4 SystemVerilog Interface

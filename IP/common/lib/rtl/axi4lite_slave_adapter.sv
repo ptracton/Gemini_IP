@@ -1,3 +1,4 @@
+`timescale 1ps / 1ps
 //------------------------------------------------------------------------------
 // File: axi4lite_slave_adapter.sv
 // Description: Generic AXI4-Lite Slave Adapter.
@@ -119,14 +120,18 @@ module axi4lite_slave_adapter #(
   end
 
   // Read Data & Response
+  logic [DATA_WIDTH-1:0] rdata_reg;
+
   always_ff @(posedge aclk or negedge aresetn) begin
     if (!aresetn) begin
       s_axi_rvalid <= 1'b0;
       s_axi_rresp  <= 2'b0;
+      rdata_reg    <= '0;
     end else begin
       if (s_axi_arready && s_axi_arvalid && ~s_axi_rvalid) begin
         s_axi_rvalid <= 1'b1;
         s_axi_rresp  <= 2'b0;
+        rdata_reg    <= reg_rdata; // Capture data from slave
       end else if (s_axi_rready && s_axi_rvalid) begin
         s_axi_rvalid <= 1'b0;
       end
@@ -140,7 +145,7 @@ module axi4lite_slave_adapter #(
   assign reg_be    = s_axi_wstrb;
   assign reg_re    = s_axi_arready && s_axi_arvalid;
 
-  // Read Data Pass-through
-  assign s_axi_rdata = reg_rdata;
+  // Read Data Output
+  assign s_axi_rdata = rdata_reg;
 
 endmodule

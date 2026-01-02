@@ -261,6 +261,10 @@ joined_coverage_repo/
 # SymbiYosys (Formal)
 **/verif/formal/*/
 *.sby
-!IP/common/bus_matrix/verif/formal/*.sby
-!IP/common/bus_matrix/verif/formal/*.sv
-!IP/common/bus_matrix/verif/formal/*.sh
+!IP/common/bus_matrix/verif/formal/**
+
+# Allow UART Formal Verification
+!IP/interface/UART/verif/formal/*.sby
+!IP/interface/UART/verif/formal/*.sv
+!IP/interface/UART/verif/formal/*.sh
+!IP/interface/UART/verif/uvm/env/

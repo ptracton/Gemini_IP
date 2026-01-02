@@ -4,7 +4,7 @@
  * Wishbone B4 Wrapper for UART IP.
  */
 
-`timescale 1ns / 1ps
+`timescale 1ps / 1ps
 
 module uart_wb #(
     parameter DEFAULT_BAUD_DIV = 16'd27

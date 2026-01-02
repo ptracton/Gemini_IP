@@ -1,3 +1,4 @@
+`timescale 1ps / 1ps
 /*
  * File: sync_fifo.sv
  * Description: Synchronous FIFO with configurable width and depth.
