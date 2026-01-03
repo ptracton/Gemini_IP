@@ -40,6 +40,7 @@ This script will:
 - **[General Timer](IP/common/general_timer/README.md)**: A 32-bit configurable timer with PWM, Input Capture, Prescaler, and multi-bus support (AXI/APB/WB).
 - **[Bus Matrix](IP/common/bus_matrix/README.md)**: High-performance N:M interconnect supporting AXI4-Lite, AHB5-Lite, and Wishbone B4 with configurable arbitration and security firewall.
 - **[Sync FIFO](IP/common/sync_fifo/README.md)**: Generic synchronous FIFO with configurable width/depth, programmable thresholds, error flags, peak usage tracking, and multiple bus wrappers (AXI/APB/AHB/WB).
+- **[Single Port Memory](IP/common/sp_memory/README.md)**: High-performance single port memory with configurable width/depth, byte enables, and AXI4-Lite, APB4, Wishbone B4, and AHB-Lite support.
 
 ## Regression Summary
 
@@ -53,21 +54,22 @@ The entire project undergoes periodic full regression testing. Below is the late
 | **General Timer** | ✅ PASS | [Results](IP/common/general_timer/timer_regression_results.md) |
 | **Bus Matrix** | ✅ PASS | [Results](IP/common/bus_matrix/bus_matrix_regression_results.md) |
 | **Sync FIFO** | ✅ PASS | [Results](IP/common/sync_fifo/sync_fifo_regression_results.md) |
+| **SP Memory** | ✅ PASS | [Results](IP/common/sp_memory/sp_memory_regression_results.md) |
 
 **Overall Status: PASSED**
 ## Feature Overview
 
-| Feature | Bus Matrix | Sync FIFO | GPIO | Timer | UART | SPI |
-|---------|------------|-----------|------|-------|------|-----|
-| AXI4-Lite| [x] | [x] | [x] | [x] | [x] | [x] |
-| APB | [ ] | [x] | [x] | [x] | [x] | [x] |
-| Wishbone | [x] | [x] | [x] | [x] | [x] | [x] |
-| AHB-Lite | [x] | [x] | [ ] | [ ] | [ ] | [ ] |
-| SystemVerilog | [x] | [x] | [x] | [x] | [x] | [x] |
-| VHDL-2008 | [x] | [x] | [x] | [x] | [x] | [x] |
-| Cocotb | [x] | [x] | [x] | [x] | [x] | [x] |
-| UVM | [ ] | [ ] | [x] | [ ] | [x] | [x] |
-| Synthesis | [x] | [x] | [x] | [x] | [x] | [x] |
+| Feature | Bus Matrix | Sync FIFO | SP Memory | GPIO | Timer | UART | SPI |
+|---------|------------|-----------|-----------|------|-------|------|-----|
+| AXI4-Lite| [x] | [x] | [x] | [x] | [x] | [x] | [x] |
+| APB | [ ] | [x] | [x] | [x] | [x] | [x] | [x] |
+| Wishbone | [x] | [x] | [x] | [x] | [x] | [x] | [x] |
+| AHB-Lite | [x] | [x] | [x] | [ ] | [ ] | [ ] | [ ] |
+| SystemVerilog | [x] | [x] | [x] | [x] | [x] | [x] | [x] |
+| VHDL-2008 | [x] | [x] | [x] | [x] | [x] | [x] | [x] |
+| Cocotb | [x] | [x] | [x] | [x] | [x] | [x] | [x] |
+| UVM | [ ] | [ ] | [ ] | [x] | [x] | [x] |
+| Synthesis | [x] | [x] | [x] | [x] | [x] | [x] | [x] |
 
 ## Running Verifications & Tools
 
@@ -81,6 +83,7 @@ Please refer to the specific IP documentation for detailed instructions on runni
 - **[Sync FIFO Verification Guide](IP/common/sync_fifo/README.md#verification)**
 - **[UART Verification Guide](IP/interface/UART/README.md#verification-status)**
 - **[SPI Master Verification Guide](IP/interface/SPI_Master/README.md#verification-results)**
+- **[SP Memory Verification Guide](IP/common/sp_memory/README.md#verification)**
 
 ## Project Maintenance
 
