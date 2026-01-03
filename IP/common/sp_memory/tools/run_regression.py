@@ -25,6 +25,7 @@ def run_regression():
     iverilog_script = os.path.join(sim_dir, "iverilog/run_iverilog.sh")
     ghdl_script     = os.path.join(sim_dir, "ghdl/run_ghdl.sh")
     xilinx_script   = os.path.join(sim_dir, "xilinx/run_xilinx.sh")
+    modelsim_script = os.path.join(sim_dir, "modelsim/run_modelsim.sh")
     
     # Define Jobs
     jobs = [
@@ -42,6 +43,9 @@ def run_regression():
         RegressionJob("Xilinx_SV_Native", [xilinx_script, "Xilinx_SV_Native"]),
         RegressionJob("Xilinx_SV_AXI",    [xilinx_script, "Xilinx_SV_AXI"]),
         RegressionJob("Xilinx_VHDL_AXI",  [xilinx_script, "Xilinx_VHDL_AXI"]),
+
+        # ModelSim Tests (via script)
+        RegressionJob("ModelSim_Sweep",   [modelsim_script]),
 
         # Cocotb Tests
         RegressionJob("SV_Core_32",   ["/bin/bash", "-c", f"cd {verif_dir} && make clean && make SIM=verilator TOPLEVEL_LANG=verilog WIDTH=32"]),

@@ -40,16 +40,11 @@ module sp_memory #(
 
   // Extra storage for Parity (1 bit per byte)
   localparam PARITY_BITS = (PARITY) ? (WIDTH / 8) : 0;
-  logic [PARITY_BITS-1:0] mem_parity[DEPTH-1:0];
-
-  // Extra storage for ECC (7 bits for 32-bit width)
-  localparam ECC_BITS = (ECC && WIDTH == 32) ? 7 : 0;
-  logic [   ECC_BITS-1:0] mem_ecc     [DEPTH-1:0];
+  logic [PARITY_BITS-1:0] mem_parity  [DEPTH-1:0];
 
   // Internal Signals
   logic [      WIDTH-1:0] rdata_raw;
   logic [PARITY_BITS-1:0] rparity_raw;
-  logic [   ECC_BITS-1:0] recc_raw;
 
   // BIST Controller
   typedef enum logic [1:0] {
@@ -233,64 +228,75 @@ module sp_memory #(
         end
       end
       if (!we_mux && PARITY) rparity_raw <= mem_parity[addr_mux];
-      if (!we_mux && ECC_BITS > 0)
-        recc_raw <= mem_ecc[addr_mux];  // Ensure recc_raw is updated for all Techs
     end
   end
 
-  // ECC Encoding (32-bit -> 7-bit Hamming SECDED)
-  logic [ECC_BITS-1:0] ecc_code_in;
-  always_comb begin
-    if (ECC_BITS == 7) begin
-      ecc_code_in[0] = wdata_mux[0] ^ wdata_mux[1] ^ wdata_mux[3] ^ wdata_mux[4] ^ wdata_mux[6] ^ wdata_mux[8] ^ wdata_mux[10] ^ wdata_mux[11] ^ wdata_mux[13] ^ wdata_mux[15] ^ wdata_mux[17] ^ wdata_mux[19] ^ wdata_mux[21] ^ wdata_mux[23] ^ wdata_mux[25] ^ wdata_mux[26] ^ wdata_mux[28] ^ wdata_mux[30];
-      ecc_code_in[1] = wdata_mux[0] ^ wdata_mux[2] ^ wdata_mux[3] ^ wdata_mux[5] ^ wdata_mux[6] ^ wdata_mux[9] ^ wdata_mux[10] ^ wdata_mux[12] ^ wdata_mux[13] ^ wdata_mux[16] ^ wdata_mux[17] ^ wdata_mux[20] ^ wdata_mux[21] ^ wdata_mux[24] ^ wdata_mux[25] ^ wdata_mux[27] ^ wdata_mux[28] ^ wdata_mux[31];
-      ecc_code_in[2] = wdata_mux[1] ^ wdata_mux[2] ^ wdata_mux[3] ^ wdata_mux[7] ^ wdata_mux[8] ^ wdata_mux[9] ^ wdata_mux[10] ^ wdata_mux[14] ^ wdata_mux[15] ^ wdata_mux[16] ^ wdata_mux[17] ^ wdata_mux[22] ^ wdata_mux[23] ^ wdata_mux[24] ^ wdata_mux[25] ^ wdata_mux[29] ^ wdata_mux[30] ^ wdata_mux[31];
-      ecc_code_in[3] = wdata_mux[4] ^ wdata_mux[5] ^ wdata_mux[6] ^ wdata_mux[7] ^ wdata_mux[8] ^ wdata_mux[9] ^ wdata_mux[10] ^ wdata_mux[18] ^ wdata_mux[19] ^ wdata_mux[20] ^ wdata_mux[21] ^ wdata_mux[22] ^ wdata_mux[23] ^ wdata_mux[24] ^ wdata_mux[25];
-      ecc_code_in[4] = wdata_mux[11] ^ wdata_mux[12] ^ wdata_mux[13] ^ wdata_mux[14] ^ wdata_mux[15] ^ wdata_mux[16] ^ wdata_mux[17] ^ wdata_mux[18] ^ wdata_mux[19] ^ wdata_mux[20] ^ wdata_mux[21] ^ wdata_mux[22] ^ wdata_mux[23] ^ wdata_mux[24] ^ wdata_mux[25];
-      ecc_code_in[5] = wdata_mux[26] ^ wdata_mux[27] ^ wdata_mux[28] ^ wdata_mux[29] ^ wdata_mux[30] ^ wdata_mux[31];
-      ecc_code_in[6] = ^wdata_mux ^ (^ecc_code_in[5:0]);  // Overall parity for SECDED
-    end else begin
-      ecc_code_in = '0;
-    end
-  end
-
-  // ECC is usually full-word write only in BRAMs unless using RMW
-  always_ff @(posedge clk) begin
-    if (cs_int && we_mux && ECC_BITS > 0 && &wstrb_mux) begin
-      mem_ecc[addr_mux] <= ecc_code_in;
-    end
-  end
-
-  // ECC Decoding
+  // ECC Logic
   logic [WIDTH-1:0] rdata_corrected;
   logic             ecc_single_int;
   logic             ecc_double_int;
-  logic [      5:0] syndrome;
-  logic             overall_parity;
 
-  always_comb begin
-    if (ECC_BITS == 7) begin
-      syndrome[0] = rdata_raw[0] ^ rdata_raw[1] ^ rdata_raw[3] ^ rdata_raw[4] ^ rdata_raw[6] ^ rdata_raw[8] ^ rdata_raw[10] ^ rdata_raw[11] ^ rdata_raw[13] ^ rdata_raw[15] ^ rdata_raw[17] ^ rdata_raw[19] ^ rdata_raw[21] ^ rdata_raw[23] ^ rdata_raw[25] ^ rdata_raw[26] ^ rdata_raw[28] ^ rdata_raw[30] ^ recc_raw[0];
-      syndrome[1] = rdata_raw[0] ^ rdata_raw[2] ^ rdata_raw[3] ^ rdata_raw[5] ^ rdata_raw[6] ^ rdata_raw[9] ^ rdata_raw[10] ^ rdata_raw[12] ^ rdata_raw[13] ^ rdata_raw[16] ^ rdata_raw[17] ^ rdata_raw[20] ^ rdata_raw[21] ^ rdata_raw[24] ^ rdata_raw[25] ^ rdata_raw[27] ^ rdata_raw[28] ^ rdata_raw[31] ^ recc_raw[1];
-      syndrome[2] = rdata_raw[1] ^ rdata_raw[2] ^ rdata_raw[3] ^ rdata_raw[7] ^ rdata_raw[8] ^ rdata_raw[9] ^ rdata_raw[10] ^ rdata_raw[14] ^ rdata_raw[15] ^ rdata_raw[16] ^ rdata_raw[17] ^ rdata_raw[22] ^ rdata_raw[23] ^ rdata_raw[24] ^ rdata_raw[25] ^ rdata_raw[29] ^ rdata_raw[30] ^ rdata_raw[31] ^ recc_raw[2];
-      syndrome[3] = rdata_raw[4] ^ rdata_raw[5] ^ rdata_raw[6] ^ rdata_raw[7] ^ rdata_raw[8] ^ rdata_raw[9] ^ rdata_raw[10] ^ rdata_raw[18] ^ rdata_raw[19] ^ rdata_raw[20] ^ rdata_raw[21] ^ rdata_raw[22] ^ rdata_raw[23] ^ rdata_raw[24] ^ rdata_raw[25] ^ recc_raw[3];
-      syndrome[4] = rdata_raw[11] ^ rdata_raw[12] ^ rdata_raw[13] ^ rdata_raw[14] ^ rdata_raw[15] ^ rdata_raw[16] ^ rdata_raw[17] ^ rdata_raw[18] ^ rdata_raw[19] ^ rdata_raw[20] ^ rdata_raw[21] ^ rdata_raw[22] ^ rdata_raw[23] ^ rdata_raw[24] ^ rdata_raw[25] ^ recc_raw[4];
-      syndrome[5] = rdata_raw[26] ^ rdata_raw[27] ^ rdata_raw[28] ^ rdata_raw[29] ^ rdata_raw[30] ^ rdata_raw[31] ^ recc_raw[5];
-      overall_parity = ^rdata_raw ^ (^recc_raw);
+  generate
+    if (ECC && WIDTH == 32) begin : gen_ecc
+      localparam ECC_BITS = 7;
+      logic [ECC_BITS-1:0] mem_ecc[DEPTH-1:0];
+      logic [ECC_BITS-1:0] recc_raw;
+      logic [ECC_BITS-1:0] ecc_code_in;
+      logic [5:0] syndrome;
+      logic overall_parity;
 
-      ecc_single_int = (syndrome != 0) && overall_parity;
-      ecc_double_int = (syndrome != 0) && !overall_parity;
+      // Initialization
+      initial begin
+`ifdef COCOTB_SIM
+        for (int k = 0; k < DEPTH; k++) begin
+          mem_ecc[k] = '0;
+        end
+`endif
+      end
 
-      // Correct single bit (simplified)
-      rdata_corrected = rdata_raw;  // In a full implementation, we'd use syndrome to flip the bit
-    end else begin
-      syndrome        = '0;
-      overall_parity  = 1'b0;
-      ecc_single_int  = 1'b0;
-      ecc_double_int  = 1'b0;
-      rdata_corrected = rdata_raw;
+      // Encoding
+      always_comb begin
+        ecc_code_in[0] = wdata_mux[0] ^ wdata_mux[1] ^ wdata_mux[3] ^ wdata_mux[4] ^ wdata_mux[6] ^ wdata_mux[8] ^ wdata_mux[10] ^ wdata_mux[11] ^ wdata_mux[13] ^ wdata_mux[15] ^ wdata_mux[17] ^ wdata_mux[19] ^ wdata_mux[21] ^ wdata_mux[23] ^ wdata_mux[25] ^ wdata_mux[26] ^ wdata_mux[28] ^ wdata_mux[30];
+        ecc_code_in[1] = wdata_mux[0] ^ wdata_mux[2] ^ wdata_mux[3] ^ wdata_mux[5] ^ wdata_mux[6] ^ wdata_mux[9] ^ wdata_mux[10] ^ wdata_mux[12] ^ wdata_mux[13] ^ wdata_mux[16] ^ wdata_mux[17] ^ wdata_mux[20] ^ wdata_mux[21] ^ wdata_mux[24] ^ wdata_mux[25] ^ wdata_mux[27] ^ wdata_mux[28] ^ wdata_mux[31];
+        ecc_code_in[2] = wdata_mux[1] ^ wdata_mux[2] ^ wdata_mux[3] ^ wdata_mux[7] ^ wdata_mux[8] ^ wdata_mux[9] ^ wdata_mux[10] ^ wdata_mux[14] ^ wdata_mux[15] ^ wdata_mux[16] ^ wdata_mux[17] ^ wdata_mux[22] ^ wdata_mux[23] ^ wdata_mux[24] ^ wdata_mux[25] ^ wdata_mux[29] ^ wdata_mux[30] ^ wdata_mux[31];
+        ecc_code_in[3] = wdata_mux[4] ^ wdata_mux[5] ^ wdata_mux[6] ^ wdata_mux[7] ^ wdata_mux[8] ^ wdata_mux[9] ^ wdata_mux[10] ^ wdata_mux[18] ^ wdata_mux[19] ^ wdata_mux[20] ^ wdata_mux[21] ^ wdata_mux[22] ^ wdata_mux[23] ^ wdata_mux[24] ^ wdata_mux[25];
+        ecc_code_in[4] = wdata_mux[11] ^ wdata_mux[12] ^ wdata_mux[13] ^ wdata_mux[14] ^ wdata_mux[15] ^ wdata_mux[16] ^ wdata_mux[17] ^ wdata_mux[18] ^ wdata_mux[19] ^ wdata_mux[20] ^ wdata_mux[21] ^ wdata_mux[22] ^ wdata_mux[23] ^ wdata_mux[24] ^ wdata_mux[25];
+        ecc_code_in[5] = wdata_mux[26] ^ wdata_mux[27] ^ wdata_mux[28] ^ wdata_mux[29] ^ wdata_mux[30] ^ wdata_mux[31];
+        ecc_code_in[6] = ^wdata_mux ^ (^ecc_code_in[5:0]);
+      end
+
+      // ECC Storage
+      always_ff @(posedge clk) begin
+        if (cs_int) begin
+          if (we_mux && &wstrb_mux) begin
+            mem_ecc[addr_mux] <= ecc_code_in;
+          end
+          if (!we_mux) begin
+            recc_raw <= mem_ecc[addr_mux];
+          end
+        end
+      end
+
+      // Decoding
+      always_comb begin
+        syndrome[0] = rdata_raw[0] ^ rdata_raw[1] ^ rdata_raw[3] ^ rdata_raw[4] ^ rdata_raw[6] ^ rdata_raw[8] ^ rdata_raw[10] ^ rdata_raw[11] ^ rdata_raw[13] ^ rdata_raw[15] ^ rdata_raw[17] ^ rdata_raw[19] ^ rdata_raw[21] ^ rdata_raw[23] ^ rdata_raw[25] ^ rdata_raw[26] ^ rdata_raw[28] ^ rdata_raw[30] ^ recc_raw[0];
+        syndrome[1] = rdata_raw[0] ^ rdata_raw[2] ^ rdata_raw[3] ^ rdata_raw[5] ^ rdata_raw[6] ^ rdata_raw[9] ^ rdata_raw[10] ^ rdata_raw[12] ^ rdata_raw[13] ^ rdata_raw[16] ^ rdata_raw[17] ^ rdata_raw[20] ^ rdata_raw[21] ^ rdata_raw[24] ^ rdata_raw[25] ^ rdata_raw[27] ^ rdata_raw[28] ^ rdata_raw[31] ^ recc_raw[1];
+        syndrome[2] = rdata_raw[1] ^ rdata_raw[2] ^ rdata_raw[3] ^ rdata_raw[7] ^ rdata_raw[8] ^ rdata_raw[9] ^ rdata_raw[10] ^ rdata_raw[14] ^ rdata_raw[15] ^ rdata_raw[16] ^ rdata_raw[17] ^ rdata_raw[22] ^ rdata_raw[23] ^ rdata_raw[24] ^ rdata_raw[25] ^ rdata_raw[29] ^ rdata_raw[30] ^ rdata_raw[31] ^ recc_raw[2];
+        syndrome[3] = rdata_raw[4] ^ rdata_raw[5] ^ rdata_raw[6] ^ rdata_raw[7] ^ rdata_raw[8] ^ rdata_raw[9] ^ rdata_raw[10] ^ rdata_raw[18] ^ rdata_raw[19] ^ rdata_raw[20] ^ rdata_raw[21] ^ rdata_raw[22] ^ rdata_raw[23] ^ rdata_raw[24] ^ rdata_raw[25] ^ recc_raw[3];
+        syndrome[4] = rdata_raw[11] ^ rdata_raw[12] ^ rdata_raw[13] ^ rdata_raw[14] ^ rdata_raw[15] ^ rdata_raw[16] ^ rdata_raw[17] ^ rdata_raw[18] ^ rdata_raw[19] ^ rdata_raw[20] ^ rdata_raw[21] ^ rdata_raw[22] ^ rdata_raw[23] ^ rdata_raw[24] ^ rdata_raw[25] ^ recc_raw[4];
+        syndrome[5] = rdata_raw[26] ^ rdata_raw[27] ^ rdata_raw[28] ^ rdata_raw[29] ^ rdata_raw[30] ^ rdata_raw[31] ^ recc_raw[5];
+        overall_parity = ^rdata_raw ^ (^recc_raw);
+
+        ecc_single_int = (syndrome != 0) && overall_parity;
+        ecc_double_int = (syndrome != 0) && !overall_parity;
+        rdata_corrected = rdata_raw;  // Simplified correction
+      end
+    end else begin : gen_no_ecc
+      assign rdata_corrected = rdata_raw;
+      assign ecc_single_int  = 1'b0;
+      assign ecc_double_int  = 1'b0;
     end
-  end
+  endgenerate
 
   // Parity Error Detection Logic
   logic [PARITY_BITS-1:0] rparity_calc;

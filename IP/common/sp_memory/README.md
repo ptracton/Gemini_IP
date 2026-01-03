@@ -31,14 +31,29 @@ The `sp_memory` is a highly configurable Single Port Random Access Memory IP. It
 
 ## Verification
 ### Multi-Simulator Support
-The IP is verified across three major simulators:
+The IP is verified across major simulators:
 1. **Iverilog**: For Native SV core and bus wrappers.
 2. **GHDL**: For Native VHDL core and bus wrappers (VHDL-2008).
-3. **Xilinx Vivado**: For technology-specific inference and mixed-language validation.
+3. **Xilinx Vivado (XSIM)**: For technology-specific inference and mixed-language validation.
+4. **ModelSim/QuestaSim**: Automated regression sweep for cross-language and cross-parameter verification.
+
+### ModelSim Simulation Sweep
+The `run_modelsim.sh` script performs a comprehensive parameter sweep to ensure robustness across different implementation choices:
+
+| Parameter | Configurations |
+| :--- | :--- |
+| **Languages** | Verilog (SystemVerilog), VHDL |
+| **Bus Interfaces** | Native, AXI4 Full, APB4, Wishbone B4, AHB-Lite |
+| **Data Widths** | 32-bit, 64-bit |
+| **Memory Depths** | 256, 512 |
+
+**Total Regression Scenarios: 40** (2 Languages × 5 Interfaces × 2 Widths × 2 Depths)
 
 ### Regression Suite
-- **Run**: `python3 tools/run_regression.py`
-- **Coverage**: 21+ automated jobs covering core and bus variants.
+- **Full Regression**: `python3 tools/run_regression.py` (Includes ModelSim Sweep)
+- **ModelSim Only**: `./sim/modelsim/run_modelsim.sh`
+- **Latest Results**: [sp_memory_regression_results.md](./sp_memory_regression_results.md)
+- **Status**: All 40 ModelSim scenarios and 22 total regression jobs passing as of 2026-01-03.
 
 ## Verification Status
 | Test Suite | Status |

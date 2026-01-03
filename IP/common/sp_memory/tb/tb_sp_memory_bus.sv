@@ -267,23 +267,23 @@ module tb_sp_memory_bus;
     htrans <= 2'b10;  // NONSEQ
     hsel   <= 1;
 
-
     // Data Phase
     @(posedge clk);
     while (!hreadyout) begin
       @(posedge clk);
     end
-    haddr  <= 0;
-    htrans <= 0;  // IDLE
-    hsel   <= 0;
     hwdata <= data;
-    // We assume strb implies full word for now in simplified AHB generic TB
-    // Or we handle byte logic. For simple reg tests, assume full word.
+    haddr  <= 0;
+    htrans <= 0;
+    hsel   <= 0;
+    hwrite <= 0;
 
+    // Confirm Data Phase completion
     @(posedge clk);
     while (!hreadyout) begin
       @(posedge clk);
     end
+    hwdata <= 0;
   endtask
 
   task bus_read(input logic [31:0] addr, output logic [WIDTH-1:0] data);
@@ -297,7 +297,6 @@ module tb_sp_memory_bus;
     htrans <= 2'b10;
     hsel   <= 1;
 
-
     // Data Phase
     @(posedge clk);
     while (!hreadyout) begin
@@ -307,9 +306,11 @@ module tb_sp_memory_bus;
     htrans <= 0;
     hsel   <= 0;
 
-    // Wait for data (Wait state logic might delay hreadyout)
-    // Actually we waited !hreadyout above.
-    // The data is valid WHEN hreadyout is high at end of data phase.
+    // Wait for end of data phase to sample
+    @(posedge clk);
+    while (!hreadyout) begin
+      @(posedge clk);
+    end
     data = hrdata;
   endtask
 
@@ -398,12 +399,14 @@ module tb_sp_memory_bus;
 
     fork
       begin : wait_aw
+        @(posedge clk);
         while (!awready) begin
           @(posedge clk);
         end
         awvalid <= 0;
       end
       begin : wait_w
+        @(posedge clk);
         while (!wready) begin
           @(posedge clk);
         end
@@ -423,6 +426,7 @@ module tb_sp_memory_bus;
     arvalid <= 1;
     rready  <= 1;
 
+    @(posedge clk);
     while (!arready) begin
       @(posedge clk);
     end
@@ -449,7 +453,13 @@ module tb_sp_memory_bus;
     end
   endtask
 
+  logic [WIDTH-1:0] pattern1;
+  logic [WIDTH-1:0] pattern2;
+
   initial begin
+    pattern1 = {(WIDTH / 32) {32'hDEADBEEF}};
+    pattern2 = {(WIDTH / 32) {32'hCAFEBABE}};
+
     bus_init();
     rst_n = 0;
     repeat (5) @(posedge clk);
@@ -459,24 +469,24 @@ module tb_sp_memory_bus;
     $display("Starting Native Bus Test...");
 
     // 1. Basic Write
-    $display("Test 1: Write Word 0xDEADBEEF to 0x10");
-    bus_write(32'h10, 32'hDEADBEEF, 4'b1111);
+    $display("Test 1: Write Word to 0x10");
+    bus_write(32'h10, pattern1, '1);
 
     // 2. Read Back
     $display("Test 2: Read Word from 0x10");
     bus_read(32'h10, read_data);
-    check(32'hDEADBEEF, read_data, "Read 0x10");
+    check(pattern1, read_data, "Read 0x10");
 
     // 3. Write Another
-    $display("Test 3: Write 0xCAFEBABE to 0x20");
-    bus_write(32'h20, 32'hCAFEBABE, 4'b1111);
+    $display("Test 3: Write to 0x20");
+    bus_write(32'h20, pattern2, '1);
 
     bus_read(32'h20, read_data);
-    check(32'hCAFEBABE, read_data, "Read 0x20");
+    check(pattern2, read_data, "Read 0x20");
 
     // 4. Verify First Data Integrity
     bus_read(32'h10, read_data);
-    check(32'hDEADBEEF, read_data, "Read 0x10 Again");
+    check(pattern1, read_data, "Read 0x10 Again");
 
     $display("ALL TESTS PASSED.");
     $finish;

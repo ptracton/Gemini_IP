@@ -13,8 +13,8 @@ ENTITY sp_memory_wb IS
         TECHNOLOGY : STRING  := "GENERIC"
     );
     PORT (
-        wb_clk_i : IN STD_LOGIC;
-        wb_rst_i : IN STD_LOGIC;
+        clk_i : IN STD_LOGIC;
+        rst_i : IN STD_LOGIC;
 
         -- Sideband Signals
         sleep          : IN  STD_LOGIC := '0';
@@ -25,16 +25,16 @@ ENTITY sp_memory_wb IS
         err_ecc_single : OUT STD_LOGIC;
         err_ecc_double : OUT STD_LOGIC;
         
-        wb_adr_i : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-        wb_dat_i : IN STD_LOGIC_VECTOR(WIDTH-1 DOWNTO 0);
-        wb_sel_i : IN STD_LOGIC_VECTOR((WIDTH/8)-1 DOWNTO 0);
-        wb_we_i  : IN STD_LOGIC;
-        wb_cyc_i : IN STD_LOGIC;
-        wb_stb_i : IN STD_LOGIC;
+        adr_i : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        dat_i : IN STD_LOGIC_VECTOR(WIDTH-1 DOWNTO 0);
+        sel_i : IN STD_LOGIC_VECTOR((WIDTH/8)-1 DOWNTO 0);
+        we_i  : IN STD_LOGIC;
+        cyc_i : IN STD_LOGIC;
+        stb_i : IN STD_LOGIC;
         
-        wb_dat_o : OUT STD_LOGIC_VECTOR(WIDTH - 1 DOWNTO 0);
-        wb_ack_o : OUT STD_LOGIC;
-        wb_err_o : OUT STD_LOGIC
+        dat_o : OUT STD_LOGIC_VECTOR(WIDTH - 1 DOWNTO 0);
+        ack_o : OUT STD_LOGIC;
+        err_o : OUT STD_LOGIC
     );
 END ENTITY sp_memory_wb;
 
@@ -81,23 +81,23 @@ ARCHITECTURE rtl OF sp_memory_wb IS
 
 BEGIN
 
-    rst_n_in <= NOT wb_rst_i;
+    rst_n_in <= NOT rst_i;
 
-    addr_ok <= unsigned(wb_adr_i) < (to_unsigned(DEPTH, 32) sll ADDR_LSB);
-    mem_cs <= wb_cyc_i AND wb_stb_i;
-    mem_we <= wb_we_i;
-    mem_addr <= wb_adr_i(ADDR_BITS + ADDR_LSB - 1 DOWNTO ADDR_LSB);
+    addr_ok <= unsigned(adr_i) < (to_unsigned(DEPTH, 32) sll ADDR_LSB);
+    mem_cs <= cyc_i AND stb_i;
+    mem_we <= we_i;
+    mem_addr <= adr_i(ADDR_BITS + ADDR_LSB - 1 DOWNTO ADDR_LSB);
     
-    wb_ack_o <= ack_reg;
-    wb_err_o <= err_reg;
+    ack_o <= ack_reg;
+    err_o <= err_reg;
 
-    PROCESS (wb_clk_i, wb_rst_i)
+    PROCESS (clk_i, rst_i)
     BEGIN
-        IF wb_rst_i = '1' THEN
+        IF rst_i = '1' THEN
             ack_reg <= '0';
             err_reg <= '0';
-        ELSIF rising_edge(wb_clk_i) THEN
-            IF wb_cyc_i = '1' AND wb_stb_i = '1' AND ack_reg = '0' AND err_reg = '0' THEN
+        ELSIF rising_edge(clk_i) THEN
+            IF cyc_i = '1' AND stb_i = '1' AND ack_reg = '0' AND err_reg = '0' THEN
                 IF addr_ok THEN
                     ack_reg <= '1';
                 ELSE
@@ -120,14 +120,14 @@ BEGIN
         ECC        => ECC
     )
     PORT MAP (
-        clk            => wb_clk_i,
+        clk            => clk_i,
         rst_n          => rst_n_in,
         cs             => mem_cs,
         we             => mem_we,
         addr           => mem_addr,
-        wdata          => wb_dat_i,
-        wstrb          => wb_sel_i,
-        rdata          => wb_dat_o,
+        wdata          => dat_i,
+        wstrb          => sel_i,
+        rdata          => dat_o,
         sleep          => sleep,
         bist_en        => bist_en,
         bist_done      => bist_done,

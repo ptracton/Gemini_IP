@@ -13,6 +13,8 @@ echo "Cleaning sp_memory artifacts..."
 
 # Clean Sim
 rm -rf sim_build *.log *.jou *.pb *.wdb xsim.dir .Xil *.vcd
+rm -rf sim/modelsim/work_dir
+rm -f tools/*.log tools/*.vcd tools/*.o
 cd verif/cocotb && make clean && cd - > /dev/null
 cd tb && rm -f *.vvp *.vcd && cd - > /dev/null
 
