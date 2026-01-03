@@ -38,6 +38,13 @@ Native testbenches are provided for Icarus, GHDL, and Xilinx.
 
 [View Regression Results](./sync_fifo_regression_results.md)
 
+### Verification Summary
+| Methodology | Tool Chain | Status | Notes |
+|---|---|---|---|
+| **Cocotb (Python)** | Icarus, GHDL, Verilator | **PASSED** | Full regression (Core, AXI, APB, AHB, Wishbone) successful. |
+| **Native Scripts** | Icarus, GHDL | **PASSED** | Standalone simulation scripts verified. |
+| **UVM (SystemVerilog)** | Xilinx Vivado (xelab) | **FAILED** | **Known Issue**: `xelab` crashes with SIGSEGV during elaboration for this IP. Code Coverage is currently unavailable. |
+
 ### Running Tests
 ```bash
 # Cocotb (SV)

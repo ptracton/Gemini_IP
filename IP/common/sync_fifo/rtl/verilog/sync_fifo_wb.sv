@@ -26,6 +26,22 @@ module sync_fifo_wb #(
     output logic                      wb_ack_o,
     output logic                      wb_err_o,
     output logic                      wb_stall_o
+`ifdef SIMULATION
+    ,
+    output logic                      mon_flush,
+    output logic                      mon_push,
+    output logic [    DATA_WIDTH-1:0] mon_data_in,
+    output logic                      mon_full,
+    output logic                      mon_almost_full,
+    output logic                      mon_overflow,
+    output logic                      mon_pop,
+    output logic [    DATA_WIDTH-1:0] mon_data_out,
+    output logic                      mon_empty,
+    output logic                      mon_almost_empty,
+    output logic                      mon_underflow,
+    output logic [              31:0] mon_level,
+    output logic [              31:0] mon_max_level
+`endif
 );
 
   // Register Offsets
@@ -191,5 +207,21 @@ module sync_fifo_wb #(
       .level    (fifo_level),
       .max_level(fifo_max_level)
   );
+
+`ifdef SIMULATION
+  assign mon_flush        = fifo_flush;
+  assign mon_push         = fifo_push;
+  assign mon_data_in      = fifo_data_in;
+  assign mon_full         = fifo_full;
+  assign mon_almost_full  = fifo_almost_full;
+  assign mon_overflow     = fifo_overflow;
+  assign mon_pop          = fifo_pop;
+  assign mon_data_out     = fifo_data_out;
+  assign mon_empty        = fifo_empty;
+  assign mon_almost_empty = fifo_almost_empty;
+  assign mon_underflow    = fifo_underflow;
+  assign mon_level        = {27'b0, fifo_level};
+  assign mon_max_level    = {27'b0, fifo_max_level};
+`endif
 
 endmodule
