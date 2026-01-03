@@ -57,17 +57,17 @@ The entire project undergoes periodic full regression testing. Below is the late
 **Overall Status: PASSED**
 ## Feature Overview
 
-| Feature | Sync FIFO | GPIO | Timer | UART | SPI |
-|---------|-----------|------|-------|------|-----|
-| AXI4-Lite| [x] | [x] | [x] | [x] | [x] |
-| APB | [x] | [x] | [x] | [x] | [x] |
-| Wishbone | [x] | [x] | [x] | [x] | [x] |
-| AHB-Lite | [x] | [ ] | [ ] | [ ] | [ ] |
-| SystemVerilog | [x] | [x] | [x] | [x] | [x] |
-| VHDL-2008 | [x] | [x] | [x] | [x] | [x] |
-| Cocotb | [x] | [x] | [x] | [x] | [x] |
-| UVM | [ ] | [x] | [ ] | [x] | [x] |
-| Synthesis | [x] | [x] | [x] | [x] | [x] |
+| Feature | Bus Matrix | Sync FIFO | GPIO | Timer | UART | SPI |
+|---------|------------|-----------|------|-------|------|-----|
+| AXI4-Lite| [x] | [x] | [x] | [x] | [x] | [x] |
+| APB | [ ] | [x] | [x] | [x] | [x] | [x] |
+| Wishbone | [x] | [x] | [x] | [x] | [x] | [x] |
+| AHB-Lite | [x] | [x] | [ ] | [ ] | [ ] | [ ] |
+| SystemVerilog | [x] | [x] | [x] | [x] | [x] | [x] |
+| VHDL-2008 | [x] | [x] | [x] | [x] | [x] | [x] |
+| Cocotb | [x] | [x] | [x] | [x] | [x] | [x] |
+| UVM | [ ] | [ ] | [x] | [ ] | [x] | [x] |
+| Synthesis | [x] | [x] | [x] | [x] | [x] | [x] |
 
 ## Running Verifications & Tools
 
