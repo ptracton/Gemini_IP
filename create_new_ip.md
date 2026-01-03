@@ -26,7 +26,7 @@ NEW_IP/
 ├── tools/            # Regression, Linting, and Cleanup scripts
 ├── synthesis/        # Vivado, Quartus, and Yosys synthesis scripts
 ├── README.md         # Documentation (Architecture & Register Map)
-└── new_ip_regression_results.md # Automated regression results summary
+└── <IP_NAME>_regression_results.md # Automated regression results summary
 ```
 
 ## 2. RTL Implementation
@@ -49,6 +49,7 @@ NEW_IP/
 - [ ] **UVM**: Build a full UVM environment (Note: UVM may be excluded if it causes host-level stability issues).
 
 ## 5. Synthesis Validation
+- [ ] Create `synthesis/run_synth.sh` to automate all synthesis jobs.
 - [ ] Perform **Vivado** synthesis to check Artix-7 utilization and timing.
 - [ ] Perform **Open-Source (Yosys)** synthesis for cross-tool verification.
 - [ ] Perform **Quartus** synthesis to verify Intel FPGA compatibility (Cyclone IV/V).
@@ -56,8 +57,9 @@ NEW_IP/
 ## 6. Regression, Cleanup & Documentation
 - [ ] **Pathing Standard**: All scripts MUST use the `$GEMINI_IP_ROOT` environment variable. Avoid hardcoded absolute paths or excessive relative pathing (`../../..`).
 - [ ] **Regression**: Integrate all jobs into a local `run_regression.py` tool.
-- [ ] **Results Summary**: Ensure `run_regression.py` generates `new_ip_regression_results.md` in the IP root with a summary of all test statuses.
-- [ ] **Cleanup**: Implement `run_clean.sh` in `tools/` that cleans all simulation, verification, and synthesis artifacts (should call `synthesis/cleanup.sh`).
+- [ ] **Results Summary**: Ensure `run_regression.py` generates `<IP_NAME>_regression_results.md` in the IP root with a summary of all test statuses.
+- [ ] **Cleanup**: Implement `run_clean.sh` in `tools/` and verify that the Project Root `clean_project.sh` successfully removes all artifacts valid for this IP.
 - [ ] **Standardized Naming**: Use `run_regression.py`, `run_lint.sh`, `run_cdc.sh`, `run_clean.sh`, and `run_synth.sh`.
 - [ ] **Documentation**: Document the IP using the GPIO `README.md` as a template (include Mermaid diagrams).
-- [ ] **Final Check**: All 13+ regression jobs must pass before the IP is considered **Verified**.
+- [ ] **Known Issues**: If a verification step fails due to tool limitations (e.g., UVM Code Coverage crash), explicitly document this in a "Known Issues" section in `README.md`.
+- [ ] **Final Check**: All 13+ regression jobs must pass before the IP is considered **Verified** (exceptions allowed only for documented tool issues).
