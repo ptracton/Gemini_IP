@@ -63,8 +63,10 @@ module sp_memory_ahb #(
     end else begin
       if (hready) begin
         if (hsel && htrans[1]) begin  // Capture valid transfer
+`ifndef FORMAL
           $display("AHB_DBG: CAPTURE hsel=%b htrans=%b hwrite=%b addr=%x", hsel, htrans, hwrite,
                    haddr);
+`endif
           dp_active <= 1'b1;
           dp_write  <= hwrite;
           dp_addr   <= haddr;
@@ -189,6 +191,9 @@ module sp_memory_ahb #(
   sp_memory #(
       .WIDTH(WIDTH),
       .DEPTH(DEPTH),
+      .PIPELINE(PIPELINE),
+      .PARITY(PARITY),
+      .ECC(ECC),
       .TECHNOLOGY(TECHNOLOGY)
   ) core (
       .clk(hclk),
@@ -208,12 +213,37 @@ module sp_memory_ahb #(
       .err_ecc_double(err_ecc_double)
   );
 
+`ifndef FORMAL
   always_ff @(posedge hclk) begin
     if (mem_cs && mem_we)
       $display("AHB_DBG: WRITE Addr=%x Data=%x Strb=%x", mem_addr, mem_wdata, mem_wstrb);
     if (mem_cs && !mem_we) $display("AHB_DBG: READ Addr=%x", mem_addr);
     if (dp_active) $display("AHB_DBG: DP_ACTIVE Write=%b Addr=%x", dp_write, dp_addr);
   end
+`endif
 
   assign hresp = !addr_ok;
+
+`ifdef FORMAL
+  bus_ahb_properties #(
+      .WIDTH(WIDTH),
+      .DEPTH(DEPTH)
+  ) formal_ahb (
+      .hclk     (hclk),
+      .hresetn  (hresetn),
+      .hsel     (hsel),
+      .haddr    (haddr),
+      .htrans   (htrans),
+      .hwrite   (hwrite),
+      .hwdata   (hwdata),
+      .hready   (hready),
+      .hreadyout(hreadyout),
+      .hresp    (hresp),
+      .hrdata   (hrdata),
+      .mem_cs   (mem_cs),
+      .mem_we   (mem_we),
+      .mem_addr (mem_addr)
+  );
+`endif
+
 endmodule

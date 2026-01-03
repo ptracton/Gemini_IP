@@ -1,0 +1,53 @@
+[tasks]
+core
+axi
+ahb
+apb
+wb
+
+[options]
+mode bmc
+depth 10
+
+[engines]
+smtbmc z3
+
+[script]
+# Shared
+read -sv -DFORMAL sp_memory.sv
+read -sv sp_memory_properties.sv
+
+# Task specific
+core: prep -top sp_memory
+
+axi: read -sv -DFORMAL sp_memory_axi.sv
+axi: read -sv bus_axi_properties.sv
+axi: prep -top sp_memory_axi
+
+ahb: read -sv -DFORMAL sp_memory_ahb.sv
+ahb: read -sv bus_ahb_properties.sv
+ahb: prep -top sp_memory_ahb
+
+apb: read -sv -DFORMAL sp_memory_apb.sv
+apb: read -sv bus_apb_properties.sv
+apb: prep -top sp_memory_apb
+
+wb: read -sv -DFORMAL sp_memory_wb.sv
+wb: read -sv bus_wb_properties.sv
+wb: prep -top sp_memory_wb
+
+[files]
+../../rtl/verilog/sp_memory.sv
+sp_memory_properties.sv
+
+axi: ../../rtl/verilog/sp_memory_axi.sv
+axi: bus_axi_properties.sv
+
+ahb: ../../rtl/verilog/sp_memory_ahb.sv
+ahb: bus_ahb_properties.sv
+
+apb: ../../rtl/verilog/sp_memory_apb.sv
+apb: bus_apb_properties.sv
+
+wb: ../../rtl/verilog/sp_memory_wb.sv
+wb: bus_wb_properties.sv

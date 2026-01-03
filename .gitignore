@@ -275,3 +275,8 @@ joined_coverage_repo/
 # Allow Sync FIFO UVM
 !IP/common/sync_fifo/verif/uvm/
 
+# Allow sp_memory Formal Verification
+!IP/common/sp_memory/verif/formal/*.sby
+!IP/common/sp_memory/verif/formal/*.sv
+!IP/common/sp_memory/verif/formal/*.sh
+

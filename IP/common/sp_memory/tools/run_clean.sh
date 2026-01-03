@@ -17,5 +17,6 @@ rm -rf sim/modelsim/work_dir
 rm -f tools/*.log tools/*.vcd tools/*.o
 cd verif/cocotb && make clean && cd - > /dev/null
 cd tb && rm -f *.vvp *.vcd && cd - > /dev/null
+rm -rf verif/formal/sp_memory_*
 
 echo "Clean Complete."

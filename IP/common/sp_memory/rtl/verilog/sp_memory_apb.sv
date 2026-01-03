@@ -61,6 +61,9 @@ module sp_memory_apb #(
   sp_memory #(
       .WIDTH(WIDTH),
       .DEPTH(DEPTH),
+      .PIPELINE(PIPELINE),
+      .PARITY(PARITY),
+      .ECC(ECC),
       .TECHNOLOGY(TECHNOLOGY)
   ) core (
       .clk           (pclk),
@@ -83,4 +86,27 @@ module sp_memory_apb #(
   // APB Outputs
   assign pready  = 1'b1;  // Usage of BRAM assumes always ready (1 cycle access matches APB timing)
   assign pslverr = !addr_ok;
+
+`ifdef FORMAL
+  bus_apb_properties #(
+      .WIDTH(WIDTH),
+      .DEPTH(DEPTH)
+  ) formal_apb (
+      .pclk   (pclk),
+      .presetn(presetn),
+      .psel   (psel),
+      .penable(penable),
+      .pwrite (pwrite),
+      .paddr  (paddr),
+      .pwdata (pwdata),
+      .pstrb  (pstrb),
+      .pready (pready),
+      .prdata (prdata),
+      .pslverr(pslverr),
+      .mem_cs (psel && (!pwrite || penable)),
+      .mem_we (pwrite),
+      .mem_addr(mem_addr)
+  );
+`endif
+
 endmodule

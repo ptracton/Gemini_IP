@@ -186,6 +186,9 @@ module sp_memory_axi #(
   sp_memory #(
       .WIDTH(WIDTH),
       .DEPTH(DEPTH),
+      .PIPELINE(PIPELINE),
+      .PARITY(PARITY),
+      .ECC(ECC),
       .TECHNOLOGY(TECHNOLOGY)
   ) core (
       .clk(aclk),
@@ -206,5 +209,34 @@ module sp_memory_axi #(
   );
 
   assign rdata = mem_rdata;
+
+`ifdef FORMAL
+  bus_axi_properties #(
+      .WIDTH(WIDTH),
+      .DEPTH(DEPTH)
+  ) formal_axi (
+      .aclk   (aclk),
+      .aresetn(aresetn),
+      .awaddr (awaddr),
+      .awvalid(awvalid),
+      .awready(awready),
+      .wdata  (wdata),
+      .wvalid (wvalid),
+      .wready (wready),
+      .bresp  (bresp),
+      .bvalid (bvalid),
+      .bready (bready),
+      .araddr (araddr),
+      .arvalid(arvalid),
+      .arready(arready),
+      .rdata  (rdata),
+      .rresp  (rresp),
+      .rvalid (rvalid),
+      .rready (rready),
+      .mem_cs (mem_cs),
+      .mem_we (mem_we),
+      .mem_addr(mem_addr)
+  );
+`endif
 
 endmodule

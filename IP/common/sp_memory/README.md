@@ -65,6 +65,19 @@ The `run_modelsim.sh` script performs a comprehensive parameter sweep to ensure 
 | **AHB-Lite (SV/VHDL)** | :white_check_mark: Passing |
 | **BIST & Sleep Features** | :white_check_mark: Passing |
 | **ECC & Parity Logic** | :white_check_mark: Passing |
+### Multi-Task Formal Verification (SymbiYosys)
+A dedicated formal suite using **SymbiYosys (SBY)** and the **Z3 SMT solver** is included in `verif/formal`. It uses a multi-task configuration to verify individual components:
+
+| Task | Component | Depth | Mode | Results |
+|:--- |:--- |:--- |:--- |:--- |
+| **core** | Native Memory Core | 10 | BMC | :white_check_mark: PASS |
+| **axi** | AXI4 Full Wrapper | 10 | BMC | :white_check_mark: PASS |
+| **ahb** | AHB-Lite Wrapper | 10 | BMC | :white_check_mark: PASS |
+| **apb** | APB4 Wrapper | 10 | BMC | :white_check_mark: PASS |
+| **wb** | Wishbone B4 Wrapper | 10 | BMC | :white_check_mark: PASS |
+
+**Run Formal Suite**: `./verif/formal/run_formal.sh`
+> **Note**: The full formal suite takes approximately **42 minutes** to complete. It is not included in the standard regression script.
 
 ## Known Issues
 - None.

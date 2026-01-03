@@ -16,6 +16,11 @@ clean_dirs() {
         -name ".Xil" -o \
         -name "sim_build" -o \
         -name "__pycache__" -o \
+        -name "sp_memory_core" -o \
+        -name "sp_memory_axi" -o \
+        -name "sp_memory_ahb" -o \
+        -name "sp_memory_apb" -o \
+        -name "sp_memory_wb" -o \
         -name "work" \
     \) -exec rm -rf {} +
 }

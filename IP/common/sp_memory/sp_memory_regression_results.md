@@ -26,3 +26,16 @@
 | ✅ VHDL_WB_32 | **PASS** | 2.38 |
 | ✅ SV_AHB_32 | **PASS** | 12.47 |
 | ✅ VHDL_AHB_32 | **PASS** | 2.17 |
+
+## Formal Verification (SymbiYosys/Z3)
+**Note:** Formal verification is run separately due to long execution times (~42 mins total).
+
+| Task | Status | Result | Duration |
+|---|---|---|---|
+| ✅ SBY_Core | **PASS** | BMC (Depth 10) | ~9m 30s |
+| ✅ SBY_AXI | **PASS** | BMC (Depth 10) | 35s |
+| ✅ SBY_AHB | **PASS** | BMC (Depth 10) | 5m 10s |
+| ✅ SBY_APB | **PASS** | BMC (Depth 10) | 15m 04s |
+| ✅ SBY_WB  | **PASS** | BMC (Depth 10) | 11m 23s |
+
+**Overall Status: 100% SUCCESS (Simulation + Formal)**

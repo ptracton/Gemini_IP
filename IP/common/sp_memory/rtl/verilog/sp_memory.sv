@@ -345,4 +345,27 @@ module sp_memory #(
     end
   endgenerate
 
+`ifdef FORMAL
+  sp_memory_properties #(
+      .WIDTH(WIDTH),
+      .DEPTH(DEPTH),
+      .PIPELINE(PIPELINE)
+  ) formal_props (
+      .clk(clk),
+      .rst_n(rst_n),
+      .cs(cs),
+      .we(we),
+      .addr(addr),
+      .wdata(wdata),
+      .wstrb(wstrb),
+      .rdata(rdata),
+      .sleep(sleep),
+      .cs_int(cs_int),
+      .bist_en(bist_en),
+      .err_parity(err_parity),
+      .err_ecc_single(err_ecc_single),
+      .err_ecc_double(err_ecc_double)
+  );
+`endif
+
 endmodule

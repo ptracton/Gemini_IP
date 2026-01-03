@@ -53,7 +53,7 @@ module sp_memory_wb #(
 
   // Out of range check
   logic addr_ok;
-  assign addr_ok = (adr_i < (DEPTH << ADDR_LSB));
+  assign addr_ok = (adr_i < (DEPTH << $clog2(WIDTH / 8)));
 
   // ACK Logic: 1 cycle delay from request
   always_ff @(posedge clk_i or posedge rst_i) begin
@@ -74,6 +74,9 @@ module sp_memory_wb #(
   sp_memory #(
       .WIDTH(WIDTH),
       .DEPTH(DEPTH),
+      .PIPELINE(PIPELINE),
+      .PARITY(PARITY),
+      .ECC(ECC),
       .TECHNOLOGY(TECHNOLOGY)
   ) core (
       .clk(clk_i),
@@ -92,5 +95,27 @@ module sp_memory_wb #(
       .err_ecc_single(err_ecc_single),
       .err_ecc_double(err_ecc_double)
   );
+
+`ifdef FORMAL
+  bus_wb_properties #(
+      .WIDTH(WIDTH),
+      .DEPTH(DEPTH)
+  ) formal_wb (
+      .clk_i(clk_i),
+      .rst_i(rst_i),
+      .adr_i(adr_i),
+      .dat_i(dat_i),
+      .sel_i(sel_i),
+      .we_i(we_i),
+      .cyc_i(cyc_i),
+      .stb_i(stb_i),
+      .dat_o(dat_o),
+      .ack_o(ack_o),
+      .err_o(err_o),
+      .mem_cs(mem_cs),
+      .mem_we(we_i),  // Wishbone uses we_i directly in core instantiation too
+      .mem_addr(mem_addr)
+  );
+`endif
 
 endmodule
