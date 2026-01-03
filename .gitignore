@@ -272,3 +272,6 @@ joined_coverage_repo/
 # Allow SPI Master UVM
 !IP/interface/SPI_Master/verif/uvm/
 
+# Allow Sync FIFO UVM
+!IP/common/sync_fifo/verif/uvm/
+

@@ -1,9 +1,9 @@
 # General Timer Regression Results
 
-Generated on: 2026-01-02 16:27:35
+Generated on: 2026-01-02 16:33:07
 
-**Overall Status: PASSED**
-**Passed: 36 / 36**
+**Overall Status: FAILED**
+**Passed: 35 / 36**
 
 | Test Name | Status | Description |
 | :--- | :---: | :--- |
@@ -35,7 +35,7 @@ Generated on: 2026-01-02 16:27:35
 | UVM_VERILOG_WB_timer_count_test | ✅ PASS | UVM timer_count_test (VERILOG WB) via Xilinx xsim |
 | UVM_VHDL_AXI_timer_reg_test | ✅ PASS | UVM timer_reg_test (VHDL AXI) via Xilinx xsim |
 | UVM_VHDL_AXI_timer_count_test | ✅ PASS | UVM timer_count_test (VHDL AXI) via Xilinx xsim |
-| UVM_VHDL_APB_timer_reg_test | ✅ PASS | UVM timer_reg_test (VHDL APB) via Xilinx xsim |
+| UVM_VHDL_APB_timer_reg_test | ❌ FAIL | UVM timer_reg_test (VHDL APB) via Xilinx xsim |
 | UVM_VHDL_APB_timer_count_test | ✅ PASS | UVM timer_count_test (VHDL APB) via Xilinx xsim |
 | UVM_VHDL_WB_timer_reg_test | ✅ PASS | UVM timer_reg_test (VHDL WB) via Xilinx xsim |
 | UVM_VHDL_WB_timer_count_test | ✅ PASS | UVM timer_count_test (VHDL WB) via Xilinx xsim |
