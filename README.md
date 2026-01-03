@@ -82,6 +82,24 @@ Please refer to the specific IP documentation for detailed instructions on runni
 - **[UART Verification Guide](IP/interface/UART/README.md#verification-status)**
 - **[SPI Master Verification Guide](IP/interface/SPI_Master/README.md#verification-results)**
 
+## Project Maintenance
+
+### Cleaning Build Artifacts
+To recursively remove all simulation artifacts (logs, waveforms, compiled databases) and reset the project to a clean state, run:
+
+```bash
+./clean_project.sh
+```
+
+This script cleans:
+- Vivado/Xilinx artifacts (`xsim.dir`, `.Xil`, `*.wdb`, `*.jou`, `*.pb`)
+- Icarus Verilog artifacts (`*.vvp`)
+- GHDL artifacts (`*.cf`)
+- Cocotb `sim_build` directories
+- Python `__pycache__`
+- Temporary status files and logs
+
+
 ## Development Standards
 
 Every IP in `Gemini_IP` follows a strict "Gold Standard" template established by the [GPIO](IP/interface/GPIO/README.md) module. New IP development must follow the [Create New IP Workflow](create_new_ip.md):
