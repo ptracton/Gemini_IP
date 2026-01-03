@@ -41,6 +41,20 @@ This script will:
 - **[Bus Matrix](IP/common/bus_matrix/README.md)**: High-performance N:M interconnect supporting AXI4-Lite, AHB5-Lite, and Wishbone B4 with configurable arbitration and security firewall.
 - **[Sync FIFO](IP/common/sync_fifo/README.md)**: Generic synchronous FIFO with configurable width/depth, programmable thresholds, error flags, peak usage tracking, and multiple bus wrappers (AXI/APB/AHB/WB).
 
+## Regression Summary
+
+The entire project undergoes periodic full regression testing. Below is the latest status:
+
+| IP Module | Status | Regression Suite |
+| :--- | :---: | :--- |
+| **GPIO** | ✅ PASS | [Results](IP/interface/GPIO/gpio_regression_results.md) |
+| **SPI Master** | ✅ PASS | [Results](IP/interface/SPI_Master/spi_master_regression_results.md) |
+| **UART** | ✅ PASS | [Results](IP/interface/UART/uart_regression_results.md) |
+| **General Timer** | ✅ PASS | [Results](IP/common/general_timer/timer_regression_results.md) |
+| **Bus Matrix** | ✅ PASS | [Results](IP/common/bus_matrix/bus_matrix_regression_results.md) |
+| **Sync FIFO** | ✅ PASS | [Results](IP/common/sync_fifo/sync_fifo_regression_results.md) |
+
+**Overall Status: PASSED**
 ## Feature Overview
 
 | Feature | Sync FIFO | GPIO | Timer | UART | SPI |

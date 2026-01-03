@@ -141,7 +141,7 @@ module sync_fifo_axi #(
   assign fifo_pop = reg_re && addr_is_data;
 
   logic [DATA_WIDTH-1:0] internal_rdata;
-  logic [DATA_WIDTH-1:0] stored_rdata;
+
 
   always_comb begin
     internal_rdata = '0;
@@ -163,15 +163,9 @@ module sync_fifo_axi #(
   // Latch read data for AXI Slave compliance
   // The SV adapter extracts reg_rdata continuously, but we must ensure it stays stable
   // during the read response phase.
-  always_ff @(posedge aclk or negedge aresetn) begin
-    if (!aresetn) begin
-      stored_rdata <= '0;
-    end else if (reg_re) begin
-      stored_rdata <= internal_rdata;
-    end
-  end
 
-  assign reg_rdata = stored_rdata;
+
+  assign reg_rdata = internal_rdata;
 
   // FIFO Instance
   sync_fifo #(

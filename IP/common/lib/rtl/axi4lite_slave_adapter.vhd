@@ -88,7 +88,7 @@ begin
   s_axi_rvalid  <= rvalid_i;
   s_axi_bresp   <= "00"; -- OKAY
   s_axi_rresp   <= "00"; -- OKAY
-  s_axi_rdata   <= reg_rdata;
+  s_axi_rdata   <= rdata_reg;
 
   -- Write Address Handshake
   process (aclk, aresetn)
@@ -163,6 +163,7 @@ begin
     elsif rising_edge(aclk) then
       if (arready_i = '1' and s_axi_arvalid = '1' and rvalid_i = '0') then
         rvalid_i  <= '1';
+        rdata_reg <= reg_rdata;
       elsif (s_axi_rready = '1' and rvalid_i = '1') then
         rvalid_i <= '0';
       end if;

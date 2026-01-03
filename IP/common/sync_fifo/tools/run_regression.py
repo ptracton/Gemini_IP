@@ -4,6 +4,7 @@
 import os
 import subprocess
 import datetime
+import sys
 
 class RegressionJob:
     def __init__(self, name, command):
@@ -65,6 +66,9 @@ def run_regression():
                 pass_count += 1
     
     print(f"\nTotal: {pass_count}/{len(jobs)} PASSED")
+    
+    if pass_count != len(jobs):
+        sys.exit(1)
 
 if __name__ == "__main__":
     run_regression()

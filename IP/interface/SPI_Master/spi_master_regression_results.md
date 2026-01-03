@@ -1,6 +1,6 @@
 # SPI Master IP Regression Results
 
-Date: 2026-01-02 14:07:49
+Date: 2026-01-02 16:26:49
 
 | Test Name | Status |
 |-----------|--------|
@@ -17,11 +17,3 @@ Date: 2026-01-02 14:07:49
 
 ## Detailed Results
 Passed: 10/10
-
-## Code Coverage (UVM)
-- **Line Coverage**: 88.51%
-- **Branch Coverage**: 17.74%
-- **Toggle Coverage**: 18.90%
-- **Condition Coverage**: 13.22%
-
-*Report generated at: `verif/uvm/coverage_report_regression/index.html`*

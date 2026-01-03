@@ -143,8 +143,7 @@ architecture rtl of sync_fifo_axi is
     signal fifo_max_level    : std_logic_vector(LEVEL_WIDTH - 1 downto 0);
     
     signal addr_offset  : std_logic_vector(3 downto 0);
-    signal reg_re_d     : std_logic;
-    signal stored_rdata : std_logic_vector(DATA_WIDTH - 1 downto 0);
+
     signal internal_rdata : std_logic_vector(DATA_WIDTH - 1 downto 0);
 
 begin
@@ -203,25 +202,13 @@ begin
     end process;
     
     -- Read Logic
-    process (aclk, aresetn)
-    begin
-        if aresetn = '0' then
-            reg_re_d <= '0';
-            stored_rdata <= (others => '0');
-        elsif rising_edge(aclk) then
-            reg_re_d <= reg_re;
-            -- Latch data on reg_re's first cycle
-            if reg_re = '1' and reg_re_d = '0' then
-                stored_rdata <= internal_rdata;
-            end if;
-        end if;
-    end process;
+
     
     -- FIFO Pop: 1-cycle pulse
-    fifo_pop <= '1' when (reg_re = '1' and reg_re_d = '0' and addr_offset = ADDR_DATA) else '0';
+    fifo_pop <= '1' when (reg_re = '1' and addr_offset = ADDR_DATA) else '0';
     
     -- Drive register bus from LATCED data
-    reg_rdata <= stored_rdata;
+    reg_rdata <= internal_rdata;
 
 
     process (addr_offset, fifo_data_out, fifo_empty, fifo_full, fifo_almost_empty, fifo_almost_full, fifo_overflow, fifo_underflow, fifo_level, fifo_max_level)

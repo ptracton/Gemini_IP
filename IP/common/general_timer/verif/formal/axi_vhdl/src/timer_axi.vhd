@@ -120,12 +120,12 @@ architecture rtl of timer_axi is
   signal load_val, cmp_val, current_val, capture_val             : std_logic_vector(31 downto 0) := (others => '0');
 
   -- Adapter signals
-  signal reg_addr       : std_logic_vector(31 downto 0);
-  signal reg_wdata      : std_logic_vector(31 downto 0);
-  signal reg_rdata_wire : std_logic_vector(31 downto 0);
-  signal reg_we         : std_logic;
-  signal reg_re         : std_logic;
-  signal reg_be         : std_logic_vector(3 downto 0);
+  signal reg_addr       : std_logic_vector(31 downto 0) := (others => '0');
+  signal reg_wdata      : std_logic_vector(31 downto 0) := (others => '0');
+  signal reg_rdata_wire : std_logic_vector(31 downto 0) := (others => '0');
+  signal reg_we         : std_logic                     := '0';
+  signal reg_re         : std_logic                     := '0';
+  signal reg_be         : std_logic_vector(3 downto 0)  := (others => '0');
 
 begin
 
