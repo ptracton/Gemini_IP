@@ -32,17 +32,27 @@ begin
         generic map (
             WIDTH      => WIDTH,
             DEPTH      => DEPTH,
-            TECHNOLOGY => TECHNOLOGY
+            TECHNOLOGY => TECHNOLOGY,
+            PIPELINE   => 0,
+            PARITY     => 0,
+            ECC        => 0
         )
         port map (
-            clk   => clk,
-            rst_n => rst_n,
-            cs    => cs,
-            we    => we,
-            addr  => addr(9 downto 0), -- Match DEPTH=1024 (2^10)
-            wdata => wdata,
-            wstrb => wstrb,
-            rdata => rdata
+            clk            => clk,
+            rst_n          => rst_n,
+            cs             => cs,
+            we             => we,
+            addr           => addr(9 downto 0), -- Match DEPTH=1024 (2^10)
+            wdata          => wdata,
+            wstrb          => wstrb,
+            rdata          => rdata,
+            sleep          => '0',
+            bist_en        => '0',
+            bist_done      => open,
+            bist_pass      => open,
+            err_parity     => open,
+            err_ecc_single => open,
+            err_ecc_double => open
         );
 
     -- Stimulus process

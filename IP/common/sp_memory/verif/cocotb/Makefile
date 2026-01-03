@@ -59,6 +59,7 @@ ifeq ($(TOPLEVEL_LANG),verilog)
 
 else ifeq ($(TOPLEVEL_LANG),vhdl)
     SIM = ghdl
+    EXTRA_ARGS += --std=08
     SIM_ARGS += -gWIDTH=$(WIDTH)
     SIM_ARGS += -gDEPTH=$(DEPTH)
     SIM_ARGS += -gTECHNOLOGY=$(TECHNOLOGY)

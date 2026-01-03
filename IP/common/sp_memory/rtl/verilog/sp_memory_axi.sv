@@ -5,22 +5,38 @@
  */
 
 module sp_memory_axi #(
-    parameter WIDTH = 32,
-    parameter DEPTH = 1024,
-    parameter TECHNOLOGY = "GENERIC"
+    parameter int WIDTH      = 32,
+    parameter int DEPTH      = 1024,
+    parameter bit PIPELINE   = 0,
+    parameter bit PARITY     = 0,
+    parameter bit ECC        = 0,
+    parameter     TECHNOLOGY = "GENERIC"
 ) (
     input logic aclk,
     input logic aresetn,
 
-    // AXI4-Lite Slave Interface
+    // Sideband Signals
+    input  logic sleep,
+    input  logic bist_en,
+    output logic bist_done,
+    output logic bist_pass,
+    output logic err_parity,
+    output logic err_ecc_single,
+    output logic err_ecc_double,
+
+    // AXI4 Slave Interface
     // Write Address Channel
     input  logic [         31:0] awaddr,
+    input  logic [          7:0] awlen,    // Burst length
+    input  logic [          2:0] awsize,   // Burst size
+    input  logic [          1:0] awburst,  // Burst type
     input  logic [          2:0] awprot,
     input  logic                 awvalid,
     output logic                 awready,
     // Write Data Channel
     input  logic [    WIDTH-1:0] wdata,
     input  logic [(WIDTH/8)-1:0] wstrb,
+    input  logic                 wlast,    // Last word of burst
     input  logic                 wvalid,
     output logic                 wready,
     // Write Response Channel
@@ -29,12 +45,16 @@ module sp_memory_axi #(
     input  logic                 bready,
     // Read Address Channel
     input  logic [         31:0] araddr,
+    input  logic [          7:0] arlen,    // Burst length
+    input  logic [          2:0] arsize,   // Burst size
+    input  logic [          1:0] arburst,  // Burst type
     input  logic [          2:0] arprot,
     input  logic                 arvalid,
     output logic                 arready,
     // Read Data Channel
     output logic [    WIDTH-1:0] rdata,
     output logic [          1:0] rresp,
+    output logic                 rlast,    // Last word
     output logic                 rvalid,
     input  logic                 rready
 );
@@ -47,139 +67,122 @@ module sp_memory_axi #(
   logic [    (WIDTH/8)-1:0] mem_wstrb;
   logic [        WIDTH-1:0] mem_rdata;
 
-  // AXI4-Lite Slave Controller Logic
-  // Simple state machine or direct combinatorial mapping depending on latency requirements.
-  // Supporting 1-cycle latency integration.
-
-  // Using a library adapter or custom logic?
-  // Let's implement a clean custom adapter for this specific IP to minimize external dependencies for this example,
-  // matching standard Gemini IP patterns.
-
+  // AXI4 State Machine
   typedef enum logic [1:0] {
     IDLE,
-    R_ACCESS,
-    W_ACCESS
+    WRITE_DATA,
+    WRITE_RESP,
+    READ_DATA
   } state_t;
-  state_t state, next_state;
+  state_t state;
 
-  // Address Decode
-  // Assumption: Base address handled by interconnect, we see offset.
-  // Align address to word boundaries.
+  // Burst Counters and Latches
+  logic [31:0] curr_awaddr, curr_araddr;
+  logic [7:0] len_awcount, len_arcount;
+  logic [2:0] burst_size;
+  logic [1:0] burst_type;
+
   localparam int ADDR_LSB = $clog2(WIDTH / 8);
 
-  // Buffers for channels
-  logic aw_done, w_done, b_done;
-  logic ar_done, r_done;
+  // Address Boundary Check
+  logic w_addr_ok, r_addr_ok;
+  assign w_addr_ok = (awaddr < (DEPTH << ADDR_LSB));
+  assign r_addr_ok = (araddr < (DEPTH << ADDR_LSB));
 
-  // Handshake Logic
   always_ff @(posedge aclk or negedge aresetn) begin
     if (!aresetn) begin
-      awready <= 1'b0;
-      wready  <= 1'b0;
-      bvalid  <= 1'b0;
-      bresp   <= 2'b00;  // OKAY
-      arready <= 1'b0;
-      rvalid  <= 1'b0;
-      rresp   <= 2'b00;  // OKAY
-      aw_done <= 1'b0;
-      w_done  <= 1'b0;
-      ar_done <= 1'b0;
+      state       <= IDLE;
+      awready     <= 1'b0;
+      wready      <= 1'b0;
+      bvalid      <= 1'b0;
+      bresp       <= 2'b00;
+      arready     <= 1'b0;
+      rvalid      <= 1'b0;
+      rresp       <= 2'b00;
+      rlast       <= 1'b0;
+      len_awcount <= 0;
+      len_arcount <= 0;
     end else begin
-      // Write Channel
-      if (awvalid && !awready && !aw_done) awready <= 1'b1;
-      else awready <= 1'b0;
+      case (state)
+        IDLE: begin
+          if (awvalid) begin
+            awready     <= 1'b1;
+            curr_awaddr <= awaddr;
+            len_awcount <= awlen;
+            bresp       <= w_addr_ok ? 2'b00 : 2'b11;  // OKAY or DECERR
+            state       <= WRITE_DATA;
+          end else if (arvalid) begin
+            arready     <= 1'b1;
+            curr_araddr <= araddr;
+            len_arcount <= arlen;
+            rresp       <= r_addr_ok ? 2'b00 : 2'b11;
+            state       <= READ_DATA;
+          end
+        end
 
-      if (wvalid && !wready && !w_done) wready <= 1'b1;
-      else wready <= 1'b0;
+        WRITE_DATA: begin
+          awready <= 1'b0;
+          wready  <= 1'b1;
+          if (wvalid && wready) begin
+            curr_awaddr <= curr_awaddr + (1 << ADDR_LSB);
+            if (len_awcount == 0 || wlast) begin
+              wready <= 1'b0;
+              state  <= WRITE_RESP;
+            end else begin
+              len_awcount <= len_awcount - 1;
+            end
+          end
+        end
 
-      if (awready && awvalid) aw_done <= 1'b1;
-      if (wready && wvalid) w_done <= 1'b1;
+        WRITE_RESP: begin
+          wready <= 1'b0;
+          bvalid <= 1'b1;
+          if (bvalid && bready) begin
+            bvalid <= 1'b0;
+            state  <= IDLE;
+          end
+        end
 
-      if (aw_done && w_done && !bvalid) begin
-        bvalid  <= 1'b1;
-        aw_done <= 1'b0;
-        w_done  <= 1'b0;
-      end else if (bready && bvalid) begin
-        bvalid <= 1'b0;
-      end
-
-      // Read Channel
-      if (arvalid && !arready && !ar_done) begin
-        arready <= 1'b1;
-        ar_done <= 1'b1;
-      end else begin
-        arready <= 1'b0;
-      end
-
-      if (rready && rvalid) begin
-        rvalid  <= 1'b0;
-        ar_done <= 1'b0;  // Ready for next
-      end else if (ar_done && !rvalid) begin
-        // Simple 1-cycle definition logic
-        // For BRAM, data is ready 1 cycle after address
-        // We need to wait for memory latency.
-        // Assuming memory is synchronous with clk.
-        // If arready was high cycle N, data is valid cycle N+1.
-        // WE simulate this delay via the state/control flow effectively.
-        rvalid <= 1'b1;
-      end
+        READ_DATA: begin
+          arready <= 1'b0;
+          rvalid  <= 1'b1;
+          rlast   <= (len_arcount == 0);
+          if (rvalid && rready) begin
+            curr_araddr <= curr_araddr + (1 << ADDR_LSB);
+            if (len_arcount == 0) begin
+              rvalid <= 1'b0;
+              rlast  <= 1'b0;
+              state  <= IDLE;
+            end else begin
+              len_arcount <= len_arcount - 1;
+            end
+          end
+        end
+      endcase
     end
   end
 
-  // Memory Mapping
-  logic [31:0] latched_waddr, latched_raddr;
-  logic [WIDTH-1:0] latched_wdata;
-  logic [(WIDTH/8)-1:0] latched_wstrb;
-
-  always_ff @(posedge aclk) begin
-    if (awvalid && awready) latched_waddr <= awaddr;
-    if (wvalid && wready) begin
-      latched_wdata <= wdata;
-      latched_wstrb <= wstrb;
-    end
-    if (arvalid && arready) latched_raddr <= araddr;
-  end
-
-  // Memory Control
-  // Priority: Writes or Reads? Reads usually simple, Writes require B channel response.
-  // AXI4-Lite doesn't support simultaneous R/W transactions efficiently on same ID (implicit).
-  // Note: Simple arbitration if both valid.
-
-  logic [$clog2(DEPTH)-1:0] w_slice_addr, r_slice_addr;
-  assign w_slice_addr = latched_waddr[$clog2(DEPTH)+ADDR_LSB-1 : ADDR_LSB];
-  assign r_slice_addr = araddr[$clog2(DEPTH)+ADDR_LSB-1 : ADDR_LSB];
-
-  // Wait, BRAM needs CS during the clock edge of operation.
-  // WRITE: access happens when aw_done & w_done are true (data ready to write)
-  // READ: access happens when arvalid & arready are true (address captured)
-
+  // Memory interface mapping
   always_comb begin
-    mem_we = 1'b0;
-    mem_addr = '0;
+    mem_cs    = 1'b0;
+    mem_we    = 1'b0;
+    mem_addr  = '0;
     mem_wdata = '0;
     mem_wstrb = '0;
 
-    // Write Operation (Trigger when both addr and data latched/valid)
-    if (aw_done && w_done && !bvalid) begin
-      mem_cs = 1'b1;
-      mem_we = 1'b1;  // Trigger Write
-      mem_addr = w_slice_addr;
-      mem_wdata = latched_wdata;
-      mem_wstrb = latched_wstrb;
-    end  // Read Operation
-    else if (arvalid && arready) begin
-      // Trigger Read
-      mem_cs = 1'b1;
-      mem_we = 1'b0;
-      mem_addr = r_slice_addr;
-      mem_wdata = '0;
-      mem_wstrb = '0;
-    end else begin
-      mem_cs = 1'b0;
+    if (state == WRITE_DATA && wvalid) begin
+      mem_cs    = 1'b1;
+      mem_we    = 1'b1;
+      mem_addr  = curr_awaddr[ADDR_LSB+$clog2(DEPTH)-1 : ADDR_LSB];
+      mem_wdata = wdata;
+      mem_wstrb = wstrb;
+    end else if (state == READ_DATA) begin
+      mem_cs   = 1'b1;
+      mem_we   = 1'b0;
+      mem_addr = curr_araddr[ADDR_LSB+$clog2(DEPTH)-1 : ADDR_LSB];
     end
   end
 
-  // Instantiate Core
   sp_memory #(
       .WIDTH(WIDTH),
       .DEPTH(DEPTH),
@@ -192,7 +195,14 @@ module sp_memory_axi #(
       .addr(mem_addr),
       .wdata(mem_wdata),
       .wstrb(mem_wstrb),
-      .rdata(mem_rdata)
+      .rdata(mem_rdata),
+      .sleep(sleep),
+      .bist_en(bist_en),
+      .bist_done(bist_done),
+      .bist_pass(bist_pass),
+      .err_parity(err_parity),
+      .err_ecc_single(err_ecc_single),
+      .err_ecc_double(err_ecc_double)
   );
 
   assign rdata = mem_rdata;

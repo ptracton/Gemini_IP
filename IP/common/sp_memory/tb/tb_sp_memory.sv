@@ -36,7 +36,14 @@ module tb_sp_memory;
       .addr(addr),
       .wdata(wdata),
       .wstrb(wstrb),
-      .rdata(rdata)
+      .rdata(rdata),
+      .sleep(1'b0),
+      .bist_en(1'b0),
+      .bist_done(),
+      .bist_pass(),
+      .err_parity(),
+      .err_ecc_single(),
+      .err_ecc_double()
   );
 
   // Clock Generation

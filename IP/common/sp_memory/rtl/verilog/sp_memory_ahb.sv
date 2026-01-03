@@ -5,12 +5,24 @@
  */
 
 module sp_memory_ahb #(
-    parameter WIDTH = 32,
-    parameter DEPTH = 1024,
-    parameter TECHNOLOGY = "GENERIC"
+    parameter int WIDTH      = 32,
+    parameter int DEPTH      = 1024,
+    parameter bit PIPELINE   = 0,
+    parameter bit PARITY     = 0,
+    parameter bit ECC        = 0,
+    parameter     TECHNOLOGY = "GENERIC"
 ) (
     input logic hclk,
     input logic hresetn,
+
+    // Sideband Signals
+    input  logic sleep,
+    input  logic bist_en,
+    output logic bist_done,
+    output logic bist_pass,
+    output logic err_parity,
+    output logic err_ecc_single,
+    output logic err_ecc_double,
 
     // AHB-Lite Interface
     input logic             hsel,
@@ -170,6 +182,10 @@ module sp_memory_ahb #(
     end
   end
 
+  // Out of range check
+  logic addr_ok;
+  assign addr_ok = (haddr < (DEPTH << ADDR_LSB));
+
   sp_memory #(
       .WIDTH(WIDTH),
       .DEPTH(DEPTH),
@@ -182,7 +198,14 @@ module sp_memory_ahb #(
       .addr(mem_addr),
       .wdata(mem_wdata),
       .wstrb(mem_wstrb),
-      .rdata(hrdata)
+      .rdata(hrdata),
+      .sleep(sleep),
+      .bist_en(bist_en),
+      .bist_done(bist_done),
+      .bist_pass(bist_pass),
+      .err_parity(err_parity),
+      .err_ecc_single(err_ecc_single),
+      .err_ecc_double(err_ecc_double)
   );
 
   always_ff @(posedge hclk) begin
@@ -192,6 +215,5 @@ module sp_memory_ahb #(
     if (dp_active) $display("AHB_DBG: DP_ACTIVE Write=%b Addr=%x", dp_write, dp_addr);
   end
 
-  assign hresp = 1'b0;  // OKAY
-
+  assign hresp = !addr_ok;
 endmodule

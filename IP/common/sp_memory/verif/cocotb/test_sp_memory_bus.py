@@ -14,37 +14,65 @@ class BusDriver:
     async def reset(self):
         if self.bus_type == "axi":
             self.dut.aresetn.value = 0
+            self.dut.awvalid.value = 0
+            self.dut.awaddr.value = 0
+            self.dut.awlen.value = 0
+            self.dut.awsize.value = 0
+            self.dut.awburst.value = 0
+            self.dut.awprot.value = 0
+            
+            self.dut.wvalid.value = 0
+            self.dut.wdata.value = 0
+            self.dut.wstrb.value = 0
+            self.dut.wlast.value = 0
+            
+            self.dut.bready.value = 0
+            
+            self.dut.arvalid.value = 0
+            self.dut.araddr.value = 0
+            self.dut.arlen.value = 0
+            self.dut.arsize.value = 0
+            self.dut.arburst.value = 0
+            self.dut.arprot.value = 0
+            
+            self.dut.rready.value = 0
+            
             await RisingEdge(self.dut.aclk)
             self.dut.aresetn.value = 1
-            self.dut.awvalid.value = 0
-            self.dut.wvalid.value = 0
-            self.dut.arvalid.value = 0
-            self.dut.bready.value = 1
-            self.dut.rready.value = 1
         elif self.bus_type == "apb":
             self.dut.presetn.value = 0
-            await RisingEdge(self.dut.pclk)
-            self.dut.presetn.value = 1
             self.dut.psel.value = 0
             self.dut.penable.value = 0
+            self.dut.paddr.value = 0
+            self.dut.pwrite.value = 0
+            self.dut.pwdata.value = 0
+            self.dut.pstrb.value = 0
+            self.dut.pprot.value = 0
+            await RisingEdge(self.dut.pclk)
+            self.dut.presetn.value = 1
         elif self.bus_type == "wb":
             self.dut.wb_rst_i.value = 1 
-            await RisingEdge(self.dut.wb_clk_i)
-            self.dut.wb_rst_i.value = 0
             self.dut.wb_cyc_i.value = 0
             self.dut.wb_stb_i.value = 0
             self.dut.wb_we_i.value = 0
+            self.dut.wb_adr_i.value = 0
+            self.dut.wb_dat_i.value = 0
+            self.dut.wb_sel_i.value = 0
+            await RisingEdge(self.dut.wb_clk_i)
+            self.dut.wb_rst_i.value = 0
         elif self.bus_type == "ahb":
             self.dut.hresetn.value = 0
-            await RisingEdge(self.dut.hclk)
-            self.dut.hresetn.value = 1
             self.dut.hsel.value = 0
             self.dut.htrans.value = 0 # IDLE
             self.dut.hwrite.value = 0
-            # Driver drives HREADY input (Slave's HREADY_IN)
-            # In VHDL we renamed to hready, in SV it is hready.
-            # We assume top level port is hready (std AHB Lite master -> slave)
+            self.dut.haddr.value = 0
+            self.dut.hwdata.value = 0
+            self.dut.hsize.value = 0
+            self.dut.hburst.value = 0
+            self.dut.hprot.value = 0
             self.dut.hready.value = 1
+            await RisingEdge(self.dut.hclk)
+            self.dut.hresetn.value = 1
 
     async def write(self, addr, data):
         clk = self._get_clk()
@@ -70,9 +98,11 @@ class BusDriver:
             self.dut.awvalid.value = 0
             self.dut.wvalid.value = 0
             
+            self.dut.bready.value = 1
             # Wait for BVALID
             while not self.dut.bvalid.value:
                 await RisingEdge(clk)
+            self.dut.bready.value = 0
 
         elif self.bus_type == "apb":
             # Setup Phase
@@ -138,10 +168,12 @@ class BusDriver:
                 await RisingEdge(clk)
             self.dut.arvalid.value = 0
             
+            self.dut.rready.value = 1
             # Read Data
             while not self.dut.rvalid.value:
                 await RisingEdge(clk)
             val = int(self.dut.rdata.value)
+            self.dut.rready.value = 0
             return val
 
         elif self.bus_type == "apb":

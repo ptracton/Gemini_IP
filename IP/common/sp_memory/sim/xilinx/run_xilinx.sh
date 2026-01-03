@@ -60,10 +60,11 @@ run_vhdl_test() {
     cd $SIM_DIR/build
     rm -rf xsim.dir
     
-    xvhdl $V_RTL_DIR/sp_memory.vhd
+    V_FILES="$V_RTL_DIR/sp_memory.vhd"
     if [ ! -z "$WRAPPER" ]; then
-        xvhdl $V_RTL_DIR/$WRAPPER
+        V_FILES="$V_FILES $V_RTL_DIR/$WRAPPER"
     fi
+    xvhdl -2008 $V_FILES
     
     MACRO_ARG=""
     if [ ! -z "$MACRO" ]; then

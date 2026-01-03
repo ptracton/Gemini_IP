@@ -5,12 +5,24 @@
  */
 
 module sp_memory_apb #(
-    parameter WIDTH = 32,
-    parameter DEPTH = 1024,
-    parameter TECHNOLOGY = "GENERIC"
+    parameter int WIDTH      = 32,
+    parameter int DEPTH      = 1024,
+    parameter bit PIPELINE   = 0,
+    parameter bit PARITY     = 0,
+    parameter bit ECC        = 0,
+    parameter     TECHNOLOGY = "GENERIC"
 ) (
     input logic pclk,
     input logic presetn,
+
+    // Sideband Signals
+    input  logic sleep,
+    input  logic bist_en,
+    output logic bist_done,
+    output logic bist_pass,
+    output logic err_parity,
+    output logic err_ecc_single,
+    output logic err_ecc_double,
 
     // APB4 Interface
     input  logic [         31:0] paddr,
@@ -42,23 +54,33 @@ module sp_memory_apb #(
   // APB4: Write data valid during Access phase.
   // So we must write only when PENABLE is high (Access phase).
 
+  // Out of range check
+  logic addr_ok;
+  assign addr_ok = (paddr < (DEPTH << ADDR_LSB));
+
   sp_memory #(
       .WIDTH(WIDTH),
       .DEPTH(DEPTH),
       .TECHNOLOGY(TECHNOLOGY)
   ) core (
-      .clk  (pclk),
-      .rst_n(presetn),
-      .cs   (psel && (!pwrite || penable)),  // Read: Setup+Access. Write: Access only.
-      .we   (pwrite),                        // Write if PWRITE is high
-      .addr (mem_addr),
-      .wdata(pwdata),
-      .wstrb(pstrb),
-      .rdata(prdata)
+      .clk           (pclk),
+      .rst_n         (presetn),
+      .cs            (psel && (!pwrite || penable)),  // Read: Setup+Access. Write: Access only.
+      .we            (pwrite),                        // Write if PWRITE is high
+      .addr          (mem_addr),
+      .wdata         (pwdata),
+      .wstrb         (pstrb),
+      .rdata         (prdata),
+      .sleep         (sleep),
+      .bist_en       (bist_en),
+      .bist_done     (bist_done),
+      .bist_pass     (bist_pass),
+      .err_parity    (err_parity),
+      .err_ecc_single(err_ecc_single),
+      .err_ecc_double(err_ecc_double)
   );
 
   // APB Outputs
   assign pready  = 1'b1;  // Usage of BRAM assumes always ready (1 cycle access matches APB timing)
-  assign pslverr = 1'b0;  // No errors modeled
-
+  assign pslverr = !addr_ok;
 endmodule

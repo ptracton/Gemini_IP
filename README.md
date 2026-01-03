@@ -40,7 +40,7 @@ This script will:
 - **[General Timer](IP/common/general_timer/README.md)**: A 32-bit configurable timer with PWM, Input Capture, Prescaler, and multi-bus support (AXI/APB/WB).
 - **[Bus Matrix](IP/common/bus_matrix/README.md)**: High-performance N:M interconnect supporting AXI4-Lite, AHB5-Lite, and Wishbone B4 with configurable arbitration and security firewall.
 - **[Sync FIFO](IP/common/sync_fifo/README.md)**: Generic synchronous FIFO with configurable width/depth, programmable thresholds, error flags, peak usage tracking, and multiple bus wrappers (AXI/APB/AHB/WB).
-- **[Single Port Memory](IP/common/sp_memory/README.md)**: High-performance single port memory with configurable width/depth, byte enables, and AXI4-Lite, APB4, Wishbone B4, and AHB-Lite support.
+- **[Single Port Memory](IP/common/sp_memory/README.md)**: Advanced Single Port Memory with **BIST**, **SECDED ECC**, **Parity**, and **Sleep Mode**. Supports AXI4 Full (Burst), APB4, Wishbone B4, and AHB-Lite.
 
 ## Regression Summary
 

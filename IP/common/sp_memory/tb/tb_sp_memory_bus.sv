@@ -55,7 +55,14 @@ module tb_sp_memory_bus;
       .pprot(pprot),
       .pready(pready),
       .prdata(prdata),
-      .pslverr(pslverr)
+      .pslverr(pslverr),
+      .sleep(1'b0),
+      .bist_en(1'b0),
+      .bist_done(),
+      .bist_pass(),
+      .err_parity(),
+      .err_ecc_single(),
+      .err_ecc_double()
   );
 
   task bus_init;
@@ -133,11 +140,19 @@ module tb_sp_memory_bus;
       .adr_i(adr_i),
       .dat_i(dat_i),
       .sel_i(sel_i),
-      .we_i (we_i),
+      .we_i(we_i),
       .cyc_i(cyc_i),
       .stb_i(stb_i),
       .dat_o(dat_o),
-      .ack_o(ack_o)
+      .ack_o(ack_o),
+      .err_o(),
+      .sleep(1'b0),
+      .bist_en(1'b0),
+      .bist_done(),
+      .bist_pass(),
+      .err_parity(),
+      .err_ecc_single(),
+      .err_ecc_double()
   );
 
   task bus_init;
@@ -219,7 +234,14 @@ module tb_sp_memory_bus;
       .hready(hready),
       .hreadyout(hreadyout),
       .hresp(hresp),
-      .hrdata(hrdata)
+      .hrdata(hrdata),
+      .sleep(1'b0),
+      .bist_en(1'b0),
+      .bist_done(),
+      .bist_pass(),
+      .err_parity(),
+      .err_ecc_single(),
+      .err_ecc_double()
   );
 
   task bus_init;
@@ -316,24 +338,39 @@ module tb_sp_memory_bus;
       .aclk(clk),
       .aresetn(rst_n),
       .awaddr(awaddr),
+      .awlen(8'b0),
+      .awsize(3'b010),
+      .awburst(2'b01),
       .awvalid(awvalid),
       .awready(awready),
       .awprot(3'b0),
       .wdata(wdata),
       .wstrb(wstrb),
+      .wlast(1'b1),
       .wvalid(wvalid),
       .wready(wready),
       .bresp(bresp),
       .bvalid(bvalid),
       .bready(bready),
       .araddr(araddr),
+      .arlen(8'b0),
+      .arsize(3'b010),
+      .arburst(2'b01),
       .arvalid(arvalid),
       .arready(arready),
       .arprot(3'b0),
       .rdata(rdata_axi),
       .rresp(rresp),
+      .rlast(),
       .rvalid(rvalid),
-      .rready(rready)
+      .rready(rready),
+      .sleep(1'b0),
+      .bist_en(1'b0),
+      .bist_done(),
+      .bist_pass(),
+      .err_parity(),
+      .err_ecc_single(),
+      .err_ecc_double()
   );
 
   task bus_init;
