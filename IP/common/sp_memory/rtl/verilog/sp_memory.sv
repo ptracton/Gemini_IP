@@ -157,31 +157,47 @@ module sp_memory #(
         end
       end
     end else if (TECHNOLOGY == "ALTERA") begin : gen_altera_mram
-      (* ramstyle = "M10K" *) logic [WIDTH-1:0] mem_alt[DEPTH-1:0];
-
-      // Initialization
-      initial begin
-        if (INIT_FILE != "") begin
-          $readmemh(INIT_FILE, mem_alt);
-        end else begin
-`ifdef SIMULATION
-          for (int k = 0; k < DEPTH; k++) begin
-            mem_alt[k] = '0;
-          end
-`endif
-        end
-      end
-
-      always_ff @(posedge clk) begin
-        if (cs_int) begin
-          if (we_mux) begin
-            for (int k = 0; k < (WIDTH / 8); k++) begin
-              if (wstrb_mux[k]) mem_alt[addr_mux][k*8+:8] <= wdata_mux[k*8+:8];
-            end
-          end
-          rdata_raw <= mem_alt[addr_mux];
-        end
-      end
+      // Explicit instantiation of altsyncram to guarantee M9K inference
+      altsyncram #(
+          .clock_enable_input_a("BYPASS"),
+          .clock_enable_output_a("BYPASS"),
+          .intended_device_family("Cyclone IV E"),
+          .lpm_hint("ENABLE_RUNTIME_MOD=NO"),
+          .lpm_type("altsyncram"),
+          .numwords_a(DEPTH),
+          .operation_mode("SINGLE_PORT"),
+          .outdata_aclr_a("NONE"),
+          .outdata_reg_a("UNREGISTERED"),
+          .power_up_uninitialized("FALSE"),
+          .read_during_write_mode_mixed_ports("DONT_CARE"),
+          .widthad_a($clog2(DEPTH)),
+          .width_a(WIDTH),
+          .width_byteena_a(WIDTH / 8)
+      ) altsyncram_component (
+          .address_a(addr_mux),
+          .byteena_a(wstrb_mux),
+          .clock0(clk),
+          .data_a(wdata_mux),
+          .wren_a(we_mux & cs_int),
+          .q_a(rdata_raw),
+          .aclr0(1'b0),
+          .aclr1(1'b0),
+          .address_b(1'b1),
+          .addressstall_a(1'b0),
+          .addressstall_b(1'b0),
+          .byteena_b(1'b1),
+          .clock1(1'b1),
+          .clocken0(1'b1),
+          .clocken1(1'b1),
+          .clocken2(1'b1),
+          .clocken3(1'b1),
+          .data_b(1'b1),
+          .eccstatus(),
+          .q_b(),
+          .rden_a(1'b1),
+          .rden_b(1'b1),
+          .wren_b(1'b0)
+      );
     end else begin : gen_generic_ram
       // Memory Array
       logic [WIDTH-1:0] mem[DEPTH-1:0];
@@ -303,7 +319,7 @@ module sp_memory #(
 
   generate
     if (PARITY) begin : gen_parity_check
-      for (i = 0; i < (WIDTH / 8); i++) begin
+      for (i = 0; i < (WIDTH / 8); i++) begin : parity_calc_loop
         assign rparity_calc[i] = ^rdata_raw[(i*8)+7 : i*8];
       end
       assign parity_err_int = (rparity_calc != rparity_raw);

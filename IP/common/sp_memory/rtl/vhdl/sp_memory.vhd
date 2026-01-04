@@ -56,13 +56,10 @@ ARCHITECTURE rtl OF sp_memory IS
 
     -- Memory Array
     TYPE mem_type IS ARRAY (0 TO DEPTH - 1) OF STD_LOGIC_VECTOR(WIDTH - 1 DOWNTO 0);
-    SIGNAL mem : mem_type := (OTHERS => (OTHERS => '0'));
+    -- SHARED VARIABLE mem : mem_type; -- Replaced by byte slices
     
     -- Xilinx/Altera attributes
-    ATTRIBUTE ram_style : STRING;
-    ATTRIBUTE ram_style OF mem : SIGNAL IS "block";
-    ATTRIBUTE ramstyle  : STRING;
-    ATTRIBUTE ramstyle  OF mem : SIGNAL IS "M10K";
+    -- ATTRIBUTE ramstyle  OF mem : VARIABLE IS "M9K, no_rw_check";
 
     -- Extra storage for Parity
     TYPE parity_mem_type IS ARRAY (0 TO DEPTH - 1) OF STD_LOGIC_VECTOR((WIDTH / 8) - 1 DOWNTO 0);
@@ -203,36 +200,151 @@ BEGIN
         END IF;
     END PROCESS;
 
-    PROCESS (clk)
+    -- Altera Specific Instantiation (Guarantees M9K)
+    GEN_ALTERA : IF TECHNOLOGY = "ALTERA" GENERATE
+        COMPONENT altsyncram
+        GENERIC (
+            clock_enable_input_a : STRING;
+            clock_enable_output_a : STRING;
+            intended_device_family : STRING;
+            lpm_hint : STRING;
+            lpm_type : STRING;
+            numwords_a : NATURAL;
+            operation_mode : STRING;
+            outdata_aclr_a : STRING;
+            outdata_reg_a : STRING;
+            power_up_uninitialized : STRING;
+            read_during_write_mode_mixed_ports : STRING;
+            widthad_a : NATURAL;
+            width_a : NATURAL;
+            width_byteena_a : NATURAL
+        );
+        PORT (
+            address_a : IN STD_LOGIC_VECTOR (widthad_a-1 DOWNTO 0);
+            byteena_a : IN STD_LOGIC_VECTOR (width_byteena_a-1 DOWNTO 0);
+            clock0 : IN STD_LOGIC ;
+            data_a : IN STD_LOGIC_VECTOR (width_a-1 DOWNTO 0);
+            wren_a : IN STD_LOGIC ;
+            q_a : OUT STD_LOGIC_VECTOR (width_a-1 DOWNTO 0)
+        );
+        END COMPONENT;
     BEGIN
-        IF rising_edge(clk) THEN
-            IF cs_int = '1' THEN
-                -- Write Logic with Byte Enables
-                IF we_mux = '1' THEN
-                    FOR i IN 0 TO (WIDTH / 8) - 1 LOOP
-                        IF wstrb_mux(i) = '1' THEN
-                            mem(to_integer(unsigned(addr_mux)))((i * 8) + 7 DOWNTO i * 8) <= wdata_mux((i * 8) + 7 DOWNTO i * 8);
-                            IF PARITY /= 0 THEN
-                                mem_parity(to_integer(unsigned(addr_mux)))(i) <= calc_parity(wdata_mux((i * 8) + 7 DOWNTO i * 8));
-                            END IF;
-                        END IF;
-                    END LOOP;
-                    -- ECC is full word
-                    IF ECC /= 0 AND wstrb_mux = (wstrb_mux'range => '1') THEN
-                        mem_ecc(to_integer(unsigned(addr_mux))) <= ecc_code_in;
-                    END IF;
-                ELSE
-                    -- Read Logic (Synchronous)
-                    rdata_raw <= mem(to_integer(unsigned(addr_mux)));
-                    IF PARITY /= 0 THEN
-                        rparity_raw <= mem_parity(to_integer(unsigned(addr_mux)));
-                    END IF;
-                    IF ECC /= 0 THEN
-                        recc_raw <= mem_ecc(to_integer(unsigned(addr_mux)));
+        altsyncram_component : altsyncram
+        GENERIC MAP (
+            clock_enable_input_a => "BYPASS",
+            clock_enable_output_a => "BYPASS",
+            intended_device_family => "Cyclone IV E",
+            lpm_hint => "ENABLE_RUNTIME_MOD=NO",
+            lpm_type => "altsyncram",
+            numwords_a => DEPTH,
+            operation_mode => "SINGLE_PORT",
+            outdata_aclr_a => "NONE",
+            outdata_reg_a => "UNREGISTERED",
+            power_up_uninitialized => "FALSE",
+            read_during_write_mode_mixed_ports => "DONT_CARE",
+            widthad_a => function_log2(DEPTH),
+            width_a => WIDTH,
+            width_byteena_a => WIDTH/8
+        )
+        PORT MAP (
+            address_a => addr_mux,
+            byteena_a => wstrb_mux,
+            clock0 => clk,
+            data_a => wdata_mux,
+            wren_a => we_mux and cs_int,
+            q_a => rdata_raw
+        );
+        
+        -- Sideband Logic (Parity/ECC) implemented as inferred logic/RAM
+        PROCESS(clk)
+        BEGIN
+            IF rising_edge(clk) THEN
+                IF cs_int = '1' THEN
+                    IF we_mux = '1' THEN
+                         -- Parity
+                         IF PARITY /= 0 THEN
+                            FOR i IN 0 TO (WIDTH / 8) - 1 LOOP
+                                IF wstrb_mux(i) = '1' THEN
+                                    mem_parity(to_integer(unsigned(addr_mux)))(i) <= calc_parity(wdata_mux((i * 8) + 7 DOWNTO i * 8));
+                                END IF;
+                            END LOOP;
+                         END IF;
+                         -- ECC
+                         IF ECC /= 0 AND wstrb_mux = (wstrb_mux'range => '1') THEN
+                            mem_ecc(to_integer(unsigned(addr_mux))) <= ecc_code_in;
+                         END IF;
+                    ELSE
+                        -- Read Sideband
+                         IF PARITY /= 0 THEN
+                            rparity_raw <= mem_parity(to_integer(unsigned(addr_mux)));
+                         END IF;
+                         IF ECC /= 0 THEN
+                            recc_raw <= mem_ecc(to_integer(unsigned(addr_mux)));
+                         END IF;
                     END IF;
                 END IF;
             END IF;
+        END PROCESS;
+    END GENERATE;
 
+    -- Generic Inference (For Vivado/others)
+    GEN_GENERIC : IF TECHNOLOGY /= "ALTERA" GENERATE
+        -- Memory Signal
+        SIGNAL mem : mem_type := (OTHERS => (OTHERS => '0'));
+        ATTRIBUTE ram_style : STRING;
+        ATTRIBUTE ram_style OF mem : SIGNAL IS "block";
+    BEGIN
+        PROCESS(clk)
+            VARIABLE v_mem_data : STD_LOGIC_VECTOR(WIDTH - 1 DOWNTO 0);
+        BEGIN
+            IF rising_edge(clk) THEN
+                IF cs_int = '1' THEN
+                    IF we_mux = '1' THEN
+                         v_mem_data := mem(to_integer(unsigned(addr_mux)));
+                         FOR i IN 0 TO (WIDTH / 8) - 1 LOOP
+                             IF wstrb_mux(i) = '1' THEN
+                                 v_mem_data((i * 8) + 7 DOWNTO i * 8) := wdata_mux((i * 8) + 7 DOWNTO i * 8);
+                             END IF;
+                         END LOOP;
+                         mem(to_integer(unsigned(addr_mux))) <= v_mem_data;
+
+                         -- Parity (Optional)
+                         IF PARITY /= 0 THEN
+                            FOR i IN 0 TO (WIDTH / 8) - 1 LOOP
+                                IF wstrb_mux(i) = '1' THEN
+                                    mem_parity(to_integer(unsigned(addr_mux)))(i) <= calc_parity(wdata_mux((i * 8) + 7 DOWNTO i * 8));
+                                END IF;
+                            END LOOP;
+                         END IF;
+                    ELSE
+                        -- Read
+                        rdata_raw <= mem(to_integer(unsigned(addr_mux)));
+                         -- Parity Read
+                         IF PARITY /= 0 THEN
+                            rparity_raw <= mem_parity(to_integer(unsigned(addr_mux)));
+                         END IF;
+                    END IF;
+                END IF;
+            END IF;
+        END PROCESS;
+    END GENERATE;
+
+    -- ECC Logic (Must remain outside slice loop or handle separately, assuming full word write)
+    PROCESS (clk)
+    BEGIN
+        IF rising_edge(clk) THEN
+            IF cs_int = '1' AND we_mux = '1' AND wstrb_mux = (wstrb_mux'range => '1') AND ECC /= 0 THEN
+                mem_ecc(to_integer(unsigned(addr_mux))) <= ecc_code_in;
+            ELSIF cs_int = '1' AND we_mux = '0' AND ECC /= 0 THEN
+                recc_raw <= mem_ecc(to_integer(unsigned(addr_mux)));
+            END IF;
+        END IF;
+    END PROCESS;
+
+    -- Pipeline and Control Logic Process (With Reset)
+    REG_LOGIC: PROCESS (clk)
+    BEGIN
+        IF rising_edge(clk) THEN
             -- Pipeline register
             IF rst_n = '0' THEN
                 rdata_reg <= (OTHERS => '0');

@@ -20,7 +20,14 @@ cd tb && rm -f *.vvp *.vcd && cd - > /dev/null
 rm -rf verif/formal/sp_memory_*
 
 # Clean UVM
-rm -rf verif/uvm/work_* verif/uvm/xsim.dir verif/uvm/*.log verif/uvm/*.pb verif/uvm/*.jou verif/uvm/*.wdb
+rm -rf verif/uvm/work* verif/uvm/xsim.dir verif/uvm/*.log verif/uvm/*.pb verif/uvm/*.jou verif/uvm/*.wdb
+rm -rf verif/uvm/coverage*
 rm -rf coverage* test_bist_merge test_bist_report cov_merge* axi_stress_report
+
+# Extra Clean (User Requested)
+rm -f tools/*.log
+rm -rf verif/formal/sp_memory
+rm -f verif/cocotb/*.o verif/cocotb/results.xml
+rm -rf verif/cocotb/sp_memory*
 
 echo "Clean Complete."

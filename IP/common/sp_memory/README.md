@@ -80,5 +80,15 @@ A dedicated formal suite using **SymbiYosys (SBY)** and the **Z3 SMT solver** is
 **Run Formal Suite**: `./verif/formal/run_formal.sh`
 > **Note**: The full formal suite takes approximately **42 minutes** to complete. It is not included in the standard regression script.
 
+## Synthesis Results
+The IP has been characterized using **Vivado**, **Quartus**, and **Yosys**. It consistently infers dedicated memory primitives (BRAM/MRAM) across configurations.
+
+- **Status**: ✅ Synthesizable
+- **Memory Inference**: 
+  - **Xilinx**: `RAMB36E1` / `RAMB18E1` (Block RAM)
+  - **Altera**: `altsyncram` (M9K/M20K)
+  - **Generic**: Inferred FF/LUTRAM
+- **Report**: [sp_memory_synthesis_results.md](./sp_memory_synthesis_results.md) (Includes detailed instance counts)
+
 ## Known Issues
 - None.
