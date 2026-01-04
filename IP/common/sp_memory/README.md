@@ -65,6 +65,7 @@ The `run_modelsim.sh` script performs a comprehensive parameter sweep to ensure 
 | **AHB-Lite (SV/VHDL)** | :white_check_mark: Passing |
 | **BIST & Sleep Features** | :white_check_mark: Passing |
 | **ECC & Parity Logic** | :white_check_mark: Passing |
+| **UVM Code Coverage** | :white_check_mark: **>95%** (AXI: 95.4%, AHB: 97.5%) |
 ### Multi-Task Formal Verification (SymbiYosys)
 A dedicated formal suite using **SymbiYosys (SBY)** and the **Z3 SMT solver** is included in `verif/formal`. It uses a multi-task configuration to verify individual components:
 

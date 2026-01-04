@@ -10,6 +10,7 @@ module sp_memory_ahb #(
     parameter bit PIPELINE   = 0,
     parameter bit PARITY     = 0,
     parameter bit ECC        = 0,
+    parameter     INIT_FILE  = "",
     parameter     TECHNOLOGY = "GENERIC"
 ) (
     input logic hclk,
@@ -194,6 +195,7 @@ module sp_memory_ahb #(
       .PIPELINE(PIPELINE),
       .PARITY(PARITY),
       .ECC(ECC),
+      .INIT_FILE(INIT_FILE),
       .TECHNOLOGY(TECHNOLOGY)
   ) core (
       .clk(hclk),

@@ -47,6 +47,9 @@ def run_regression():
         # ModelSim Tests (via script)
         RegressionJob("ModelSim_Sweep",   [modelsim_script]),
 
+        # UVM Full Regression
+        RegressionJob("UVM_Full_Regression", [os.path.join(ip_dir, "verif/uvm/run_full_uvm.sh")]),
+
         # Cocotb Tests
         RegressionJob("SV_Core_32",   ["/bin/bash", "-c", f"cd {verif_dir} && make clean && make SIM=verilator TOPLEVEL_LANG=verilog WIDTH=32"]),
         RegressionJob("SV_Core_128",  ["/bin/bash", "-c", f"cd {verif_dir} && make clean && make SIM=verilator TOPLEVEL_LANG=verilog WIDTH=128"]),

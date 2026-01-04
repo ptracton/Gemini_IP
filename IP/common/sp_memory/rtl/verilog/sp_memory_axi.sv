@@ -10,6 +10,7 @@ module sp_memory_axi #(
     parameter bit PIPELINE   = 0,
     parameter bit PARITY     = 0,
     parameter bit ECC        = 0,
+    parameter     INIT_FILE  = "",
     parameter     TECHNOLOGY = "GENERIC"
 ) (
     input logic aclk,
@@ -68,10 +69,11 @@ module sp_memory_axi #(
   logic [        WIDTH-1:0] mem_rdata;
 
   // AXI4 State Machine
-  typedef enum logic [1:0] {
+  typedef enum logic [2:0] {
     IDLE,
     WRITE_DATA,
     WRITE_RESP,
+    READ_WAIT,
     READ_DATA
   } state_t;
   state_t state;
@@ -102,6 +104,8 @@ module sp_memory_axi #(
       rlast       <= 1'b0;
       len_awcount <= 0;
       len_arcount <= 0;
+      curr_awaddr <= 0;
+      curr_araddr <= 0;
     end else begin
       case (state)
         IDLE: begin
@@ -116,8 +120,13 @@ module sp_memory_axi #(
             curr_araddr <= araddr;
             len_arcount <= arlen;
             rresp       <= r_addr_ok ? 2'b00 : 2'b11;
-            state       <= READ_DATA;
+            state       <= READ_WAIT;
           end
+        end
+
+        READ_WAIT: begin
+          arready <= 1'b0;
+          state   <= READ_DATA;
         end
 
         WRITE_DATA: begin
@@ -144,16 +153,15 @@ module sp_memory_axi #(
         end
 
         READ_DATA: begin
-          arready <= 1'b0;
-          rvalid  <= 1'b1;
-          rlast   <= (len_arcount == 0);
+          rvalid <= 1'b1;
+          rlast  <= (len_arcount == 0);
           if (rvalid && rready) begin
-            curr_araddr <= curr_araddr + (1 << ADDR_LSB);
             if (len_arcount == 0) begin
               rvalid <= 1'b0;
               rlast  <= 1'b0;
               state  <= IDLE;
             end else begin
+              curr_araddr <= curr_araddr + (1 << ADDR_LSB);
               len_arcount <= len_arcount - 1;
             end
           end
@@ -176,7 +184,7 @@ module sp_memory_axi #(
       mem_addr  = curr_awaddr[ADDR_LSB+$clog2(DEPTH)-1 : ADDR_LSB];
       mem_wdata = wdata;
       mem_wstrb = wstrb;
-    end else if (state == READ_DATA) begin
+    end else if (state == READ_WAIT || state == READ_DATA) begin
       mem_cs   = 1'b1;
       mem_we   = 1'b0;
       mem_addr = curr_araddr[ADDR_LSB+$clog2(DEPTH)-1 : ADDR_LSB];
@@ -189,6 +197,7 @@ module sp_memory_axi #(
       .PIPELINE(PIPELINE),
       .PARITY(PARITY),
       .ECC(ECC),
+      .INIT_FILE(INIT_FILE),
       .TECHNOLOGY(TECHNOLOGY)
   ) core (
       .clk(aclk),

@@ -68,7 +68,7 @@ The entire project undergoes periodic full regression testing. Below is the late
 | SystemVerilog | [x] | [x] | [x] | [x] | [x] | [x] | [x] |
 | VHDL-2008 | [x] | [x] | [x] | [x] | [x] | [x] | [x] |
 | Cocotb | [x] | [x] | [x] | [x] | [x] | [x] | [x] |
-| UVM | [ ] | [ ] | [ ] | [x] | [x] | [x] |
+| UVM | [ ] | [ ] | [x] | [x] | [x] | [x] | [x] |
 | Synthesis | [x] | [x] | [x] | [x] | [x] | [x] | [x] |
 
 ## Running Verifications & Tools

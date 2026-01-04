@@ -10,6 +10,7 @@ module sp_memory_wb #(
     parameter bit PIPELINE   = 0,
     parameter bit PARITY     = 0,
     parameter bit ECC        = 0,
+    parameter     INIT_FILE  = "",
     parameter     TECHNOLOGY = "GENERIC"
 ) (
     input logic clk_i,
@@ -77,6 +78,7 @@ module sp_memory_wb #(
       .PIPELINE(PIPELINE),
       .PARITY(PARITY),
       .ECC(ECC),
+      .INIT_FILE(INIT_FILE),
       .TECHNOLOGY(TECHNOLOGY)
   ) core (
       .clk(clk_i),

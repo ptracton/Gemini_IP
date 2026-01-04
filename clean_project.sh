@@ -21,7 +21,11 @@ clean_dirs() {
         -name "sp_memory_ahb" -o \
         -name "sp_memory_apb" -o \
         -name "sp_memory_wb" -o \
-        -name "work" \
+        -name "work" -o \
+        -name "work_*" -o \
+        -name "coverage_repo" -o \
+        -name "cov_merge_final" -o \
+        -name "coverage_report_final" \
     \) -exec rm -rf {} +
 }
 

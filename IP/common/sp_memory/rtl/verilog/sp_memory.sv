@@ -10,13 +10,13 @@
  */
 
 module sp_memory #(
-    parameter WIDTH = 32,
-    parameter DEPTH = 1024,
-    parameter TECHNOLOGY = "GENERIC",
-    parameter INIT_FILE = "",
-    parameter PIPELINE = 0,
-    parameter PARITY = 0,
-    parameter ECC = 0
+    parameter int WIDTH      = 32,
+    parameter int DEPTH      = 1024,
+    parameter     TECHNOLOGY = "GENERIC",
+    parameter     INIT_FILE  = "",
+    parameter bit PIPELINE   = 0,
+    parameter bit PARITY     = 0,
+    parameter bit ECC        = 0
 ) (
     input  logic                     clk,
     input  logic                     rst_n,           // Active low reset
@@ -138,7 +138,7 @@ module sp_memory #(
         if (INIT_FILE != "") begin
           $readmemh(INIT_FILE, mem_xil);
         end else begin
-`ifdef COCOTB_SIM
+`ifdef SIMULATION
           for (int k = 0; k < DEPTH; k++) begin
             mem_xil[k] = '0;
           end
@@ -164,7 +164,7 @@ module sp_memory #(
         if (INIT_FILE != "") begin
           $readmemh(INIT_FILE, mem_alt);
         end else begin
-`ifdef COCOTB_SIM
+`ifdef SIMULATION
           for (int k = 0; k < DEPTH; k++) begin
             mem_alt[k] = '0;
           end
@@ -191,11 +191,10 @@ module sp_memory #(
         if (INIT_FILE != "") begin
           $readmemh(INIT_FILE, mem);
         end else begin
-`ifdef COCOTB_SIM
+`ifdef SIMULATION
           for (int k = 0; k < DEPTH; k++) begin
             mem[k] = '0;
             if (PARITY) mem_parity[k] = '0;
-            if (ECC_BITS > 0) mem_ecc[k] = '0;
           end
 `endif
         end
@@ -247,7 +246,7 @@ module sp_memory #(
 
       // Initialization
       initial begin
-`ifdef COCOTB_SIM
+`ifdef SIMULATION
         for (int k = 0; k < DEPTH; k++) begin
           mem_ecc[k] = '0;
         end

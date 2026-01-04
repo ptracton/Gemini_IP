@@ -49,6 +49,15 @@ interface axi_if (
     input rdata, rresp, rvalid;
   endclocking
 
+  clocking monitor_cb @(posedge aclk);
+    default input #1step;
+    input awaddr, awprot, awvalid, awready;
+    input wdata, wstrb, wvalid, wready;
+    input bresp, bvalid, bready;
+    input araddr, arprot, arvalid, arready;
+    input rdata, rresp, rvalid, rready;
+  endclocking
+
   clocking slave_cb @(posedge aclk);
     default input #1ns output #1ns;
     input awaddr, awprot, awvalid, wdata, wstrb, wvalid, bready, araddr, arprot, arvalid, rready;
@@ -56,13 +65,6 @@ interface axi_if (
   endclocking
 
   modport master(clocking cb, input aclk, aresetn);
-  modport monitor(
-      input aclk, aresetn, 
-                     awaddr, awprot, awvalid, awready,
-                     wdata, wstrb, wvalid, wready,
-                     bresp, bvalid, bready,
-                     araddr, arprot, arvalid, arready,
-                     rdata, rresp, rvalid, rready
-  );
+  modport monitor(clocking monitor_cb, input aclk, aresetn);
 
 endinterface
