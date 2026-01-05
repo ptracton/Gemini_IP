@@ -34,6 +34,7 @@ This script will:
 ### Interface
 - **[GPIO](IP/interface/GPIO/README.md)**: Configurable GPIO with Interrupts, PWM, Debouncing, and multi-bus support.
 - **[SPI Master](IP/interface/SPI_Master/README.md)**: Configurable SPI Master with FIFOs, programmable word length, and support for AXI4-Lite, APB4, and Wishbone.
+- **[SPI Slave](IP/interface/SPI_Slave/README.md)**: Generic SPI Slave with CDC, burst support, compliant with SPI Mode 0/3, and internal bus master capability.
 - **[UART](IP/interface/UART/README.md)**: Universal Asynchronous Receiver/Transmitter with configurable baud rate, FIFOs, RS-485, DMA, and multi-bus support.
 
 ### Common
@@ -50,6 +51,7 @@ The entire project undergoes periodic full regression testing. Below is the late
 | :--- | :---: | :--- |
 | **GPIO** | ✅ PASS | [Results](IP/interface/GPIO/gpio_regression_results.md) |
 | **SPI Master** | ✅ PASS | [Results](IP/interface/SPI_Master/spi_master_regression_results.md) |
+| **SPI Slave** | ✅ PASS | [Results](IP/interface/SPI_Slave/spi_slave_regression_results.md) |
 | **UART** | ✅ PASS | [Results](IP/interface/UART/uart_regression_results.md) |
 | **General Timer** | ✅ PASS | [Results](IP/common/general_timer/timer_regression_results.md) |
 | **Bus Matrix** | ✅ PASS | [Results](IP/common/bus_matrix/bus_matrix_regression_results.md) |
@@ -59,17 +61,17 @@ The entire project undergoes periodic full regression testing. Below is the late
 **Overall Status: PASSED**
 ## Feature Overview
 
-| Feature | Bus Matrix | Sync FIFO | SP Memory | GPIO | Timer | UART | SPI |
-|---------|------------|-----------|-----------|------|-------|------|-----|
-| AXI4-Lite| [x] | [x] | [x] | [x] | [x] | [x] | [x] |
-| APB | [ ] | [x] | [x] | [x] | [x] | [x] | [x] |
-| Wishbone | [x] | [x] | [x] | [x] | [x] | [x] | [x] |
-| AHB-Lite | [x] | [x] | [x] | [ ] | [ ] | [ ] | [ ] |
-| SystemVerilog | [x] | [x] | [x] | [x] | [x] | [x] | [x] |
-| VHDL-2008 | [x] | [x] | [x] | [x] | [x] | [x] | [x] |
-| Cocotb | [x] | [x] | [x] | [x] | [x] | [x] | [x] |
-| UVM | [ ] | [ ] | [x] | [x] | [x] | [x] | [x] |
-| Synthesis | [x] | [x] | [x] | [x] | [x] | [x] | [x] |
+| Feature | Bus Matrix | Sync FIFO | SP Memory | GPIO | Timer | UART | SPI Mstr | SPI Slv |
+|---------|------------|-----------|-----------|------|-------|------|----------|---------|
+| AXI4-Lite| [x] | [x] | [x] | [x] | [x] | [x] | [x] | [ ] |
+| APB | [ ] | [x] | [x] | [x] | [x] | [x] | [x] | [ ] |
+| Wishbone | [x] | [x] | [x] | [x] | [x] | [x] | [x] | [ ] |
+| AHB-Lite | [x] | [x] | [x] | [ ] | [ ] | [ ] | [ ] | [ ] |
+| SystemVerilog | [x] | [x] | [x] | [x] | [x] | [x] | [x] | [x] |
+| VHDL-2008 | [x] | [x] | [x] | [x] | [x] | [x] | [x] | [x] |
+| Cocotb | [x] | [x] | [x] | [x] | [x] | [x] | [x] | [ ] |
+| UVM | [ ] | [ ] | [x] | [x] | [x] | [x] | [x] | [ ] |
+| Synthesis | [x] | [x] | [x] | [x] | [x] | [x] | [x] | [ ] |
 
 ## Running Verifications & Tools
 
@@ -83,6 +85,7 @@ Please refer to the specific IP documentation for detailed instructions on runni
 - **[Sync FIFO Verification Guide](IP/common/sync_fifo/README.md#verification)**
 - **[UART Verification Guide](IP/interface/UART/README.md#verification-status)**
 - **[SPI Master Verification Guide](IP/interface/SPI_Master/README.md#verification-results)**
+- **[SPI Slave Verification Guide](IP/interface/SPI_Slave/README.md#verification-status)**
 - **[SP Memory Verification Guide](IP/common/sp_memory/README.md#verification)**
 
 ## Project Maintenance

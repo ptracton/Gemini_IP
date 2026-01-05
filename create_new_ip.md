@@ -36,8 +36,9 @@ NEW_IP/
 
 ## 3. Initial Native Verification
 - [ ] Create standalone testbenches in `tb/`.
-- [ ] Verify SystemVerilog using **Icarus Verilog** (`run_iverilog.sh`), **Xilinx xsim** (`run_xsim.sh`), and **ModelSim** (`run_modelsim.sh`).
-- [ ] Verify VHDL using **GHDL** (`run_ghdl.sh`), **Xilinx xsim** (`run_xsim_vhdl.sh`), and **ModelSim** (`run_modelsim_vhdl.sh`).
+- [ ] Verify SystemVerilog using **Icarus Verilog** (`run_iverilog.sh`), **Xilinx xsim** (`run_xsim.sh`), and **ModelSim** (`run_modelsim.sh`). Ensure simulations write output to log files (e.g., `simulation.log`).
+- [ ] Verify VHDL using **GHDL** (`run_ghdl.sh`), **Xilinx xsim** (`run_xsim_vhdl.sh`), and **ModelSim** (`run_modelsim_vhdl.sh`). Ensure simulations write output to log files (e.g., `simulation.log`).
+- [ ] **Fail-Fast Policy**: Simulation testbenches MUST terminate immediately upon detecting a data mismatch or error (use `$fatal` in SV, `severity failure` in VHDL). DO NOT continue simulation after a failure.
 - [ ] Create **ModelSim GUI** wave scripts (`.do`) with grouped signals, hex radix, and cyan clocks.
 
 ## 4. Advanced Verification & Analysis
