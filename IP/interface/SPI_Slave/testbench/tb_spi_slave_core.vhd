@@ -172,8 +172,14 @@ begin
                 end loop;
             end if;
 
+            -- Wait for core to process last bit
+            wait until rising_edge(spi_clk);
+            wait until falling_edge(spi_clk);
+
             -- CS High
-            spi_cs_n <= '1';
+            wait until rising_edge(spi_clk);
+        wait until falling_edge(spi_clk);
+        spi_cs_n <= '1';
             wait for 100 ns;
         end procedure;
 
@@ -243,6 +249,8 @@ begin
         end loop;
 
         
+        wait until rising_edge(spi_clk);
+        wait until falling_edge(spi_clk);
         spi_cs_n <= '1';
         wait for 500 ns;
 
@@ -302,6 +310,8 @@ begin
             assert false report "Test Failed" severity failure;
         end if;
         
+        wait until rising_edge(spi_clk);
+        wait until falling_edge(spi_clk);
         spi_cs_n <= '1';
         report "Simulation Completed";
         wait;

@@ -75,24 +75,28 @@ def main():
     sim_dir = os.path.join(ip_root, "sim")
     
     # Define tests to run
-    # Format: (Test Name, Script Path relative to CWD or Absolute, Working Directory)
+    # Format: (Test Name, Command String, Working Directory)
     tests = [
-        ("Icarus Verilog System", os.path.join(sim_dir, "iverilog", "run_iverilog.sh"), gemini_root),
-        ("GHDL VHDL System", os.path.join(sim_dir, "ghdl", "run_ghdl.sh"), gemini_root),
+        # SystemVerilog (Icarus)
+        ("SV Core", "iverilog -g2012 -DSIMULATION -o out/core.vvp rtl/verilog/spi_async_fifo.sv rtl/verilog/spi_slave_core.sv tb/tb_spi_slave_core.sv && vvp -l out/core.log out/core.vvp", ip_root),
+        ("SV Wishbone", "iverilog -g2012 -DSIMULATION -o out/wb.vvp -I rtl/verilog rtl/verilog/spi_async_fifo.sv rtl/verilog/spi_slave_core.sv rtl/verilog/spi_slave_wb.sv tb/tb_spi_slave_wb.sv && vvp -l out/wb.log out/wb.vvp", ip_root),
+        ("SV AXI4-Lite", "iverilog -g2012 -DSIMULATION -o out/axi.vvp -I rtl/verilog rtl/verilog/spi_async_fifo.sv rtl/verilog/spi_slave_core.sv rtl/verilog/spi_slave_axi.sv tb/tb_spi_slave_axi.sv && vvp -l out/axi.log out/axi.vvp", ip_root),
+        ("SV AHB", "iverilog -g2012 -DSIMULATION -o out/ahb.vvp -I rtl/verilog rtl/verilog/spi_async_fifo.sv rtl/verilog/spi_slave_core.sv rtl/verilog/spi_slave_ahb.sv tb/tb_spi_slave_ahb.sv && vvp -l out/ahb.log out/ahb.vvp", ip_root),
+        
+        # VHDL (GHDL)
+        ("VHDL Core", "ghdl -a --std=08 --workdir=sim/ghdl/work rtl/vhdl/spi_async_fifo.vhd rtl/vhdl/spi_slave_core.vhd tb/tb_spi_slave_core.vhd && ghdl -e --std=08 --workdir=sim/ghdl/work tb_spi_slave_core && ghdl -r --std=08 --workdir=sim/ghdl/work tb_spi_slave_core --stop-time=100us", ip_root),
+        ("VHDL Wishbone", "ghdl -a --std=08 --workdir=sim/ghdl/work rtl/vhdl/spi_async_fifo.vhd rtl/vhdl/spi_slave_core.vhd rtl/vhdl/spi_slave_wb.vhd tb/tb_spi_slave_wb.vhd && ghdl -e --std=08 --workdir=sim/ghdl/work tb_spi_slave_wb && ghdl -r --std=08 --workdir=sim/ghdl/work tb_spi_slave_wb --stop-time=100us", ip_root),
+        ("VHDL AXI4-Lite", "ghdl -a --std=08 --workdir=sim/ghdl/work rtl/vhdl/spi_async_fifo.vhd rtl/vhdl/spi_slave_core.vhd rtl/vhdl/spi_slave_axi.vhd tb/tb_spi_slave_axi.vhd && ghdl -e --std=08 --workdir=sim/ghdl/work tb_spi_slave_axi && ghdl -r --std=08 --workdir=sim/ghdl/work tb_spi_slave_axi --stop-time=100us", ip_root),
+        ("VHDL AHB", "ghdl -a --std=08 --workdir=sim/ghdl/work rtl/vhdl/spi_async_fifo.vhd rtl/vhdl/spi_slave_core.vhd rtl/vhdl/spi_slave_ahb.vhd tb/tb_spi_slave_ahb.vhd && ghdl -e --std=08 --workdir=sim/ghdl/work tb_spi_slave_ahb && ghdl -r --std=08 --workdir=sim/ghdl/work tb_spi_slave_ahb --stop-time=100us", ip_root),
     ]
     
     results = []
     
-    for name, script, work_dir in tests:
-        if os.path.exists(script):
-             results.append(run_test(name, script, work_dir))
-        else:
-            results.append({
-                "name": name, 
-                "status": "SKIPPED", 
-                "duration": "0", 
-                "output": f"Script not found: {script}"
-            })
+    os.makedirs(os.path.join(ip_root, "out"), exist_ok=True)
+    os.makedirs(os.path.join(ip_root, "sim/ghdl/work"), exist_ok=True)
+
+    for name, cmd, work_dir in tests:
+        results.append(run_test(name, cmd, work_dir))
 
     report_file = os.path.join(ip_root, "spi_slave_regression_results.md")
     generate_report(results, report_file)

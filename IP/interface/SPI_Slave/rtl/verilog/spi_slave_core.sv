@@ -372,7 +372,7 @@ module spi_slave_core (
   // Bus Output Assignments
   // Ensure m_state comparisons result in 0/1, not X if m_state is X (though reset should fix that).
   // Using explicit reset check in assignment or just relying on reset.
-  assign bus_req_o   = (m_state == M_WRITE_EXEC) || (m_state == M_READ_EXEC);
+  assign bus_req_o   = ((m_state == M_WRITE_EXEC) || (m_state == M_READ_EXEC)) && !bus_ack_i;
   assign bus_addr_o  = sys_addr;
   assign bus_we_o    = (m_state == M_WRITE_EXEC);
   assign bus_wdata_o = sys_data_out;
